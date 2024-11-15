@@ -1,17 +1,64 @@
 // Initialize GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-class PortfolioAnimator {
+class PortfolioManager {
     constructor() {
+        this.currentSection = 'home';
+        this.initializeNavigation();
         this.initializeHeroAnimations();
         this.initializeTimeline();
         this.initializeSkills();
-        this.initializeScrollAnimations();
-        this.initializeNavigation();
+        this.initializeSectionAnimations();
+    }
+
+    initializeNavigation() {
+        // Handle navigation clicks
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                this.switchSection(targetId);
+            });
+        });
+
+        // Handle initial section based on hash
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            this.switchSection(hash);
+        }
+    }
+
+    switchSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.remove('active');
+            section.style.display = 'none';
+        });
+
+        // Show target section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            targetSection.style.display = 'block';
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Trigger section-specific animations
+            this.animateSection(sectionId);
+            
+            // Update URL without scrolling
+            history.pushState(null, null, `#${sectionId}`);
+        }
     }
 
     initializeHeroAnimations() {
-        // Animate hero content on load
+        // Hero section animations
         gsap.from('.hero-content', {
             duration: 1,
             y: 50,
@@ -22,48 +69,21 @@ class PortfolioAnimator {
     }
 
     initializeTimeline() {
-        const timelineContainer = document.querySelector('.timeline');
-        const filterButtons = document.querySelectorAll('.filter-button');
-
-        // Sort entries by date
+        const timeline = document.querySelector('.timeline');
         const sortedEntries = [...portfolioData.timeline].sort((a, b) => {
-            // Handle 'present' endDate
-            if (a.endDate === 'present') return -1;
-            if (b.endDate === 'present') return 1;
-            
-            // Compare dates
-            const dateA = new Date(a.endDate || a.date);
-            const dateB = new Date(b.endDate || b.date);
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
             return dateB - dateA;
         });
 
-        // Render timeline entries
-        this.renderTimelineEntries(sortedEntries);
-
-        // Initialize filter functionality
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const filter = button.getAttribute('data-filter');
-                
-                // Update active button state
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-
-                // Filter entries
-                const filteredEntries = filter === 'all' 
-                    ? sortedEntries 
-                    : sortedEntries.filter(entry => entry.type === filter);
-
-                this.renderTimelineEntries(filteredEntries);
-            });
-        });
-    }
-
-    renderTimelineEntries(entries) {
-        const timelineContainer = document.querySelector('.timeline');
-        timelineContainer.innerHTML = '';
-
-        entries.forEach((entry, index) => {
+        // Calculate timeline dimensions
+        const containerWidth = document.querySelector('.timeline-container').offsetWidth;
+        const entryWidth = 350; // Width of each entry
+        const entryMargin = 30; // Margin between entries
+        const entriesPerRow = Math.floor((containerWidth - 50) / (entryWidth + entryMargin));
+        
+        // Create timeline entries
+        sortedEntries.forEach((entry, index) => {
             const entryElement = document.createElement('div');
             entryElement.className = 'timeline-entry';
             
@@ -72,59 +92,111 @@ class PortfolioAnimator {
                 ? `${this.formatDate(entry.date)} - ${entry.endDate === 'present' ? 'Present' : this.formatDate(entry.endDate)}`
                 : this.formatDate(entry.date);
 
-            // Create entry content
             entryElement.innerHTML = `
-                <div class="entry-content ${entry.type}-entry">
+                <div class="entry-content">
                     <div class="entry-header">
                         <h3 class="entry-title">${entry.title}</h3>
                         <span class="entry-date">${dateDisplay}</span>
                     </div>
                     <p class="entry-description">${entry.description}</p>
                     ${this.renderTechStack(entry.techStack)}
-                    ${this.renderLinks(entry.links)}
+                    ${this.renderLinks(entry.links || {})}
                 </div>
             `;
 
-            timelineContainer.appendChild(entryElement);
+            timeline.appendChild(entryElement);
+
+            // Calculate position for snaking layout
+            const row = Math.floor(index / entriesPerRow);
+            const isEvenRow = row % 2 === 0;
+            const positionInRow = isEvenRow 
+                ? index % entriesPerRow 
+                : entriesPerRow - 1 - (index % entriesPerRow);
+
+            const xPos = positionInRow * (entryWidth + entryMargin) + 50;
+            const yPos = row * 300; // Height between rows
+
+            gsap.set(entryElement, {
+                x: xPos,
+                y: yPos,
+                opacity: 0
+            });
 
             // Animate entry
-            gsap.from(entryElement, {
-                duration: 0.8,
-                opacity: 0,
-                y: 50,
+            gsap.to(entryElement, {
+                opacity: 1,
+                duration: 0.5,
                 delay: index * 0.1,
                 scrollTrigger: {
                     trigger: entryElement,
                     start: 'top bottom-=100',
+                    end: 'bottom center',
                     toggleActions: 'play none none reverse'
                 }
             });
+        });
+
+        // Animate timeline line
+        const timelineLine = document.querySelector('.timeline-line');
+        const totalRows = Math.ceil(sortedEntries.length / entriesPerRow);
+        const totalHeight = totalRows * 300;
+
+        timelineLine.style.height = `${totalHeight}px`;
+        
+        gsap.set(timelineLine, {
+            height: 0
+        });
+
+        gsap.to(timelineLine, {
+            height: totalHeight,
+            duration: 2,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.timeline',
+                start: 'top center',
+                end: 'bottom bottom',
+                toggleActions: 'play none none reverse'
+            }
         });
     }
 
     renderTechStack(techStack) {
         if (!techStack) return '';
         return `
-            <div class="entry-tech">
-                ${techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+            <div class="tech-stack">
+                ${techStack.map(tech => `
+                    <span class="tech-tag">${tech}</span>
+                `).join('')}
             </div>
         `;
     }
 
     renderLinks(links) {
-        if (!links) return '';
+        if (Object.keys(links).length === 0) return '';
         return `
             <div class="entry-links">
                 ${Object.entries(links).map(([type, url]) => `
                     <a href="${url}" target="_blank" rel="noopener noreferrer" class="entry-link">
-                        <i class="fas fa-${type === 'github' ? 'github' : 
-                                       type === 'verify' ? 'certificate' : 
-                                       type === 'project' ? 'external-link-alt' : 'link'}"></i>
-                        ${type.charAt(0).toUpperCase() + type.slice(1)}
+                        <i class="fas fa-${this.getLinkIcon(type)}"></i>
+                        ${this.formatLinkType(type)}
                     </a>
                 `).join('')}
             </div>
         `;
+    }
+
+    getLinkIcon(type) {
+        const icons = {
+            github: 'github',
+            demo: 'external-link-alt',
+            verify: 'certificate',
+            project: 'external-link-alt'
+        };
+        return icons[type] || 'link';
+    }
+
+    formatLinkType(type) {
+        return type.charAt(0).toUpperCase() + type.slice(1);
     }
 
     formatDate(dateString) {
@@ -133,9 +205,8 @@ class PortfolioAnimator {
     }
 
     initializeSkills() {
-        const skillsContainer = document.querySelector('.skills-grid');
+        const skillsGrid = document.querySelector('.skills-grid');
         
-        // Create and populate skill categories
         Object.entries(portfolioData.skills).forEach(([category, skills]) => {
             const categoryElement = document.createElement('div');
             categoryElement.className = 'skill-category';
@@ -153,97 +224,42 @@ class PortfolioAnimator {
                     </div>
                 `).join('')}
             `;
-            skillsContainer.appendChild(categoryElement);
+            skillsGrid.appendChild(categoryElement);
         });
 
-        // Animate skill bars on scroll
+        // Animate skill bars
         document.querySelectorAll('.skill-progress').forEach(bar => {
             const level = bar.getAttribute('data-level');
-            
-            ScrollTrigger.create({
-                trigger: bar,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(bar, {
-                        scaleX: level / 100,
-                        duration: 1.5,
-                        ease: 'power2.out'
-                    });
+            gsap.to(bar, {
+                scaleX: level / 100,
+                duration: 1.5,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: bar,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none reverse'
                 }
             });
         });
     }
 
-    initializeScrollAnimations() {
+    initializeSectionAnimations() {
         // Animate section headers
-        gsap.utils.toArray('.section-header').forEach(header => {
+        document.querySelectorAll('.section-header').forEach(header => {
             gsap.from(header, {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out',
                 scrollTrigger: {
                     trigger: header,
-                    start: 'top 80%',
+                    start: 'top bottom-=100',
                     toggleActions: 'play none none reverse'
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: 'power3.out'
-            });
-        });
-
-        // Animate skill categories
-        gsap.utils.toArray('.skill-category').forEach((category, i) => {
-            gsap.from(category, {
-                scrollTrigger: {
-                    trigger: category,
-                    start: 'top 80%',
-                    toggleActions: 'play none none reverse'
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                delay: i * 0.2,
-                ease: 'power3.out'
-            });
-        });
-    }
-
-    initializeNavigation() {
-        // Smooth scroll for navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
                 }
             });
         });
 
-        // Highlight active section in navigation
-        const sections = document.querySelectorAll('section');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 300) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Social links animation
+        // Animate social links
         document.querySelectorAll('.social-link').forEach(link => {
             link.addEventListener('mouseenter', () => {
                 gsap.to(link, {
@@ -262,14 +278,30 @@ class PortfolioAnimator {
             });
         });
     }
+
+    animateSection(sectionId) {
+        // Reset scroll position
+        window.scrollTo(0, 0);
+        
+        // Trigger section-specific animations
+        switch(sectionId) {
+            case 'timeline':
+                ScrollTrigger.refresh();
+                this.initializeTimeline();
+                break;
+            case 'skills':
+                ScrollTrigger.refresh();
+                break;
+        }
+    }
 }
 
-// Initialize everything when DOM is loaded
+// Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
-    new PortfolioAnimator();
+    new PortfolioManager();
 });
 
-// Handle window resize events
+// Handle window resize
 window.addEventListener('resize', () => {
     ScrollTrigger.refresh();
 });

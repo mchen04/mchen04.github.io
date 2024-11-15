@@ -5,7 +5,10 @@ const portfolioData = {
         tagline: "A Computer Science major blending technology and creativity",
         github: "https://github.com/mchen04",
         linkedin: "https://www.linkedin.com/in/michael-luo-chen",
-        email: "michaelluochen1@gmail.com"
+        email: "michaelluochen1@gmail.com",
+        about: `Computer Science student at UC Riverside with a passion for AI and software development. 
+               Currently working on cutting-edge projects in machine learning and web development.
+               Founder and President of the UCR AI Club, leading initiatives to promote AI education and research.`
     },
     timeline: [
         {
@@ -83,26 +86,13 @@ const portfolioData = {
             }
         },
         {
-            id: "reciptapp",
-            title: "ReciptApp",
-            date: "2024-01",
-            type: "project",
-            description: "A receipt management app for tracking and organizing expenses with cloud functionality.",
-            techStack: ["TypeScript", "Python", "AWS S3"],
-            links: {
-                github: "https://github.com/mchen04/ReciptApp"
-            }
-        },
-        {
-            id: "songsmith-ai",
-            title: "SongsmithAI",
-            date: "2023-11",
-            type: "project",
-            description: "A deep learning project for generating song lyrics using LSTMs trained on Spotify and Genius datasets.",
-            techStack: ["Python", "TensorFlow", "Keras"],
-            links: {
-                github: "https://github.com/mchen04/SongsmithAI"
-            }
+            id: "ai-club-president",
+            title: "Founder and President - UCR AI Club",
+            date: "2023-10",
+            endDate: "present",
+            type: "experience",
+            description: "Established the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with AI industry experts, leading to a 45% increase in engagement. Developed and presented a comprehensive 9-topic AI curriculum in collaboration with professors.",
+            techStack: ["Leadership", "Event Organization", "Curriculum Development"]
         },
         {
             id: "unsupervised-learning-cert",
@@ -116,15 +106,6 @@ const portfolioData = {
             }
         },
         {
-            id: "ai-club-president",
-            title: "Founder and President - UCR AI Club",
-            date: "2023-10",
-            endDate: "present",
-            type: "experience",
-            description: "Established the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with AI industry experts, leading to a 45% increase in engagement. Developed and presented a comprehensive 9-topic AI curriculum in collaboration with professors.",
-            techStack: ["Leadership", "Event Organization", "Curriculum Development"]
-        },
-        {
             id: "software-engineer-intern",
             title: "Software Engineer – Intern → Part-Time",
             date: "2023-06",
@@ -134,14 +115,14 @@ const portfolioData = {
             techStack: ["Windows Presentation Foundation (WPF)", "C#", "Arduino", "Python"]
         },
         {
-            id: "word-hunt",
-            title: "CS100 Final Project - Modified Word Hunt",
-            date: "2023-06",
-            type: "project",
-            description: "An enhanced version of Word Hunt with a leaderboard and multiplayer features.",
-            techStack: ["Python", "Flask", "SQLite"],
+            id: "advanced-algorithms-cert",
+            title: "Advanced Learning Algorithms",
+            date: "2023-05",
+            type: "certification",
+            description: "Mastered advanced machine learning algorithms and their implementations.",
+            issuer: "Coursera (DeepLearning.AI)",
             links: {
-                github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
+                verify: "https://coursera.org/verify/U33T2QRT8MFC"
             }
         },
         {
@@ -153,17 +134,6 @@ const portfolioData = {
             techStack: ["Python", "TensorFlow", "OpenCV"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
-            }
-        },
-        {
-            id: "advanced-algorithms-cert",
-            title: "Advanced Learning Algorithms",
-            date: "2023-05",
-            type: "certification",
-            description: "Mastered advanced machine learning algorithms and their implementations.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/U33T2QRT8MFC"
             }
         },
         {

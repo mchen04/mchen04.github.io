@@ -38,6 +38,7 @@
             overflow-x: hidden;
         }
 
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -77,49 +78,49 @@
             transition: all 0.3s ease;
         }
 
+        .nav-link.active {
+            color: var(--primary);
+        }
+
         .nav-link:hover {
             color: var(--primary);
         }
 
-        .hero {
-            height: 100vh;
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem;
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        #home {
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 60px;
+            text-align: center;
         }
 
         .hero-content {
-            text-align: center;
-            z-index: 1;
             max-width: 800px;
-            padding: 0 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            display: inline-block;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--text);
-            margin-bottom: 2rem;
         }
 
         .typewriter {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: inline-block;
             overflow: hidden;
             border-right: 2px solid var(--primary);
             white-space: nowrap;
             margin: 0 auto;
             letter-spacing: 0.15em;
-            animation: 
-                typing 3.5s steps(30, end),
-                blink-caret .75s step-end infinite;
+            animation: typing 3.5s steps(30, end),
+                       blink-caret .75s step-end infinite;
         }
 
         @keyframes typing {
@@ -132,72 +133,48 @@
             50% { border-color: var(--primary); }
         }
 
-        .section-header {
-            text-align: center;
-            color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 4rem;
-        }
-
         /* Timeline Section */
         .timeline-section {
-            position: relative;
-            padding: 6rem 2rem;
-            overflow: hidden;
+            padding-top: 80px;
         }
 
         .timeline-container {
-            max-width: 1600px;
+            max-width: 1200px;
             margin: 0 auto;
             position: relative;
         }
 
         .timeline {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
             position: relative;
-            padding: 3rem 0;
+            padding-left: 50px;
         }
 
-        .timeline::before {
-            content: '';
+        .timeline-line {
             position: absolute;
-            width: calc(100% - 4rem);
-            height: 2px;
-            background: linear-gradient(to right, var(--primary), var(--accent));
+            left: 0;
             top: 0;
-            left: 2rem;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
         }
 
         .timeline-entry {
-            width: 350px;
-            margin-top: 2rem;
             position: relative;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateX(50px);
         }
 
         .timeline-entry::before {
             content: '';
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background: var(--primary);
+            left: -54px;
+            top: 15px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            top: -2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        .timeline-entry::after {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 2rem;
             background: var(--primary);
-            top: -2rem;
-            left: 50%;
-            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--primary);
         }
 
         .entry-content {
@@ -213,35 +190,44 @@
             box-shadow: 0 5px 15px rgba(0, 168, 107, 0.2);
         }
 
-        .timeline-filters {
+        .entry-header {
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .entry-title {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .entry-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .entry-description {
+            margin: 1rem 0;
+        }
+
+        .tech-stack {
+            display: flex;
             flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
         }
 
-        .filter-button {
-            background: none;
-            border: 1px solid var(--primary);
-            color: var(--text);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-button:hover,
-        .filter-button.active {
-            background: var(--primary);
-            color: var(--background);
+        .tech-tag {
+            background: rgba(0, 168, 107, 0.2);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
         }
 
         /* Skills Section */
-        .skills-container {
-            padding: 6rem 2rem;
-        }
-
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -259,16 +245,6 @@
 
         .skill-category:hover {
             transform: translateY(-5px);
-        }
-
-        .skill-category h3 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .skill-item {
-            margin: 1.5rem 0;
         }
 
         .skill-header {
@@ -289,12 +265,19 @@
             background: var(--primary);
             transform-origin: left;
             transform: scaleX(0);
-            transition: transform 1s ease-out;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
         }
 
         /* Contact Section */
-        .contact-container {
-            padding: 6rem 2rem;
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
         }
 
@@ -328,21 +311,14 @@
             color: var(--background);
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
-            .hero h1 {
+            .typewriter {
                 font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .timeline-entry {
-                width: 100%;
             }
 
             @keyframes typing {
@@ -352,7 +328,7 @@
         }
 
         @media (max-width: 480px) {
-            .hero h1 {
+            .typewriter {
                 font-size: 2rem;
             }
 
@@ -368,7 +344,8 @@
         <div class="nav-content">
             <a href="#" class="nav-logo">Michael Chen</a>
             <div class="nav-links">
-                <a href="#home" class="nav-link">Home</a>
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
                 <a href="#timeline" class="nav-link">Timeline</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#contact" class="nav-link">Contact</a>
@@ -376,25 +353,25 @@
         </div>
     </nav>
 
-    <section id="home" class="hero">
+    <section id="home" class="active">
         <div class="hero-content">
             <h1 class="typewriter">Hi, I'm Michael Chen</h1>
             <p>A Computer Science major blending technology and creativity</p>
         </div>
     </section>
 
-    <section id="timeline" class="timeline-section">
+    <section id="about">
+        <h2 class="section-header">About Me</h2>
+        <div class="about-content">
+            <p>Computer Science student at UC Riverside with a passion for AI and software development.</p>
+        </div>
+    </section>
+
+    <section id="timeline">
         <h2 class="section-header">My Journey</h2>
         <div class="timeline-container">
-            <div class="timeline-filters">
-                <button class="filter-button active" data-filter="all">All</button>
-                <button class="filter-button" data-filter="project">Projects</button>
-                <button class="filter-button" data-filter="experience">Experience</button>
-                <button class="filter-button" data-filter="education">Education</button>
-                <button class="filter-button" data-filter="certification">Certifications</button>
-                <button class="filter-button" data-filter="award">Awards</button>
-            </div>
             <div class="timeline">
+                <div class="timeline-line"></div>
                 <!-- Timeline entries will be dynamically added here -->
             </div>
         </div>
@@ -408,7 +385,7 @@
     </section>
 
     <section id="contact">
-        <div class="contact-container">
+        <div class="contact-content">
             <h2 class="section-header">Get in Touch</h2>
             <div class="social-links">
                 <a href="mailto:michaelluochen1@gmail.com" class="social-link" title="Email">
