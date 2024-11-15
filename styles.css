@@ -139,60 +139,39 @@ body {
 
 /* Timeline */
 .timeline-container {
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    position: relative;
 }
 
 .timeline {
     position: relative;
-    padding: 2rem 0;
-    width: 100%;
+    padding: 2rem 0 2rem 20px;
 }
 
 .timeline::before {
     content: '';
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
+    left: 0;
+    top: 0;
     height: 100%;
+    width: 2px;
     background-color: var(--timeline-line);
 }
 
 .timeline-entry {
     position: relative;
-    margin: 4rem 0;
-    padding: 2rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
     background-color: var(--bg-secondary);
     border: 1px solid var(--timeline-line);
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    width: calc(50% - 50px);
-    clear: both;
-}
-
-.timeline-entry:nth-child(odd) {
-    float: left;
-    clear: both;
-}
-
-.timeline-entry:nth-child(even) {
-    float: right;
-}
-
-.timeline-entry:nth-child(odd) .timeline-pearl {
-    right: -58px;
-    left: auto;
-}
-
-.timeline-entry:nth-child(even) .timeline-pearl {
-    left: -58px;
 }
 
 .timeline-pearl {
     position: absolute;
+    left: -28px;
     top: 50%;
     transform: translateY(-50%);
     width: 16px;
@@ -200,10 +179,10 @@ body {
     background-color: var(--pearl-color);
     border-radius: 50%;
     box-shadow: 0 0 10px var(--accent-glow);
-    z-index: 2;
+    z-index: 1;
 }
 
-.timeline-entry .entry-type {
+.entry-type {
     position: absolute;
     top: -12px;
     right: 20px;
@@ -214,7 +193,6 @@ body {
     font-size: 0.8rem;
     border: 1px solid var(--accent);
     text-transform: capitalize;
-    z-index: 1;
 }
 
 .entry-header {
@@ -225,20 +203,15 @@ body {
     color: var(--accent);
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    line-height: 1.4;
 }
 
 .entry-date {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    display: block;
-    margin-bottom: 0.5rem;
 }
 
 .entry-description {
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
     margin-bottom: 1rem;
 }
 
@@ -255,14 +228,13 @@ body {
     padding: 0.25rem 0.75rem;
     border-radius: 15px;
     font-size: 0.9rem;
-    border: 1px solid var(--timeline-line);
+    border: 1px solid var(--accent);
 }
 
-/* Entry Links */
 .entry-links {
     display: flex;
     gap: 1rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 }
 
 .entry-link {
@@ -282,13 +254,8 @@ body {
 .entry-link:hover {
     background-color: var(--accent);
     color: var(--bg-primary);
-    text-shadow: none;
-    box-shadow: 0 0 10px var(--accent-glow);
     transform: translateY(-2px);
-}
-
-.entry-link i {
-    font-size: 1rem;
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Skills Section */
@@ -333,13 +300,12 @@ body {
     font-size: 0.9rem;
     border: 1px solid var(--accent);
     transition: all 0.3s ease;
-    cursor: default;
 }
 
 .skill-item:hover {
     color: var(--accent);
-    box-shadow: 0 0 10px var(--accent-glow);
     transform: translateY(-2px);
+    box-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Contact Section */
@@ -368,9 +334,17 @@ body {
 .social-link:hover {
     color: var(--accent);
     transform: scale(1.1);
-    text-shadow: 0 0 10px var(--accent-glow);
     border-color: var(--accent);
     box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Section Headers */
+.section-header {
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    text-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Responsive Design */
@@ -393,39 +367,16 @@ body {
         font-size: 2.5rem;
     }
 
-    .timeline::before {
-        left: 30px;
-    }
-
-    .timeline-entry {
-        width: calc(100% - 60px);
-        float: right;
-        margin: 2rem 0 2rem 60px;
-    }
-
-    .timeline-entry:nth-child(odd),
-    .timeline-entry:nth-child(even) {
-        float: right;
-    }
-
-    .timeline-entry:nth-child(odd) .timeline-pearl,
-    .timeline-entry:nth-child(even) .timeline-pearl {
-        left: -44px;
-        right: auto;
-    }
-
-    .timeline-entry .entry-type {
-        right: 10px;
-        font-size: 0.75rem;
-        padding: 0.2rem 0.8rem;
-    }
-
     .skills-grid {
         grid-template-columns: 1fr;
     }
 
     .section {
         padding: 100px 1rem 2rem;
+    }
+
+    .entry-links {
+        flex-wrap: wrap;
     }
 }
 
@@ -449,27 +400,5 @@ body {
 
     .social-links {
         gap: 1rem;
-    }
-
-    .timeline-entry {
-        padding: 1.5rem;
-        margin: 2rem 0 2rem 45px;
-    }
-
-    .timeline::before {
-        left: 22px;
-    }
-
-    .timeline-pearl {
-        width: 12px;
-        height: 12px;
-    }
-
-    .entry-links {
-        flex-direction: column;
-    }
-
-    .entry-link {
-        justify-content: center;
     }
 }

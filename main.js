@@ -125,8 +125,8 @@ class PortfolioManager {
                 : this.formatDate(entry.date);
 
             entryElement.innerHTML = `
-                ${entry.type ? `<span class="entry-type">${entry.type}</span>` : ''}
                 <div class="timeline-pearl"></div>
+                ${entry.type ? `<span class="entry-type">${entry.type}</span>` : ''}
                 <div class="entry-header">
                     <h3 class="entry-title">${entry.title}</h3>
                     <span class="entry-date">${dateDisplay}</span>
@@ -144,7 +144,7 @@ class PortfolioManager {
                     start: 'top bottom-=100'
                 },
                 opacity: 0,
-                x: index % 2 === 0 ? -50 : 50,
+                x: -50,
                 duration: 1
             });
 
