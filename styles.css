@@ -154,6 +154,7 @@ body {
 .timeline::before {
     content: '';
     position: absolute;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
@@ -175,17 +176,18 @@ body {
     border: 1px solid var(--timeline-line);
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    width: calc(50% - 50px);
-    clear: both;
+    width: 40%;
 }
 
 .timeline-entry:nth-child(odd) {
     float: left;
     clear: both;
+    transform: translateX(-50%);
 }
 
 .timeline-entry:nth-child(even) {
     float: right;
+    transform: translateX(50%);
 }
 
 .timeline-entry:nth-child(odd) .timeline-pearl {
@@ -409,18 +411,25 @@ body {
     }
 
     .timeline::before {
-        left: 30px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .timeline-entry {
-        width: calc(100% - 60px);
+        width: 40%;
         float: right;
-        margin: 2rem 0 2rem 60px;
+        margin: 2rem 0;
+        transform: translateX(50%);
     }
 
-    .timeline-entry:nth-child(odd),
+    .timeline-entry:nth-child(odd) {
+        float: left;
+        transform: translateX(-50%);
+    }
+
     .timeline-entry:nth-child(even) {
         float: right;
+        transform: translateX(50%);
     }
 
     .timeline-entry:nth-child(odd) .timeline-pearl,
