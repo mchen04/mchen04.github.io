@@ -1,14 +1,18 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michael Chen - Portfolio</title>
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <nav class="nav-content">
@@ -22,353 +26,54 @@
         </div>
     </nav>
 
-    <section id="home" class="section active">
-        <div class="hero-background"></div>
-        <div class="hero-content">
-            <h1 id="hi-im-michael-chen" class="typewriter">Hi, I'm Michael Chen</h1>
-            <p class="hero-subtitle">Bridging tradition and innovation through technology</p>
-            <p class="hero-description">A Computer Science major blending technology and creativity</p>
-        </div>
-    </section>
-
-    <section id="about" class="section">
-        <h2 id="about-me" class="section-header">About Me</h2>
-        <div class="about-content">
-            <p>Computer Science student at UC Riverside with a passion for AI and software development.</p>
-        </div>
-    </section>
-
-    <section id="timeline" class="section">
-        <h2 id="my-journey" class="section-header">My Journey</h2>
-        <div class="timeline-container">
-            <div class="timeline"></div>
-        </div>
-    </section>
-
-    <section id="skills" class="section">
-        <h2 id="skills-expertise" class="section-header">Skills & Expertise</h2>
-        <div class="skills-grid"></div>
-    </section>
-
-    <section id="contact" class="section">
-        <div class="contact-content">
-            <h2 id="get-in-touch" class="section-header">Get in Touch</h2>
-            <div class="social-links">
-                <a href="mailto:michaelluochen1@gmail.com" class="social-link" title="Email">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://github.com/mchen04" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-linkedin"></i>
-                </a>
+    <main>
+        <section id="home" class="section active">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <h1 id="hi-im-michael-chen" class="typewriter">Hi, I'm Michael Chen</h1>
+                <p class="hero-subtitle">Bridging tradition and innovation through technology</p>
+                <p class="hero-description">A Computer Science major blending technology and creativity</p>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section id="about" class="section">
+            <h2 class="section-header">About Me</h2>
+            <div class="about-content">
+                <p>Computer Science student at UC Riverside with a passion for AI and software development.</p>
+            </div>
+        </section>
+
+        <section id="timeline" class="section">
+            <h2 class="section-header">My Journey</h2>
+            <div class="timeline-container">
+                <div class="timeline"></div>
+            </div>
+        </section>
+
+        <section id="skills" class="section">
+            <h2 class="section-header">Skills & Expertise</h2>
+            <div class="skills-grid"></div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="contact-content">
+                <h2 class="section-header">Get in Touch</h2>
+                <div class="social-links">
+                    <a href="mailto:michaelluochen1@gmail.com" class="social-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://github.com/mchen04" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script src="data.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
-
-/* styles.css */
-:root {
-    --bg-primary: #1a1a1a;
-    --bg-secondary: #242424;
-    --text-primary: #e6d5b8;
-    --text-secondary: #a89f8c;
-    --accent: #d4b483;
-    --accent-glow: rgba(212, 180, 131, 0.15);
-    --timeline-line: #3a3a3a;
-    --pearl-color: #d4b483;
-    --nav-hover: #2a2a2a;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-}
-
-/* Navigation */
-.nav-content {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--bg-secondary);
-    border-bottom: 1px solid var(--accent);
-    z-index: 1000;
-}
-
-.nav-logo {
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-shadow: 0 0 10px var(--accent-glow);
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.nav-link:hover, .nav-link.active {
-    color: var(--accent);
-    text-shadow: 0 0 10px var(--accent-glow);
-}
-
-/* Sections */
-.section {
-    min-height: 100vh;
-    padding: 6rem 2rem 2rem;
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-.section-header {
-    color: var(--accent);
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    text-shadow: 0 0 10px var(--accent-glow);
-}
-
-/* Hero Section */
-#home {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
-    opacity: 0.1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-}
-
-.hero-content h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-    color: var(--accent);
-    text-shadow: 0 0 15px var(--accent-glow);
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-/* Timeline */
-.timeline-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.timeline {
-    position: relative;
-    padding: 2rem 0;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background-color: var(--timeline-line);
-}
-
-.timeline-entry {
-    position: relative;
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--timeline-line);
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.timeline-pearl {
-    position: absolute;
-    left: -8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    background-color: var(--pearl-color);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-glow);
-}
-
-.entry-header {
-    margin-bottom: 1rem;
-}
-
-.entry-title {
-    color: var(--accent);
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.entry-date {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.tech-tag {
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    border: 1px solid var(--accent);
-}
-
-/* Skills Section */
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.skill-category {
-    background-color: var(--bg-secondary);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid var(--timeline-line);
-}
-
-.skill-category h3 {
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-}
-
-.skill-item {
-    margin-bottom: 1rem;
-}
-
-.skill-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.skill-bar {
-    height: 8px;
-    background-color: var(--bg-primary);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-glow));
-    transform-origin: left;
-    transform: scaleX(0);
-}
-
-/* Contact Section */
-.contact-content {
-    text-align: center;
-    padding: 2rem;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.social-link {
-    color: var(--text-secondary);
-    font-size: 1.5rem;
-    transition: all 0.3s ease;
-}
-
-.social-link:hover {
-    color: var(--accent);
-    transform: scale(1.1);
-    text-shadow: 0 0 10px var(--accent-glow);
-}
-
-@keyframes glow {
-    0% { text-shadow: 0 0 10px var(--accent-glow); }
-    50% { text-shadow: 0 0 20px var(--accent-glow); }
-    100% { text-shadow: 0 0 10px var(--accent-glow); }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nav-content {
-        flex-direction: column;
-        padding: 1rem;
-    }
-
-    .nav-links {
-        margin-top: 1rem;
-        gap: 1rem;
-    }
-
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .timeline::before {
-        left: 0;
-    }
-
-    .timeline-entry {
-        margin-left: 20px;
-    }
-
-    .skills-grid {
-        grid-template-columns: 1fr;
-    }
-}

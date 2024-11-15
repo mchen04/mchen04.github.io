@@ -59,8 +59,19 @@ class PortfolioManager {
             
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
+                gsap.to(link, {
+                    color: 'var(--text-secondary)',
+                    textShadow: 'none',
+                    duration: 0.3
+                });
+                
                 if (link.getAttribute('href') === `#${sectionId}`) {
                     link.classList.add('active');
+                    gsap.to(link, {
+                        color: 'var(--accent)',
+                        textShadow: '0 0 10px var(--accent-glow)',
+                        duration: 0.3
+                    });
                 }
             });
 
