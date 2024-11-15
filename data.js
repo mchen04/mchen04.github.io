@@ -8,6 +8,36 @@ const portfolioData = {
         linkedin: "https://www.linkedin.com/in/michael-luo-chen",
         email: "michaelluochen1@gmail.com"
     },
+    skills: {
+        "Programming Languages": [
+            { name: "Python", level: 95 },
+            { name: "C++", level: 90 },
+            { name: "JavaScript", level: 85 },
+            { name: "Java", level: 80 },
+            { name: "TypeScript", level: 75 }
+        ],
+        "Frameworks & Libraries": [
+            { name: "React.js", level: 90 },
+            { name: "TensorFlow", level: 85 },
+            { name: "PyTorch", level: 80 },
+            { name: "Flask", level: 75 },
+            { name: "Next.js", level: 70 }
+        ],
+        "Tools & Technologies": [
+            { name: "Git", level: 90 },
+            { name: "Docker", level: 80 },
+            { name: "AWS", level: 75 },
+            { name: "Firebase", level: 85 },
+            { name: "Linux", level: 80 }
+        ],
+        "Machine Learning": [
+            { name: "Computer Vision", level: 85 },
+            { name: "Natural Language Processing", level: 80 },
+            { name: "Deep Learning", level: 85 },
+            { name: "Data Analysis", level: 90 },
+            { name: "Model Deployment", level: 75 }
+        ]
+    },
     entries: [
         {
             id: "ucr-education",
@@ -52,66 +82,6 @@ const portfolioData = {
             ]
         },
         {
-            id: "portfolio-website",
-            title: "Portfolio Website",
-            date: "2024-11",
-            type: "project",
-            description: "A personal portfolio website to showcase skills, projects, and achievements with a dynamic, animated timeline.",
-            techStack: ["React.js", "Framer Motion", "GSAP", "CSS3"],
-            links: {
-                github: "https://github.com/mchen04/portfolio"
-            }
-        },
-        {
-            id: "freqcreator",
-            title: "FreqCreator",
-            date: "2024-11",
-            type: "project",
-            description: "A tool to generate frequency spectrums for audio signals with customizable visualization options.",
-            techStack: ["Python", "Matplotlib"],
-            links: {
-                github: "https://github.com/mchen04/FreqCreator"
-            }
-        },
-        {
-            id: "amd-award",
-            title: "AMD University Award Category – Advancing AI Event",
-            date: "2024-10",
-            type: "award",
-            description: "Received the AMD University Award for the PHiLIP project. Presented a live demo showcasing real-time text-to-image generation capabilities using AMD MI210 GPUs at the AMD Advancing AI Event in San Francisco.",
-            techStack: ["AMD MI210 GPUs", "Generative AI", "Stable Diffusion", "ControlNet"],
-            links: {
-                project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
-            },
-            highlights: [
-                "Presented live demo at AMD Advancing AI Event",
-                "Won University Award Category",
-                "Showcased real-time AI capabilities"
-            ]
-        },
-        {
-            id: "keepingtabs",
-            title: "KeepingTabs",
-            date: "2024-10",
-            type: "project",
-            description: "A productivity tool to manage tabs and bookmarks effectively with tagging and cloud sync features.",
-            techStack: ["TypeScript", "React.js", "Firebase"],
-            links: {
-                github: "https://github.com/mchen04/KeepingTabs"
-            }
-        },
-        {
-            id: "news-genie",
-            title: "News Genie",
-            date: "2024-08",
-            type: "project",
-            description: "AI-powered news aggregator with personalized recommendations and summaries.",
-            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase"],
-            links: {
-                github: "https://github.com/mchen04/News-Genie"
-            }
-        },
-        {
             id: "philip-project",
             title: "PHiLIP: Personalized Human in Loop Image Production",
             date: "2024-02",
@@ -137,6 +107,55 @@ const portfolioData = {
             ]
         },
         {
+            id: "amd-award",
+            title: "AMD University Award Category – Advancing AI Event",
+            date: "2024-10",
+            type: "award",
+            description: "Received the AMD University Award for the PHiLIP project. Presented a live demo showcasing real-time text-to-image generation capabilities using AMD MI210 GPUs at the AMD Advancing AI Event in San Francisco.",
+            techStack: ["AMD MI210 GPUs", "Generative AI", "Stable Diffusion", "ControlNet"],
+            links: {
+                project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
+            },
+            highlights: [
+                "Presented live demo at AMD Advancing AI Event",
+                "Won University Award Category",
+                "Showcased real-time AI capabilities"
+            ]
+        },
+        {
+            id: "freqcreator",
+            title: "FreqCreator",
+            date: "2024-11",
+            type: "project",
+            description: "A tool to generate frequency spectrums for audio signals with customizable visualization options.",
+            techStack: ["Python", "Matplotlib"],
+            links: {
+                github: "https://github.com/mchen04/FreqCreator"
+            }
+        },
+        {
+            id: "keepingtabs",
+            title: "KeepingTabs",
+            date: "2024-10",
+            type: "project",
+            description: "A productivity tool to manage tabs and bookmarks effectively with tagging and cloud sync features.",
+            techStack: ["TypeScript", "React.js", "Firebase"],
+            links: {
+                github: "https://github.com/mchen04/KeepingTabs"
+            }
+        },
+        {
+            id: "news-genie",
+            title: "News Genie",
+            date: "2024-08",
+            type: "project",
+            description: "AI-powered news aggregator with personalized recommendations and summaries.",
+            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase"],
+            links: {
+                github: "https://github.com/mchen04/News-Genie"
+            }
+        },
+        {
             id: "reciptapp",
             title: "ReciptApp",
             date: "2024-01",
@@ -156,17 +175,6 @@ const portfolioData = {
             techStack: ["Python", "TensorFlow", "Keras"],
             links: {
                 github: "https://github.com/mchen04/SongsmithAI"
-            }
-        },
-        {
-            id: "unsupervised-learning",
-            title: "Unsupervised Learning, Recommenders, and Reinforcement Learning",
-            date: "2023-10",
-            type: "certification",
-            description: "Completed comprehensive training in unsupervised learning techniques and recommender systems.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
             }
         },
         {
@@ -192,28 +200,6 @@ const portfolioData = {
             }
         },
         {
-            id: "advanced-algorithms",
-            title: "Advanced Learning Algorithms",
-            date: "2023-05",
-            type: "certification",
-            description: "Mastered advanced machine learning algorithms and their implementations.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/U33T2QRT8MFC"
-            }
-        },
-        {
-            id: "ml-regression",
-            title: "Supervised Machine Learning: Regression and Classification",
-            date: "2023-02",
-            type: "certification",
-            description: "Completed DeepLearning.AI's course on supervised machine learning fundamentals.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/RDHD7AHGBYYH"
-            }
-        },
-        {
             id: "pdf-scraper",
             title: "Scraping PDF - UCR Catalog",
             date: "2023-01",
@@ -235,223 +221,55 @@ const portfolioData = {
                 github: "https://github.com/mchen04/Carbon-Emmisions-Map"
             }
         }
+    ],
+    certifications: [
+        {
+            id: "unsupervised-learning",
+            title: "Unsupervised Learning, Recommenders, and Reinforcement Learning",
+            date: "2023-10",
+            type: "certification",
+            description: "Completed comprehensive training in unsupervised learning techniques and recommender systems.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
+            }
+        },
+        {
+            id: "advanced-algorithms",
+            title: "Advanced Learning Algorithms",
+            date: "2023-05",
+            type: "certification",
+            description: "Mastered advanced machine learning algorithms and their implementations.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/U33T2QRT8MFC"
+            }
+        },
+        {
+            id: "ml-regression",
+            title: "Supervised Machine Learning: Regression and Classification",
+            date: "2023-02",
+            type: "certification",
+            description: "Completed DeepLearning.AI's course on supervised machine learning fundamentals.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/RDHD7AHGBYYH"
+            }
+        }
     ]
 };
 
-class PortfolioRenderer {
-    constructor(data) {
-        this.data = data;
-        this.timelineElement = document.querySelector('.timeline');
-        this.traditionalElement = document.querySelector('.traditional-view');
-    }
+// Timeline filtering functions
+const timelineFilters = {
+    all: entry => true,
+    projects: entry => entry.type === 'project',
+    experience: entry => entry.type === 'experience',
+    education: entry => entry.type === 'education',
+    certifications: entry => entry.type === 'certification',
+    awards: entry => entry.type === 'award'
+};
 
-    formatDate(dateStr, endDate) {
-        if (dateStr === 'present') return 'Present';
-        const date = new Date(dateStr);
-        const formatted = date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long'
-        });
-        
-        if (endDate) {
-            const endFormatted = endDate === 'present' ? 'Present' : 
-                new Date(endDate).toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long'
-                });
-            return `${formatted} – ${endFormatted}`;
-        }
-        
-        return formatted;
-    }
-
-    createTimelineEntry(entry) {
-        const entryDiv = document.createElement('div');
-        entryDiv.className = 'timeline-entry';
-        
-        const content = document.createElement('div');
-        content.className = 'entry-content';
-        
-        if (entry.type === 'award') {
-            content.classList.add('award-entry');
-        } else if (entry.type === 'experience') {
-            content.classList.add('experience-entry');
-        } else if (entry.type === 'education') {
-            content.classList.add('education-entry');
-        }
-        
-        let dateDisplay = this.formatDate(entry.date, entry.endDate);
-        if (entry.type === 'education' && entry.endDate && entry.endDate.includes('2026')) {
-            dateDisplay += ' (Expected)';
-        }
-        
-        content.innerHTML = `
-            <h3>${entry.title}</h3>
-            <p class="date">${dateDisplay}</p>
-            <p class="type">${entry.type}</p>
-            <p class="description">${entry.description}</p>
-            ${this.renderTechStack(entry)}
-            ${this.renderHighlights(entry)}
-            ${this.renderLinks(entry)}
-        `;
-
-        content.addEventListener('click', () => {
-            content.classList.toggle('expanded');
-        });
-
-        entryDiv.appendChild(content);
-        return entryDiv;
-    }
-
-    renderHighlights(entry) {
-        if (!entry.highlights) return '';
-        return `
-            <div class="highlights">
-                <ul>
-                    ${entry.highlights.map(highlight => `
-                        <li>${highlight}</li>
-                    `).join('')}
-                </ul>
-            </div>
-        `;
-    }
-
-    renderTraditionalView() {
-        const groupedEntries = this.data.entries.reduce((acc, entry) => {
-            acc[entry.type] = acc[entry.type] || [];
-            acc[entry.type].push(entry);
-            return acc;
-        }, {});
-
-        Object.keys(groupedEntries).forEach(type => {
-            let categoryCard = document.querySelector(`.category-card[data-type="${type}"]`);
-            
-            if (!categoryCard) {
-                categoryCard = document.createElement('div');
-                categoryCard.className = 'category-card';
-                categoryCard.setAttribute('data-type', type);
-                this.traditionalElement.appendChild(categoryCard);
-            }
-
-            categoryCard.innerHTML = `
-                <h2>${type.charAt(0).toUpperCase() + type.slice(1)}s</h2>
-                ${this.renderCategoryEntries(groupedEntries[type])}
-            `;
-        });
-    }
-
-    renderCategoryEntries(entries) {
-        return this.sortEntries(entries)
-            .map(entry => `
-                <div class="category-entry ${entry.type}-entry">
-                    <h3>${entry.title}</h3>
-                    <p class="date">${this.formatDate(entry.date, entry.endDate)}</p>
-                    <p class="description">${entry.description}</p>
-                    ${this.renderTechStack(entry)}
-                    ${this.renderHighlights(entry)}
-                    ${this.renderLinks(entry)}
-                </div>
-            `).join('');
-    }
-
-    renderTechStack(entry) {
-        if (!entry.techStack) return '';
-        return `
-            <div class="tech-stack">
-                ${entry.techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-            </div>
-        `;
-    }
-
-    renderLinks(entry) {
-        if (!entry.links) return '';
-        return `
-            <div class="entry-links">
-                ${Object.entries(entry.links).map(([type, url]) => `
-                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="link-${type}">
-                        ${type.charAt(0).toUpperCase() + type.slice(1)}
-                    </a>
-                `).join('')}
-            </div>
-        `;
-    }
-
-    sortEntries(entries) {
-        return entries.sort((a, b) => {
-            // Sort ongoing experiences first
-            if (a.endDate === 'present' && b.endDate !== 'present') return -1;
-            if (b.endDate === 'present' && a.endDate !== 'present') return 1;
-            
-            // Then sort by start date
-            const aDate = new Date(a.date);
-            const bDate = new Date(b.date);
-            
-            // If dates are equal, prioritize education
-            if (aDate.getTime() === bDate.getTime()) {
-                if (a.type === 'education') return -1;
-                if (b.type === 'education') return 1;
-            }
-            
-            return bDate - aDate;
-        });
-    }
-
-    renderTimeline() {
-        this.timelineElement.innerHTML = '';
-        const sortedEntries = this.sortEntries([...this.data.entries]);
-        sortedEntries.forEach(entry => {
-            const entryElement = this.createTimelineEntry(entry);
-            this.timelineElement.appendChild(entryElement);
-        });
-    }
-
-    initialize() {
-        this.renderTimeline();
-        this.renderTraditionalView();
-        this.initializeFilters();
-    }
-
-    initializeFilters() {
-        const types = [...new Set(this.data.entries.map(entry => entry.type))];
-        
-        const filterContainer = document.createElement('div');
-        filterContainer.className = 'filters';
-        filterContainer.innerHTML = `
-            <button class="filter-btn active" data-filter="all">All</button>
-            ${types.map(type => `
-                <button class="filter-btn" data-filter="${type}">
-                    ${type.charAt(0).toUpperCase() + type.slice(1)}s
-                </button>
-            `).join('')}
-        `;
-
-        this.timelineElement.parentNode.insertBefore(
-            filterContainer, 
-            this.timelineElement
-        );
-
-        filterContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('filter-btn')) {
-                const filter = e.target.dataset.filter;
-                this.filterEntries(filter);
-                
-                // Update active button
-                filterContainer.querySelectorAll('.filter-btn')
-                    .forEach(btn => btn.classList.remove('active'));
-                e.target.classList.add('active');
-            }
-        });
-    }
-
-    filterEntries(filter) {
-        const entries = this.timelineElement.querySelectorAll('.timeline-entry');
-        entries.forEach(entry => {
-            const type = entry.querySelector('.type').textContent;
-            if (filter === 'all' || type === filter) {
-                entry.style.display = '';
-            } else {
-                entry.style.display = 'none';
-            }
-        });
-    }
+// Export for use in main.js
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { portfolioData, timelineFilters };
 }

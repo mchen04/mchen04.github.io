@@ -4,15 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michael Chen - Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #2dd4bf;
-            --background: #1a1a1a;
-            --text: #ffffff;
-            --card-bg: #252525;
-            --education: #4CAF50;
-            --award: #FFD700;
-            --experience: #FF6B6B;
+            /* Traditional Chinese-inspired colors */
+            --jade: #00A86B;
+            --gold: #FFD700;
+            --red: #FF4D4D;
+            --deep-blue: #1B4B73;
+            --ink-black: #1a1a1a;
+            --paper-white: #F5F5F5;
+            
+            /* UI Colors */
+            --background: var(--ink-black);
+            --text: var(--paper-white);
+            --primary: var(--jade);
+            --accent: var(--gold);
+            --highlight: var(--red);
+            --lowlight: var(--deep-blue);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes brushStroke {
+            0% { transform: scaleX(0); transform-origin: left; }
+            100% { transform: scaleX(1); transform-origin: left; }
+        }
+
+        @keyframes inkSpread {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
 
         body {
@@ -22,19 +46,41 @@
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        header {
-            padding: 2rem;
-            text-align: center;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
             border-bottom: 1px solid var(--primary);
         }
 
-        nav {
-            padding: 1rem;
-            background-color: var(--card-bg);
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
             gap: 2rem;
         }
 
@@ -43,35 +89,102 @@
             text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 4px;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .nav-link:hover {
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
             background-color: var(--primary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
         }
 
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 60px; /* Account for fixed nav */
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 2rem;
+        }
+
+        .typewriter {
+            border-right: 2px solid var(--primary);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary) }
+        }
+
+        /* Timeline Section */
+        .timeline-container {
+            padding: 6rem 2rem;
+            background-color: var(--background);
+            position: relative;
         }
 
         .timeline {
             position: relative;
-            padding: 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
             left: 50%;
-            width: 2px;
+            width: 4px;
             height: 100%;
-            background-color: var(--primary);
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            transform: translateX(-50%);
         }
 
         .timeline-entry {
-            margin: 2rem 0;
+            margin: 4rem 0;
             position: relative;
             width: calc(50% - 30px);
         }
@@ -85,299 +198,283 @@
         }
 
         .entry-content {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
         }
 
-        .entry-content.expanded {
-            transform: scale(1.05);
+        .entry-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .traditional-view {
-            display: none;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .category-card {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.5rem;
+        .timeline-entry::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary);
             border-radius: 50%;
-            background-color: var(--card-bg);
-            border: 1px solid var(--primary);
-            color: var(--text);
-            cursor: pointer;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 0 4px rgba(0, 168, 107, 0.2);
         }
 
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0;
+        .timeline-entry:nth-child(odd)::before {
+            right: -40px;
         }
 
-        .filter-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--primary);
-            background: none;
-            color: var(--text);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .timeline-entry:nth-child(even)::before {
+            left: -40px;
         }
 
-        .filter-btn:hover,
-        .filter-btn.active {
-            background-color: var(--primary);
+        /* Skills Section */
+        .skills-container {
+            padding: 6rem 2rem;
+            background-color: var(--background);
         }
 
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .tech-tag {
-            background-color: var(--primary);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.875rem;
+        .skill-category {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        .entry-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+        .skill-category:hover {
+            transform: translateY(-5px);
         }
 
-        .entry-links a {
+        .skill-category h3 {
             color: var(--primary);
-            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
         }
 
-        .entry-links a:hover {
-            text-decoration: underline;
+        .skill-item {
+            margin: 1.5rem 0;
         }
 
-        .type {
-            text-transform: capitalize;
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background-color: var(--primary);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 1s ease-out;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            padding: 6rem 2rem;
+            background-color: var(--background);
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-content h2 {
             color: var(--primary);
-            font-size: 0.875rem;
-        }
-
-        .category-entry {
+            font-size: 2.5rem;
             margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--primary);
-        }
-
-        .category-entry:last-child {
-            border-bottom: none;
-        }
-
-        .education-entry {
-            border-left: 4px solid var(--education);
-            background-color: rgba(76, 175, 80, 0.1);
-        }
-
-        .award-entry {
-            border-left: 4px solid var(--award);
-            background-color: rgba(255, 215, 0, 0.1);
-        }
-
-        .experience-entry {
-            border-left: 4px solid var(--experience);
-            background-color: rgba(255, 107, 107, 0.1);
         }
 
         .social-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 2rem;
+            margin: 2rem 0;
         }
 
         .social-link {
             color: var(--text);
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--primary);
-            border-radius: 4px;
+            padding: 1rem;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
+            position: relative;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .social-link i {
+            font-size: 1.5rem;
         }
 
         .social-link:hover {
+            transform: translateY(-5px);
             background-color: var(--primary);
-            transform: translateY(-2px);
+            color: var(--background);
         }
 
-        .email-link {
-            border-color: var(--experience);
+        .social-link::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.2);
+            transition: all 0.3s ease;
+            z-index: -1;
         }
 
-        .email-link:hover {
-            background-color: var(--experience);
+        .social-link:hover::after {
+            opacity: 0.2;
+            transform: translate(-50%, -50%) scale(1.4);
         }
 
-        .github-link {
-            border-color: var(--primary);
-        }
-
-        .linkedin-link {
-            border-color: var(--education);
-        }
-
-        .linkedin-link:hover {
-            background-color: var(--education);
-        }
-
-        footer {
+        /* Section Headers */
+        .section-header {
             text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            border-top: 1px solid var(--primary);
+            margin-bottom: 4rem;
+            color: var(--primary);
+            font-size: 2.5rem;
         }
 
-        .highlights {
-            margin-top: 1rem;
-            padding-left: 1rem;
-        }
-
-        .highlights ul {
-            margin: 0;
-            padding-left: 1rem;
-        }
-
-        .highlights li {
-            margin-bottom: 0.5rem;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
             .timeline::before {
-                left: 0;
+                left: 30px;
             }
 
             .timeline-entry {
-                width: calc(100% - 30px);
-                left: 30px !important;
+                width: calc(100% - 60px);
+                left: 60px !important;
             }
 
-            .filters {
-                flex-wrap: wrap;
+            .timeline-entry::before {
+                left: -30px !important;
+            }
+
+            .timeline-entry:nth-child(even)::before {
+                left: -30px !important;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
             }
 
             .social-links {
-                flex-direction: column;
-                align-items: center;
+                flex-wrap: wrap;
             }
+        }
 
-            .social-link {
-                width: 200px;
-            }
+        /* Particle Container */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
-    
-    <header>
-        <h1 id="name"></h1>
-        <p id="title" class="typewriter"></p>
-    </header>
-
     <nav>
-        <a href="#timeline" class="nav-link">Timeline</a>
-        <a href="#traditional" class="nav-link">Traditional View</a>
-        <a href="#contact" class="nav-link">Contact</a>
+        <div class="nav-content">
+            <a href="#" class="nav-logo">Michael Chen</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#timeline" class="nav-link">Timeline</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
     </nav>
 
-    <main>
-        <section id="timeline" class="timeline">
-            <!-- Timeline entries will be dynamically added here -->
-        </section>
-
-        <section id="traditional" class="traditional-view">
-            <!-- Traditional view entries will be dynamically added here -->
-        </section>
-    </main>
-
-    <footer id="contact">
-        <h2>Get in Touch</h2>
-        <div class="social-links">
-            <a href="mailto:michaelluochen1@gmail.com" class="social-link email-link" target="_blank" rel="noopener noreferrer">
-                ✉️ Email
-            </a>
-            <a href="https://github.com/mchen04" class="social-link github-link" target="_blank" rel="noopener noreferrer">
-                💻 GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link linkedin-link" target="_blank" rel="noopener noreferrer">
-                🔗 LinkedIn
-            </a>
+    <section id="home" class="hero">
+        <div id="particles-js"></div>
+        <div class="hero-content">
+            <h1 class="typewriter">Hi, I'm Michael Chen</h1>
+            <p>A Computer Science major blending technology and creativity</p>
         </div>
-    </footer>
+    </section>
 
+    <section id="timeline" class="timeline-container">
+        <h2 class="section-header">My Journey</h2>
+        <div class="timeline">
+            <!-- Timeline entries will be dynamically added here -->
+        </div>
+    </section>
+
+    <section id="skills" class="skills-container">
+        <h2 class="section-header">Skills & Expertise</h2>
+        <div class="skills-grid">
+            <!-- Skills will be dynamically added here -->
+        </div>
+    </section>
+
+    <section id="contact" class="contact-container">
+        <div class="contact-content">
+            <h2>Get in Touch</h2>
+            <div class="social-links">
+                <a href="mailto:michaelluochen1@gmail.com" class="social-link" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://github.com/mchen04" class="social-link" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="data.js"></script>
-    <script>
-        // Initialize the portfolio renderer
-        const renderer = new PortfolioRenderer(portfolioData);
-        renderer.initialize();
-
-        // Theme toggle functionality
-        const themeToggle = document.querySelector('.theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-        });
-
-        // Navigation handling
-        const navLinks = document.querySelectorAll('.nav-link');
-        const timeline = document.querySelector('.timeline');
-        const traditionalView = document.querySelector('.traditional-view');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = e.target.getAttribute('href').substring(1);
-                
-                if (target === 'timeline') {
-                    timeline.style.display = 'block';
-                    traditionalView.style.display = 'none';
-                } else if (target === 'traditional') {
-                    timeline.style.display = 'none';
-                    traditionalView.style.display = 'grid';
-                }
-            });
-        });
-
-        // Update personal info
-        document.getElementById('name').textContent = portfolioData.personalInfo.name;
-        document.getElementById('title').textContent = portfolioData.personalInfo.tagline;
-
-        // Initialize social links
-        document.querySelectorAll('.social-link').forEach(link => {
-            link.addEventListener('mouseover', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-            link.addEventListener('mouseout', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
