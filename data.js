@@ -7,8 +7,8 @@ const portfolioData = {
         linkedin: "https://www.linkedin.com/in/michael-luo-chen",
         email: "michaelluochen1@gmail.com",
         about: `Computer Science student at UC Riverside with a passion for AI and software development. 
-               Currently working on cutting-edge projects in machine learning and web development.
-               Founder and President of the UCR AI Club, leading initiatives to promote AI education and research.`
+               Founder and President of the UCR AI Club, leading initiatives to promote AI education and research.
+               Currently working on cutting-edge projects in machine learning and web development.`
     },
     timeline: [
         {

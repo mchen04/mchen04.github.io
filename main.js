@@ -10,25 +10,11 @@ class PortfolioManager {
         this.initializeSkills();
         this.initializeSectionAnimations();
         this.initializeGlowEffects();
-        this.initializeScrollProgress();
     }
 
     initializeScrollEffects() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    if (entry.target.id === 'skills') {
-                        ScrollTrigger.refresh();
-                    }
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        document.querySelectorAll('.section').forEach(section => {
-            observer.observe(section);
+        ScrollTrigger.defaults({
+            toggleActions: 'play none none reverse'
         });
     }
 
@@ -37,34 +23,29 @@ class PortfolioManager {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                const navHeight = document.querySelector('.nav-content').offsetHeight;
-                const extraOffset = targetId === '#skills' ? 40 : 20; // Extra offset for skills section
-                
-                window.scrollTo({
-                    top: targetSection.offsetTop - navHeight - extraOffset,
-                    behavior: 'smooth'
-                });
+                document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
             });
         });
 
         // Update active nav link on scroll
         window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
             const navHeight = document.querySelector('.nav-content').offsetHeight;
-            const fromTop = window.scrollY + navHeight + 100;
 
-            document.querySelectorAll('.section').forEach(section => {
-                const id = section.getAttribute('id');
-                const link = document.querySelector(`.nav-link[href="#${id}"]`);
-                
-                // Check if section is in view
-                if (
-                    section.offsetTop <= fromTop &&
-                    section.offsetTop + section.offsetHeight > fromTop
-                ) {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - navHeight - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
                     link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
                 }
             });
         });
@@ -141,12 +122,11 @@ class PortfolioManager {
 
             timeline.appendChild(entryElement);
 
-            // Scroll triggered animations for timeline entries
+            // Scroll triggered animations
             gsap.from(entryElement, {
                 scrollTrigger: {
                     trigger: entryElement,
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none reverse'
+                    start: 'top bottom-=100'
                 },
                 opacity: 0,
                 x: index % 2 === 0 ? -50 : 50,
@@ -158,8 +138,7 @@ class PortfolioManager {
             gsap.to(pearl, {
                 scrollTrigger: {
                     trigger: pearl,
-                    start: 'top bottom',
-                    toggleActions: 'play none none reverse'
+                    start: 'top bottom'
                 },
                 boxShadow: '0 0 15px var(--accent-glow)',
                 duration: 1.5,
@@ -176,35 +155,30 @@ class PortfolioManager {
         Object.entries(portfolioData.skills).forEach(([category, skills]) => {
             const categoryElement = document.createElement('div');
             categoryElement.className = 'skill-category';
+            
+            const skillsList = skills.map(skill => 
+                `<div class="skill-item">${skill.name}</div>`
+            ).join('');
+
             categoryElement.innerHTML = `
                 <h3>${category}</h3>
-                ${skills.map(skill => `
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>${skill.name}</span>
-                            <span>${skill.level}%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-level="${skill.level}"></div>
-                        </div>
-                    </div>
-                `).join('')}
+                <div class="skill-list">
+                    ${skillsList}
+                </div>
             `;
+            
             skillsGrid.appendChild(categoryElement);
 
-            // Animate skill bars on scroll
-            categoryElement.querySelectorAll('.skill-progress').forEach(bar => {
-                const level = bar.getAttribute('data-level');
-                gsap.to(bar, {
-                    scrollTrigger: {
-                        trigger: bar,
-                        start: 'top bottom-=50',
-                        toggleActions: 'play none none reverse'
-                    },
-                    scaleX: level / 100,
-                    duration: 1.5,
-                    ease: 'power2.out'
-                });
+            // Animate skill items on scroll
+            gsap.from(categoryElement.querySelectorAll('.skill-item'), {
+                scrollTrigger: {
+                    trigger: categoryElement,
+                    start: 'top bottom-=50'
+                },
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.1
             });
         });
     }
@@ -213,11 +187,6 @@ class PortfolioManager {
         // Glow effect for section headers
         gsap.utils.toArray('.section-header').forEach(header => {
             gsap.to(header, {
-                scrollTrigger: {
-                    trigger: header,
-                    start: 'top bottom',
-                    toggleActions: 'play none none reverse'
-                },
                 duration: 2,
                 repeat: -1,
                 yoyo: true,
@@ -248,38 +217,20 @@ class PortfolioManager {
         });
     }
 
-    initializeScrollProgress() {
-        // Create scroll progress bar
-        const progressBar = document.createElement('div');
-        progressBar.className = 'scroll-progress';
-        document.body.appendChild(progressBar);
-
-        // Update progress bar width based on scroll
-        gsap.to(progressBar, {
-            scaleX: 1,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: document.documentElement,
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: true
-            }
-        });
-    }
-
     initializeSectionAnimations() {
         gsap.utils.toArray('.section').forEach(section => {
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none reverse'
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: 'power3.out'
-            });
+            if (section.id !== 'home') {
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top bottom-=100'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            }
         });
     }
 
