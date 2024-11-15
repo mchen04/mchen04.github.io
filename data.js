@@ -6,9 +6,7 @@ const portfolioData = {
         github: "https://github.com/mchen04",
         linkedin: "https://www.linkedin.com/in/michael-luo-chen",
         email: "michaelluochen1@gmail.com",
-        about: `Computer Science student at UC Riverside with a passion for AI and software development. 
-               Founder and President of the UCR AI Club, leading initiatives to promote AI education and research.
-               Currently working on cutting-edge projects in machine learning and web development.`
+        about: "CS@UCR with a Minor in Management: Strategy & Entrepreneurship | President & Co-Founder AI@UCR | Part-Time SWE@Mobivolt LLC | AMD Pervasive AI Winner"
     },
     timeline: [
         {
@@ -16,8 +14,8 @@ const portfolioData = {
             title: "Portfolio Website",
             date: "2024-11",
             type: "project",
-            description: "A personal portfolio website showcasing skills, projects, and achievements with a dynamic, animated timeline.",
-            techStack: ["React.js", "Framer Motion", "GSAP", "CSS3"],
+            description: "A personal portfolio website with Asian-inspired design, showcasing skills, projects, and achievements. Built to run fast and simply as a challenge to create a high-performance site without modern frameworks.",
+            techStack: ["HTML", "CSS", "JavaScript"],
             links: {
                 github: "https://github.com/mchen04/portfolio"
             }
@@ -27,8 +25,16 @@ const portfolioData = {
             title: "FreqCreator",
             date: "2024-11",
             type: "project",
-            description: "A tool to generate frequency spectrums for audio signals with customizable visualization options.",
-            techStack: ["Python", "Matplotlib"],
+            description: "A complete tool for creating and automating content for social media platforms. FreqCreator generates audio files of different frequencies, creates visually unique images based on the sound's characteristics (patterns, colors, hues, etc.), and produces videos with pulsating animations and overlay text for enhanced user engagement. The tool compresses and clips videos to fit the ideal length for platforms like Instagram Reels, YouTube Shorts, TikTok, and Facebook Reels. It also supports direct uploads to Google Drive for easy content sharing.",
+            techStack: [
+                "Python", 
+                "PIL", 
+                "MoviePy", 
+                "OpenAI API", 
+                "Google Drive API",
+                "SoundFile", 
+                "Lameenc"
+            ],
             links: {
                 github: "https://github.com/mchen04/FreqCreator"
             }
@@ -38,8 +44,17 @@ const portfolioData = {
             title: "AMD University Award Category – Advancing AI Event",
             date: "2024-10",
             type: "award",
-            description: "Received the AMD University Award for the PHiLIP project. Presented a live demo showcasing real-time text-to-image generation capabilities using AMD MI210 GPUs at the AMD Advancing AI Event in San Francisco.",
-            techStack: ["AMD MI210 GPUs", "Generative AI", "Stable Diffusion", "ControlNet"],
+            description: "Won the AMD University Award for the PHiLIP project, emerging as the top team out of 8,000+ participants. Earned a $2,500 prize pool and a fully sponsored trip to San Francisco to present at the AMD Advancing AI Event. Delivered a live demo showcasing real-time text-to-image generation capabilities using AMD MI210 GPUs, leveraging PixArt models, FreeStyle models, ROCm software, and AMD Cloud. The event featured luminaries like Dr. Lisa Su, providing a platform to engage with leaders in AI and technology.",
+            techStack: [
+                "AMD MI210 GPUs",
+                "Generative AI",
+                "Stable Diffusion",
+                "ControlNet",
+                "PixArt Models",
+                "FreeStyle Models",
+                "ROCm Software",
+                "AMD Cloud"
+            ],
             links: {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
             }
@@ -49,8 +64,8 @@ const portfolioData = {
             title: "KeepingTabs",
             date: "2024-10",
             type: "project",
-            description: "A productivity tool to manage tabs and bookmarks effectively with tagging and cloud sync features.",
-            techStack: ["TypeScript", "React.js", "Firebase"],
+            description: "A productivity tool designed to efficiently manage tabs and bookmarks with advanced features such as AI-generated previews of tabs, tagging, and cloud synchronization. It incorporates options for freezing tabs and performing batch actions to optimize memory usage. Currently under active development to expand its functionality further.",
+            techStack: ["TypeScript", "React.js", "Firebase", "Google APIs"],
             links: {
                 github: "https://github.com/mchen04/KeepingTabs"
             }
@@ -60,8 +75,15 @@ const portfolioData = {
             title: "News Genie",
             date: "2024-08",
             type: "project",
-            description: "AI-powered news aggregator with personalized recommendations and summaries.",
-            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase"],
+            description: "An AI-powered news aggregator developed for the Gemini API Developer Competition, providing personalized news recommendations and summaries. Features include a user database for tailored experiences, anti-hallucination mechanisms to ensure factual accuracy, and seamless integration with the Gemini API to leverage advanced generative capabilities. The application addresses real-world challenges by enhancing user engagement through dynamic summaries and delivering reliable content.",
+            techStack: [
+                "React.js",
+                "Next.js",
+                "Python",
+                "Flask",
+                "Firebase",
+                "Gemini API"
+            ],
             links: {
                 github: "https://github.com/mchen04/News-Genie"
             }
@@ -72,14 +94,18 @@ const portfolioData = {
             date: "2024-02",
             endDate: "2024-06",
             type: "project",
-            description: "A generative AI project that leverages advanced machine learning models for personalized, real-time text-to-image generation. Won the University Category of the AMD Pervasive AI Developer Contest and showcased at the AMD Advancing AI Event 2024.",
+            description: "PHiLIP is an advanced AI-powered image generation and enhancement suite designed to democratize access to high-quality AI-generated imagery. Developed for the AMD Pervasive AI Developer Contest, the project won the University Category, earning recognition for its innovative design and real-world applications. PHiLIP combines cutting-edge ML models with a user-friendly interface, offering text-to-image generation, iterative image refinement, and style enhancements. Leveraging AMD MI210 GPUs, AMD Cloud, ROCm software, PixArt models, and Freestyle models, PHiLIP delivers rapid and precise results. The project demonstrates the power of collaborative innovation, with future plans for video generation and advanced AI education modules.",
             techStack: [
                 "Python",
+                "Flask",
                 "PyTorch",
+                "PixArt Models",
+                "Freestyle Models",
                 "Stable Diffusion",
                 "ControlNet",
-                "PixArt Models",
-                "AMD MI210 GPUs"
+                "AMD MI210 GPUs",
+                "ROCm Software",
+                "AMD Cloud"
             ],
             links: {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
@@ -87,87 +113,18 @@ const portfolioData = {
         },
         {
             id: "ai-club-president",
-            title: "Founder and President - UCR AI Club",
+            title: "Founder and President - AI@UCR",
             date: "2023-10",
             endDate: "present",
             type: "experience",
-            description: "Established the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with AI industry experts, leading to a 45% increase in engagement. Developed and presented a comprehensive 9-topic AI curriculum in collaboration with professors.",
-            techStack: ["Leadership", "Event Organization", "Curriculum Development"]
-        },
-        {
-            id: "unsupervised-learning-cert",
-            title: "Unsupervised Learning, Recommenders, and Reinforcement Learning",
-            date: "2023-10",
-            type: "certification",
-            description: "Completed comprehensive training in unsupervised learning techniques and recommender systems.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
-            }
-        },
-        {
-            id: "software-engineer-intern",
-            title: "Software Engineer – Intern → Part-Time",
-            date: "2023-06",
-            endDate: "present",
-            type: "experience",
-            description: "Developed desktop applications for real-time control and visualization of hardware systems, enhancing operational efficiency by 65%. Designed firmware to monitor voltage, temperature, and pressure in hardware devices.",
-            techStack: ["Windows Presentation Foundation (WPF)", "C#", "Arduino", "Python"]
-        },
-        {
-            id: "advanced-algorithms-cert",
-            title: "Advanced Learning Algorithms",
-            date: "2023-05",
-            type: "certification",
-            description: "Mastered advanced machine learning algorithms and their implementations.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/U33T2QRT8MFC"
-            }
-        },
-        {
-            id: "mafway",
-            title: "MafWay",
-            date: "2023-05",
-            type: "project",
-            description: "An AI-driven image recognition app targeting innovative areas like sign language recognition.",
-            techStack: ["Python", "TensorFlow", "OpenCV"],
-            links: {
-                github: "https://github.com/mchen04/MafWay"
-            }
-        },
-        {
-            id: "ml-regression-cert",
-            title: "Supervised Machine Learning: Regression and Classification",
-            date: "2023-02",
-            type: "certification",
-            description: "Completed DeepLearning.AI's course on supervised machine learning fundamentals.",
-            issuer: "Coursera (DeepLearning.AI)",
-            links: {
-                verify: "https://coursera.org/verify/RDHD7AHGBYYH"
-            }
-        },
-        {
-            id: "pdf-scraper",
-            title: "Scraping PDF - UCR Catalog",
-            date: "2023-01",
-            type: "project",
-            description: "A Python script for extracting and searching data from UCR's catalog PDF.",
-            techStack: ["Python", "PyPDF2"],
-            links: {
-                github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog"
-            }
-        },
-        {
-            id: "carbon-emissions",
-            title: "Carbon Emissions Map",
-            date: "2022-11",
-            type: "project",
-            description: "An interactive dashboard visualizing US state-level carbon emissions for 2021. Won the Sustainability Award at CutieHack.",
-            techStack: ["JavaScript", "HTML", "CSS"],
-            links: {
-                github: "https://github.com/mchen04/Carbon-Emmisions-Map"
-            }
+            description: "Established the first official AI club at UCR, growing membership to 50+ students and fostering a collaborative learning environment for AI enthusiasts. Organized workshops and guest lectures with AI industry experts, achieving a 45% increase in engagement. Developed and presented a comprehensive 8-topic AI curriculum in collaboration with professors, covering topics such as Ethics and Bias in AI, Linear and Logistic Regression, Basics of Neural Networks, Clustering Algorithms, Decision Trees, Random Forests, Recommender Systems, and Basics of Reinforcement Learning. The curriculum also incorporates hands-on learning with tools and software relevant to the AI field.",
+            techStack: [
+                "Leadership",
+                "Curriculum Development",
+                "Event Organization",
+                "Machine Learning Concepts",
+                "Team Building"
+            ]
         },
         {
             id: "ucr-education",
@@ -175,38 +132,57 @@ const portfolioData = {
             date: "2022-09",
             endDate: "2026-06",
             type: "education",
-            description: "Pursuing a B.S. in Computer Science with a Minor in Business. Relevant coursework includes Data Structures & Algorithms, Software Construction, Operating Systems, and Machine Learning.",
-            techStack: ["C++", "Python", "Java", "SQL", "Assembly"]
+            description: "Pursuing a B.S. in Computer Science with a Minor in Management: Strategy & Entrepreneurship.",
+            coursework: [
+                "Data Structures & Algorithms",
+                "Software Construction",
+                "Design of Operating Systems",
+                "Assembly and Machine Organization",
+                "Logic Design",
+                "Formal Automata",
+                "Cybersecurity",
+                "Discrete Math",
+                "Linear Algebra",
+                "Differential Equations",
+                "Technical Communications",
+                "Design and Architecture of Computer Systems",
+                "Compiler Design"
+            ]
         }
     ],
     skills: {
         "Programming Languages": [
-            { name: "Python", level: 95 },
-            { name: "C++", level: 90 },
-            { name: "JavaScript", level: 85 },
-            { name: "Java", level: 80 },
-            { name: "TypeScript", level: 75 }
+            "Python",
+            "C/C++/C#",
+            "Java",
+            "Node.js",
+            "GraphQL",
+            "SQL",
+            "JavaScript",
+            "HTML",
+            "CSS"
         ],
-        "Frameworks & Libraries": [
-            { name: "React.js", level: 90 },
-            { name: "TensorFlow", level: 85 },
-            { name: "PyTorch", level: 80 },
-            { name: "Flask", level: 75 },
-            { name: "Next.js", level: 70 }
+        "Frameworks": [
+            "React/Next.js",
+            "Spring",
+            "TensorFlow",
+            "PyTorch",
+            "Flask",
+            "Windows Presentation Foundation"
         ],
-        "Tools & Technologies": [
-            { name: "Git", level: 90 },
-            { name: "Docker", level: 80 },
-            { name: "AWS", level: 75 },
-            { name: "Firebase", level: 85 },
-            { name: "Linux", level: 80 }
+        "DB & Tools": [
+            "MongoDB",
+            "Postgres",
+            "Jupyter Notebook",
+            "Microsoft Visual Studio",
+            "Eclipse",
+            "Arduino",
+            "SPSS Statistics"
         ],
         "Machine Learning": [
-            { name: "Computer Vision", level: 85 },
-            { name: "Natural Language Processing", level: 80 },
-            { name: "Deep Learning", level: 85 },
-            { name: "Data Analysis", level: 90 },
-            { name: "Model Deployment", level: 75 }
+            "Supervised & Unsupervised Learning",
+            "Advanced Learning Algorithms",
+            "Reinforcement Learning"
         ]
     }
 };
