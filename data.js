@@ -38,7 +38,7 @@ const portfolioData = {
             description: "Developed a personal portfolio website with an Asian-inspired design, showcasing skills and achievements. Built using HTML, CSS, and JavaScript to ensure high performance without modern frameworks.",
             techStack: ["HTML", "CSS", "JavaScript"],
             links: {
-                github: "https://github.com/mchen04/portfolio"
+                github: "https://github.com/mchen04/mchen04.github.io"
             }
         },
         {
