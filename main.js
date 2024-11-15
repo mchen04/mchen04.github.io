@@ -125,6 +125,7 @@ class PortfolioManager {
                 : this.formatDate(entry.date);
 
             entryElement.innerHTML = `
+                ${entry.type ? `<span class="entry-type">${entry.type}</span>` : ''}
                 <div class="timeline-pearl"></div>
                 <div class="entry-header">
                     <h3 class="entry-title">${entry.title}</h3>
