@@ -79,6 +79,7 @@ body {
     min-height: 100vh;
     padding: 80px 2rem;
     position: relative;
+    scroll-margin-top: var(--nav-height);
 }
 
 /* Hero Section */
@@ -253,6 +254,7 @@ body {
     font-size: 0.9rem;
     border: 1px solid var(--accent);
     transition: all 0.3s ease;
+    cursor: default;
 }
 
 .skill-item:hover {

@@ -148,16 +148,10 @@ class PortfolioManager {
     }
 
     initializeSkills() {
-        const skillCategories = {
-            'Programming Languages': ['Python', 'C++', 'JavaScript', 'Java', 'TypeScript'],
-            'Frameworks & Libraries': ['React.js', 'TensorFlow', 'PyTorch', 'Flask', 'Next.js'],
-            'Tools & Technologies': ['Git', 'Docker', 'AWS', 'Firebase', 'Linux'],
-            'Machine Learning': ['Computer Vision', 'Natural Language Processing', 'Deep Learning', 'Data Analysis', 'Model Deployment']
-        };
-
         const skillsGrid = document.querySelector('.skills-grid');
         
-        Object.entries(skillCategories).forEach(([category, skills]) => {
+        // Using skills directly from portfolioData
+        Object.entries(portfolioData.skills).forEach(([category, skills]) => {
             const categoryElement = document.createElement('div');
             categoryElement.className = 'skill-category';
             
@@ -174,10 +168,12 @@ class PortfolioManager {
             
             skillsGrid.appendChild(categoryElement);
 
+            // Animate category
             gsap.from(categoryElement, {
                 scrollTrigger: {
                     trigger: categoryElement,
-                    start: 'top bottom-=50'
+                    start: 'top bottom-=50',
+                    toggleActions: 'restart none none reverse'
                 },
                 y: 30,
                 opacity: 0,
@@ -185,16 +181,21 @@ class PortfolioManager {
                 ease: 'power2.out'
             });
 
-            gsap.from(categoryElement.querySelectorAll('.skill-item'), {
-                scrollTrigger: {
-                    trigger: categoryElement,
-                    start: 'top bottom-=50'
-                },
-                y: 20,
-                opacity: 0,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: 'power2.out'
+            // Animate individual skills
+            const skillItems = categoryElement.querySelectorAll('.skill-item');
+            skillItems.forEach((item, index) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: categoryElement,
+                        start: 'top bottom-=50',
+                        toggleActions: 'restart none none reverse'
+                    },
+                    y: 20,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    ease: 'power2.out'
+                });
             });
         });
     }
