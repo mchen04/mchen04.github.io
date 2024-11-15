@@ -26,7 +26,7 @@ body {
 }
 
 main {
-    padding-top: 60px;
+    padding-top: 60px; /* Account for fixed nav */
 }
 
 /* Navigation */
@@ -78,22 +78,6 @@ main {
     min-height: 100vh;
     padding: 6rem 2rem;
     position: relative;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.section.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.section-header {
-    color: var(--accent);
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    text-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* Hero Section */
@@ -295,6 +279,15 @@ main {
 .social-link:hover {
     color: var(--accent);
     transform: scale(1.1);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Section Headers */
+.section-header {
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
     text-shadow: 0 0 10px var(--accent-glow);
 }
 
