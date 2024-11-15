@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michael Chen - Portfolio</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
             --jade: #00A86B;
@@ -63,6 +64,22 @@
             font-size: 1.5rem;
             color: var(--primary);
             text-decoration: none;
+            position: relative;
+        }
+
+        .nav-logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-logo:hover::after {
+            width: 100%;
         }
 
         .nav-links {
@@ -76,13 +93,26 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 168, 107, 0.1);
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 0;
         }
 
         .nav-link.active {
-            color: var(--primary);
-        }
-
-        .nav-link:hover {
             color: var(--primary);
         }
 
@@ -91,6 +121,7 @@
             min-height: 100vh;
             padding: 6rem 2rem;
             display: none;
+            position: relative;
         }
 
         section.active {
@@ -103,10 +134,28 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, var(--primary) 25%, var(--primary) 26%, transparent 27%, transparent 74%, var(--primary) 75%, var(--primary) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, var(--primary) 25%, var(--primary) 26%, transparent 27%, transparent 74%, var(--primary) 75%, var(--primary) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
         }
 
         .hero-content {
             max-width: 800px;
+            position: relative;
+            z-index: 1;
         }
 
         .typewriter {
@@ -123,19 +172,44 @@
                        blink-caret .75s step-end infinite;
         }
 
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 435px }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary); }
+        .hero-description {
+            max-width: 600px;
+            margin: 2rem auto;
+            color: var(--text);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .ink-brush {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ink-brush path {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 2;
+            opacity: 0.1;
         }
 
         /* Timeline Section */
         .timeline-section {
             padding-top: 80px;
+            position: relative;
+            overflow: hidden;
         }
 
         .timeline-container {
@@ -146,35 +220,50 @@
 
         .timeline {
             position: relative;
-            padding-left: 50px;
+            padding: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
 
-        .timeline-line {
+        .timeline-dragon {
             position: absolute;
-            left: 0;
             top: 0;
-            width: 4px;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: var(--primary);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .timeline-entry {
             position: relative;
-            margin-bottom: 2rem;
+            width: calc(33.33% - 2rem);
             opacity: 0;
-            transform: translateX(50px);
+            transform: translateY(50px);
+            z-index: 1;
         }
 
-        .timeline-entry::before {
+        .timeline-pearl {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            left: -10px;
+            top: 15px;
+            box-shadow: 0 0 15px var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-pearl::before {
             content: '';
             position: absolute;
-            left: -54px;
-            top: 15px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+            width: 100%;
+            height: 100%;
             background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
 
         .entry-content {
@@ -183,6 +272,7 @@
             border-radius: 8px;
             border-left: 4px solid var(--primary);
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .entry-content:hover {
@@ -225,6 +315,12 @@
             padding: 0.25rem 0.75rem;
             border-radius: 15px;
             font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: rgba(0, 168, 107, 0.3);
+            transform: translateY(-2px);
         }
 
         /* Skills Section */
@@ -241,6 +337,7 @@
             padding: 2rem;
             border-radius: 8px;
             transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .skill-category:hover {
@@ -258,6 +355,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
+            position: relative;
         }
 
         .skill-progress {
@@ -265,13 +363,18 @@
             background: var(--primary);
             transform-origin: left;
             transform: scaleX(0);
+            position: relative;
         }
 
-        /* About Section */
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--accent);
+            animation: glow 1.5s infinite;
         }
 
         /* Contact Section */
@@ -279,6 +382,7 @@
             max-width: 800px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
         }
 
         .social-links {
@@ -299,16 +403,55 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .social-link i {
             font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .social-link:hover {
-            transform: translateY(-5px);
+        .social-link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
             background: var(--primary);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover::before {
+            transform: translateY(0);
+        }
+
+        .social-link:hover i {
             color: var(--background);
+        }
+
+        /* Animations */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 435px }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
 
         /* Responsive Design */
@@ -319,6 +462,10 @@
 
             .typewriter {
                 font-size: 2.5rem;
+            }
+
+            .timeline-entry {
+                width: 100%;
             }
 
             @keyframes typing {
@@ -337,9 +484,22 @@
                 to { width: 252px }
             }
         }
+
+        /* Canvas Styles */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.2;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+    <canvas id="three-canvas"></canvas>
     <nav>
         <div class="nav-content">
             <a href="#" class="nav-logo">Michael Chen</a>
@@ -354,10 +514,16 @@
     </nav>
 
     <section id="home" class="active">
+        <div class="hero-background"></div>
         <div class="hero-content">
             <h1 class="typewriter">Hi, I'm Michael Chen</h1>
-            <p>A Computer Science major blending technology and creativity</p>
+            <p class="hero-subtitle">Bridging tradition and innovation through technology</p>
+            <p class="hero-description">A Computer Science major blending technology and creativity</p>
         </div>
+        <svg class="ink-brush" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M10,50 Q30,40 50,50 T90,50" />
+            <path d="M10,60 Q30,50 50,60 T90,60" />
+        </svg>
     </section>
 
     <section id="about">
@@ -370,8 +536,10 @@
     <section id="timeline">
         <h2 class="section-header">My Journey</h2>
         <div class="timeline-container">
+            <svg class="timeline-dragon" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+                <!-- Dragon path will be added dynamically -->
+            </svg>
             <div class="timeline">
-                <div class="timeline-line"></div>
                 <!-- Timeline entries will be dynamically added here -->
             </div>
         </div>

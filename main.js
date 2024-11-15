@@ -4,6 +4,8 @@ gsap.registerPlugin(ScrollTrigger);
 class PortfolioManager {
     constructor() {
         this.currentSection = 'home';
+        this.threeScene = null;
+        this.initializeThreeJS();
         this.initializeNavigation();
         this.initializeHeroAnimations();
         this.initializeTimeline();
@@ -11,8 +13,57 @@ class PortfolioManager {
         this.initializeSectionAnimations();
     }
 
+    initializeThreeJS() {
+        const canvas = document.getElementById('three-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Create geometric particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1000;
+        const positions = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: '#00A86B',
+            transparent: true,
+            opacity: 0.5
+        });
+
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        camera.position.z = 5;
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+            particles.rotation.y += 0.001;
+            particles.rotation.x += 0.001;
+            renderer.render(scene, camera);
+        };
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        this.threeScene = { scene, camera, renderer, particles };
+    }
+
     initializeNavigation() {
-        // Handle navigation clicks
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -21,7 +72,6 @@ class PortfolioManager {
             });
         });
 
-        // Handle initial section based on hash
         const hash = window.location.hash.substring(1);
         if (hash) {
             this.switchSection(hash);
@@ -29,19 +79,16 @@ class PortfolioManager {
     }
 
     switchSection(sectionId) {
-        // Hide all sections
         document.querySelectorAll('section').forEach(section => {
             section.classList.remove('active');
             section.style.display = 'none';
         });
 
-        // Show target section
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
             targetSection.classList.add('active');
             targetSection.style.display = 'block';
             
-            // Update navigation
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${sectionId}`) {
@@ -49,50 +96,100 @@ class PortfolioManager {
                 }
             });
 
-            // Trigger section-specific animations
             this.animateSection(sectionId);
-            
-            // Update URL without scrolling
             history.pushState(null, null, `#${sectionId}`);
         }
     }
 
     initializeHeroAnimations() {
-        // Hero section animations
-        gsap.from('.hero-content', {
+        const tl = gsap.timeline();
+
+        tl.from('.hero-content', {
             duration: 1,
             y: 50,
             opacity: 0,
-            ease: 'power3.out',
-            delay: 0.5
+            ease: 'power3.out'
+        })
+        .from('.hero-subtitle', {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: 'power3.out'
+        }, '-=0.5')
+        .from('.hero-description', {
+            duration: 0.8,
+            y: 20,
+            opacity: 0,
+            ease: 'power3.out'
+        }, '-=0.5');
+
+        // Animate ink brush strokes
+        const paths = document.querySelectorAll('.ink-brush path');
+        paths.forEach((path, index) => {
+            const length = path.getTotalLength();
+            gsap.set(path, {
+                strokeDasharray: length,
+                strokeDashoffset: length,
+                opacity: 0.1
+            });
+
+            gsap.to(path, {
+                strokeDashoffset: 0,
+                duration: 2,
+                delay: index * 0.5,
+                ease: 'power2.out'
+            });
         });
+    }
+
+    createDragonPath() {
+        const container = document.querySelector('.timeline-container');
+        const svg = document.querySelector('.timeline-dragon');
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+
+        // Create a snaking path that resembles a dragon's body
+        const numPoints = Math.ceil(height / 200);
+        const points = [];
+        const amplitude = width * 0.3;
+
+        for (let i = 0; i < numPoints; i++) {
+            const y = (i / (numPoints - 1)) * height;
+            const x = Math.sin((i / (numPoints - 1)) * Math.PI * 2) * amplitude + width / 2;
+            points.push(`${x},${y}`);
+        }
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M ${points.join(' L ')}`);
+        path.setAttribute('stroke', '#00A86B');
+        path.setAttribute('stroke-width', '4');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('opacity', '0.2');
+
+        svg.appendChild(path);
+        return path;
     }
 
     initializeTimeline() {
         const timeline = document.querySelector('.timeline');
+        const dragonPath = this.createDragonPath();
+        
         const sortedEntries = [...portfolioData.timeline].sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateB - dateA;
         });
 
-        // Calculate timeline dimensions
-        const containerWidth = document.querySelector('.timeline-container').offsetWidth;
-        const entryWidth = 350; // Width of each entry
-        const entryMargin = 30; // Margin between entries
-        const entriesPerRow = Math.floor((containerWidth - 50) / (entryWidth + entryMargin));
-        
-        // Create timeline entries
         sortedEntries.forEach((entry, index) => {
             const entryElement = document.createElement('div');
             entryElement.className = 'timeline-entry';
             
-            // Format date display
             const dateDisplay = entry.endDate 
                 ? `${this.formatDate(entry.date)} - ${entry.endDate === 'present' ? 'Present' : this.formatDate(entry.endDate)}`
                 : this.formatDate(entry.date);
 
             entryElement.innerHTML = `
+                <div class="timeline-pearl"></div>
                 <div class="entry-content">
                     <div class="entry-header">
                         <h3 class="entry-title">${entry.title}</h3>
@@ -106,27 +203,12 @@ class PortfolioManager {
 
             timeline.appendChild(entryElement);
 
-            // Calculate position for snaking layout
-            const row = Math.floor(index / entriesPerRow);
-            const isEvenRow = row % 2 === 0;
-            const positionInRow = isEvenRow 
-                ? index % entriesPerRow 
-                : entriesPerRow - 1 - (index % entriesPerRow);
-
-            const xPos = positionInRow * (entryWidth + entryMargin) + 50;
-            const yPos = row * 300; // Height between rows
-
-            gsap.set(entryElement, {
-                x: xPos,
-                y: yPos,
-                opacity: 0
-            });
-
             // Animate entry
-            gsap.to(entryElement, {
-                opacity: 1,
-                duration: 0.5,
-                delay: index * 0.1,
+            gsap.from(entryElement, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: index * 0.2,
                 scrollTrigger: {
                     trigger: entryElement,
                     start: 'top bottom-=100',
@@ -136,19 +218,15 @@ class PortfolioManager {
             });
         });
 
-        // Animate timeline line
-        const timelineLine = document.querySelector('.timeline-line');
-        const totalRows = Math.ceil(sortedEntries.length / entriesPerRow);
-        const totalHeight = totalRows * 300;
-
-        timelineLine.style.height = `${totalHeight}px`;
-        
-        gsap.set(timelineLine, {
-            height: 0
+        // Animate dragon path
+        const pathLength = dragonPath.getTotalLength();
+        gsap.set(dragonPath, {
+            strokeDasharray: pathLength,
+            strokeDashoffset: pathLength
         });
 
-        gsap.to(timelineLine, {
-            height: totalHeight,
+        gsap.to(dragonPath, {
+            strokeDashoffset: 0,
             duration: 2,
             ease: 'power2.out',
             scrollTrigger: {
@@ -225,26 +303,25 @@ class PortfolioManager {
                 `).join('')}
             `;
             skillsGrid.appendChild(categoryElement);
-        });
 
-        // Animate skill bars
-        document.querySelectorAll('.skill-progress').forEach(bar => {
-            const level = bar.getAttribute('data-level');
-            gsap.to(bar, {
-                scaleX: level / 100,
-                duration: 1.5,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: bar,
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none reverse'
-                }
+            // Animate skill bars
+            categoryElement.querySelectorAll('.skill-progress').forEach(bar => {
+                const level = bar.getAttribute('data-level');
+                gsap.to(bar, {
+                    scaleX: level / 100,
+                    duration: 1.5,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: bar,
+                        start: 'top bottom-=100',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
             });
         });
     }
 
     initializeSectionAnimations() {
-        // Animate section headers
         document.querySelectorAll('.section-header').forEach(header => {
             gsap.from(header, {
                 y: 50,
@@ -259,7 +336,6 @@ class PortfolioManager {
             });
         });
 
-        // Animate social links
         document.querySelectorAll('.social-link').forEach(link => {
             link.addEventListener('mouseenter', () => {
                 gsap.to(link, {
@@ -280,14 +356,11 @@ class PortfolioManager {
     }
 
     animateSection(sectionId) {
-        // Reset scroll position
         window.scrollTo(0, 0);
         
-        // Trigger section-specific animations
         switch(sectionId) {
             case 'timeline':
                 ScrollTrigger.refresh();
-                this.initializeTimeline();
                 break;
             case 'skills':
                 ScrollTrigger.refresh();
