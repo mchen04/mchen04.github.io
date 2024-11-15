@@ -5,10 +5,52 @@ const portfolioData = {
         title: "Software Developer",
         tagline: "Full Stack Developer | Machine Learning Enthusiast",
         github: "https://github.com/mchen04",
-        linkedin: "https://linkedin.com/in/yourusername",
-        resume: "path/to/resume.pdf"
+        linkedin: "https://www.linkedin.com/in/michael-luo-chen",
+        email: "michaelluochen1@gmail.com"
     },
     entries: [
+        {
+            id: "ucr-education",
+            title: "University of California, Riverside (UCR)",
+            date: "2022-09",
+            endDate: "2026-06",
+            type: "education",
+            description: "Pursuing a B.S. in Computer Science with a Minor in Business. Relevant coursework includes Data Structures & Algorithms, Software Construction, Design of Operating Systems, Assembly and Machine Organization, Logic Design, Formal Automata, Cybersecurity, Discrete Math, Linear Algebra, and Differential Equations.",
+            techStack: ["C++", "Python", "Java", "SQL", "Assembly"],
+            highlights: [
+                "B.S. in Computer Science",
+                "Minor in Business",
+                "Expected Graduation: June 2026"
+            ]
+        },
+        {
+            id: "software-engineer-intern",
+            title: "Software Engineer – Intern → Part-Time",
+            date: "2023-06",
+            endDate: "present",
+            type: "experience",
+            description: "Developed desktop applications for real-time control and visualization of hardware systems, enhancing operational efficiency by 65%. Designed firmware to monitor voltage, temperature, and pressure in hardware devices, ensuring reliable communication through safety features like checksums. Engineered advanced data processing algorithms to improve measurement accuracy by 30%.",
+            techStack: ["Windows Presentation Foundation (WPF)", "C#", "Arduino", "Python"],
+            highlights: [
+                "Enhanced operational efficiency by 65%",
+                "Designed firmware with safety features",
+                "Improved measurement accuracy by 30%"
+            ]
+        },
+        {
+            id: "ai-club-president",
+            title: "Founder and President - UCR AI Club",
+            date: "2023-10",
+            endDate: "present",
+            type: "experience",
+            description: "Established the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with AI industry experts, leading to a 45% increase in engagement. Developed and presented a comprehensive 9-topic AI curriculum in collaboration with professors, tailored for students of all skill levels.",
+            techStack: ["Leadership", "Event Organization", "Curriculum Development"],
+            highlights: [
+                "Grew membership to 50+ students",
+                "Achieved 45% increase in engagement",
+                "Developed 9-topic AI curriculum"
+            ]
+        },
         {
             id: "portfolio-website",
             title: "Portfolio Website",
@@ -73,6 +115,7 @@ const portfolioData = {
             id: "philip-project",
             title: "PHiLIP: Personalized Human in Loop Image Production",
             date: "2024-02",
+            endDate: "2024-06",
             type: "project",
             description: "A generative AI project that leverages advanced machine learning models for personalized, real-time text-to-image generation. Won the University Category of the AMD Pervasive AI Developer Contest and showcased at the AMD Advancing AI Event 2024.",
             techStack: [
@@ -91,8 +134,7 @@ const portfolioData = {
                 "Showcased at AMD Advancing AI Event 2024",
                 "Implemented real-time text-to-image generation",
                 "Utilized AMD MI210 GPUs for accelerated processing"
-            ],
-            duration: "February 2024 – June 2024"
+            ]
         },
         {
             id: "reciptapp",
@@ -203,19 +245,24 @@ class PortfolioRenderer {
         this.traditionalElement = document.querySelector('.traditional-view');
     }
 
-    renderTimeline() {
-        // Clear existing entries
-        this.timelineElement.innerHTML = '';
-        
-        // Sort entries by date
-        const sortedEntries = [...this.data.entries].sort((a, b) => 
-            new Date(b.date) - new Date(a.date)
-        );
-
-        sortedEntries.forEach(entry => {
-            const entryElement = this.createTimelineEntry(entry);
-            this.timelineElement.appendChild(entryElement);
+    formatDate(dateStr, endDate) {
+        if (dateStr === 'present') return 'Present';
+        const date = new Date(dateStr);
+        const formatted = date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long'
         });
+        
+        if (endDate) {
+            const endFormatted = endDate === 'present' ? 'Present' : 
+                new Date(endDate).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long'
+                });
+            return `${formatted} – ${endFormatted}`;
+        }
+        
+        return formatted;
     }
 
     createTimelineEntry(entry) {
@@ -225,14 +272,22 @@ class PortfolioRenderer {
         const content = document.createElement('div');
         content.className = 'entry-content';
         
-        // Add special styling for awards
         if (entry.type === 'award') {
             content.classList.add('award-entry');
+        } else if (entry.type === 'experience') {
+            content.classList.add('experience-entry');
+        } else if (entry.type === 'education') {
+            content.classList.add('education-entry');
+        }
+        
+        let dateDisplay = this.formatDate(entry.date, entry.endDate);
+        if (entry.type === 'education' && entry.endDate && entry.endDate.includes('2026')) {
+            dateDisplay += ' (Expected)';
         }
         
         content.innerHTML = `
             <h3>${entry.title}</h3>
-            <p class="date">${this.formatDate(entry.date)}</p>
+            <p class="date">${dateDisplay}</p>
             <p class="type">${entry.type}</p>
             <p class="description">${entry.description}</p>
             ${this.renderTechStack(entry)}
@@ -240,7 +295,6 @@ class PortfolioRenderer {
             ${this.renderLinks(entry)}
         `;
 
-        // Add click handler for expanding/collapsing
         content.addEventListener('click', () => {
             content.classList.toggle('expanded');
         });
@@ -263,18 +317,15 @@ class PortfolioRenderer {
     }
 
     renderTraditionalView() {
-        // Group entries by type
         const groupedEntries = this.data.entries.reduce((acc, entry) => {
             acc[entry.type] = acc[entry.type] || [];
             acc[entry.type].push(entry);
             return acc;
         }, {});
 
-        // Clear and render each category
         Object.keys(groupedEntries).forEach(type => {
             let categoryCard = document.querySelector(`.category-card[data-type="${type}"]`);
             
-            // Create category card if it doesn't exist (for new types like 'award')
             if (!categoryCard) {
                 categoryCard = document.createElement('div');
                 categoryCard.className = 'category-card';
@@ -290,12 +341,11 @@ class PortfolioRenderer {
     }
 
     renderCategoryEntries(entries) {
-        return entries
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
+        return this.sortEntries(entries)
             .map(entry => `
-                <div class="category-entry">
+                <div class="category-entry ${entry.type}-entry">
                     <h3>${entry.title}</h3>
-                    <p class="date">${this.formatDate(entry.date)}</p>
+                    <p class="date">${this.formatDate(entry.date, entry.endDate)}</p>
                     <p class="description">${entry.description}</p>
                     ${this.renderTechStack(entry)}
                     ${this.renderHighlights(entry)}
@@ -326,11 +376,32 @@ class PortfolioRenderer {
         `;
     }
 
-    formatDate(dateStr) {
-        const date = new Date(dateStr);
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long' 
+    sortEntries(entries) {
+        return entries.sort((a, b) => {
+            // Sort ongoing experiences first
+            if (a.endDate === 'present' && b.endDate !== 'present') return -1;
+            if (b.endDate === 'present' && a.endDate !== 'present') return 1;
+            
+            // Then sort by start date
+            const aDate = new Date(a.date);
+            const bDate = new Date(b.date);
+            
+            // If dates are equal, prioritize education
+            if (aDate.getTime() === bDate.getTime()) {
+                if (a.type === 'education') return -1;
+                if (b.type === 'education') return 1;
+            }
+            
+            return bDate - aDate;
+        });
+    }
+
+    renderTimeline() {
+        this.timelineElement.innerHTML = '';
+        const sortedEntries = this.sortEntries([...this.data.entries]);
+        sortedEntries.forEach(entry => {
+            const entryElement = this.createTimelineEntry(entry);
+            this.timelineElement.appendChild(entryElement);
         });
     }
 
@@ -341,10 +412,8 @@ class PortfolioRenderer {
     }
 
     initializeFilters() {
-        // Get unique types from entries
         const types = [...new Set(this.data.entries.map(entry => entry.type))];
         
-        // Create filter buttons
         const filterContainer = document.createElement('div');
         filterContainer.className = 'filters';
         filterContainer.innerHTML = `
@@ -356,13 +425,11 @@ class PortfolioRenderer {
             `).join('')}
         `;
 
-        // Add filters before timeline
         this.timelineElement.parentNode.insertBefore(
             filterContainer, 
             this.timelineElement
         );
 
-        // Add filter functionality
         filterContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('filter-btn')) {
                 const filter = e.target.dataset.filter;

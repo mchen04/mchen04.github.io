@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Timeline</title>
+    <title>Michael Chen - Portfolio</title>
     <style>
         :root {
             --primary: #2dd4bf;
             --background: #1a1a1a;
             --text: #ffffff;
             --card-bg: #252525;
+            --education: #4CAF50;
+            --award: #FFD700;
+            --experience: #FF6B6B;
         }
 
         body {
@@ -186,6 +189,65 @@
             border-bottom: none;
         }
 
+        .education-entry {
+            border-left: 4px solid var(--education);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .award-entry {
+            border-left: 4px solid var(--award);
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .experience-entry {
+            border-left: 4px solid var(--experience);
+            background-color: rgba(255, 107, 107, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .email-link {
+            border-color: var(--experience);
+        }
+
+        .email-link:hover {
+            background-color: var(--experience);
+        }
+
+        .github-link {
+            border-color: var(--primary);
+        }
+
+        .linkedin-link {
+            border-color: var(--education);
+        }
+
+        .linkedin-link:hover {
+            background-color: var(--education);
+        }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -193,11 +255,18 @@
             border-top: 1px solid var(--primary);
         }
 
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
+        .highlights {
             margin-top: 1rem;
+            padding-left: 1rem;
+        }
+
+        .highlights ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+
+        .highlights li {
+            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -213,6 +282,15 @@
             .filters {
                 flex-wrap: wrap;
             }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-link {
+                width: 200px;
+            }
         }
     </style>
 </head>
@@ -220,8 +298,8 @@
     <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
     
     <header>
-        <h1 id="name">John Doe</h1>
-        <p id="title" class="typewriter">Software Developer | Creative Thinker | Problem Solver</p>
+        <h1 id="name"></h1>
+        <p id="title" class="typewriter"></p>
     </header>
 
     <nav>
@@ -236,31 +314,22 @@
         </section>
 
         <section id="traditional" class="traditional-view">
-            <div class="category-card" data-type="project">
-                <h2>Projects</h2>
-                <!-- Project entries will be dynamically added here -->
-            </div>
-            <div class="category-card" data-type="certification">
-                <h2>Certifications</h2>
-                <!-- Certification entries will be dynamically added here -->
-            </div>
-            <div class="category-card" data-type="experience">
-                <h2>Work Experience</h2>
-                <!-- Experience entries will be dynamically added here -->
-            </div>
-            <div class="category-card" data-type="education">
-                <h2>Education</h2>
-                <!-- Education entries will be dynamically added here -->
-            </div>
+            <!-- Traditional view entries will be dynamically added here -->
         </section>
     </main>
 
     <footer id="contact">
         <h2>Get in Touch</h2>
         <div class="social-links">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="resume.pdf" download>Download Resume</a>
+            <a href="mailto:michaelluochen1@gmail.com" class="social-link email-link" target="_blank" rel="noopener noreferrer">
+                ✉️ Email
+            </a>
+            <a href="https://github.com/mchen04" class="social-link github-link" target="_blank" rel="noopener noreferrer">
+                💻 GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link linkedin-link" target="_blank" rel="noopener noreferrer">
+                🔗 LinkedIn
+            </a>
         </div>
     </footer>
 
@@ -299,6 +368,16 @@
         // Update personal info
         document.getElementById('name').textContent = portfolioData.personalInfo.name;
         document.getElementById('title').textContent = portfolioData.personalInfo.tagline;
+
+        // Initialize social links
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('mouseover', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            link.addEventListener('mouseout', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
     </script>
 </body>
 </html>
