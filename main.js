@@ -14,12 +14,10 @@ class PortfolioManager {
     }
 
     initializeScrollEffects() {
-        // Create intersection observer for fade-in effects
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // Initialize GSAP animations when section becomes visible
                     if (entry.target.id === 'skills') {
                         ScrollTrigger.refresh();
                     }
@@ -29,21 +27,22 @@ class PortfolioManager {
             threshold: 0.1
         });
 
-        // Observe all sections
         document.querySelectorAll('.section').forEach(section => {
             observer.observe(section);
         });
     }
 
     initializeNavigation() {
-        // Smooth scroll to section when clicking nav links
         document.querySelectorAll('.nav-link, .nav-logo').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = link.getAttribute('href');
                 const targetSection = document.querySelector(targetId);
+                const navHeight = document.querySelector('.nav-content').offsetHeight;
+                const extraOffset = targetId === '#skills' ? 40 : 20; // Extra offset for skills section
+                
                 window.scrollTo({
-                    top: targetSection.offsetTop - 60,
+                    top: targetSection.offsetTop - navHeight - extraOffset,
                     behavior: 'smooth'
                 });
             });
@@ -51,19 +50,21 @@ class PortfolioManager {
 
         // Update active nav link on scroll
         window.addEventListener('scroll', () => {
-            let current = '';
-            document.querySelectorAll('.section').forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop - 300) {
-                    current = section.getAttribute('id');
-                }
-            });
+            const navHeight = document.querySelector('.nav-content').offsetHeight;
+            const fromTop = window.scrollY + navHeight + 100;
 
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
+            document.querySelectorAll('.section').forEach(section => {
+                const id = section.getAttribute('id');
+                const link = document.querySelector(`.nav-link[href="#${id}"]`);
+                
+                // Check if section is in view
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
                     link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
                 }
             });
         });
