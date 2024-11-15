@@ -3,6 +3,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 class PortfolioManager {
     constructor() {
+        this.initializeContent();
         this.initializeScrollEffects();
         this.initializeNavigation();
         this.initializeHeroAnimations();
@@ -10,6 +11,20 @@ class PortfolioManager {
         this.initializeSkills();
         this.initializeSectionAnimations();
         this.initializeGlowEffects();
+    }
+
+    initializeContent() {
+        // Initialize personal info
+        document.getElementById('nav-name').textContent = portfolioData.personalInfo.name;
+        document.getElementById('hero-name').textContent = portfolioData.personalInfo.name;
+        document.getElementById('hero-tagline').textContent = portfolioData.personalInfo.tagline;
+        document.getElementById('hero-title').textContent = portfolioData.personalInfo.title;
+        document.getElementById('about-text').textContent = portfolioData.personalInfo.about;
+
+        // Initialize contact links
+        document.getElementById('email-link').href = `mailto:${portfolioData.personalInfo.email}`;
+        document.getElementById('github-link').href = portfolioData.personalInfo.github;
+        document.getElementById('linkedin-link').href = portfolioData.personalInfo.linkedin;
     }
 
     initializeScrollEffects() {
@@ -150,7 +165,6 @@ class PortfolioManager {
     initializeSkills() {
         const skillsGrid = document.querySelector('.skills-grid');
         
-        // Using skills directly from portfolioData
         Object.entries(portfolioData.skills).forEach(([category, skills]) => {
             const categoryElement = document.createElement('div');
             categoryElement.className = 'skill-category';
