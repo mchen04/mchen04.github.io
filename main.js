@@ -3,81 +3,70 @@ gsap.registerPlugin(ScrollTrigger);
 
 class PortfolioManager {
     constructor() {
-        this.currentSection = 'home';
+        this.initializeScrollEffects();
         this.initializeNavigation();
         this.initializeHeroAnimations();
         this.initializeTimeline();
         this.initializeSkills();
         this.initializeSectionAnimations();
         this.initializeGlowEffects();
+        this.initializeScrollProgress();
+    }
+
+    initializeScrollEffects() {
+        // Create intersection observer for fade-in effects
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Initialize GSAP animations when section becomes visible
+                    if (entry.target.id === 'skills') {
+                        ScrollTrigger.refresh();
+                    }
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
     }
 
     initializeNavigation() {
-        document.querySelectorAll('.nav-link').forEach(link => {
+        // Smooth scroll to section when clicking nav links
+        document.querySelectorAll('.nav-link, .nav-logo').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                this.switchSection(targetId);
-            });
-
-            // Add hover animation for nav links
-            link.addEventListener('mouseenter', () => {
-                gsap.to(link, {
-                    color: 'var(--accent)',
-                    textShadow: '0 0 10px var(--accent-glow)',
-                    duration: 0.3
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 60,
+                    behavior: 'smooth'
                 });
             });
+        });
 
-            link.addEventListener('mouseleave', () => {
-                if (!link.classList.contains('active')) {
-                    gsap.to(link, {
-                        color: 'var(--text-secondary)',
-                        textShadow: 'none',
-                        duration: 0.3
-                    });
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('.section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 300) {
+                    current = section.getAttribute('id');
                 }
             });
-        });
 
-        const hash = window.location.hash.substring(1);
-        if (hash) {
-            this.switchSection(hash);
-        }
-    }
-
-    switchSection(sectionId) {
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-            section.style.display = 'none';
-        });
-
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
-            targetSection.style.display = 'block';
-            
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
-                gsap.to(link, {
-                    color: 'var(--text-secondary)',
-                    textShadow: 'none',
-                    duration: 0.3
-                });
-                
-                if (link.getAttribute('href') === `#${sectionId}`) {
+                if (link.getAttribute('href') === `#${current}`) {
                     link.classList.add('active');
-                    gsap.to(link, {
-                        color: 'var(--accent)',
-                        textShadow: '0 0 10px var(--accent-glow)',
-                        duration: 0.3
-                    });
                 }
             });
-
-            this.animateSection(sectionId);
-            history.pushState(null, null, `#${sectionId}`);
-        }
+        });
     }
 
     initializeHeroAnimations() {
@@ -151,22 +140,26 @@ class PortfolioManager {
 
             timeline.appendChild(entryElement);
 
-            // Enhanced timeline entry animation
+            // Scroll triggered animations for timeline entries
             gsap.from(entryElement, {
-                opacity: 0,
-                x: index % 2 === 0 ? -50 : 50,
-                duration: 1,
                 scrollTrigger: {
                     trigger: entryElement,
                     start: 'top bottom-=100',
-                    end: 'bottom center',
                     toggleActions: 'play none none reverse'
-                }
+                },
+                opacity: 0,
+                x: index % 2 === 0 ? -50 : 50,
+                duration: 1
             });
 
-            // Glow effect for timeline pearl
+            // Animate timeline pearl
             const pearl = entryElement.querySelector('.timeline-pearl');
             gsap.to(pearl, {
+                scrollTrigger: {
+                    trigger: pearl,
+                    start: 'top bottom',
+                    toggleActions: 'play none none reverse'
+                },
                 boxShadow: '0 0 15px var(--accent-glow)',
                 duration: 1.5,
                 repeat: -1,
@@ -198,34 +191,18 @@ class PortfolioManager {
             `;
             skillsGrid.appendChild(categoryElement);
 
-            // Enhanced skill bar animations
+            // Animate skill bars on scroll
             categoryElement.querySelectorAll('.skill-progress').forEach(bar => {
                 const level = bar.getAttribute('data-level');
                 gsap.to(bar, {
-                    scaleX: level / 100,
-                    duration: 1.5,
-                    ease: 'power2.out',
                     scrollTrigger: {
                         trigger: bar,
-                        start: 'top bottom-=100',
+                        start: 'top bottom-=50',
                         toggleActions: 'play none none reverse'
-                    }
-                });
-
-                // Add glow effect on hover
-                const skillItem = bar.closest('.skill-item');
-                skillItem.addEventListener('mouseenter', () => {
-                    gsap.to(bar, {
-                        boxShadow: '0 0 10px var(--accent-glow)',
-                        duration: 0.3
-                    });
-                });
-
-                skillItem.addEventListener('mouseleave', () => {
-                    gsap.to(bar, {
-                        boxShadow: 'none',
-                        duration: 0.3
-                    });
+                    },
+                    scaleX: level / 100,
+                    duration: 1.5,
+                    ease: 'power2.out'
                 });
             });
         });
@@ -235,6 +212,11 @@ class PortfolioManager {
         // Glow effect for section headers
         gsap.utils.toArray('.section-header').forEach(header => {
             gsap.to(header, {
+                scrollTrigger: {
+                    trigger: header,
+                    start: 'top bottom',
+                    toggleActions: 'play none none reverse'
+                },
                 duration: 2,
                 repeat: -1,
                 yoyo: true,
@@ -243,7 +225,7 @@ class PortfolioManager {
             });
         });
 
-        // Enhanced social links animation
+        // Social links hover effect
         document.querySelectorAll('.social-link').forEach(link => {
             link.addEventListener('mouseenter', () => {
                 gsap.to(link, {
@@ -265,18 +247,37 @@ class PortfolioManager {
         });
     }
 
+    initializeScrollProgress() {
+        // Create scroll progress bar
+        const progressBar = document.createElement('div');
+        progressBar.className = 'scroll-progress';
+        document.body.appendChild(progressBar);
+
+        // Update progress bar width based on scroll
+        gsap.to(progressBar, {
+            scaleX: 1,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: document.documentElement,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true
+            }
+        });
+    }
+
     initializeSectionAnimations() {
-        document.querySelectorAll('.section-header').forEach(header => {
-            gsap.from(header, {
+        gsap.utils.toArray('.section').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none reverse'
+                },
                 y: 50,
                 opacity: 0,
                 duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: header,
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none reverse'
-                }
+                ease: 'power3.out'
             });
         });
     }
@@ -323,19 +324,6 @@ class PortfolioManager {
     formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-    }
-
-    animateSection(sectionId) {
-        window.scrollTo(0, 0);
-        
-        switch(sectionId) {
-            case 'timeline':
-                ScrollTrigger.refresh();
-                break;
-            case 'skills':
-                ScrollTrigger.refresh();
-                break;
-        }
     }
 }
 
