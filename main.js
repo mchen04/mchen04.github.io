@@ -122,7 +122,6 @@ class PortfolioManager {
 
             timeline.appendChild(entryElement);
 
-            // Scroll triggered animations
             gsap.from(entryElement, {
                 scrollTrigger: {
                     trigger: entryElement,
@@ -133,7 +132,6 @@ class PortfolioManager {
                 duration: 1
             });
 
-            // Animate timeline pearl
             const pearl = entryElement.querySelector('.timeline-pearl');
             gsap.to(pearl, {
                 scrollTrigger: {
@@ -150,14 +148,21 @@ class PortfolioManager {
     }
 
     initializeSkills() {
+        const skillCategories = {
+            'Programming Languages': ['Python', 'C++', 'JavaScript', 'Java', 'TypeScript'],
+            'Frameworks & Libraries': ['React.js', 'TensorFlow', 'PyTorch', 'Flask', 'Next.js'],
+            'Tools & Technologies': ['Git', 'Docker', 'AWS', 'Firebase', 'Linux'],
+            'Machine Learning': ['Computer Vision', 'Natural Language Processing', 'Deep Learning', 'Data Analysis', 'Model Deployment']
+        };
+
         const skillsGrid = document.querySelector('.skills-grid');
         
-        Object.entries(portfolioData.skills).forEach(([category, skills]) => {
+        Object.entries(skillCategories).forEach(([category, skills]) => {
             const categoryElement = document.createElement('div');
             categoryElement.className = 'skill-category';
             
             const skillsList = skills.map(skill => 
-                `<div class="skill-item">${skill.name}</div>`
+                `<div class="skill-item">${skill}</div>`
             ).join('');
 
             categoryElement.innerHTML = `
@@ -169,7 +174,17 @@ class PortfolioManager {
             
             skillsGrid.appendChild(categoryElement);
 
-            // Animate skill items on scroll
+            gsap.from(categoryElement, {
+                scrollTrigger: {
+                    trigger: categoryElement,
+                    start: 'top bottom-=50'
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+
             gsap.from(categoryElement.querySelectorAll('.skill-item'), {
                 scrollTrigger: {
                     trigger: categoryElement,
@@ -178,13 +193,13 @@ class PortfolioManager {
                 y: 20,
                 opacity: 0,
                 duration: 0.5,
-                stagger: 0.1
+                stagger: 0.1,
+                ease: 'power2.out'
             });
         });
     }
 
     initializeGlowEffects() {
-        // Glow effect for section headers
         gsap.utils.toArray('.section-header').forEach(header => {
             gsap.to(header, {
                 duration: 2,
@@ -195,7 +210,6 @@ class PortfolioManager {
             });
         });
 
-        // Social links hover effect
         document.querySelectorAll('.social-link').forEach(link => {
             link.addEventListener('mouseenter', () => {
                 gsap.to(link, {
