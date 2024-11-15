@@ -9,6 +9,7 @@ class PortfolioManager {
         this.initializeTimeline();
         this.initializeSkills();
         this.initializeSectionAnimations();
+        this.initializeGlowEffects();
     }
 
     initializeNavigation() {
@@ -17,6 +18,25 @@ class PortfolioManager {
                 e.preventDefault();
                 const targetId = link.getAttribute('href').substring(1);
                 this.switchSection(targetId);
+            });
+
+            // Add hover animation for nav links
+            link.addEventListener('mouseenter', () => {
+                gsap.to(link, {
+                    color: 'var(--accent)',
+                    textShadow: '0 0 10px var(--accent-glow)',
+                    duration: 0.3
+                });
+            });
+
+            link.addEventListener('mouseleave', () => {
+                if (!link.classList.contains('active')) {
+                    gsap.to(link, {
+                        color: 'var(--text-secondary)',
+                        textShadow: 'none',
+                        duration: 0.3
+                    });
+                }
             });
         });
 
@@ -27,7 +47,7 @@ class PortfolioManager {
     }
 
     switchSection(sectionId) {
-        document.querySelectorAll('section').forEach(section => {
+        document.querySelectorAll('.section').forEach(section => {
             section.classList.remove('active');
             section.style.display = 'none';
         });
@@ -52,8 +72,18 @@ class PortfolioManager {
     initializeHeroAnimations() {
         const tl = gsap.timeline();
 
-        tl.from('.hero-content', {
-            duration: 1,
+        // Animate hero background
+        gsap.to('.hero-background', {
+            opacity: 0.2,
+            duration: 2,
+            repeat: -1,
+            yoyo: true,
+            ease: 'power1.inOut'
+        });
+
+        // Animate hero content
+        tl.from('.hero-content h1', {
+            duration: 1.2,
             y: 50,
             opacity: 0,
             ease: 'power3.out'
@@ -69,7 +99,14 @@ class PortfolioManager {
             y: 20,
             opacity: 0,
             ease: 'power3.out'
-        }, '-=0.5');
+        }, '-=0.5')
+        .to('.hero-content h1', {
+            duration: 2,
+            textShadow: '0 0 15px var(--accent-glow)',
+            repeat: -1,
+            yoyo: true,
+            ease: 'power1.inOut'
+        });
     }
 
     initializeTimeline() {
@@ -80,7 +117,6 @@ class PortfolioManager {
             return dateB - dateA;
         });
 
-        // Clear existing entries
         timeline.innerHTML = '';
         
         sortedEntries.forEach((entry, index) => {
@@ -104,12 +140,11 @@ class PortfolioManager {
 
             timeline.appendChild(entryElement);
 
-            // Animate entry
+            // Enhanced timeline entry animation
             gsap.from(entryElement, {
                 opacity: 0,
-                y: 50,
-                duration: 0.8,
-                delay: index * 0.2,
+                x: index % 2 === 0 ? -50 : 50,
+                duration: 1,
                 scrollTrigger: {
                     trigger: entryElement,
                     start: 'top bottom-=100',
@@ -118,14 +153,119 @@ class PortfolioManager {
                 }
             });
 
-            // Animate pearl
+            // Glow effect for timeline pearl
             const pearl = entryElement.querySelector('.timeline-pearl');
-            gsap.from(pearl, {
-                scale: 0,
+            gsap.to(pearl, {
+                boxShadow: '0 0 15px var(--accent-glow)',
+                duration: 1.5,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power1.inOut'
+            });
+        });
+    }
+
+    initializeSkills() {
+        const skillsGrid = document.querySelector('.skills-grid');
+        
+        Object.entries(portfolioData.skills).forEach(([category, skills]) => {
+            const categoryElement = document.createElement('div');
+            categoryElement.className = 'skill-category';
+            categoryElement.innerHTML = `
+                <h3>${category}</h3>
+                ${skills.map(skill => `
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span>${skill.name}</span>
+                            <span>${skill.level}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-level="${skill.level}"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+            skillsGrid.appendChild(categoryElement);
+
+            // Enhanced skill bar animations
+            categoryElement.querySelectorAll('.skill-progress').forEach(bar => {
+                const level = bar.getAttribute('data-level');
+                gsap.to(bar, {
+                    scaleX: level / 100,
+                    duration: 1.5,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: bar,
+                        start: 'top bottom-=100',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
+
+                // Add glow effect on hover
+                const skillItem = bar.closest('.skill-item');
+                skillItem.addEventListener('mouseenter', () => {
+                    gsap.to(bar, {
+                        boxShadow: '0 0 10px var(--accent-glow)',
+                        duration: 0.3
+                    });
+                });
+
+                skillItem.addEventListener('mouseleave', () => {
+                    gsap.to(bar, {
+                        boxShadow: 'none',
+                        duration: 0.3
+                    });
+                });
+            });
+        });
+    }
+
+    initializeGlowEffects() {
+        // Glow effect for section headers
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.to(header, {
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                textShadow: '0 0 15px var(--accent-glow)',
+                ease: 'power1.inOut'
+            });
+        });
+
+        // Enhanced social links animation
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                gsap.to(link, {
+                    scale: 1.1,
+                    color: 'var(--accent)',
+                    textShadow: '0 0 10px var(--accent-glow)',
+                    duration: 0.3
+                });
+            });
+
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, {
+                    scale: 1,
+                    color: 'var(--text-secondary)',
+                    textShadow: 'none',
+                    duration: 0.3
+                });
+            });
+        });
+    }
+
+    initializeSectionAnimations() {
+        document.querySelectorAll('.section-header').forEach(header => {
+            gsap.from(header, {
+                y: 50,
                 opacity: 0,
-                duration: 0.5,
-                delay: index * 0.2 + 0.3,
-                ease: 'back.out(1.7)'
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: header,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none reverse'
+                }
             });
         });
     }
@@ -172,79 +312,6 @@ class PortfolioManager {
     formatDate(dateString) {
         const date = new Date(dateString);
         return date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-    }
-
-    initializeSkills() {
-        const skillsGrid = document.querySelector('.skills-grid');
-        
-        Object.entries(portfolioData.skills).forEach(([category, skills]) => {
-            const categoryElement = document.createElement('div');
-            categoryElement.className = 'skill-category';
-            categoryElement.innerHTML = `
-                <h3>${category}</h3>
-                ${skills.map(skill => `
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span>${skill.name}</span>
-                            <span>${skill.level}%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" data-level="${skill.level}"></div>
-                        </div>
-                    </div>
-                `).join('')}
-            `;
-            skillsGrid.appendChild(categoryElement);
-
-            // Animate skill bars
-            categoryElement.querySelectorAll('.skill-progress').forEach(bar => {
-                const level = bar.getAttribute('data-level');
-                gsap.to(bar, {
-                    scaleX: level / 100,
-                    duration: 1.5,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: bar,
-                        start: 'top bottom-=100',
-                        toggleActions: 'play none none reverse'
-                    }
-                });
-            });
-        });
-    }
-
-    initializeSectionAnimations() {
-        document.querySelectorAll('.section-header').forEach(header => {
-            gsap.from(header, {
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: header,
-                    start: 'top bottom-=100',
-                    toggleActions: 'play none none reverse'
-                }
-            });
-        });
-
-        document.querySelectorAll('.social-link').forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                gsap.to(link, {
-                    scale: 1.1,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            });
-
-            link.addEventListener('mouseleave', () => {
-                gsap.to(link, {
-                    scale: 1,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            });
-        });
     }
 
     animateSection(sectionId) {

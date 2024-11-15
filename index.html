@@ -1,571 +1,374 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Michael Chen - Portfolio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <style>
-        :root {
-            --jade: #2BAE66;
-            --gold: #D4AF37;
-            --red: #C41E3A;
-            --deep-blue: #003A6C;
-            --ink-black: #1C1C1C;
-            --paper-white: #F5F5F5;
-            
-            --background: var(--ink-black);
-            --text: var(--paper-white);
-            --primary: var(--jade);
-            --accent: var(--gold);
-            --highlight: var(--red);
-            --lowlight: var(--deep-blue);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(28, 28, 28, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--primary);
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .nav-logo {
-            font-size: 1.5rem;
-            color: var(--primary);
-            text-decoration: none;
-            position: relative;
-        }
-
-        .nav-logo::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-logo:hover::after {
-            width: 100%;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            color: var(--text);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(43, 174, 102, 0.1);
-            transition: left 0.3s ease;
-        }
-
-        .nav-link:hover::before {
-            left: 0;
-        }
-
-        .nav-link.active {
-            color: var(--primary);
-        }
-
-        /* Sections */
-        section {
-            min-height: 100vh;
-            padding: 6rem 2rem 2rem;
-            display: none;
-            position: relative;
-        }
-
-        section.active {
-            display: block;
-        }
-
-        /* Hero Section */
-        #home {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.1;
-            background-image: 
-                linear-gradient(0deg, transparent 24%, var(--primary) 25%, var(--primary) 26%, transparent 27%, transparent 74%, var(--primary) 75%, var(--primary) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, var(--primary) 25%, var(--primary) 26%, transparent 27%, transparent 74%, var(--primary) 75%, var(--primary) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .typewriter {
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: inline-block;
-            overflow: hidden;
-            border-right: 2px solid var(--primary);
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: 0.15em;
-            animation: typing 3.5s steps(30, end),
-                       blink-caret .75s step-end infinite;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-top: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .hero-description {
-            max-width: 600px;
-            margin: 2rem auto;
-            color: var(--text);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* Timeline Section */
-        .timeline-section {
-            padding-top: 80px;
-            position: relative;
-            overflow: visible;
-        }
-
-        .timeline-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            padding: 2rem;
-        }
-
-        .timeline {
-            position: relative;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem 0;
-        }
-
-        .timeline-dragon {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .timeline-entry {
-            position: relative;
-            background: rgba(43, 174, 102, 0.05);
-            border-radius: 8px;
-            padding: 1.5rem;
-            border-left: 4px solid var(--primary);
-            transition: all 0.3s ease;
-            z-index: 1;
-        }
-
-        .timeline-entry:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(43, 174, 102, 0.2);
-        }
-
-        .timeline-pearl {
-            position: absolute;
-            left: -12px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        .timeline-pearl::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .entry-header {
-            margin-bottom: 1rem;
-        }
-
-        .entry-title {
-            color: var(--primary);
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .entry-date {
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        .entry-description {
-            color: var(--text);
-            margin: 1rem 0;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-tag {
-            background: rgba(43, 174, 102, 0.2);
-            color: var(--primary);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .tech-tag:hover {
-            background: rgba(43, 174, 102, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .entry-links {
-            margin-top: 1rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .entry-link {
-            color: var(--accent);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .entry-link:hover {
-            color: var(--primary);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .skill-category {
-            background: rgba(43, 174, 102, 0.05);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-        }
-
-        .skill-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .skill-bar {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: var(--primary);
-            transform-origin: left;
-            transform: scaleX(0);
-            position: relative;
-        }
-
-        .skill-progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-            background: var(--accent);
-            animation: glow 1.5s infinite;
-        }
-
-        /* Contact Section */
-        .contact-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            color: var(--text);
-            text-decoration: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(43, 174, 102, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .social-link i {
-            font-size: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .social-link:hover::before {
-            transform: translateY(0);
-        }
-
-        .social-link:hover i {
-            color: var(--background);
-        }
-
-        /* Animations */
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 435px }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary); }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 0; }
-        }
-
-        @keyframes glow {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
-        }
-
-        /* Section Headers */
-        .section-header {
-            color: var(--primary);
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .typewriter {
-                font-size: 2.5rem;
-            }
-
-            .timeline {
-                grid-template-columns: 1fr;
-            }
-
-            @keyframes typing {
-                from { width: 0 }
-                to { width: 315px }
-            }
-        }
-
-        @media (max-width: 480px) {
-            .typewriter {
-                font-size: 2rem;
-            }
-
-            @keyframes typing {
-                from { width: 0 }
-                to { width: 252px }
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <nav>
-        <div class="nav-content">
-            <a href="#" class="nav-logo">Michael Chen</a>
-            <div class="nav-links">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#timeline" class="nav-link">Timeline</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
+    <nav class="nav-content">
+        <a href="#" class="nav-logo">Michael Chen</a>
+        <div class="nav-links">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#timeline" class="nav-link">Timeline</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#contact" class="nav-link">Contact</a>
         </div>
     </nav>
 
-    <section id="home" class="active">
+    <section id="home" class="section active">
         <div class="hero-background"></div>
         <div class="hero-content">
-            <h1 class="typewriter">Hi, I'm Michael Chen</h1>
+            <h1 id="hi-im-michael-chen" class="typewriter">Hi, I'm Michael Chen</h1>
             <p class="hero-subtitle">Bridging tradition and innovation through technology</p>
             <p class="hero-description">A Computer Science major blending technology and creativity</p>
         </div>
     </section>
 
-    <section id="about">
-        <h2 class="section-header">About Me</h2>
+    <section id="about" class="section">
+        <h2 id="about-me" class="section-header">About Me</h2>
         <div class="about-content">
             <p>Computer Science student at UC Riverside with a passion for AI and software development.</p>
         </div>
     </section>
 
-    <section id="timeline">
-        <h2 class="section-header">My Journey</h2>
+    <section id="timeline" class="section">
+        <h2 id="my-journey" class="section-header">My Journey</h2>
         <div class="timeline-container">
-            <div class="timeline">
-                <!-- Timeline entries will be dynamically added here -->
-            </div>
+            <div class="timeline"></div>
         </div>
     </section>
 
-    <section id="skills">
-        <h2 class="section-header">Skills & Expertise</h2>
-        <div class="skills-grid">
-            <!-- Skills will be dynamically added here -->
-        </div>
+    <section id="skills" class="section">
+        <h2 id="skills-expertise" class="section-header">Skills & Expertise</h2>
+        <div class="skills-grid"></div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="section">
         <div class="contact-content">
-            <h2 class="section-header">Get in Touch</h2>
+            <h2 id="get-in-touch" class="section-header">Get in Touch</h2>
             <div class="social-links">
                 <a href="mailto:michaelluochen1@gmail.com" class="social-link" title="Email">
                     <i class="fas fa-envelope"></i>
                 </a>
-                <a href="https://github.com/mchen04" class="social-link" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <a href="https://github.com/mchen04" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                <a href="https://www.linkedin.com/in/michael-luo-chen" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-linkedin"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
+
+/* styles.css */
+:root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #242424;
+    --text-primary: #e6d5b8;
+    --text-secondary: #a89f8c;
+    --accent: #d4b483;
+    --accent-glow: rgba(212, 180, 131, 0.15);
+    --timeline-line: #3a3a3a;
+    --pearl-color: #d4b483;
+    --nav-hover: #2a2a2a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* Navigation */
+.nav-content {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--accent);
+    z-index: 1000;
+}
+
+.nav-logo {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Sections */
+.section {
+    min-height: 100vh;
+    padding: 6rem 2rem 2rem;
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.section-header {
+    color: var(--accent);
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Hero Section */
+#home {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    text-shadow: 0 0 15px var(--accent-glow);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+/* Timeline */
+.timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-color: var(--timeline-line);
+}
+
+.timeline-entry {
+    position: relative;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--timeline-line);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-pearl {
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-color: var(--pearl-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.entry-header {
+    margin-bottom: 1rem;
+}
+
+.entry-title {
+    color: var(--accent);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.entry-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tech-tag {
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    border: 1px solid var(--accent);
+}
+
+/* Skills Section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.skill-category {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--timeline-line);
+}
+
+.skill-category h3 {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+.skill-item {
+    margin-bottom: 1rem;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.skill-bar {
+    height: 8px;
+    background-color: var(--bg-primary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-glow));
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+/* Contact Section */
+.contact-content {
+    text-align: center;
+    padding: 2rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.social-link {
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    color: var(--accent);
+    transform: scale(1.1);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 10px var(--accent-glow); }
+    50% { text-shadow: 0 0 20px var(--accent-glow); }
+    100% { text-shadow: 0 0 10px var(--accent-glow); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-content {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        margin-top: 1rem;
+        gap: 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .timeline::before {
+        left: 0;
+    }
+
+    .timeline-entry {
+        margin-left: 20px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
