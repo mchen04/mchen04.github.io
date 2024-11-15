@@ -120,6 +120,10 @@ class PortfolioManager {
             const entryElement = document.createElement('div');
             entryElement.className = 'timeline-entry';
             
+            if (entry.type) {
+                entryElement.setAttribute('data-type', entry.type);
+            }
+            
             const dateDisplay = entry.endDate 
                 ? `${this.formatDate(entry.date)} - ${entry.endDate === 'present' ? 'Present' : this.formatDate(entry.endDate)}`
                 : this.formatDate(entry.date);
@@ -138,16 +142,18 @@ class PortfolioManager {
 
             timeline.appendChild(entryElement);
 
+            // Animate entry
             gsap.from(entryElement, {
                 scrollTrigger: {
                     trigger: entryElement,
                     start: 'top bottom-=100'
                 },
                 opacity: 0,
-                x: -50,
+                x: index % 2 === 0 ? -50 : 50,
                 duration: 1
             });
 
+            // Animate pearl
             const pearl = entryElement.querySelector('.timeline-pearl');
             gsap.to(pearl, {
                 scrollTrigger: {
