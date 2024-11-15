@@ -9,12 +9,33 @@ const portfolioData = {
         about: "CS@UCR with a Minor in Management: Strategy & Entrepreneurship | President & Co-Founder AI@UCR | Part-Time SWE@Mobivolt LLC | AMD Pervasive AI Winner"
     },
     timeline: [
+        // Ongoing entries first
+        {
+            id: "mobivolt-swe",
+            title: "Part-Time Software Engineer at Mobivolt LLC",
+            date: "2023-06",
+            endDate: "present",
+            type: "experience",
+            description: "Developed real-time control and visualization software for hardware systems, boosting operational efficiency by 65%. Designed firmware to monitor and visualize system parameters such as voltage, temperature, and pressure. Created advanced data processing algorithms to enhance measurement accuracy by 30%.",
+            techStack: ["WPF", "C#", "Arduino", "Python"]
+        },
+        {
+            id: "ai-club-president",
+            title: "President & Co-Founder - AI@UCR",
+            date: "2023-10",
+            endDate: "present",
+            type: "experience",
+            description: "Founded the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with industry experts, achieving a 45% increase in engagement. Designed an 8-topic AI curriculum including Neural Networks, Reinforcement Learning, and Clustering Algorithms.",
+            techStack: ["Leadership", "Curriculum Development", "Event Organization", "Team Building"]
+        },
+
+        // Entries sorted by descending end date
         {
             id: "portfolio-website",
             title: "Portfolio Website",
             date: "2024-11",
             type: "project",
-            description: "An Asian-inspired portfolio website showcasing skills and achievements. Built to run fast and simply without modern frameworks. Developed using HTML, CSS, and JavaScript.",
+            description: "Developed a personal portfolio website with an Asian-inspired design, showcasing skills and achievements. Built using HTML, CSS, and JavaScript to ensure high performance without modern frameworks.",
             techStack: ["HTML", "CSS", "JavaScript"],
             links: {
                 github: "https://github.com/mchen04/portfolio"
@@ -25,36 +46,18 @@ const portfolioData = {
             title: "FreqCreator",
             date: "2024-11",
             type: "project",
-            description: "A tool for creating automated social media content, including audio files, visualizations, and videos. Supports seamless customization, compression, and platform-specific optimizations. Integrates AI for high-quality outputs.",
-            techStack: [
-                "Python", 
-                "PIL", 
-                "MoviePy", 
-                "OpenAI API", 
-                "Google Drive API",
-                "SoundFile", 
-                "Lameenc"
-            ],
+            description: "Created a tool for generating and automating social media content, including audio files, visualizations, and videos. Features AI-driven customization and platform-specific optimizations.",
+            techStack: ["Python", "PIL", "MoviePy", "OpenAI API", "Google Drive API", "SoundFile", "Lameenc"],
             links: {
                 github: "https://github.com/mchen04/FreqCreator"
             }
         },
         {
             id: "amd-award",
-            title: "AMD University Award Category – Advancing AI Event",
+            title: "AMD University Award – Advancing AI Event",
             date: "2024-10",
             type: "award",
-            description: "Won AMD University Award, earning $2,500 and a sponsored trip to present at the AMD Advancing AI Event. Demonstrated real-time text-to-image generation using AMD GPUs and advanced AI models. Engaged with AI leaders like Dr. Lisa Su.",
-            techStack: [
-                "AMD MI210 GPUs",
-                "Generative AI",
-                "Stable Diffusion",
-                "ControlNet",
-                "PixArt Models",
-                "FreeStyle Models",
-                "ROCm Software",
-                "AMD Cloud"
-            ],
+            description: "Received the AMD University Award for the PHiLIP project, standing out among over 8,000 participants. Presented at the AMD Advancing AI Event, demonstrating real-time text-to-image generation using AMD MI210 GPUs.",
             links: {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
             }
@@ -64,7 +67,7 @@ const portfolioData = {
             title: "KeepingTabs",
             date: "2024-10",
             type: "project",
-            description: "A productivity tool for managing tabs and bookmarks with tagging, cloud sync, and memory optimization features. Integrates AI to generate tab previews and automate workflows. Actively expanding functionality.",
+            description: "Developed a productivity tool for efficient tab and bookmark management, featuring AI-generated previews, tagging, and cloud synchronization. Includes memory optimization through tab freezing and batch actions.",
             techStack: ["TypeScript", "React.js", "Firebase", "Google APIs"],
             links: {
                 github: "https://github.com/mchen04/KeepingTabs"
@@ -75,40 +78,32 @@ const portfolioData = {
             title: "News Genie",
             date: "2024-08",
             type: "project",
-            description: "An AI-powered news aggregator providing personalized recommendations and summaries. Integrates anti-hallucination features and Gemini API for advanced generative capabilities. Built for the Gemini API Developer Competition.",
-            techStack: [
-                "React.js",
-                "Next.js",
-                "Python",
-                "Flask",
-                "Firebase",
-                "Gemini API"
-            ],
+            description: "Built an AI-powered news aggregator offering personalized recommendations and summaries. Integrates anti-hallucination mechanisms and leverages the Gemini API for advanced generative capabilities.",
+            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API"],
             links: {
                 github: "https://github.com/mchen04/News-Genie"
             }
         },
         {
             id: "philip-project",
-            title: "PHiLIP: Personalized Human in Loop Image Production",
-            date: "2024-02",
-            endDate: "2024-06",
+            title: "PHiLIP: Personalized Human-in-the-Loop Image Production",
+            date: "2024-06",
             type: "project",
-            description: "An AI suite for text-to-image generation, style enhancements, and iterative refinement. Won AMD Pervasive AI University Contest and showcased at the AMD AI Event. Leveraged AMD MI210 GPUs and advanced AI models.",
-            techStack: [
-                "Python",
-                "Flask",
-                "PyTorch",
-                "PixArt Models",
-                "Freestyle Models",
-                "Stable Diffusion",
-                "ControlNet",
-                "AMD MI210 GPUs",
-                "ROCm Software",
-                "AMD Cloud"
-            ],
+            description: "Developed an AI-powered image generation suite offering text-to-image creation, iterative refinement, and style enhancements. Won the AMD Pervasive AI University Contest and showcased at the AMD AI Event.",
+            techStack: ["Python", "Flask", "PyTorch", "PixArt Models", "Freestyle Models", "Stable Diffusion", "ControlNet"],
             links: {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
+            }
+        },
+        {
+            id: "unsupervised-learning-cert",
+            title: "Unsupervised Learning, Recommenders, and Reinforcement Learning",
+            date: "2023-10",
+            type: "certification",
+            description: "Learned clustering, recommender systems, and reinforcement learning techniques. Completed as part of the Machine Learning Specialization.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
             }
         },
         {
@@ -116,21 +111,32 @@ const portfolioData = {
             title: "MafWay",
             date: "2023-05",
             type: "project",
-            description: "A web app for handwritten math recognition with 98% accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions. Trained on over 375,000 images with advanced preprocessing techniques.",
+            description: "A web app for handwritten math recognition with 98% accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions.",
             techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
             }
         },
         {
-            id: "carbon-emissions",
-            title: "Carbon Emissions Map",
-            date: "2022-11",
-            type: "project",
-            description: "An interactive dashboard visualizing state-level carbon emissions in the US. Used gradients of red to represent emission severity. Built for data-driven environmental insights.",
-            techStack: ["JavaScript", "HTML", "CSS"],
+            id: "advanced-algorithms-cert",
+            title: "Advanced Learning Algorithms",
+            date: "2023-05",
+            type: "certification",
+            description: "Mastered neural networks, decision trees, and ensemble methods. Applied TensorFlow and XGBoost for advanced machine learning tasks.",
+            issuer: "Coursera (DeepLearning.AI)",
             links: {
-                github: "https://github.com/mchen04/Carbon-Emmisions-Map"
+                verify: "https://coursera.org/verify/U33T2QRT8MFC"
+            }
+        },
+        {
+            id: "ml-regression-cert",
+            title: "Supervised Machine Learning: Regression and Classification",
+            date: "2023-02",
+            type: "certification",
+            description: "Learned supervised learning techniques including linear and logistic regression. Implemented models using scikit-learn and NumPy.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/RDHD7AHGBYYH"
             }
         },
         {
@@ -138,12 +144,33 @@ const portfolioData = {
             title: "Scraping PDF - UCR Catalog",
             date: "2023-01",
             type: "project",
-            description: "A Python script for extracting course details from UCR's catalog PDFs. Retrieves prerequisites, credits, timings, and more. Streamlines data retrieval for students and advisors.",
+            description: "A Python script for extracting course details from UCR's catalog PDFs. Retrieves prerequisites, credits, timings, and more.",
             techStack: ["Python", "PyPDF2"],
             links: {
                 github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog"
             }
-        }
+        },
+        {
+            id: "cutiehack-sustainability-award",
+            title: "CutieHack Sustainability Award",
+            date: "2022-11",
+            type: "award",
+            description: "Recognized with the Sustainability Award at CutieHack for developing the Carbon Emissions Map.",
+            links: {
+                project: "https://devpost.com/software/2020-us-energy-based-carbon-emissions-by-state-map"
+            }
+        },
+        {
+            id: "carbon-emissions",
+            title: "Carbon Emissions Map",
+            date: "2022-11",
+            type: "project",
+            description: "An interactive dashboard visualizing state-level carbon emissions in the US. Used gradients of red to represent emission severity.",
+            techStack: ["JavaScript", "HTML", "CSS"],
+            links: {
+                github: "https://github.com/mchen04/Carbon-Emmisions-Map"
+            }
+        },
     ],
     skills: {
         "Programming Languages": [
