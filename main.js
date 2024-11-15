@@ -4,63 +4,11 @@ gsap.registerPlugin(ScrollTrigger);
 class PortfolioManager {
     constructor() {
         this.currentSection = 'home';
-        this.threeScene = null;
-        this.initializeThreeJS();
         this.initializeNavigation();
         this.initializeHeroAnimations();
         this.initializeTimeline();
         this.initializeSkills();
         this.initializeSectionAnimations();
-    }
-
-    initializeThreeJS() {
-        const canvas = document.getElementById('three-canvas');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        // Create geometric particles
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 1000;
-        const positions = new Float32Array(particlesCount * 3);
-
-        for(let i = 0; i < particlesCount * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 10;
-        }
-
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.02,
-            color: '#00A86B',
-            transparent: true,
-            opacity: 0.5
-        });
-
-        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particles);
-
-        camera.position.z = 5;
-
-        const animate = () => {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.001;
-            particles.rotation.x += 0.001;
-            renderer.render(scene, camera);
-        };
-
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        this.threeScene = { scene, camera, renderer, particles };
     }
 
     initializeNavigation() {
@@ -122,64 +70,19 @@ class PortfolioManager {
             opacity: 0,
             ease: 'power3.out'
         }, '-=0.5');
-
-        // Animate ink brush strokes
-        const paths = document.querySelectorAll('.ink-brush path');
-        paths.forEach((path, index) => {
-            const length = path.getTotalLength();
-            gsap.set(path, {
-                strokeDasharray: length,
-                strokeDashoffset: length,
-                opacity: 0.1
-            });
-
-            gsap.to(path, {
-                strokeDashoffset: 0,
-                duration: 2,
-                delay: index * 0.5,
-                ease: 'power2.out'
-            });
-        });
-    }
-
-    createDragonPath() {
-        const container = document.querySelector('.timeline-container');
-        const svg = document.querySelector('.timeline-dragon');
-        const width = container.offsetWidth;
-        const height = container.offsetHeight;
-
-        // Create a snaking path that resembles a dragon's body
-        const numPoints = Math.ceil(height / 200);
-        const points = [];
-        const amplitude = width * 0.3;
-
-        for (let i = 0; i < numPoints; i++) {
-            const y = (i / (numPoints - 1)) * height;
-            const x = Math.sin((i / (numPoints - 1)) * Math.PI * 2) * amplitude + width / 2;
-            points.push(`${x},${y}`);
-        }
-
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', `M ${points.join(' L ')}`);
-        path.setAttribute('stroke', '#00A86B');
-        path.setAttribute('stroke-width', '4');
-        path.setAttribute('fill', 'none');
-        path.setAttribute('opacity', '0.2');
-
-        svg.appendChild(path);
-        return path;
     }
 
     initializeTimeline() {
         const timeline = document.querySelector('.timeline');
-        const dragonPath = this.createDragonPath();
-        
         const sortedEntries = [...portfolioData.timeline].sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateB - dateA;
         });
 
+        // Clear existing entries
+        timeline.innerHTML = '';
+        
         sortedEntries.forEach((entry, index) => {
             const entryElement = document.createElement('div');
             entryElement.className = 'timeline-entry';
@@ -190,15 +93,13 @@ class PortfolioManager {
 
             entryElement.innerHTML = `
                 <div class="timeline-pearl"></div>
-                <div class="entry-content">
-                    <div class="entry-header">
-                        <h3 class="entry-title">${entry.title}</h3>
-                        <span class="entry-date">${dateDisplay}</span>
-                    </div>
-                    <p class="entry-description">${entry.description}</p>
-                    ${this.renderTechStack(entry.techStack)}
-                    ${this.renderLinks(entry.links || {})}
+                <div class="entry-header">
+                    <h3 class="entry-title">${entry.title}</h3>
+                    <span class="entry-date">${dateDisplay}</span>
                 </div>
+                <p class="entry-description">${entry.description}</p>
+                ${this.renderTechStack(entry.techStack)}
+                ${this.renderLinks(entry.links || {})}
             `;
 
             timeline.appendChild(entryElement);
@@ -216,25 +117,16 @@ class PortfolioManager {
                     toggleActions: 'play none none reverse'
                 }
             });
-        });
 
-        // Animate dragon path
-        const pathLength = dragonPath.getTotalLength();
-        gsap.set(dragonPath, {
-            strokeDasharray: pathLength,
-            strokeDashoffset: pathLength
-        });
-
-        gsap.to(dragonPath, {
-            strokeDashoffset: 0,
-            duration: 2,
-            ease: 'power2.out',
-            scrollTrigger: {
-                trigger: '.timeline',
-                start: 'top center',
-                end: 'bottom bottom',
-                toggleActions: 'play none none reverse'
-            }
+            // Animate pearl
+            const pearl = entryElement.querySelector('.timeline-pearl');
+            gsap.from(pearl, {
+                scale: 0,
+                opacity: 0,
+                duration: 0.5,
+                delay: index * 0.2 + 0.3,
+                ease: 'back.out(1.7)'
+            });
         });
     }
 
