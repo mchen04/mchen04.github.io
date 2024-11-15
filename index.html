@@ -7,7 +7,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            /* Traditional Chinese-inspired colors */
             --jade: #00A86B;
             --gold: #FFD700;
             --red: #FF4D4D;
@@ -15,7 +14,6 @@
             --ink-black: #1a1a1a;
             --paper-white: #F5F5F5;
             
-            /* UI Colors */
             --background: var(--ink-black);
             --text: var(--paper-white);
             --primary: var(--jade);
@@ -40,7 +38,6 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -65,9 +62,6 @@
             font-size: 1.5rem;
             color: var(--primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
         .nav-links {
@@ -81,29 +75,12 @@
             padding: 0.5rem 1rem;
             border-radius: 4px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
+        .nav-link:hover {
+            color: var(--primary);
         }
 
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -155,36 +132,6 @@
             50% { border-color: var(--primary); }
         }
 
-        /* Dragon Background */
-        .dragon-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .dragon-background svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .dragon-curve {
-            animation: flowDragon 30s infinite ease-in-out;
-        }
-
-        @keyframes flowDragon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(20px); }
-        }
-
-        /* Sections */
-        section {
-            padding: 6rem 2rem;
-        }
-
         .section-header {
             text-align: center;
             color: var(--primary);
@@ -192,7 +139,109 @@
             margin-bottom: 4rem;
         }
 
-        /* Skills Grid */
+        /* Timeline Section */
+        .timeline-section {
+            position: relative;
+            padding: 6rem 2rem;
+            overflow: hidden;
+        }
+
+        .timeline-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: calc(100% - 4rem);
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            top: 0;
+            left: 2rem;
+        }
+
+        .timeline-entry {
+            width: 350px;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .timeline-entry::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50%;
+            top: -2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .timeline-entry::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2rem;
+            background: var(--primary);
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .entry-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .entry-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 168, 107, 0.2);
+        }
+
+        .timeline-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            padding: 6rem 2rem;
+        }
+
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -202,10 +251,9 @@
         }
 
         .skill-category {
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
             padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
 
@@ -231,14 +279,14 @@
 
         .skill-bar {
             height: 8px;
-            background-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             overflow: hidden;
         }
 
         .skill-progress {
             height: 100%;
-            background-color: var(--primary);
+            background: var(--primary);
             transform-origin: left;
             transform: scaleX(0);
             transition: transform 1s ease-out;
@@ -246,6 +294,7 @@
 
         /* Contact Section */
         .contact-container {
+            padding: 6rem 2rem;
             text-align: center;
         }
 
@@ -262,7 +311,7 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -275,11 +324,10 @@
 
         .social-link:hover {
             transform: translateY(-5px);
-            background-color: var(--primary);
+            background: var(--primary);
             color: var(--background);
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -293,12 +341,8 @@
                 font-size: 1.2rem;
             }
 
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .social-links {
-                flex-wrap: wrap;
+            .timeline-entry {
+                width: 100%;
             }
 
             @keyframes typing {
@@ -325,6 +369,7 @@
             <a href="#" class="nav-logo">Michael Chen</a>
             <div class="nav-links">
                 <a href="#home" class="nav-link">Home</a>
+                <a href="#timeline" class="nav-link">Timeline</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
@@ -332,29 +377,26 @@
     </nav>
 
     <section id="home" class="hero">
-        <div class="dragon-background">
-            <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="dragon-scales" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M0 20c5-10 15-10 20 0s15 10 20 0" 
-                              fill="none" 
-                              stroke="#00A86B" 
-                              stroke-width="0.5" 
-                              opacity="0.2"/>
-                    </pattern>
-                </defs>
-                <path class="dragon-curve" 
-                      d="M100,300 Q200,100 400,300 T700,300" 
-                      fill="none" 
-                      stroke="#00A86B" 
-                      stroke-width="1" 
-                      opacity="0.1"/>
-                <rect width="100%" height="100%" fill="url(#dragon-scales)" opacity="0.05"/>
-            </svg>
-        </div>
         <div class="hero-content">
             <h1 class="typewriter">Hi, I'm Michael Chen</h1>
             <p>A Computer Science major blending technology and creativity</p>
+        </div>
+    </section>
+
+    <section id="timeline" class="timeline-section">
+        <h2 class="section-header">My Journey</h2>
+        <div class="timeline-container">
+            <div class="timeline-filters">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="project">Projects</button>
+                <button class="filter-button" data-filter="experience">Experience</button>
+                <button class="filter-button" data-filter="education">Education</button>
+                <button class="filter-button" data-filter="certification">Certifications</button>
+                <button class="filter-button" data-filter="award">Awards</button>
+            </div>
+            <div class="timeline">
+                <!-- Timeline entries will be dynamically added here -->
+            </div>
         </div>
     </section>
 

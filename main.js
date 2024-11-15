@@ -4,9 +4,9 @@ gsap.registerPlugin(ScrollTrigger);
 class PortfolioAnimator {
     constructor() {
         this.initializeHeroAnimations();
+        this.initializeTimeline();
         this.initializeSkills();
         this.initializeScrollAnimations();
-        this.initializeParticles();
         this.initializeNavigation();
     }
 
@@ -19,32 +19,117 @@ class PortfolioAnimator {
             ease: 'power3.out',
             delay: 0.5
         });
+    }
 
-        // Animate dragon background on mouse move
-        document.addEventListener('mousemove', (e) => {
-            const dragon = document.querySelector('.dragon-background');
-            if (!dragon) return;
+    initializeTimeline() {
+        const timelineContainer = document.querySelector('.timeline');
+        const filterButtons = document.querySelectorAll('.filter-button');
 
-            const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
-            const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+        // Sort entries by date
+        const sortedEntries = [...portfolioData.timeline].sort((a, b) => {
+            // Handle 'present' endDate
+            if (a.endDate === 'present') return -1;
+            if (b.endDate === 'present') return 1;
+            
+            // Compare dates
+            const dateA = new Date(a.endDate || a.date);
+            const dateB = new Date(b.endDate || b.date);
+            return dateB - dateA;
+        });
 
-            gsap.to(dragon, {
-                duration: 1,
-                x: mouseX,
-                y: mouseY,
-                rotation: mouseX * 0.05,
-                ease: 'power1.out'
+        // Render timeline entries
+        this.renderTimelineEntries(sortedEntries);
+
+        // Initialize filter functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                
+                // Update active button state
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Filter entries
+                const filteredEntries = filter === 'all' 
+                    ? sortedEntries 
+                    : sortedEntries.filter(entry => entry.type === filter);
+
+                this.renderTimelineEntries(filteredEntries);
             });
         });
+    }
 
-        // Animate dragon curves
-        gsap.to('.dragon-curve', {
-            duration: 20,
-            ease: 'none',
-            strokeDashoffset: 1000,
-            repeat: -1,
-            yoyo: true
+    renderTimelineEntries(entries) {
+        const timelineContainer = document.querySelector('.timeline');
+        timelineContainer.innerHTML = '';
+
+        entries.forEach((entry, index) => {
+            const entryElement = document.createElement('div');
+            entryElement.className = 'timeline-entry';
+            
+            // Format date display
+            const dateDisplay = entry.endDate 
+                ? `${this.formatDate(entry.date)} - ${entry.endDate === 'present' ? 'Present' : this.formatDate(entry.endDate)}`
+                : this.formatDate(entry.date);
+
+            // Create entry content
+            entryElement.innerHTML = `
+                <div class="entry-content ${entry.type}-entry">
+                    <div class="entry-header">
+                        <h3 class="entry-title">${entry.title}</h3>
+                        <span class="entry-date">${dateDisplay}</span>
+                    </div>
+                    <p class="entry-description">${entry.description}</p>
+                    ${this.renderTechStack(entry.techStack)}
+                    ${this.renderLinks(entry.links)}
+                </div>
+            `;
+
+            timelineContainer.appendChild(entryElement);
+
+            // Animate entry
+            gsap.from(entryElement, {
+                duration: 0.8,
+                opacity: 0,
+                y: 50,
+                delay: index * 0.1,
+                scrollTrigger: {
+                    trigger: entryElement,
+                    start: 'top bottom-=100',
+                    toggleActions: 'play none none reverse'
+                }
+            });
         });
+    }
+
+    renderTechStack(techStack) {
+        if (!techStack) return '';
+        return `
+            <div class="entry-tech">
+                ${techStack.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+            </div>
+        `;
+    }
+
+    renderLinks(links) {
+        if (!links) return '';
+        return `
+            <div class="entry-links">
+                ${Object.entries(links).map(([type, url]) => `
+                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="entry-link">
+                        <i class="fas fa-${type === 'github' ? 'github' : 
+                                       type === 'verify' ? 'certificate' : 
+                                       type === 'project' ? 'external-link-alt' : 'link'}"></i>
+                        ${type.charAt(0).toUpperCase() + type.slice(1)}
+                    </a>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', { month: 'long', year: 'numeric' });
     }
 
     initializeSkills() {
@@ -72,8 +157,7 @@ class PortfolioAnimator {
         });
 
         // Animate skill bars on scroll
-        const skillBars = document.querySelectorAll('.skill-progress');
-        skillBars.forEach(bar => {
+        document.querySelectorAll('.skill-progress').forEach(bar => {
             const level = bar.getAttribute('data-level');
             
             ScrollTrigger.create({
@@ -97,7 +181,6 @@ class PortfolioAnimator {
                 scrollTrigger: {
                     trigger: header,
                     start: 'top 80%',
-                    end: 'bottom 20%',
                     toggleActions: 'play none none reverse'
                 },
                 y: 50,
@@ -113,7 +196,6 @@ class PortfolioAnimator {
                 scrollTrigger: {
                     trigger: category,
                     start: 'top 80%',
-                    end: 'bottom 20%',
                     toggleActions: 'play none none reverse'
                 },
                 y: 50,
@@ -125,79 +207,8 @@ class PortfolioAnimator {
         });
     }
 
-    initializeParticles() {
-        particlesJS('particles-js', {
-            particles: {
-                number: {
-                    value: 80,
-                    density: {
-                        enable: true,
-                        value_area: 800
-                    }
-                },
-                color: {
-                    value: '#00A86B'
-                },
-                shape: {
-                    type: 'circle'
-                },
-                opacity: {
-                    value: 0.5,
-                    random: true,
-                    animation: {
-                        enable: true,
-                        speed: 1,
-                        opacity_min: 0.1,
-                        sync: false
-                    }
-                },
-                size: {
-                    value: 3,
-                    random: true,
-                    animation: {
-                        enable: true,
-                        speed: 2,
-                        size_min: 0.1,
-                        sync: false
-                    }
-                },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: '#00A86B',
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 1,
-                    direction: 'none',
-                    random: true,
-                    straight: false,
-                    out_mode: 'out',
-                    bounce: false
-                }
-            },
-            interactivity: {
-                detect_on: 'canvas',
-                events: {
-                    onhover: {
-                        enable: true,
-                        mode: 'repulse'
-                    },
-                    onclick: {
-                        enable: true,
-                        mode: 'push'
-                    },
-                    resize: true
-                }
-            },
-            retina_detect: true
-        });
-    }
-
     initializeNavigation() {
-        // Smooth scroll for navigation links
+        // Smooth scroll for navigation
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -213,14 +224,12 @@ class PortfolioAnimator {
             });
         });
 
-        // Highlight active navigation link
+        // Highlight active section in navigation
         const sections = document.querySelectorAll('section');
         window.addEventListener('scroll', () => {
             let current = '';
-            
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
                 if (pageYOffset >= sectionTop - 300) {
                     current = section.getAttribute('id');
                 }
@@ -234,7 +243,7 @@ class PortfolioAnimator {
             });
         });
 
-        // Social links hover animation
+        // Social links animation
         document.querySelectorAll('.social-link').forEach(link => {
             link.addEventListener('mouseenter', () => {
                 gsap.to(link, {
@@ -255,17 +264,12 @@ class PortfolioAnimator {
     }
 }
 
-// Initialize when DOM is loaded
+// Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new PortfolioAnimator();
 });
 
-// Handle loading state
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Handle resize events for responsive animations
+// Handle window resize events
 window.addEventListener('resize', () => {
     ScrollTrigger.refresh();
 });
