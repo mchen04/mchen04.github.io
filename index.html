@@ -86,6 +86,12 @@
             padding: 1.5rem;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .entry-content.expanded {
+            transform: scale(1.05);
         }
 
         .traditional-view {
@@ -113,6 +119,73 @@
             cursor: pointer;
         }
 
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            background: none;
+            color: var(--text);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background-color: var(--primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        .entry-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .entry-links a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .entry-links a:hover {
+            text-decoration: underline;
+        }
+
+        .type {
+            text-transform: capitalize;
+            color: var(--primary);
+            font-size: 0.875rem;
+        }
+
+        .category-entry {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--primary);
+        }
+
+        .category-entry:last-child {
+            border-bottom: none;
+        }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -136,6 +209,10 @@
                 width: calc(100% - 30px);
                 left: 30px !important;
             }
+
+            .filters {
+                flex-wrap: wrap;
+            }
         }
     </style>
 </head>
@@ -143,8 +220,8 @@
     <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
     
     <header>
-        <h1>John Doe</h1>
-        <p class="typewriter">Software Developer | Creative Thinker | Problem Solver</p>
+        <h1 id="name">John Doe</h1>
+        <p id="title" class="typewriter">Software Developer | Creative Thinker | Problem Solver</p>
     </header>
 
     <nav>
@@ -156,36 +233,22 @@
     <main>
         <section id="timeline" class="timeline">
             <!-- Timeline entries will be dynamically added here -->
-            <div class="timeline-entry">
-                <div class="entry-content">
-                    <h3>CutieHack – Carbon Emissions Map</h3>
-                    <p>November 2023</p>
-                    <p>Created an interactive map visualization for carbon emissions data...</p>
-                </div>
-            </div>
-            <div class="timeline-entry">
-                <div class="entry-content">
-                    <h3>AWS Certified Cloud Practitioner</h3>
-                    <p>October 2023</p>
-                    <p>Achieved AWS certification demonstrating cloud expertise...</p>
-                </div>
-            </div>
         </section>
 
         <section id="traditional" class="traditional-view">
-            <div class="category-card">
+            <div class="category-card" data-type="project">
                 <h2>Projects</h2>
                 <!-- Project entries will be dynamically added here -->
             </div>
-            <div class="category-card">
+            <div class="category-card" data-type="certification">
                 <h2>Certifications</h2>
                 <!-- Certification entries will be dynamically added here -->
             </div>
-            <div class="category-card">
+            <div class="category-card" data-type="experience">
                 <h2>Work Experience</h2>
                 <!-- Experience entries will be dynamically added here -->
             </div>
-            <div class="category-card">
+            <div class="category-card" data-type="education">
                 <h2>Education</h2>
                 <!-- Education entries will be dynamically added here -->
             </div>
@@ -201,7 +264,12 @@
         </div>
     </footer>
 
+    <script src="data.js"></script>
     <script>
+        // Initialize the portfolio renderer
+        const renderer = new PortfolioRenderer(portfolioData);
+        renderer.initialize();
+
         // Theme toggle functionality
         const themeToggle = document.querySelector('.theme-toggle');
         themeToggle.addEventListener('click', () => {
@@ -227,6 +295,10 @@
                 }
             });
         });
+
+        // Update personal info
+        document.getElementById('name').textContent = portfolioData.personalInfo.name;
+        document.getElementById('title').textContent = portfolioData.personalInfo.tagline;
     </script>
 </body>
 </html>
