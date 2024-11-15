@@ -387,14 +387,20 @@ body {
     .nav-links {
         margin-top: 1rem;
         gap: 1rem;
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero-content h1 {
         font-size: 2.5rem;
     }
 
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
     .timeline-entry {
-        width: 80%;
+        width: 90%;
     }
 
     .skills-grid {
@@ -404,6 +410,18 @@ body {
     .section {
         padding: 100px 1rem 2rem;
     }
+
+    .social-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -411,20 +429,7 @@ body {
         --nav-height: 120px;
     }
 
-    .nav-links {
-        flex-direction: column;
-        align-items: center;
-    }
-
     .hero-content h1 {
         font-size: 2rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.2rem;
-    }
-
-    .social-links {
-        gap: 1rem;
     }
 }
