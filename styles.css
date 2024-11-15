@@ -149,6 +149,9 @@ body {
     position: relative;
     padding: 2rem 0;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .timeline::before {
@@ -162,12 +165,6 @@ body {
     background-color: var(--timeline-line);
 }
 
-.timeline::after {
-    content: '';
-    clear: both;
-    display: table;
-}
-
 .timeline-entry {
     position: relative;
     margin: 4rem 0;
@@ -176,33 +173,13 @@ body {
     border: 1px solid var(--timeline-line);
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    width: 40%;
-}
-
-.timeline-entry:nth-child(odd) {
-    float: left;
-    clear: both;
-    transform: translateX(-50%);
-}
-
-.timeline-entry:nth-child(even) {
-    float: right;
-    transform: translateX(50%);
-}
-
-.timeline-entry:nth-child(odd) .timeline-pearl {
-    right: -58px;
-    left: auto;
-}
-
-.timeline-entry:nth-child(even) .timeline-pearl {
-    left: -58px;
+    width: 60%;
 }
 
 .timeline-pearl {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 16px;
     height: 16px;
     background-color: var(--pearl-color);
@@ -214,7 +191,8 @@ body {
 .entry-type {
     position: absolute;
     top: -12px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--bg-primary);
     color: var(--accent);
     padding: 0.25rem 1rem;
@@ -410,32 +388,8 @@ body {
         font-size: 2.5rem;
     }
 
-    .timeline::before {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
     .timeline-entry {
-        width: 40%;
-        float: right;
-        margin: 2rem 0;
-        transform: translateX(50%);
-    }
-
-    .timeline-entry:nth-child(odd) {
-        float: left;
-        transform: translateX(-50%);
-    }
-
-    .timeline-entry:nth-child(even) {
-        float: right;
-        transform: translateX(50%);
-    }
-
-    .timeline-entry:nth-child(odd) .timeline-pearl,
-    .timeline-entry:nth-child(even) .timeline-pearl {
-        left: -44px;
-        right: auto;
+        width: 80%;
     }
 
     .skills-grid {
