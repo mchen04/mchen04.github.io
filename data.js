@@ -57,7 +57,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/FreqCreator"
             },
             media: [
-                { type: "video", url: "https://youtu.be/GWTLKKbYzwc" }
+                { type: "youtube", url: "https://www.youtube.com/embed/GWTLKKbYzwc" }
             ]
         },
         {
@@ -96,7 +96,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/News-Genie"
             },
             media: [
-                { type: "video", url: "https://youtu.be/oCNbbrOpNEU?si=2D2wfXf040lXzBVa" }
+                { type: "youtube", url: "https://www.youtube.com/embed/oCNbbrOpNEU" }
             ]
         },
         {
@@ -110,7 +110,7 @@ const portfolioData = {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
             },
             media: [
-                { type: "video", url: "https://www.youtube.com/watch?v=lK-Dw5Fcrds" }
+                { type: "youtube", url: "https://www.youtube.com/embed/lK-Dw5Fcrds" }
             ]
         },
         {
@@ -217,7 +217,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/Carbon-Emmisions-Map"
             },
             media: [
-                { type: "video", url: "https://www.youtube.com/watch?v=osbiSP4x4OE" }
+                { type: "youtube", url: "https://www.youtube.com/embed/osbiSP4x4OE" }
             ]
         },
     ],
