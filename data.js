@@ -122,7 +122,10 @@ const portfolioData = {
             issuer: "Coursera (DeepLearning.AI)",
             links: {
                 verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
-            }
+            },
+            media: [
+                { type: "image", url: "media/images/certifications/Coursera_ Unsupervised Learning, Recommenders, Reinforcement Learning (Michael Chen).pdf" }
+            ]
         },
         {
             id: "modded-word-hunt",
@@ -163,7 +166,10 @@ const portfolioData = {
             issuer: "Coursera (DeepLearning.AI)",
             links: {
                 verify: "https://coursera.org/verify/U33T2QRT8MFC"
-            }
+            },
+            media: [
+                { type: "image", url: "media/images/certifications/Coursera_ Advanced Learning Algorithms (Michael Chen).pdf" }
+            ]
         },
         {
             id: "ml-regression-cert",
@@ -174,7 +180,10 @@ const portfolioData = {
             issuer: "Coursera (DeepLearning.AI)",
             links: {
                 verify: "https://coursera.org/verify/RDHD7AHGBYYH"
-            }
+            },
+            media: [
+                { type: "image", url: "media/images/certifications/Coursera_ Supervised Machine Learning_ Regression and Classification (Michael Chen).pdf" }
+            ]
         },
         {
             id: "pdf-scraper",
