@@ -124,7 +124,7 @@ const portfolioData = {
                 verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
             },
             media: [
-                { type: "image", url: "media/images/certifications/Unsupervised_ML.pdf" }
+                { type: "image", url: "media/images/certifications/Unsupervised_ML.png" }
             ]
         },
         {
@@ -168,7 +168,7 @@ const portfolioData = {
                 verify: "https://coursera.org/verify/U33T2QRT8MFC"
             },
             media: [
-                { type: "image", url: "media/images/certifications/Advanced_Learning_Algo.pdf" }
+                { type: "image", url: "media/images/certifications/Advanced_Learning_Algo.png" }
             ]
         },
         {
@@ -182,7 +182,7 @@ const portfolioData = {
                 verify: "https://coursera.org/verify/RDHD7AHGBYYH"
             },
             media: [
-                { type: "image", url: "media/images/certifications/Supervised_ML.pdf" }
+                { type: "image", url: "media/images/certifications/Supervised_ML.png" }
             ]
         },
         {
