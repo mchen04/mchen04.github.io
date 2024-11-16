@@ -204,7 +204,7 @@ class PortfolioManager {
                 // Handle media loading and errors
                 const slides = entryElement.querySelectorAll('.swiper-slide');
                 slides.forEach(slide => {
-                    const media = slide.querySelector('img, iframe');
+                    const media = slide.querySelector('img, video, iframe');
                     if (media) {
                         media.addEventListener('load', () => {
                             media.classList.add('loaded');
@@ -215,8 +215,8 @@ class PortfolioManager {
                             slide.classList.add('error');
                         });
 
-                        // For iframes (YouTube), add loaded class after a delay
-                        if (media.tagName === 'IFRAME') {
+                        // For iframes (YouTube) and videos, add loaded class after a delay
+                        if (media.tagName === 'IFRAME' || media.tagName === 'VIDEO') {
                             setTimeout(() => {
                                 media.classList.add('loaded');
                                 slide.classList.remove('error');
@@ -228,7 +228,7 @@ class PortfolioManager {
                 // Update Swiper on media load
                 swiper.on('slideChange', () => {
                     const activeSlide = slides[swiper.activeIndex];
-                    const media = activeSlide.querySelector('img, iframe');
+                    const media = activeSlide.querySelector('img, video, iframe');
                     if (media && !media.classList.contains('loaded')) {
                         media.src = media.src;
                     }
@@ -275,6 +275,15 @@ class PortfolioManager {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen>
                         </iframe>
+                    </div>
+                `;
+            } else if (item.type === 'video') {
+                return `
+                    <div class="swiper-slide">
+                        <video controls playsinline>
+                            <source src="${item.url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 `;
             } else if (item.type === 'image') {
