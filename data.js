@@ -17,7 +17,17 @@ const portfolioData = {
             endDate: "present",
             type: "experience",
             description: "Developed real-time control and visualization software for hardware systems, boosting operational efficiency by 65%. Designed firmware to monitor and visualize system parameters such as voltage, temperature, and pressure. Created advanced data processing algorithms to enhance measurement accuracy by 30%.",
-            techStack: ["WPF", "C#", "Arduino", "Python"]
+            techStack: ["WPF", "C#", "Arduino", "Python"],
+            media: [
+                {
+                    type: "image",
+                    url: "https://picsum.photos/800/600?random=1"
+                },
+                {
+                    type: "image",
+                    url: "https://picsum.photos/800/600?random=2"
+                }
+            ]
         },
         {
             id: "ai-club-president",
@@ -26,10 +36,18 @@ const portfolioData = {
             endDate: "present",
             type: "experience",
             description: "Founded the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with industry experts, achieving a 45% increase in engagement. Designed an 8-topic AI curriculum including Neural Networks, Reinforcement Learning, and Clustering Algorithms.",
-            techStack: ["Leadership", "Curriculum Development", "Event Organization", "Team Building"]
+            techStack: ["Leadership", "Curriculum Development", "Event Organization", "Team Building"],
+            media: [
+                {
+                    type: "youtube",
+                    url: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                },
+                {
+                    type: "image",
+                    url: "https://picsum.photos/800/600?random=3"
+                }
+            ]
         },
-
-        // Entries sorted by descending end date
         {
             id: "portfolio-website",
             title: "Portfolio Website",
@@ -39,7 +57,13 @@ const portfolioData = {
             techStack: ["HTML", "CSS", "JavaScript"],
             links: {
                 github: "https://github.com/mchen04/mchen04.github.io"
-            }
+            },
+            media: [
+                {
+                    type: "image",
+                    url: "https://picsum.photos/800/600?random=4"
+                }
+            ]
         },
         {
             id: "freqcreator",

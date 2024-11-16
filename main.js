@@ -148,6 +148,7 @@ class PortfolioManager {
         sortedEntries.forEach((entry, index) => {
             const entryElement = document.createElement('div');
             entryElement.className = 'timeline-entry';
+            entryElement.id = entry.id;
             
             if (entry.type) {
                 entryElement.setAttribute('data-type', entry.type);
@@ -157,6 +158,11 @@ class PortfolioManager {
                 ? `${this.formatDate(entry.date)} - ${entry.endDate === 'present' ? 'Present' : this.formatDate(entry.endDate)}`
                 : this.formatDate(entry.date);
 
+            let mediaCarousel = '';
+            if (entry.media && entry.media.length > 0) {
+                mediaCarousel = this.createMediaCarousel(entry.media, entry.id);
+            }
+
             entryElement.innerHTML = `
                 <div class="timeline-pearl"></div>
                 ${entry.type ? `<span class="entry-type">${entry.type}</span>` : ''}
@@ -165,11 +171,69 @@ class PortfolioManager {
                     <span class="entry-date">${dateDisplay}</span>
                 </div>
                 <p class="entry-description">${entry.description}</p>
+                ${mediaCarousel}
                 ${this.renderTechStack(entry.techStack)}
                 ${this.renderLinks(entry.links || {})}
             `;
 
             timeline.appendChild(entryElement);
+
+            // Initialize Swiper if media exists
+            if (entry.media && entry.media.length > 0) {
+                const hasMultipleSlides = entry.media.length > 1;
+                const swiper = new Swiper(`#swiper-${entry.id}`, {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    loop: hasMultipleSlides,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        dynamicBullets: hasMultipleSlides
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                        enabled: hasMultipleSlides
+                    },
+                    autoplay: hasMultipleSlides ? {
+                        delay: 5000,
+                        disableOnInteraction: false
+                    } : false
+                });
+
+                // Handle media loading and errors
+                const slides = entryElement.querySelectorAll('.swiper-slide');
+                slides.forEach(slide => {
+                    const media = slide.querySelector('img, iframe');
+                    if (media) {
+                        media.addEventListener('load', () => {
+                            media.classList.add('loaded');
+                            slide.classList.remove('error');
+                        });
+
+                        media.addEventListener('error', () => {
+                            slide.classList.add('error');
+                        });
+
+                        // For iframes (YouTube), add loaded class after a delay
+                        if (media.tagName === 'IFRAME') {
+                            setTimeout(() => {
+                                media.classList.add('loaded');
+                                slide.classList.remove('error');
+                            }, 1000);
+                        }
+                    }
+                });
+
+                // Update Swiper on media load
+                swiper.on('slideChange', () => {
+                    const activeSlide = slides[swiper.activeIndex];
+                    const media = activeSlide.querySelector('img, iframe');
+                    if (media && !media.classList.contains('loaded')) {
+                        media.src = media.src;
+                    }
+                });
+            }
 
             // Animate entry
             gsap.from(entryElement, {
@@ -196,6 +260,45 @@ class PortfolioManager {
                 ease: 'power1.inOut'
             });
         });
+    }
+
+    createMediaCarousel(media, entryId) {
+        if (!media || media.length === 0) return '';
+
+        const slides = media.map(item => {
+            if (item.type === 'youtube') {
+                return `
+                    <div class="swiper-slide">
+                        <iframe 
+                            src="${item.url}" 
+                            title="YouTube video player" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                `;
+            } else if (item.type === 'image') {
+                return `
+                    <div class="swiper-slide">
+                        <img src="${item.url}" alt="Project media" loading="lazy">
+                    </div>
+                `;
+            }
+            return '';
+        }).join('');
+
+        return `
+            <div class="media-carousel">
+                <div class="swiper" id="swiper-${entryId}">
+                    <div class="swiper-wrapper">
+                        ${slides}
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        `;
     }
 
     initializeSkills() {
