@@ -31,14 +31,8 @@ const portfolioData = {
                 github: "https://ai-ucr.ucrhighlanders.org/projects"
             },
             media: [
-                {
-                    type: "image",
-                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r"
-                },
-                {
-                    type: "image",
-                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r"
-                }
+                { type: "image", url: "media/images/ai@ucr/AI@UCR_NameTags_at_Competition.png" },
+                { type: "image", url: "media/images/ai@ucr/AI@UCR_Workshop1.png" }
             ]
         },
         {
@@ -63,10 +57,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/FreqCreator"
             },
             media: [
-                {
-                    type: "video",
-                    url: "https://drive.google.com/file/d/1riT_dbxgjvwWAH1pv3A5FAdckdm_fSKZ/view?usp=drive_link"
-                }
+                { type: "video", url: "media/videos/freq-creator/70Hz.mp4" }
             ]
         },
         {
@@ -79,14 +70,8 @@ const portfolioData = {
                 project: "https://www.hackster.io/contests/amd2023#category-1092"
             },
             media: [
-                {
-                    type: "image",
-                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r", 
-                },
-                {
-                    type: "image",
-                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r", 
-                }
+                { type: "image", url: "media/images/amd-award/amd-award-main-photo.png" },
+                { type: "image", url: "media/images/amd-award/amd-award-second-photo.png" }
             ]
         },
         {
@@ -109,7 +94,10 @@ const portfolioData = {
             techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API"],
             links: {
                 github: "https://github.com/mchen04/News-Genie"
-            }
+            },
+            media: [
+                { type: "video", url: "media/videos/newgenie/newgenie-demo.mp4" }
+            ]
         },
         {
             id: "philip-project",
@@ -122,10 +110,7 @@ const portfolioData = {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
             },
             media: [
-                {
-                    type: "video",
-                    url: "https://www.youtube.com/watch?v=lK-Dw5Fcrds", 
-                }
+                { type: "video", url: "media/videos/philip/philip-demo.mp4" }
             ]
         },
         {
@@ -150,14 +135,12 @@ const portfolioData = {
                 github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
             },
             media: [
-                {
-                    type: "image",
-                    url: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt/blob/main/main_menu.gif"
-                },
-                {
-                    type: "image",
-                    url: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt/blob/main/Images/Settings.PNG"
-                }
+                { type: "image", url: "media/images/word-hunt/word-hunt-default-board.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-expanded-board.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-menu.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-score-screen.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-settings.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-tests.png" }
             ]
         },
         {
@@ -225,10 +208,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/Carbon-Emmisions-Map"
             },
             media: [
-                {
-                    type: "video",
-                    url: "https://www.youtube.com/watch?v=osbiSP4x4OE", 
-                }
+                { type: "video", url: "media/videos/carbon-emissions-map/carbon-emissions-map-demo.mp4" }
             ]
         },
     ],
