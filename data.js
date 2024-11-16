@@ -135,11 +135,11 @@ const portfolioData = {
                 github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
             },
             media: [
+                { type: "image", url: "media/images/word-hunt/word-hunt-menu.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-settings.png" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-default-board.png" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-expanded-board.png" },
-                { type: "image", url: "media/images/word-hunt/word-hunt-menu.png" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-score-screen.png" },
-                { type: "image", url: "media/images/word-hunt/word-hunt-settings.png" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-tests.png" }
             ]
         },

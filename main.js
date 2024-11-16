@@ -280,7 +280,7 @@ class PortfolioManager {
             } else if (item.type === 'video') {
                 return `
                     <div class="swiper-slide">
-                        <video controls playsinline>
+                        <video controls playsinline muted>
                             <source src="${item.url}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
