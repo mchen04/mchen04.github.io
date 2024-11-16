@@ -18,16 +18,6 @@ const portfolioData = {
             type: "experience",
             description: "Developed real-time control and visualization software for hardware systems, boosting operational efficiency by 65%. Designed firmware to monitor and visualize system parameters such as voltage, temperature, and pressure. Created advanced data processing algorithms to enhance measurement accuracy by 30%.",
             techStack: ["WPF", "C#", "Arduino", "Python"],
-            media: [
-                {
-                    type: "image",
-                    url: "https://picsum.photos/800/600?random=1"
-                },
-                {
-                    type: "image",
-                    url: "https://picsum.photos/800/600?random=2"
-                }
-            ]
         },
         {
             id: "ai-club-president",
@@ -37,14 +27,17 @@ const portfolioData = {
             type: "experience",
             description: "Founded the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with industry experts, achieving a 45% increase in engagement. Designed an 8-topic AI curriculum including Neural Networks, Reinforcement Learning, and Clustering Algorithms.",
             techStack: ["Leadership", "Curriculum Development", "Event Organization", "Team Building"],
+            links: {
+                github: "https://ai-ucr.ucrhighlanders.org/projects"
+            },
             media: [
                 {
-                    type: "youtube",
-                    url: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                    type: "image",
+                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r"
                 },
                 {
                     type: "image",
-                    url: "https://picsum.photos/800/600?random=3"
+                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r"
                 }
             ]
         },
@@ -58,12 +51,6 @@ const portfolioData = {
             links: {
                 github: "https://github.com/mchen04/mchen04.github.io"
             },
-            media: [
-                {
-                    type: "image",
-                    url: "https://picsum.photos/800/600?random=4"
-                }
-            ]
         },
         {
             id: "freqcreator",
@@ -74,7 +61,13 @@ const portfolioData = {
             techStack: ["Python", "PIL", "MoviePy", "OpenAI API", "Google Drive API", "SoundFile", "Lameenc"],
             links: {
                 github: "https://github.com/mchen04/FreqCreator"
-            }
+            },
+            media: [
+                {
+                    type: "video",
+                    url: "https://drive.google.com/file/d/1riT_dbxgjvwWAH1pv3A5FAdckdm_fSKZ/view?usp=drive_link"
+                }
+            ]
         },
         {
             id: "amd-award",
@@ -83,8 +76,18 @@ const portfolioData = {
             type: "award",
             description: "Received the AMD University Award for the PHiLIP project, standing out among over 8,000 participants. Presented at the AMD Advancing AI Event, demonstrating real-time text-to-image generation using AMD MI210 GPUs.",
             links: {
-                project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
-            }
+                project: "https://www.hackster.io/contests/amd2023#category-1092"
+            },
+            media: [
+                {
+                    type: "image",
+                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r", 
+                },
+                {
+                    type: "image",
+                    url: "https://drive.google.com/drive/u/0/folders/15bSQrLK8yBjJMSDPsplZLnoBR3UjHA7r", 
+                }
+            ]
         },
         {
             id: "keepingtabs",
@@ -117,7 +120,13 @@ const portfolioData = {
             techStack: ["Python", "Flask", "PyTorch", "PixArt Models", "Freestyle Models", "Stable Diffusion", "ControlNet"],
             links: {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
-            }
+            },
+            media: [
+                {
+                    type: "video",
+                    url: "https://www.youtube.com/watch?v=lK-Dw5Fcrds", 
+                }
+            ]
         },
         {
             id: "unsupervised-learning-cert",
@@ -129,6 +138,27 @@ const portfolioData = {
             links: {
                 verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
             }
+        },
+        {
+            id: "modded-word-hunt",
+            title: "Modded Word Hunt",
+            date: "2023-06",
+            type: "project",
+            description: "A C++ adaptation of the classic Word Hunt game with enhanced features like customizable grids, power-ups, and advanced scoring mechanics. Includes a hint system, custom sound effects, and an interactive UI for an engaging user experience.",
+            techStack: ["C++", "CMake", "SFML", "Git", "Google Test", "Valgrind"],
+            links: {
+                github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
+            },
+            media: [
+                {
+                    type: "image",
+                    url: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt/blob/main/main_menu.gif"
+                },
+                {
+                    type: "image",
+                    url: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt/blob/main/Images/Settings.PNG"
+                }
+            ]
         },
         {
             id: "mafway",
@@ -193,7 +223,13 @@ const portfolioData = {
             techStack: ["JavaScript", "HTML", "CSS"],
             links: {
                 github: "https://github.com/mchen04/Carbon-Emmisions-Map"
-            }
+            },
+            media: [
+                {
+                    type: "video",
+                    url: "https://www.youtube.com/watch?v=osbiSP4x4OE", 
+                }
+            ]
         },
     ],
     skills: {
