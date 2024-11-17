@@ -151,7 +151,7 @@ const portfolioData = {
             title: "MafWay",
             date: "2023-05",
             type: "project",
-            description: "A web app for handwritten math recognition with 98% accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions.",
+            description: "A web app for handwritten math recognition with 98% cross-validation accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions.",
             techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
@@ -204,7 +204,10 @@ const portfolioData = {
             description: "Recognized with the Sustainability Award at CutieHack for developing the Carbon Emissions Map.",
             links: {
                 project: "https://devpost.com/software/2020-us-energy-based-carbon-emissions-by-state-map"
-            }
+            },
+            media: [
+                { type: "image", url: "media/images/cutiehack-2022/cutiehack-award.png" }
+            ]
         },
         {
             id: "carbon-emissions",
