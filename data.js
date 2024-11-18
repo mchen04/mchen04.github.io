@@ -9,7 +9,6 @@ const portfolioData = {
         about: "CS@UCR with a Minor in Management: Strategy & Entrepreneurship | President & Co-Founder AI@UCR | Part-Time SWE@Mobivolt LLC | AMD Pervasive AI Winner"
     },
     timeline: [
-        // Ongoing entries first.
         {
             id: "mobivolt-swe",
             title: "Part-Time Software Engineer at Mobivolt LLC",
@@ -36,6 +35,20 @@ const portfolioData = {
             ]
         },
         {
+            id: "amd-award",
+            title: "AMD University Award – Advancing AI Event",
+            date: "2024-10",
+            type: "award",
+            description: "Received the AMD University Award for the PHiLIP project, standing out among over 8,000 participants. Presented at the AMD Advancing AI Event, demonstrating real-time text-to-image generation using AMD MI210 GPUs.",
+            links: {
+                project: "https://www.hackster.io/contests/amd2023#category-1092"
+            },
+            media: [
+                { type: "image", url: "media/images/amd-award/amd-award-main-photo.png" },
+                { type: "image", url: "media/images/amd-award/amd-award-second-photo.png" }
+            ]
+        },
+        {
             id: "portfolio-website",
             title: "Portfolio Website",
             date: "2024-11",
@@ -58,20 +71,6 @@ const portfolioData = {
             },
             media: [
                 { type: "youtube", url: "https://www.youtube.com/embed/GWTLKKbYzwc" }
-            ]
-        },
-        {
-            id: "amd-award",
-            title: "AMD University Award – Advancing AI Event",
-            date: "2024-10",
-            type: "award",
-            description: "Received the AMD University Award for the PHiLIP project, standing out among over 8,000 participants. Presented at the AMD Advancing AI Event, demonstrating real-time text-to-image generation using AMD MI210 GPUs.",
-            links: {
-                project: "https://www.hackster.io/contests/amd2023#category-1092"
-            },
-            media: [
-                { type: "image", url: "media/images/amd-award/amd-award-main-photo.png" },
-                { type: "image", url: "media/images/amd-award/amd-award-second-photo.png" }
             ]
         },
         {
