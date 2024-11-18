@@ -16,7 +16,7 @@ const portfolioData = {
             endDate: "present",
             type: "experience",
             description: "Developed real-time control and visualization software for hardware systems, boosting operational efficiency by 65%. Designed firmware to monitor and visualize system parameters such as voltage, temperature, and pressure. Created advanced data processing algorithms to enhance measurement accuracy by 30%.",
-            techStack: ["WPF", "C#", "Arduino", "Python"],
+            techStack: ["WPF", "C#", "Arduino", "Python", "LiveCharts", "Embedded Systems", "Firmware Development"]
         },
         {
             id: "ai-club-president",
@@ -25,7 +25,7 @@ const portfolioData = {
             endDate: "present",
             type: "experience",
             description: "Founded the first official AI club at UCR, growing membership to 50+ students. Organized workshops and guest lectures with industry experts, achieving a 45% increase in engagement. Designed an 8-topic AI curriculum including Neural Networks, Reinforcement Learning, and Clustering Algorithms.",
-            techStack: ["Leadership", "Curriculum Development", "Event Organization", "Team Building"],
+            techStack: ["Leadership", "Curriculum Development", "Event Organization", "Team Building", "Workshop Facilitation", "Public Speaking", "Membership Growth", "Community Engagement"],
             links: {
                 github: "https://ai-ucr.ucrhighlanders.org/projects"
             },
@@ -53,7 +53,7 @@ const portfolioData = {
             title: "Portfolio Website",
             date: "2024-11",
             type: "project",
-            description: "Developed a personal portfolio website with an Asian-inspired design, showcasing skills and achievements. Built using HTML, CSS, and JavaScript to ensure high performance without modern frameworks.",
+            description: "Developed a personal portfolio website with an modern-inspired design, showcasing skills and achievements. Built using HTML, CSS, and JavaScript to ensure high performance without modern frameworks.",
             techStack: ["HTML", "CSS", "JavaScript"],
             links: {
                 github: "https://github.com/mchen04/mchen04.github.io"
@@ -90,7 +90,7 @@ const portfolioData = {
             date: "2024-08",
             type: "project",
             description: "Built an AI-powered news aggregator offering personalized recommendations and summaries. Integrates anti-hallucination mechanisms and leverages the Gemini API for advanced generative capabilities.",
-            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API"],
+            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API", "MongoDB", "Express.js", "Node.js", "MERN Stack"],
             links: {
                 github: "https://github.com/mchen04/News-Genie"
             },
@@ -104,7 +104,7 @@ const portfolioData = {
             date: "2024-06",
             type: "project",
             description: "Developed an AI-powered image generation suite offering text-to-image creation, iterative refinement, and style enhancements. Won the AMD Pervasive AI University Contest and showcased at the AMD AI Event.",
-            techStack: ["Python", "Flask", "PyTorch", "PixArt Models", "Freestyle Models", "Stable Diffusion", "ControlNet"],
+            techStack: ["Python", "Flask", "PyTorch", "PixArt Models", "Freestyle Models", "Stable Diffusion", "ControlNet", "React", "Node.js", "TypeScript", "JavaScript", "CSS", "ROCM5.7", "ROCM6.1", "AMD Cloud"],
             links: {
                 project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
             },
@@ -151,7 +151,7 @@ const portfolioData = {
             date: "2023-05",
             type: "project",
             description: "A web app for handwritten math recognition with 98% cross-validation accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions.",
-            techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS"],
+            techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS", "Data Preprocessing", "NumPy", "Pandas", "Data Cleaning"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
             }
