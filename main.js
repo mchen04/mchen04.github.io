@@ -208,6 +208,7 @@ class PortfolioManager {
                     if (media) {
                         media.addEventListener('load', () => {
                             media.classList.add('loaded');
+                            media.style.opacity = '1';
                             slide.classList.remove('error');
                         });
 
@@ -219,8 +220,16 @@ class PortfolioManager {
                         if (media.tagName === 'IFRAME' || media.tagName === 'VIDEO') {
                             setTimeout(() => {
                                 media.classList.add('loaded');
+                                media.style.opacity = '1';
                                 slide.classList.remove('error');
                             }, 1000);
+                        }
+
+                        // Force load event for images that might be cached
+                        if (media.tagName === 'IMG' && media.complete) {
+                            media.classList.add('loaded');
+                            media.style.opacity = '1';
+                            slide.classList.remove('error');
                         }
                     }
                 });
