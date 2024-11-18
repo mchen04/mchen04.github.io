@@ -195,7 +195,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog"
             },
             media: [
-                { type: "youtube", url: "https://www.youtube.com/watch?v=yrY0VnYN7BE" }
+                { type: "youtube", url: "https://youtu.be/embed/yrY0VnYN7BE" }
             ]
         },
         {
