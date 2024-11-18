@@ -228,59 +228,53 @@ const portfolioData = {
     ],
     skills: {
         "Programming Languages": [
-            "Python",
-            "TypeScript/JavaScript",
-            "C++",
             "C#",
+            "C++",
+            "SQL",
             "Java",
-            "SQL"
+            "Python",
+            "TypeScript/JavaScript"
         ],
         "Web Technologies": [
+            "HTML/CSS",
+            "Node.js",
             "React.js",
             "Next.js",
-            "Node.js",
-            "Express.js",
-            "HTML/CSS",
-            "Tailwind CSS",
             "GraphQL",
-            "REST APIs"
+            "REST APIs",
+            "Express.js",
+            "Tailwind CSS"
         ],
         "AI & Machine Learning": [
-            "TensorFlow",
             "PyTorch",
-            "Stable Diffusion",
-            "Neural Networks",
+            "TensorFlow",
             "Computer Vision",
-            "Natural Language Processing",
+            "Prompt Engineering",
+            "Large Language Models",
             "Reinforcement Learning",
-            "Large Language Models"
         ],
         "Cloud & DevOps": [
-            "Firebase",
-            "MongoDB",
-            "PostgreSQL",
-            "Git/GitHub",
             "CI/CD",
+            "MongoDB",
+            "Firebase",
+            "Git/GitHub",
+            "PostgreSQL",
             "AMD Cloud",
             "Google Cloud APIs"
         ],
         "Software Development": [
+            "Algorithms",
+            "Data Structures",
             "Object-Oriented Design",
             "Test-Driven Development",
-            "Agile Methodologies",
-            "System Design",
-            "Data Structures",
-            "Algorithms",
-            "Design Patterns"
+            "Agile Methodologies"
         ],
         "Specialized Skills": [
-            "Embedded Systems",
-            "Firmware Development",
-            "Windows Presentation Foundation",
             "Arduino",
             "Data Analysis",
-            "Technical Leadership",
-            "Project Management"
+            "Embedded Systems",
+            "Firmware Development",
+            "Windows Presentation Foundation"
         ]
     }
 }
