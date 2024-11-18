@@ -228,7 +228,18 @@ const portfolioData = {
             media: [
                 { type: "youtube", url: "https://www.youtube.com/embed/osbiSP4x4OE?vq=hd1080" }
             ]
+        },
+        {
+            id: "ucr-undergraduate-start",
+            title: "Start of Undergraduate Journey at UCR",
+            date: "2022-10",
+            type: "milestone",
+            description: "Began my undergraduate studies at the University of California, Riverside as a Computer Science major. This milestone marked the start of my journey into software development, innovation, and problem-solving in the field of technology.",
+            techStack: [],
+            links: {},
+            media: []
         }
+        
     ],
     skills: {
         "Programming Languages": [
