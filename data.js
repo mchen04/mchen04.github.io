@@ -193,7 +193,10 @@ const portfolioData = {
             techStack: ["Python", "PyPDF2"],
             links: {
                 github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog"
-            }
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/watch?v=yrY0VnYN7BE" }
+            ]
         },
         {
             id: "cutiehack-sustainability-award",
