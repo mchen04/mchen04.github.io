@@ -9,6 +9,7 @@ const portfolioData = {
         about: "CS@UCR with a Minor in Management: Strategy & Entrepreneurship | President & Co-Founder AI@UCR | Part-Time SWE@Mobivolt LLC | AMD Pervasive AI Winner"
     },
     timeline: [
+        // Items with end dates first
         {
             id: "mobivolt-swe",
             title: "Part-Time Software Engineer at Mobivolt LLC",
@@ -38,6 +39,7 @@ const portfolioData = {
                 { type: "image", url: "media/images/ai@ucr/AI@UCR_Workshop1.png" }
             ]
         },
+        // Rest of the items without end dates
         {
             id: "amd-award",
             title: "AMD University Award – Advancing AI Event",

@@ -139,6 +139,11 @@ class PortfolioManager {
     initializeTimeline() {
         const timeline = document.querySelector('.timeline');
         const sortedEntries = [...portfolioData.timeline].sort((a, b) => {
+            // First, prioritize entries with endDate
+            if (a.endDate && !b.endDate) return -1;
+            if (!a.endDate && b.endDate) return 1;
+            
+            // If both have endDate or both don't have endDate, sort by date
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateB - dateA;
