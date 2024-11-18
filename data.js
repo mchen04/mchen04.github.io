@@ -141,6 +141,7 @@ const portfolioData = {
                 github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
             },
             media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/1WyHNnWpu44?vq=hd1080" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-menu.png" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-settings.png" },
                 { type: "image", url: "media/images/word-hunt/word-hunt-default-board.png" },
@@ -158,7 +159,10 @@ const portfolioData = {
             techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS", "Data Preprocessing", "NumPy", "Pandas", "Data Cleaning"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
-            }
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/1EdeTjw41lw?vq=hd1080" }
+            ]
         },
         {
             id: "advanced-algorithms-cert",
