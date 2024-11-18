@@ -229,36 +229,58 @@ const portfolioData = {
     skills: {
         "Programming Languages": [
             "Python",
-            "C/C++/C#",
+            "TypeScript/JavaScript",
+            "C++",
+            "C#",
             "Java",
-            "Node.js",
-            "GraphQL",
-            "SQL",
-            "JavaScript",
-            "HTML",
-            "CSS"
+            "SQL"
         ],
-        "Frameworks": [
-            "React/Next.js",
-            "Spring",
+        "Web Technologies": [
+            "React.js",
+            "Next.js",
+            "Node.js",
+            "Express.js",
+            "HTML/CSS",
+            "Tailwind CSS",
+            "GraphQL",
+            "REST APIs"
+        ],
+        "AI & Machine Learning": [
             "TensorFlow",
             "PyTorch",
-            "Flask",
-            "Windows Presentation Foundation"
+            "Stable Diffusion",
+            "Neural Networks",
+            "Computer Vision",
+            "Natural Language Processing",
+            "Reinforcement Learning",
+            "Large Language Models"
         ],
-        "DB & Tools": [
+        "Cloud & DevOps": [
+            "Firebase",
             "MongoDB",
-            "Postgres",
-            "Jupyter Notebook",
-            "Microsoft Visual Studio",
-            "Eclipse",
-            "Arduino",
-            "SPSS Statistics"
+            "PostgreSQL",
+            "Git/GitHub",
+            "CI/CD",
+            "AMD Cloud",
+            "Google Cloud APIs"
         ],
-        "Machine Learning": [
-            "Supervised & Unsupervised Learning",
-            "Advanced Learning Algorithms",
-            "Reinforcement Learning"
+        "Software Development": [
+            "Object-Oriented Design",
+            "Test-Driven Development",
+            "Agile Methodologies",
+            "System Design",
+            "Data Structures",
+            "Algorithms",
+            "Design Patterns"
+        ],
+        "Specialized Skills": [
+            "Embedded Systems",
+            "Firmware Development",
+            "Windows Presentation Foundation",
+            "Arduino",
+            "Data Analysis",
+            "Technical Leadership",
+            "Project Management"
         ]
     }
-};
+}
