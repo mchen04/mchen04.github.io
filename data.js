@@ -52,7 +52,183 @@ const portfolioData = {
                 { type: "image", url: "media/images/amd-award/amd-award-second-photo.png" }
             ]
         },
-        // Rest of the timeline entries remain unchanged
+        {
+            id: "portfolio-website",
+            title: "Portfolio Website",
+            date: "2024-11",
+            type: "project",
+            description: "Developed a personal portfolio website with an modern-inspired design, showcasing skills and achievements. Built using HTML, CSS, and JavaScript to ensure high performance without modern frameworks.",
+            techStack: ["HTML", "CSS", "JavaScript"],
+            links: {
+                github: "https://github.com/mchen04/mchen04.github.io"
+            }
+        },
+        {
+            id: "freqcreator",
+            title: "FreqCreator",
+            date: "2024-11",
+            type: "project",
+            description: "Created a tool for generating and automating social media content, including audio files, visualizations, and videos. Features AI-driven customization and platform-specific optimizations.",
+            techStack: ["Python", "PIL", "MoviePy", "OpenAI API", "Google Drive API", "SoundFile", "Lameenc"],
+            links: {
+                github: "https://github.com/mchen04/FreqCreator"
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/GWTLKKbYzwc?vq=hd1080" }
+            ]
+        },
+        {
+            id: "keepingtabs",
+            title: "KeepingTabs",
+            date: "2024-10",
+            type: "project",
+            description: "Developed a productivity tool for efficient tab and bookmark management, featuring AI-generated previews, tagging, and cloud synchronization. Includes memory optimization through tab freezing and batch actions.",
+            techStack: ["TypeScript", "React.js", "Firebase", "Google APIs"],
+            links: {
+                github: "https://github.com/mchen04/KeepingTabs"
+            }
+        },
+        {
+            id: "news-genie",
+            title: "News Genie",
+            date: "2024-08",
+            type: "project",
+            description: "Built an AI-powered news aggregator offering personalized recommendations and summaries. Features a login system and a database for users and their preferences, catering to individual needs. Integrates anti-hallucination mechanisms and leverages the Gemini API for advanced generative capabilities.",
+            techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API", "MongoDB", "Express.js", "Node.js", "MERN Stack"],
+            links: {
+                github: "https://github.com/mchen04/News-Genie"
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/oCNbbrOpNEU?vq=hd1080" }
+            ]
+        },
+        {
+            id: "philip-project",
+            title: "PHiLIP: Personalized Human-in-the-Loop Image Production",
+            date: "2024-06",
+            type: "project",
+            description: "Developed an AI-powered image generation suite offering text-to-image creation, iterative refinement, and style enhancements. Won the AMD Pervasive AI University Contest and showcased at the AMD AI Event.",
+            techStack: ["Python", "Flask", "PyTorch", "PixArt Models", "Freestyle Models", "Stable Diffusion", "ControlNet", "React", "Node.js", "TypeScript", "JavaScript", "CSS", "ROCM5.7", "ROCM6.1", "AMD Cloud"],
+            links: {
+                project: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133"
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/lK-Dw5Fcrds?vq=hd1080" }
+            ]
+        },
+        {
+            id: "unsupervised-learning-cert",
+            title: "Unsupervised Learning, Recommenders, and Reinforcement Learning",
+            date: "2023-10",
+            type: "certification",
+            description: "Learned clustering, recommender systems, and reinforcement learning techniques. Completed as part of the Machine Learning Specialization.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/N5KVD3ZTD6W6"
+            },
+            media: [
+                { type: "image", url: "media/images/certifications/Unsupervised_ML.png" }
+            ]
+        },
+        {
+            id: "modded-word-hunt",
+            title: "Modded Word Hunt",
+            date: "2023-06",
+            type: "project",
+            description: "Developed a C++ adaptation of the classic Word Hunt game with enhanced features, including customizable grids, power-ups, and advanced scoring mechanics. Integrated a hint system, custom sound effects, and an interactive UI to deliver an engaging user experience.",
+            techStack: ["C++", "CMake", "SFML", "Git", "Google Test", "Valgrind"],
+            links: {
+                github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
+            },
+            media: [
+                { type: "image", url: "media/images/word-hunt/word-hunt-menu.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-settings.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-default-board.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-expanded-board.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-score-screen.png" },
+                { type: "image", url: "media/images/word-hunt/word-hunt-tests.png" }
+            ]
+        },
+        {
+            id: "mafway",
+            title: "MafWay",
+            date: "2023-05",
+            type: "project",
+            description: "Developed an original model from scratch for a web app specializing in handwritten math recognition, achieving 98% cross-validation accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions. The website allows users to upload or draw images, providing predictions along with confidence levels.",
+            techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS", "Data Preprocessing", "NumPy", "Pandas", "Data Cleaning"],
+            links: {
+                github: "https://github.com/mchen04/MafWay"
+            }
+        },
+        {
+            id: "advanced-algorithms-cert",
+            title: "Advanced Learning Algorithms",
+            date: "2023-05",
+            type: "certification",
+            description: "Mastered neural networks, decision trees, and ensemble methods. Applied TensorFlow and XGBoost for advanced machine learning tasks.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/U33T2QRT8MFC"
+            },
+            media: [
+                { type: "image", url: "media/images/certifications/Advanced_Learning_Algo.png" }
+            ]
+        },
+        {
+            id: "ml-regression-cert",
+            title: "Supervised Machine Learning: Regression and Classification",
+            date: "2023-02",
+            type: "certification",
+            description: "Learned supervised learning techniques including linear and logistic regression. Implemented models using scikit-learn and NumPy.",
+            issuer: "Coursera (DeepLearning.AI)",
+            links: {
+                verify: "https://coursera.org/verify/RDHD7AHGBYYH"
+            },
+            media: [
+                { type: "image", url: "media/images/certifications/Supervised_ML.png" }
+            ]
+        },
+        {
+            id: "pdf-scraper",
+            title: "Scraping PDF - UCR Catalog",
+            date: "2023-01",
+            type: "project",
+            description: "Created a Python script to extract course details from UCR's catalog PDFs, retrieving information such as prerequisites, credits, timings, and more. Includes a loading bar to indicate progress and highlights where the information is found within the document.",
+            techStack: ["Python", "PyPDF2"],
+            links: {
+                github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog"
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/yrY0VnYN7BE?vq=hd1080" }
+            ]            
+        },
+        {
+            id: "cutiehack-sustainability-award",
+            title: "CutieHack Sustainability Award",
+            date: "2022-11",
+            type: "award",
+            description: "Awarded the Sustainability Award at CutieHack for developing the Carbon Emissions Map.",
+            links: {
+                project: "https://devpost.com/software/2020-us-energy-based-carbon-emissions-by-state-map"
+            },
+            media: [
+                { type: "image", url: "media/images/cutiehack-2022/cutiehack-award.png" }
+            ]
+        },
+        {
+            id: "carbon-emissions",
+            title: "Carbon Emissions Map",
+            date: "2022-11",
+            type: "project",
+            description: "Designed and developed an interactive dashboard visualizing state-level carbon emissions in the US. Utilized gradients of red to represent emission severity. Enabled users to click on a state to display detailed policies and information regarding carbon emissions.",
+            techStack: ["JavaScript", "HTML", "CSS"],
+            links: {
+                github: "https://github.com/mchen04/Carbon-Emmisions-Map"
+            },
+            media: [
+                { type: "youtube", url: "https://www.youtube.com/embed/osbiSP4x4OE?vq=hd1080" }
+            ]
+        }
     ],
     skills: {
         "Programming Languages": [
@@ -79,7 +255,7 @@ const portfolioData = {
             "Computer Vision",
             "Prompt Engineering",
             "Large Language Models",
-            "Reinforcement Learning",
+            "Reinforcement Learning"
         ],
         "Cloud & DevOps": [
             "CI/CD",
