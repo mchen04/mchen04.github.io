@@ -9,6 +9,7 @@ class PortfolioManager {
         this.initializeHeroAnimations();
         this.initializeTimeline();
         this.initializeSkills();
+        this.initializeResumeSection();
         this.initializeSectionAnimations();
         this.initializeGlowEffects();
     }
@@ -369,6 +370,42 @@ class PortfolioManager {
                 });
             });
         });
+    }
+
+    initializeResumeSection() {
+        const resumeContainer = document.querySelector('.resume-container');
+        const downloadBtn = document.querySelector('.resume-download-btn');
+
+        // Animate resume container
+        gsap.from(resumeContainer, {
+            scrollTrigger: {
+                trigger: resumeContainer,
+                start: 'top bottom-=50'
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+        });
+
+        // Add hover animation for download button
+        if (downloadBtn) {
+            downloadBtn.addEventListener('mouseenter', () => {
+                gsap.to(downloadBtn, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            downloadBtn.addEventListener('mouseleave', () => {
+                gsap.to(downloadBtn, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        }
     }
 
     initializeGlowEffects() {
