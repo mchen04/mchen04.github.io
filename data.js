@@ -45,7 +45,7 @@ const portfolioData = {
             type: "award",
             description: "Won the prestigious AMD University Award for the PHiLIP project, which stood out among over 8,000 participants. Awarded $2,500 and selected as one of four participants to give live demonstrations of the technology. Presented at the AMD Advancing AI Event, showcasing a live demonstration of real-time text-to-image generation powered by AMD MI210 GPUs.",
             links: {
-                project: "https://www.hackster.io/contests/amd2023#category-1092"
+                verify: "https://www.hackster.io/contests/amd2023#category-1092"
             },
             media: [
                 { type: "image", url: "media/images/amd-award/amd-award-main-photo.png" },
