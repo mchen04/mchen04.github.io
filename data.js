@@ -15,7 +15,7 @@ const portfolioData = {
             date: "2023-06",
             endDate: "present",
             type: "experience",
-            description: "Developed real-time control and visualization software for hardware systems, boosting operational efficiency by 65%. Designed firmware to monitor and visualize system parameters such as voltage, temperature, and pressure. Created advanced data processing algorithms to enhance measurement accuracy by 30%.",
+            description: "Designed and implemented real-time control and visualization software for hardware systems, achieving a 65% boost in operational efficiency. Developed firmware to monitor and display key system parameters, including voltage, temperature, and pressure. Advanced data processing algorithms were created to enhance measurement accuracy by 30%, ensuring precise and reliable performance.",
             techStack: ["WPF", "C#", "Arduino", "Python", "LiveCharts", "Embedded Systems", "Firmware Development"]
         },
         {
@@ -39,7 +39,7 @@ const portfolioData = {
             title: "AMD University Award – Advancing AI Event",
             date: "2024-10",
             type: "award",
-            description: "Received the AMD University Award for the PHiLIP project, standing out among over 8,000 participants. Presented at the AMD Advancing AI Event, demonstrating real-time text-to-image generation using AMD MI210 GPUs.",
+            description: "Won the prestigious AMD University Award for the PHiLIP project, which stood out among over 8,000 participants. Awarded $2,500 and selected as one of four participants to give live demonstrations of the technology. Presented at the AMD Advancing AI Event, showcasing a live demonstration of real-time text-to-image generation powered by AMD MI210 GPUs.",
             links: {
                 project: "https://www.hackster.io/contests/amd2023#category-1092"
             },
@@ -89,7 +89,7 @@ const portfolioData = {
             title: "News Genie",
             date: "2024-08",
             type: "project",
-            description: "Built an AI-powered news aggregator offering personalized recommendations and summaries. Integrates anti-hallucination mechanisms and leverages the Gemini API for advanced generative capabilities.",
+            description: "Built an AI-powered news aggregator offering personalized recommendations and summaries. Features a login system and a database for users and their preferences, catering to individual needs. Integrates anti-hallucination mechanisms and leverages the Gemini API for advanced generative capabilities.",
             techStack: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API", "MongoDB", "Express.js", "Node.js", "MERN Stack"],
             links: {
                 github: "https://github.com/mchen04/News-Genie"
@@ -131,7 +131,7 @@ const portfolioData = {
             title: "Modded Word Hunt",
             date: "2023-06",
             type: "project",
-            description: "A C++ adaptation of the classic Word Hunt game with enhanced features like customizable grids, power-ups, and advanced scoring mechanics. Includes a hint system, custom sound effects, and an interactive UI for an engaging user experience.",
+            description: "Developed a C++ adaptation of the classic Word Hunt game with enhanced features, including customizable grids, power-ups, and advanced scoring mechanics. Integrated a hint system, custom sound effects, and an interactive UI to deliver an engaging user experience.",
             techStack: ["C++", "CMake", "SFML", "Git", "Google Test", "Valgrind"],
             links: {
                 github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt"
@@ -150,7 +150,7 @@ const portfolioData = {
             title: "MafWay",
             date: "2023-05",
             type: "project",
-            description: "A web app for handwritten math recognition with 98% cross-validation accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions.",
+            description: "Developed an original model from scratch for a web app specializing in handwritten math recognition, achieving 98% cross-validation accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions. The website allows users to upload or draw images, providing predictions along with confidence levels.",
             techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS", "Data Preprocessing", "NumPy", "Pandas", "Data Cleaning"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
@@ -189,7 +189,7 @@ const portfolioData = {
             title: "Scraping PDF - UCR Catalog",
             date: "2023-01",
             type: "project",
-            description: "A Python script for extracting course details from UCR's catalog PDFs. Retrieves prerequisites, credits, timings, and more.",
+            description: "Created a Python script to extract course details from UCR's catalog PDFs, retrieving information such as prerequisites, credits, timings, and more. Includes a loading bar to indicate progress and highlights where the information is found within the document.",
             techStack: ["Python", "PyPDF2"],
             links: {
                 github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog"
@@ -203,7 +203,7 @@ const portfolioData = {
             title: "CutieHack Sustainability Award",
             date: "2022-11",
             type: "award",
-            description: "Recognized with the Sustainability Award at CutieHack for developing the Carbon Emissions Map.",
+            description: "Awarded the Sustainability Award at CutieHack for developing the Carbon Emissions Map.",
             links: {
                 project: "https://devpost.com/software/2020-us-energy-based-carbon-emissions-by-state-map"
             },
@@ -216,7 +216,7 @@ const portfolioData = {
             title: "Carbon Emissions Map",
             date: "2022-11",
             type: "project",
-            description: "An interactive dashboard visualizing state-level carbon emissions in the US. Used gradients of red to represent emission severity.",
+            description: "Designed and developed an interactive dashboard visualizing state-level carbon emissions in the US. Utilized gradients of red to represent emission severity. Enabled users to click on a state to display detailed policies and information regarding carbon emissions.",
             techStack: ["JavaScript", "HTML", "CSS"],
             links: {
                 github: "https://github.com/mchen04/Carbon-Emmisions-Map"
