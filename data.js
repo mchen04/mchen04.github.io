@@ -154,7 +154,7 @@ const portfolioData = {
             title: "MafWay",
             date: "2023-05",
             type: "project",
-            description: "Developed an original model from scratch for a web app specializing in handwritten math recognition, achieving 98% cross-validation accuracy on 82 symbols. Built with TensorFlow, Next.js, and React for real-time predictions. The website allows users to upload or draw images, providing predictions along with confidence levels.",
+            description: "Developed an original model from scratch for a web app specializing in handwritten math recognition, achieving 98% cross-validation accuracy on 82 symbols and 700+ million pixels. Built with TensorFlow, Next.js, and React for real-time predictions. The website allows users to upload or draw images, providing predictions along with confidence levels.",
             techStack: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "HTML", "JavaScript", "CSS", "Data Preprocessing", "NumPy", "Pandas", "Data Cleaning"],
             links: {
                 github: "https://github.com/mchen04/MafWay"
