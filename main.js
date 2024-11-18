@@ -474,7 +474,7 @@ class PortfolioManager {
             <div class="entry-links">
                 ${Object.entries(links).map(([type, url]) => `
                     <a href="${url}" target="_blank" rel="noopener noreferrer" class="entry-link">
-                        <i class="fas fa-${this.getLinkIcon(type)}"></i>
+                        <i class="fab fa-${this.getLinkIcon(type)}"></i>
                         ${this.formatLinkType(type)}
                     </a>
                 `).join('')}
@@ -487,13 +487,25 @@ class PortfolioManager {
             github: 'github',
             demo: 'external-link-alt',
             verify: 'certificate',
-            project: 'external-link-alt'
+            project: 'external-link-alt',
+            linkedin: 'linkedin',
+            highlander: 'university',
+            website: 'globe',
+            discord: 'discord',
+            instagram: 'instagram'
         };
         return icons[type] || 'link';
     }
 
     formatLinkType(type) {
-        return type.charAt(0).toUpperCase() + type.slice(1);
+        const formats = {
+            linkedin: 'LinkedIn',
+            highlander: 'Highlander Link',
+            website: 'Website',
+            discord: 'Discord',
+            instagram: 'Instagram'
+        };
+        return formats[type] || type.charAt(0).toUpperCase() + type.slice(1);
     }
 
     formatDate(dateString) {
