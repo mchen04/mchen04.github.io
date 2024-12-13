@@ -80,16 +80,20 @@ const portfolioData = {
             ]
         },
         {
-            id: "keepingtabs",
-            title: "KeepingTabs",
-            date: "2024-10",
+            id: "cutify-web",
+            title: "Cutify Web",
+            date: "2024-12",
             type: "project",
-            description: "Developed a productivity tool for efficient tab and bookmark management, featuring AI-generated previews, tagging, and cloud synchronization. Includes memory optimization through tab freezing and batch actions.",
-            techStack: ["TypeScript", "React.js", "Firebase", "Google APIs"],
+            description: "Developed a Chrome extension to customize websites with immersive themes and interactive styles. Features include dynamic backgrounds, theme-colored elements, responsive design, and performance-optimized animations. Themes like Starry Night, Forest, Ocean, Sunset, and Cyberpunk offer tailored aesthetics and engaging user experiences.",
+            techStack: ["JavaScript", "CSS", "HTML"],
             links: {
-                github: "https://github.com/mchen04/KeepingTabs"
-            }
-        },
+                github: "https://github.com/mchen04/Cutify-Web"
+            },
+            media: [
+                { type: "image", url: "media/images/cutify-web/cutify-web-1.png" },
+                { type: "image", url: "media/images/cutify-web/cutify-web-2.png" }
+            ]
+        },        
         {
             id: "news-genie",
             title: "News Genie",
