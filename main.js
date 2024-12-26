@@ -460,6 +460,22 @@ class PortfolioManager {
                 });
             }
         });
+
+        // Add animation for achievement cards
+        const achievementCards = document.querySelectorAll('.achievement-card');
+        achievementCards.forEach((card, index) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top bottom-=100'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: index * 0.2,
+                ease: 'power3.out'
+            });
+        });
     }
 
     renderTechStack(techStack) {
