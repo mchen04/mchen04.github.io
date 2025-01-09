@@ -14,7 +14,7 @@ export const projects: Project[] = [
     tags: ["React", "Node.js", "OpenAI"],
     github: "https://github.com",
     demo: "https://demo.com",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
+    image: "/images/projects/ai-chat.jpg",
   },
   {
     title: "E-commerce Platform",
@@ -22,7 +22,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "Stripe", "MongoDB"],
     github: "https://github.com",
     demo: "https://demo.com",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+    image: "/images/projects/ecommerce.jpg",
   },
   {
     title: "Portfolio Website",
@@ -30,7 +30,7 @@ export const projects: Project[] = [
     tags: ["React", "Tailwind CSS", "Framer Motion"],
     github: "https://github.com",
     demo: "https://demo.com",
-    image: "https://images.unsplash.com/photo-1504893524553-b855bce32c67",
+    image: "/images/projects/portfolio.jpg",
   },
   {
     title: "Task Management App",
@@ -38,7 +38,7 @@ export const projects: Project[] = [
     tags: ["React", "Firebase", "Material-UI"],
     github: "https://github.com",
     demo: "https://demo.com",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    image: "/images/projects/task-manager.jpg",
   },
   {
     title: "Weather Dashboard",
@@ -46,6 +46,6 @@ export const projects: Project[] = [
     tags: ["React", "OpenWeather API", "Charts.js"],
     github: "https://github.com",
     demo: "https://demo.com",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+    image: "/images/projects/weather.jpg",
   },
 ];

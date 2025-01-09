@@ -11,7 +11,7 @@ export const certifications: Certification[] = [
     title: "Example Certification",
     year: "2023",
     description: "Issued by Example Organization",
-    image: "/placeholder.svg",
+    image: "/images/certifications/example-cert.jpg",
     verifyLink: "https://example.com/verify"
   }
 ];
