@@ -5,7 +5,7 @@ export interface FooterData {
 }
 
 export const footerData: FooterData = {
-  name: "John Doe",
+  name: "Michael Chen",
   title: "Computer Science Student & Developer",
   copyright: "All rights reserved."
 };

@@ -8,10 +8,10 @@ export interface ContactInfo {
 }
 
 export const contactInfo: ContactInfo = {
-  email: "john@example.com",
+  email: "michaelluochen1@gmail.com",
   social: {
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
+    github: "https://github.com/mchen04",
+    linkedin: "https://www.linkedin.com/in/michael-luo-chen/",
     twitter: "https://twitter.com"
   }
 };
