@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Trophy } from "lucide-react";
+import { Trophy, ExternalLink } from "lucide-react";
 import { awards } from "../data/awards";
+import { Button } from "./ui/button";
 
 export const Awards = () => {
   return (
@@ -40,8 +41,24 @@ export const Awards = () => {
                 <Trophy className="w-8 h-8 text-primary mb-4" />
               </motion.div>
               <h3 className="text-xl font-semibold mb-2">{award.title}</h3>
-              <p className="text-muted-foreground text-sm mb-2">{award.year}</p>
-              <p className="text-muted-foreground">{award.description}</p>
+              <p className="text-muted-foreground text-sm mb-2">
+                {typeof award.date === 'string' 
+                  ? new Date(award.date).getFullYear()
+                  : `${award.date.start} - ${award.date.end}`}
+              </p>
+              <p className="text-muted-foreground mb-4">{award.description}</p>
+              {award.links && Object.entries(award.links).map(([type, url]) => (
+                <Button
+                  key={type}
+                  variant="outline"
+                  size="sm"
+                  className="w-full mb-2 last:mb-0"
+                  onClick={() => window.open(url, '_blank')}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Verify
+                </Button>
+              ))}
             </motion.div>
           ))}
         </div>
