@@ -13,7 +13,6 @@ node_modules/
 .pnpm-store/
 
 # Build artifacts
-dist/
 dist-ssr/
 .build/
 .cache/
