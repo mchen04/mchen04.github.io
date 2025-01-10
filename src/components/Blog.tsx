@@ -47,7 +47,9 @@ export const Blog = () => {
                 <h3 className="text-xl font-semibold mb-3">{post.title}</h3>
                 <p className="text-muted-foreground mb-4">{post.excerpt}</p>
                 <motion.a 
-                  href="#" 
+                  href={post.verifyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-primary hover:text-primary/80 transition-colors inline-block"
                   whileHover={{ x: 5 }}
                   transition={{ type: "spring", stiffness: 300 }}

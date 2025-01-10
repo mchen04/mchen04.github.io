@@ -10,8 +10,8 @@ export interface ResumeData {
 export const resumeData: ResumeData = {
   title: "My Resume",
   description: "Download my resume to learn more about my education, experience, and skills.",
-  buttonText: "Download Resume",
-  filePath: "/resume.pdf", // Path to resume file in public directory
+  buttonText: "View resume",
+  filePath: "/images/documents/Michael_Chen_resume.pdf", // Path to resume file in public directory
   toastTitle: "Download Started",
   toastDescription: "Your resume download will begin shortly."
 };

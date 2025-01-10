@@ -3,37 +3,15 @@ export interface BlogPost {
   date: string;
   excerpt: string;
   image: string;
+  verifyLink: string;
 }
 
 export const blogPosts: BlogPost[] = [
   {
-    title: "My Journey in Computer Science",
-    date: "March 15, 2024",
-    excerpt: "Reflecting on my experiences and learnings in the field of computer science...",
-    image: "/images/blog/journey.jpg"
-  },
-  {
-    title: "Building Modern Web Applications",
-    date: "March 1, 2024",
-    excerpt: "A deep dive into the latest technologies and best practices...",
-    image: "/images/blog/web-apps.jpg"
-  },
-  {
-    title: "The Future of AI",
-    date: "February 15, 2024",
-    excerpt: "Exploring the possibilities and challenges of artificial intelligence...",
-    image: "/images/blog/ai-future.jpg"
-  },
-  {
-    title: "Mastering Data Structures",
-    date: "February 1, 2024",
-    excerpt: "A comprehensive guide to understanding and implementing data structures...",
-    image: "/images/blog/data-structures.jpg"
-  },
-  {
-    title: "The Power of Open Source",
-    date: "January 15, 2024",
-    excerpt: "How contributing to open source projects shaped my development journey...",
-    image: "/images/blog/open-source.jpg"
+    title: "How DeepSeek V3 Makes AI Accessible for Budget-Conscious Students",
+    date: "January 2, 2025",
+    excerpt: "Exploring how DeepSeek V3's innovative approach makes advanced AI tools accessible to students on a budget...",
+    image: "/images/blog/deepseek.jpg",
+    verifyLink: "https://medium.com/@michaelluochen1/how-deepseek-v3-makes-ai-accessible-for-budget-conscious-students-7c8b9edc683d"
   }
 ];

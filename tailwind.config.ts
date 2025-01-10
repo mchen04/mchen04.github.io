@@ -19,7 +19,7 @@ export default {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
+        border: "hsl(0, 0%, 10%)",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -45,6 +45,14 @@ export default {
         lg: "12px",
         md: "8px",
         sm: "4px",
+      },
+      borderWidth: {
+        DEFAULT: '2px',
+        '0': '0',
+        '2': '2px',
+        '4': '4px',
+        '6': '6px',
+        '8': '8px',
       },
       fontFamily: {
         sans: ["Inter", "SF Pro Display", "system-ui", "sans-serif"],

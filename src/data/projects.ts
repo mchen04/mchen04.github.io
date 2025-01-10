@@ -48,7 +48,7 @@ export const projects: Project[] = [
     description: "Interactive map visualizing state-level carbon emissions in the US, offering detailed policy data. Won the Sustainability Award at CutieHack.",
     date: "November 2022",
     tags: ["JavaScript", "HTML", "CSS"],
-    github: "https://github.com/mchen04/carbon-emissions-map",
+    github: "https://github.com/mchen04/Carbon-Emmisions-Map",
     demo: "https://www.youtube.com/watch?v=osbiSP4x4OE",
     image: "/images/projects/carbon-emissions.jpg",
   },
@@ -57,8 +57,8 @@ export const projects: Project[] = [
     description: "Personal portfolio showcasing skills and achievements.",
     date: "November 2024",
     tags: ["HTML", "CSS", "JavaScript"],
-    github: "https://github.com/mchen04/portfolio-website",
-    demo: "https://demo.com",
+    github: "https://github.com/mchen04/mchen04.github.io",
+    demo: "https://mchen04.github.io/",
     image: "/images/projects/portfolio.jpg",
   },
   {
@@ -67,7 +67,7 @@ export const projects: Project[] = [
     date: "May 2023",
     tags: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "Data Preprocessing"],
     github: "https://github.com/mchen04/mafway",
-    demo: "https://demo.com",
+    demo: "https://www.youtube.com/watch?v=1EdeTjw41lw",
     image: "/images/projects/mafway.jpg",
   },
   {
@@ -76,7 +76,7 @@ export const projects: Project[] = [
     date: "June 2023",
     tags: ["C++", "CMake", "SFML", "Google Test", "Valgrind"],
     github: "https://github.com/mchen04/modded-word-hunt",
-    demo: "https://demo.com",
+    demo: "https://www.youtube.com/watch?v=1WyHNnWpu44",
     image: "/images/projects/word-hunt.jpg",
   },
   {
@@ -84,8 +84,8 @@ export const projects: Project[] = [
     description: "Python script to extract course details from UCR's catalog PDFs.",
     date: "January 2023",
     tags: ["Python", "PyPDF2"],
-    github: "https://github.com/mchen04/pdf-scraper",
-    demo: "https://demo.com",
+    github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog",
+    demo: "https://www.youtube.com/watch?v=yrY0VnYN7BE",
     image: "/images/projects/pdf-scraper.jpg",
   },
 ];
