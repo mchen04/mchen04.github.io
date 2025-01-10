@@ -7,7 +7,7 @@ export interface HeroData {
 
 export const heroData: HeroData = {
   title: "Welcome to My Portfolio",
-  description: "I'm a passionate developer with a love for creating beautiful and functional web applications.",
+  description: "Passionate developer with expertise in creating innovative, AI-driven web applications and dynamic software solutions.",
   ctaText: "Get in Touch",
   ctaLink: "#contact"
 };
