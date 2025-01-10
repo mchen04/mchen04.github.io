@@ -43,7 +43,7 @@ import {
     {
       category: "Database",
       icon: Database,
-      items: ["Postgres", "MongoDB", "Firebase"],
+      items: ["Postgres", "MongoDB", "Firebase", "Supabase"],
     },
     {
       category: "Machine Learning",

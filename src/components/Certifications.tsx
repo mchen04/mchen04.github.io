@@ -44,7 +44,7 @@ export default function Certifications() {
                 </AspectRatio>
               </div>
               <h3 className="text-xl font-semibold mb-2">{certification.title}</h3>
-              <p className="text-muted-foreground text-sm mb-2">{certification.year}</p>
+              <p className="text-muted-foreground text-sm mb-2">{certification.date}</p>
               <p className="text-muted-foreground mb-4">{certification.description}</p>
               <motion.a
                 href={certification.verifyLink}
