@@ -9,15 +9,15 @@ const Projects = () => {
       title: "PHiLIP",
       description: "Developed an AI-powered suite for text-to-image generation, iterative refinement, and style enhancements. Won AMD Pervasive AI University Contest and showcased live at AMD Advancing AI Event.",
       tags: ["Python", "Flask", "PyTorch", "Stable Diffusion", "React", "Node.js", "TypeScript", "AMD Cloud"],
-      image: "/images/projects/philip.jpg",
-      github: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133",
+      image: "../images/projects/philip.jpg",
+      projectPage: "https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133",
       demo: "https://www.youtube.com/embed/lK-Dw5Fcrds?vq=hd1080"
     },
     {
       title: "News Genie",
       description: "AI-powered news aggregator with personalized recommendations, summaries, and anti-hallucination mechanisms.",
       tags: ["React.js", "Next.js", "Python", "Flask", "Firebase", "Gemini API", "MongoDB", "MERN Stack"],
-      image: "/images/projects/news-genie.jpg",
+      image: "../images/projects/news-genie.jpg",
       github: "https://github.com/mchen04/News-Genie",
       demo: "https://www.youtube.com/embed/oCNbbrOpNEU?vq=hd1080"
     },
@@ -27,14 +27,14 @@ const Projects = () => {
       tags: ["Python", "PIL", "MoviePy", "OpenAI API", "Google Drive API"],
       github: "https://github.com/mchen04/FreqCreator",
       demo: "https://www.youtube.com/embed/GWTLKKbYzwc?vq=hd1080",
-      image: "/images/projects/freqcreator.jpg"
+      image: "../images/projects/freqcreator.jpg"
     },
     {
       title: "Cutify Web",
       description: "Chrome extension for immersive website themes and animations.",
       tags: ["JavaScript", "CSS", "HTML"],
       github: "https://github.com/mchen04/Cutify-Web",
-      image: "/images/projects/cutify-web.jpg"
+      image: "../images/projects/cutify-web.jpg"
     },
     {
       title: "Carbon Emissions Map",
@@ -42,7 +42,7 @@ const Projects = () => {
       tags: ["JavaScript", "HTML", "CSS"],
       github: "https://github.com/mchen04/Carbon-Emmisions-Map",
       demo: "https://www.youtube.com/embed/osbiSP4x4OE?vq=hd1080",
-      image: "/images/projects/carbon-emissions.jpg"
+      image: "../images/projects/carbon-emissions.jpg"
     },
     {
       title: "MafWay",
@@ -50,7 +50,7 @@ const Projects = () => {
       tags: ["Python", "TensorFlow", "Next.js", "React", "Tailwind", "Data Preprocessing"],
       github: "https://github.com/mchen04/MafWay",
       demo: "https://www.youtube.com/embed/1EdeTjw41lw?vq=hd1080",
-      image: "/images/projects/mafway.jpg"
+      image: "../images/projects/mafway.jpg"
     },
     {
       title: "Modded Word Hunt",
@@ -58,7 +58,7 @@ const Projects = () => {
       tags: ["C++", "CMake", "SFML", "Google Test", "Valgrind"],
       github: "https://github.com/mchen04/CS100-Final-Project-Modified-Word-Hunt",
       demo: "https://www.youtube.com/embed/1WyHNnWpu44?vq=hd1080",
-      image: "/images/projects/word-hunt.jpg"
+      image: "../images/projects/word-hunt.jpg"
     },
     {
       title: "PDF Scraper",
@@ -66,7 +66,7 @@ const Projects = () => {
       tags: ["Python", "PyPDF2"],
       github: "https://github.com/mchen04/Scraping-PDF-UCR-Catalog",
       demo: "https://www.youtube.com/embed/yrY0VnYN7BE?vq=hd1080",
-      image: "/images/projects/pdf-scraper.jpg"
+      image: "../images/projects/pdf-scraper.jpg"
     }
   ];
 
@@ -97,15 +97,28 @@ const Projects = () => {
           ))}
         </div>
         <div className="flex gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            className="flex items-center gap-2"
-            onClick={() => window.open(project.github, '_blank')}
-          >
-            <Github className="h-4 w-4" />
-            GitHub
-          </Button>
+          {project.github && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+              onClick={() => window.open(project.github, '_blank')}
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </Button>
+          )}
+          {project.projectPage && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+              onClick={() => window.open(project.projectPage, '_blank')}
+            >
+              <ExternalLink className="h-4 w-4" />
+              Project Page
+            </Button>
+          )}
           {project.demo && (
             <Button
               variant="outline"
@@ -123,12 +136,14 @@ const Projects = () => {
   );
 
   return (
-    <CardGrid
+    <section id="projects">
+      <CardGrid
       items={projects}
       renderItem={renderProject}
       title="Featured Projects"
       description="Explore my latest work and personal projects"
-    />
+      />
+    </section>
   );
 };
 

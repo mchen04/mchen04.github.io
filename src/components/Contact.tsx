@@ -40,7 +40,7 @@ const Contact = () => {
               <Github className="h-6 w-6 text-primary" />
             </a>
             <a
-              href="https://www.linkedin.com/in/michael-luo-chen"
+              href="https://www.linkedin.com/in/michael-luo-chen/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-primary/10 hover:bg-primary/20 transition-all duration-300 hover:scale-110 animate-fade-in"

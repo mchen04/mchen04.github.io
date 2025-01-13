@@ -2,13 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Hero = () => {
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="min-h-screen flex items-center justify-center pt-20 pb-32 px-6">
       <div className="max-w-4xl mx-auto text-center">
         <div className="space-y-6">
           <div className="flex justify-center mb-8 animate-fade-in">
             <Avatar className="h-32 w-32 border-4 border-primary">
-              <AvatarImage src="/images/hero/hero_photo.jpg" alt="Michael Chen" />
+              <AvatarImage src="../images/hero/hero_photo.jpg" alt="Michael Chen" />
               <AvatarFallback>MC</AvatarFallback>
             </Avatar>
           </div>
@@ -26,7 +33,7 @@ const Hero = () => {
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-white transition-all duration-300 hover:scale-105"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('projects')}
             >
               View Projects
             </Button>
@@ -34,7 +41,7 @@ const Hero = () => {
               size="lg"
               variant="outline"
               className="border-primary text-primary hover:bg-primary/10 transition-all duration-300 hover:scale-105"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => scrollToSection('contact')}
             >
               Get in Touch
             </Button>

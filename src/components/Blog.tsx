@@ -7,14 +7,14 @@ const Blog = () => {
       title: "How DeepSeek V3 Makes AI Accessible for Budget-Conscious Students",
       date: "January 2, 2025",
       description: "Exploring how DeepSeek V3's innovative approach makes advanced AI tools accessible to students on a budget...",
-      image: "/images/blog/deepseek.jpg",
+      image: "../images/blog/deepseek.jpg",
       link: "https://medium.com/@michaelluochen1/how-deepseek-v3-makes-ai-accessible-for-budget-conscious-students-7c8b9edc683d"
     },
     {
       title: "How Bolt.new Helps Me Visualize and Brainstorm My Projects",
       date: "January 9, 2025",
       description: "Exploring how this Bolt.new's innovative approach helps with project visualization and brainstorming...",
-      image: "/images/blog/bolt-new.jpg",
+      image: "../images/blog/bolt-new.jpg",
       link: "https://medium.com/@michaelluochen1/how-bolt-new-helps-me-visualize-and-brainstorm-my-projects-6b4a4df1733c"
     }
   ];
@@ -36,7 +36,7 @@ const Blog = () => {
       </CardHeader>
       <CardContent>
         <p className="text-gray-600 mb-4">{post.description}</p>
-        <a href={post.link} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+        <a href={post.link} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
           Read More →
         </a>
       </CardContent>

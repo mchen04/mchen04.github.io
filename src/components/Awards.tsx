@@ -20,7 +20,7 @@ const Awards = () => {
     {
       title: "Dean's Honor Roll",
       year: "2022 - 2025",
-      description: "Recognized for academic excellence with a GPA above 3.5 during the academic years 2022-2025."
+      description: "Recognized for academic excellence with a GPA above 3.5 during the academic years 2022-2025.",
     }
   ];
 
