@@ -9,6 +9,17 @@
     <meta property="og:description" content="A modern portfolio website built with cutting-edge web technologies" />
     <meta property="og:image" content="/og-image.png" />
     <title>Michael Chen's Portfolio</title>
+    <script>
+      (function() {
+        const redirect = localStorage.getItem('path');
+        if (redirect) {
+          localStorage.removeItem('path');
+          if (redirect !== '/mchen04.github.io/') {
+            window.history.replaceState(null, null, redirect);
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

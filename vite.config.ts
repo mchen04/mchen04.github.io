@@ -17,6 +17,14 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+    assetsInlineLimit: 0,
+    sourcemap: false,
+    minify: 'terser',
   },
   plugins: [
     react(),
