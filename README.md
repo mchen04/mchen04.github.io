@@ -1,69 +1,89 @@
-# Welcome to your Lovable project
+# Michael Chen's Portfolio
 
-## Project info
+A modern portfolio website built with cutting-edge web technologies to showcase projects, experience, and skills.
 
-**URL**: https://lovable.dev/projects/32143d28-71fc-4e89-ab26-1bfee3ed6fa0
+## Features
 
-## How can I edit this code?
+- Responsive design with mobile-first approach
+- Modern UI components using shadcn/ui
+- Smooth animations and transitions
+- Project showcase with detailed descriptions
+- Contact form integration
+- Blog section for sharing insights
 
-There are several ways of editing your application.
+## Technologies Used
 
-**Use Lovable**
+- ⚡️ [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- ⚛️ [React](https://reactjs.org/) - JavaScript library for building user interfaces
+- 🦕 [TypeScript](https://www.typescriptlang.org/) - Typed JavaScript
+- 🎨 [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- 🛠️ [shadcn/ui](https://ui.shadcn.com/) - Beautifully designed components
+- 🐇 [Bun](https://bun.sh/) - Fast all-in-one JavaScript runtime
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/32143d28-71fc-4e89-ab26-1bfee3ed6fa0) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- [Bun](https://bun.sh/) (v1.0.0 or higher)
+- Node.js (v18 or higher)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mchen04/mchen04.github.io.git
+   ```
 
-Follow these steps:
+2. Navigate to the project directory:
+   ```bash
+   cd mchen04.github.io
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Install dependencies:
+   ```bash
+   bun install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Development
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+Start the development server:
+```bash
+bun run dev
 ```
 
-**Edit a file directly in GitHub**
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Building for Production
 
-**Use GitHub Codespaces**
+To build the app for production:
+```bash
+bun run build
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The build artifacts will be stored in the `dist/` directory.
 
-## What technologies are used for this project?
+## Project Structure
 
-This project is built with .
+```
+mchen04.github.io/
+├── public/            # Static assets
+├── src/               # Source files
+│   ├── components/    # React components
+│   ├── hooks/         # Custom React hooks
+│   ├── lib/           # Utility functions
+│   ├── pages/         # Page components
+│   └── App.tsx        # Main application component
+├── .gitignore         # Git ignore rules
+├── bun.lockb          # Bun lockfile
+├── package.json       # Project dependencies
+├── tailwind.config.ts # Tailwind configuration
+└── vite.config.ts     # Vite configuration
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Deployment
 
-## How can I deploy this project?
+This project is automatically deployed to GitHub Pages. The production build is served from the `gh-pages` branch.
 
-Simply open [Lovable](https://lovable.dev/projects/32143d28-71fc-4e89-ab26-1bfee3ed6fa0) and click on Share -> Publish.
+## License
 
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
