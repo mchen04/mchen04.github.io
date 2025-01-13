@@ -20,11 +20,16 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: undefined,
-      },
+        format: 'es',
+        generatedCode: {
+          constBindings: true
+        }
+      }
     },
     assetsInlineLimit: 0,
     sourcemap: false,
     minify: 'terser',
+    target: 'esnext'
   },
   plugins: [
     react(),
