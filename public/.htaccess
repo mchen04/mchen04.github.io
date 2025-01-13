@@ -1,0 +1,11 @@
+# Force correct MIME types for JavaScript files
+AddType application/javascript .js
+AddType application/javascript .mjs
+AddType application/javascript .jsx
+AddType application/javascript .ts
+AddType application/javascript .tsx
+
+# Enable CORS for module scripts
+<FilesMatch "\.(js|mjs|jsx|ts|tsx)$">
+  Header set Access-Control-Allow-Origin "*"
+</FilesMatch>

@@ -37,6 +37,24 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
+          headers: |
+            {
+              "**/*.js": {
+                "Content-Type": "application/javascript"
+              },
+              "**/*.mjs": {
+                "Content-Type": "application/javascript"
+              },
+              "**/*.jsx": {
+                "Content-Type": "application/javascript"
+              },
+              "**/*.ts": {
+                "Content-Type": "application/javascript"
+              },
+              "**/*.tsx": {
+                "Content-Type": "application/javascript"
+              }
+            }
 
   deploy:
     environment:
