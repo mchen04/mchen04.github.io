@@ -14,6 +14,14 @@ export default defineConfig(({ mode }) => ({
       'Cross-Origin-Embedder-Policy': 'require-corp'
     }
   },
+  preview: {
+    port: 8080,
+    strictPort: true,
+    headers: {
+      "Content-Type": "application/javascript",
+      "Access-Control-Allow-Origin": "*"
+    }
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
