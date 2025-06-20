@@ -588,50 +588,121 @@ class ZenPortfolio {
   }
 
   /**
-   * Subtle Micro-interactions for Enhanced UX
+   * Zen-Enhanced Micro-interactions for Deep UX
    */
   setupMicroInteractions() {
-    // Parallax effect for hero section
-    const hero = document.querySelector('.hero');
-    const geometricAccent = document.querySelector('.geometric-accent');
+    // Enhanced parallax for zen elements
+    this.setupZenParallax();
     
-    if (hero && geometricAccent) {
+    // Interactive zen elements
+    this.setupInteractiveZenElements();
+    
+    // Enhanced hover effects for project cards
+    this.setupEnhancedHoverEffects();
+
+    // Cursor enhancement for interactive elements
+    this.setupCursorEnhancements();
+  }
+  
+  setupZenParallax() {
+    const hero = document.querySelector('.hero');
+    const zenElements = document.querySelectorAll('.enso-circle, .zen-flow-line, .ink-stroke');
+    
+    if (hero && zenElements.length > 0) {
       let ticking = false;
       
-      const updateParallax = () => {
+      const updateZenParallax = () => {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
+        const heroHeight = hero.offsetHeight;
+        const scrollProgress = Math.min(scrolled / heroHeight, 1);
         
-        geometricAccent.style.transform = `translateY(${rate}px)`;
+        zenElements.forEach((element, index) => {
+          const rate = (scrolled * -0.3) + (index * 5);
+          const opacity = Math.max(0.02, 0.1 - (scrollProgress * 0.08));
+          
+          element.style.transform = `translateY(${rate}px) rotate(${scrollProgress * 45}deg)`;
+          element.style.opacity = opacity;
+        });
+        
         ticking = false;
       };
       
       window.addEventListener('scroll', () => {
         if (!ticking) {
-          requestAnimationFrame(updateParallax);
+          requestAnimationFrame(updateZenParallax);
           ticking = true;
         }
       }, { passive: true });
     }
-
-    // Enhanced hover effects for project cards
+  }
+  
+  setupInteractiveZenElements() {
+    // Interactive ripples on click
+    const sections = document.querySelectorAll('section');
+    
+    sections.forEach(section => {
+      section.addEventListener('click', (e) => {
+        if (e.target === section || section.contains(e.target)) {
+          this.createZenRipple(e.clientX, e.clientY, section);
+        }
+      });
+    });
+  }
+  
+  createZenRipple(x, y, container) {
+    const ripple = document.createElement('div');
+    const rect = container.getBoundingClientRect();
+    
+    ripple.className = 'interactive-zen-ripple';
+    ripple.style.cssText = `
+      position: absolute;
+      left: ${x - rect.left}px;
+      top: ${y - rect.top}px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--color-kohaku);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10;
+      animation: zenRippleEffect 2s ease-out forwards;
+    `;
+    
+    container.style.position = 'relative';
+    container.appendChild(ripple);
+    
+    // Remove after animation
+    setTimeout(() => {
+      if (ripple.parentNode) {
+        ripple.parentNode.removeChild(ripple);
+      }
+    }, 2000);
+  }
+  
+  setupEnhancedHoverEffects() {
     document.querySelectorAll('.project-card').forEach(card => {
       let hoverTimeout;
       
       card.addEventListener('mouseenter', () => {
         clearTimeout(hoverTimeout);
         card.style.transform = 'translateY(-8px) scale(1.02)';
+        card.style.filter = 'drop-shadow(0 20px 40px rgba(44, 44, 44, 0.1))';
+        
+        // Create subtle zen glow
+        card.style.boxShadow = `
+          var(--shadow-medium),
+          0 0 30px rgba(212, 165, 116, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1)
+        `;
       });
       
       card.addEventListener('mouseleave', () => {
         hoverTimeout = setTimeout(() => {
           card.style.transform = 'translateY(0) scale(1)';
+          card.style.filter = 'none';
+          card.style.boxShadow = 'var(--shadow-subtle)';
         }, 100);
       });
     });
-
-    // Cursor enhancement for interactive elements
-    this.setupCursorEnhancements();
   }
 
   /**

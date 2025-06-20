@@ -244,8 +244,8 @@ p {
   font-family: var(--font-accent);
   font-weight: 400;
   margin-bottom: var(--space-lg);
-  opacity: 0;
-  animation: fadeInUp var(--transition-zen) var(--transition-base) forwards;
+  opacity: 1;
+  animation: fadeInUp var(--transition-zen) 0s forwards;
 }
 
 .title-line {
@@ -268,7 +268,7 @@ p {
   font-size: var(--font-size-lg);
   color: var(--color-usuzumi);
   font-weight: 400;
-  opacity: 0;
+  opacity: 1;
   animation: fadeInUp var(--transition-zen) 0.2s forwards;
   margin-bottom: var(--space-sm);
 }
@@ -277,7 +277,7 @@ p {
   font-size: var(--font-size-base);
   color: var(--color-nezumi);
   font-weight: 300;
-  opacity: 0;
+  opacity: 1;
   animation: fadeInUp var(--transition-zen) 0.4s forwards;
   margin-bottom: 0;
 }
@@ -299,6 +299,7 @@ p {
   border: 1px solid;
   border-radius: 50%;
   opacity: 0.2;
+  z-index: -8;
 }
 
 .geometric-accent.primary {
@@ -354,10 +355,12 @@ p {
   height: 4px;
   background: var(--color-sabizome);
   border-radius: 50%;
-  top: 20%;
-  right: 15%;
-  opacity: 0.4;
+  top: 50%;
+  left: 50%;
+  opacity: 0.6;
   animation: zenPulse 4s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 
 /* Work Section */
@@ -816,6 +819,8 @@ p {
   object-fit: cover;
   border-radius: 12px;
   box-shadow: var(--shadow-medium);
+  position: relative;
+  z-index: 10;
 }
 
 .profile-accent {
@@ -827,6 +832,7 @@ p {
   border: 2px solid var(--color-kohaku);
   border-radius: 50%;
   opacity: 0.3;
+  z-index: 1;
 }
 
 /* Contact Section */
@@ -1101,6 +1107,310 @@ p {
   transform: translateY(-2px);
 }
 
+/* Zen Circles (Enso) - Sacred circular elements */
+.enso-circle {
+  position: absolute;
+  border: 1px solid;
+  border-radius: 50%;
+  opacity: 0.08;
+  pointer-events: none;
+  animation: zenFloat 60s linear infinite;
+  z-index: -15;
+}
+
+.enso-circle.large {
+  width: 400px;
+  height: 400px;
+  border-color: var(--color-kohaku);
+  border-width: 2px;
+  animation-duration: 120s;
+}
+
+.enso-circle.medium {
+  width: 280px;
+  height: 280px;
+  border-color: var(--color-sabizome);
+  animation-duration: 90s;
+  animation-direction: reverse;
+}
+
+.enso-circle.small {
+  width: 160px;
+  height: 160px;
+  border-color: var(--color-nezumi);
+  animation-duration: 80s;
+}
+
+.enso-circle.incomplete {
+  border-width: 2px;
+  border-color: transparent;
+  border-top-color: var(--color-kohaku);
+  border-right-color: var(--color-kohaku);
+  border-bottom-color: var(--color-kohaku);
+  opacity: 0.06;
+}
+
+/* Stone Garden Flowing Lines */
+.zen-flow-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-kohaku), transparent);
+  opacity: 0.08;
+  pointer-events: none;
+  animation: flowingWater 40s ease-in-out infinite;
+  z-index: -15;
+}
+
+.zen-flow-line.horizontal {
+  width: 60%;
+  transform-origin: left center;
+}
+
+.zen-flow-line.diagonal {
+  width: 40%;
+  transform: rotate(15deg);
+  animation-delay: -10s;
+}
+
+.zen-flow-line.curved {
+  width: 50%;
+  border-radius: 50px;
+  height: 2px;
+  background: radial-gradient(ellipse, var(--color-sabizome), transparent);
+  animation-delay: -20s;
+}
+
+/* Mountain Silhouette Background */
+.mountain-silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to top, 
+    rgba(108, 95, 86, 0.02) 0%,
+    rgba(108, 95, 86, 0.01) 50%,
+    transparent 100%);
+  clip-path: polygon(
+    0% 100%, 
+    20% 80%, 
+    35% 85%, 
+    50% 70%, 
+    65% 75%, 
+    80% 60%, 
+    100% 65%, 
+    100% 100%
+  );
+  pointer-events: none;
+  z-index: -20;
+}
+
+.mountain-silhouette::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top,
+    rgba(212, 165, 116, 0.015) 0%,
+    transparent 60%);
+  clip-path: polygon(
+    0% 100%,
+    15% 90%,
+    30% 95%,
+    45% 75%,
+    60% 80%,
+    75% 65%,
+    90% 70%,
+    100% 60%,
+    100% 100%
+  );
+}
+
+/* Pebble Arrangements */
+.zen-pebbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -15;
+}
+
+.zen-pebble {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-usuzumi);
+  opacity: 0.04;
+  animation: gentleBob 8s ease-in-out infinite;
+  z-index: -15;
+}
+
+.zen-pebble.size-1 {
+  width: 8px;
+  height: 6px;
+  animation-delay: 0s;
+}
+
+.zen-pebble.size-2 {
+  width: 12px;
+  height: 10px;
+  animation-delay: -2s;
+}
+
+.zen-pebble.size-3 {
+  width: 6px;
+  height: 8px;
+  animation-delay: -4s;
+}
+
+.zen-pebble.size-4 {
+  width: 10px;
+  height: 7px;
+  animation-delay: -6s;
+}
+
+/* Ink Brush Strokes */
+.ink-stroke {
+  position: absolute;
+  background: var(--color-sumi);
+  opacity: 0.03;
+  border-radius: 50px;
+  pointer-events: none;
+  transform-origin: center;
+  animation: inkFlow 25s ease-in-out infinite;
+  z-index: -15;
+}
+
+.ink-stroke.horizontal {
+  width: 120px;
+  height: 2px;
+  animation-delay: 0s;
+}
+
+.ink-stroke.vertical {
+  width: 2px;
+  height: 80px;
+  animation-delay: -8s;
+}
+
+.ink-stroke.curved {
+  width: 100px;
+  height: 4px;
+  border-radius: 0 50px 0 50px;
+  animation-delay: -15s;
+}
+
+/* Water Ripple Effects */
+.water-ripple {
+  position: absolute;
+  border: 1px solid var(--color-kohaku);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation: rippleExpand 6s ease-out infinite;
+  z-index: -12;
+}
+
+.water-ripple.ripple-1 {
+  width: 40px;
+  height: 40px;
+  animation-delay: 0s;
+}
+
+.water-ripple.ripple-2 {
+  width: 40px;
+  height: 40px;
+  animation-delay: 2s;
+}
+
+.water-ripple.ripple-3 {
+  width: 40px;
+  height: 40px;
+  animation-delay: 4s;
+}
+
+/* Breathing Animation Container */
+.zen-breathing {
+  position: relative;
+  animation: breathingRhythm 8s ease-in-out infinite;
+}
+
+/* Bamboo Section Dividers */
+.bamboo-section {
+  position: relative;
+  padding: var(--space-2xl) 0;
+}
+
+.bamboo-section::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    var(--color-kohaku) 20%,
+    var(--color-kohaku) 80%,
+    transparent 100%
+  );
+  opacity: 0.1;
+  z-index: -10;
+}
+
+.bamboo-section::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    var(--color-sabizome) 20%,
+    var(--color-sabizome) 80%,
+    transparent 100%
+  );
+  opacity: 0.08;
+  z-index: -10;
+}
+
+/* Bamboo Node Accents */
+.bamboo-node {
+  position: absolute;
+  left: -4px;
+  width: 10px;
+  height: 3px;
+  background: var(--color-kohaku);
+  border-radius: 2px;
+  opacity: 0.15;
+  z-index: -10;
+}
+
+.bamboo-node:nth-child(1) { top: 25%; }
+.bamboo-node:nth-child(2) { top: 50%; }
+.bamboo-node:nth-child(3) { top: 75%; }
+
+/* Golden Ratio Proportions */
+.golden-section {
+  max-width: min(61.8vw, 800px); /* Golden ratio width */
+  margin: 0 auto;
+}
+
+.golden-split {
+  display: grid;
+  grid-template-columns: 1.618fr 1fr; /* Golden ratio split */
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .golden-split {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Subtle shadow enhancements */
 .project-card,
 .navigation,
@@ -1170,6 +1480,124 @@ p {
 @keyframes zenPulse {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
+}
+
+@keyframes zenFloat {
+  0%, 100% { 
+    transform: translateY(0) rotate(0deg); 
+    opacity: 0.08;
+  }
+  25% { 
+    transform: translateY(-10px) rotate(90deg); 
+    opacity: 0.12;
+  }
+  50% { 
+    transform: translateY(-5px) rotate(180deg); 
+    opacity: 0.06;
+  }
+  75% { 
+    transform: translateY(-15px) rotate(270deg); 
+    opacity: 0.10;
+  }
+}
+
+@keyframes flowingWater {
+  0%, 100% {
+    transform: translateX(-20%) scaleX(0.8);
+    opacity: 0.06;
+  }
+  25% {
+    transform: translateX(0%) scaleX(1.2);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translateX(10%) scaleX(1);
+    opacity: 0.08;
+  }
+  75% {
+    transform: translateX(-5%) scaleX(0.9);
+    opacity: 0.10;
+  }
+}
+
+@keyframes gentleBob {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.04;
+  }
+  50% {
+    transform: translateY(-3px) scale(1.1);
+    opacity: 0.08;
+  }
+}
+
+@keyframes inkFlow {
+  0%, 100% {
+    transform: scale(1) skew(0deg);
+    opacity: 0.03;
+  }
+  33% {
+    transform: scale(1.2) skew(2deg);
+    opacity: 0.06;
+  }
+  66% {
+    transform: scale(0.8) skew(-1deg);
+    opacity: 0.02;
+  }
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes breathingRhythm {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes zenRippleEffect {
+  0% {
+    transform: scale(0.5) translate(-50%, -50%);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(2) translate(-50%, -50%);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(4) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+@keyframes zenActivate {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.08;
+  }
 }
 
 .loading {

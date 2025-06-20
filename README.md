@@ -1,170 +1,65 @@
-# 🎋 Zen Portfolio - Japanese Minimalism
+# Michael Chen - Software Engineer Portfolio
 
-A portfolio website embodying Japanese minimalism principles with sophisticated technical execution.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-brightgreen)](https://mchen04.github.io/)
+[![Code Quality](https://img.shields.io/badge/Code%20Quality-A+-green.svg)](#portfolio-features)
 
-## Philosophy
+My personal portfolio showcasing software engineering expertise through clean, performance-focused web development and Japanese minimalist design principles.
 
-This portfolio demonstrates the fusion of **Japanese aesthetic philosophy** with **modern web development excellence**:
+## About Me
 
-- **Ma (間)** - Intentional use of negative space for visual breathing room
-- **Wabi-Sabi (侘寂)** - Beautiful imperfection through subtle textures and organic elements
-- **Kanso (簡素)** - Simplicity and elimination of clutter
-- **Shizen (自然)** - Natural materials and colors
-- **Seijaku (静寂)** - Tranquility through purposeful design
+I'm a **Computer Science student at UC Riverside** (GPA: 3.73) passionate about creating technology that makes a meaningful impact. Currently working as a **Software Engineer at MOBIVOLT LLC** and founder of **AI at UCR (AIR)**, UCR's first official AI organization.
 
-## Technical Excellence
+**Key Achievements:**
+- 🏆 **AMD University Program Award Winner** - Pervasive AI Competition
+- 🚀 **50+ member AI organization** built from the ground up
+- ⚡ **65% operational efficiency improvement** through cross-platform desktop applications
+- 🎯 **100,000+ operations** handled via firmware integration systems
 
-### Performance Optimizations
-- **Intersection Observer API** for efficient scroll-based animations
-- **Custom cursor enhancements** with smooth movement
-- **Throttled scroll handlers** for 60fps performance
-- **Optimized image loading** with lazy loading
-- **Minimal DOM manipulation** for better performance
+## Technical Skills
 
-### Advanced CSS Features
-- **CSS Custom Properties** for consistent design system
-- **Clamp() functions** for responsive typography
-- **Backdrop-filter** for glass morphism effects
-- **CSS Grid** and **Flexbox** for perfect alignment
-- **Smooth transitions** with cubic-bezier easing
+**Languages:** Python, JavaScript/TypeScript, Java, C/C++/C#, SQL  
+**Frameworks:** React.js, Next.js 15, Flask, .NET, Node.js, Express.js  
+**AI/ML:** PyTorch, TensorFlow, Scikit-Learn, OpenAI APIs, Semantic Search  
+**Databases:** PostgreSQL, MongoDB, Supabase, Firebase, Vector DBs  
+**Tools:** Docker, Git, Linux, AWS, Vercel, Avalonia UI  
 
-### JavaScript Architecture
-- **Class-based architecture** with clean separation of concerns
-- **Performance monitoring** with Core Web Vitals
-- **Memory usage tracking** and optimization
-- **Accessibility-first** keyboard navigation
-- **Progressive enhancement** with graceful degradation
+## Featured Projects
 
-## Features
+### [PHiLIP - AI Image Generation](https://github.com/mchen04/PHiLIP) 🏆
+AMD Award-winning AI platform with 2-second generation times and 71 style options. Fine-tuned PixArt-alpha models for creative workflow optimization.
 
-### Visual Design
-- 🎨 **Natural Color Palette** - Inspired by Japanese materials (sumi ink, washi paper, amber)
-- 📝 **Perfect Typography** - Crimson Text + Inter with golden ratio spacing
-- 🌸 **Subtle Animations** - Zen-like transitions that feel meditative
-- 📱 **Responsive Design** - Maintains harmony across all devices
+### [Grantify.ai](https://github.com/mchen04/grantify)
+AI-driven grant discovery platform using Next.js 15, Google Gemini, and semantic matching to connect researchers with 1000+ funding opportunities.
 
-### Interactions
-- 🎯 **Project Modals** - Detailed project showcases with smooth transitions
-- 🔄 **Scroll Progress** - Subtle indicator showing reading progress
-- ⌨️ **Keyboard Navigation** - Full accessibility support
-- 🖱️ **Custom Cursor** - Enhanced pointer interactions
+### [Kelly Criterion Extension](https://github.com/mchen04/kelly_criterion_google_extension)
+Chrome extension implementing mathematical algorithms for optimal decision-making with dynamic filtering and financial optimization.
 
-### Technical Demos
-- 📊 **Performance Monitoring** - Real-time metrics and optimization
-- 🧪 **Intersection Observers** - Efficient scroll-based animations
-- 🎬 **Smooth Scrolling** - Native smooth scrolling with fallbacks
-- 🔧 **Modern JavaScript** - ES6+ features with clean architecture
+## Portfolio Features
 
-## Setup & Development
+This portfolio demonstrates:
+- **Performance-first development** (< 1.5s load times)
+- **Accessibility compliance** (WCAG 2.1 AA)
+- **Japanese minimalist design** with intentional whitespace
+- **Advanced CSS/JS techniques** without frameworks
+- **Responsive design** across all devices
 
-### Prerequisites
-- Node.js 14+ 
-- npm or yarn
+## Quick Start
 
-### Installation
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd zen-portfolio
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
+# View locally
+git clone https://github.com/mchen04/mchen04.github.io.git
+cd mchen04.github.io
+python -m http.server 8000
+# Visit http://localhost:8000
 ```
 
-### Testing
-```bash
-# Run comprehensive Puppeteer tests
-npm test
+## Contact
 
-# This will test:
-# - Visual harmony and spacing
-# - Typography and color palette
-# - Animation quality
-# - Mobile responsiveness
-# - Modal interactions
-# - Performance metrics
-# - Accessibility features
-# - Zen philosophy implementation
-```
-
-## Project Structure
-
-```
-zen-portfolio/
-├── index.html          # Main HTML structure
-├── styles.css          # Japanese minimalism CSS
-├── script.js           # Sophisticated interactions
-├── server.js           # Development server
-├── test-terminal.js    # Puppeteer testing suite
-├── images/             # Project and profile images
-│   ├── projects/       # Project screenshots
-│   ├── hero/           # Hero section images
-│   ├── certifications/ # Certificate images
-│   └── documents/      # Resume and documents
-└── README.md           # This file
-```
-
-## Design System
-
-### Color Palette
-- **Sumi (墨)** - `#2c2c2c` - Deep black for text
-- **Washi (和紙)** - `#faf9f7` - Paper white background
-- **Nezumi (鼠)** - `#8e8e93` - Mouse gray for secondary text
-- **Kohaku (琥珀)** - `#d4a574` - Amber for accents
-- **Sabizome (錆染)** - `#6c5f56` - Rust dye for emphasis
-
-### Typography Scale
-- **Primary Font**: Inter (clean, modern)
-- **Accent Font**: Crimson Text (elegant, readable)
-- **Scale**: Fluid typography using clamp() for perfect proportions
-
-### Spacing System
-- Based on **golden ratio** principles
-- Consistent vertical rhythm
-- Generous whitespace (Ma)
-
-## Performance Targets
-
-- ⚡ **First Contentful Paint** < 1.5s
-- 🎯 **Largest Contentful Paint** < 2.5s
-- 📊 **Cumulative Layout Shift** < 0.1
-- 💾 **JavaScript Heap** < 20MB
-- 🏎️ **DOM Nodes** < 200
-
-## Browser Support
-
-- **Modern browsers** (Chrome 80+, Firefox 75+, Safari 13+, Edge 80+)
-- **Progressive enhancement** for older browsers
-- **Mobile-first** responsive design
-- **Accessibility** WCAG 2.1 AA compliant
-
-## Zen Philosophy in Code
-
-Every element has been crafted with intention:
-
-1. **Purposeful Code** - Each line serves a specific purpose
-2. **Minimal Complexity** - Simple solutions over complex ones
-3. **Harmonious Structure** - Logical organization and clean architecture
-4. **Mindful Performance** - Optimized without sacrificing quality
-5. **Accessible Design** - Inclusive for all users
-
-## Testing Philosophy
-
-The Puppeteer test suite evaluates:
-- **Visual Harmony** - Screenshots for design consistency
-- **Technical Quality** - Performance and memory usage
-- **Zen Implementation** - Adherence to minimalist principles
-- **Accessibility** - Keyboard navigation and screen reader support
-
-## Contributing
-
-This project demonstrates a specific aesthetic and technical approach. Feel free to use it as inspiration while respecting the zen philosophy of intentional simplicity.
+**Email:** [michaelluochen1@gmail.com](mailto:michaelluochen1@gmail.com)  
+**LinkedIn:** [michael-luo-chen](https://linkedin.com/in/michael-luo-chen)  
+**GitHub:** [mchen04](https://github.com/mchen04)  
+**Phone:** (925) 365-6778
 
 ---
 
-*"Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away."* - Antoine de Saint-Exupéry
-
-Created with mindfulness and technical precision. 🍃
+*Currently seeking software engineering opportunities for Summer 2025 and beyond.*
