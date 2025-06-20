@@ -1,17 +1,436 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Michael Chen's Portfolio</title>
-    <meta name="description" content="Michael Chen's Portfolio - Showcasing my skills, projects, and experience" />
-    <meta property="og:image" content="/og-image.png" />
-    <script type="module" crossorigin src="/assets/index-GQyoAYoU.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BHsGU8hR.css">
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Chen - Portfolio</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navigation" role="navigation">
+        <div class="nav-container">
+            <a href="#" class="logo">MC</a>
+            <ul class="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#work" class="nav-link">Projects</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-  <body>
-    <div id="root"></div>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-  </body>
+    <main class="main-content">
+        <section class="hero" id="hero">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="title-line">Michael Chen</span>
+                        <span class="title-line">Builder & Innovator</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        I believe in the power of code to transform ideas into reality
+                    </p>
+                    <p class="hero-details">
+                        Turning complex problems into elegant solutions, one algorithm at a time
+                    </p>
+                </div>
+                <div class="hero-visual">
+                    <div class="zen-shapes">
+                        <div class="geometric-accent primary"></div>
+                        <div class="geometric-accent secondary"></div>
+                        <div class="geometric-accent tertiary"></div>
+                        <div class="zen-line horizontal"></div>
+                        <div class="zen-line vertical"></div>
+                        <div class="zen-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="section-container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">About</h2>
+                        <div class="about-education">
+                            <h3 class="education-school">University of California, Riverside</h3>
+                            <p class="education-details">Bachelor of Science in Computer Science</p>
+                            <p class="education-details">Minor: Entrepreneurship & Strategy</p>
+                            <p class="education-details">GPA: 3.73/4.0 • Dean's Honor List • Expected Graduation: June 2026</p>
+                        </div>
+                        <p class="about-description">
+                            I'm passionate about creating technology that makes a meaningful impact. From founding UCR's first AI organization 
+                            to winning AMD's Pervasive AI Competition, I thrive on turning ambitious ideas into reality. 
+                        </p>
+                        <p class="about-description">
+                            Whether I'm architecting cross-platform applications at MOBIVOLT LLC or building AI-powered platforms, 
+                            I approach every challenge with curiosity, precision, and a drive to innovate. 
+                            I believe the best solutions emerge when technical excellence meets creative problem-solving.
+                        </p>
+                        <div class="certifications">
+                            <h3 class="certifications-title">Certifications</h3>
+                            <div class="cert-grid">
+                                <a href="https://www.coursera.org/account/accomplishments/verify/RDHD7AHGBYYH" target="_blank" rel="noopener" class="cert-item">
+                                    <img src="images/certifications/supervised-learning.jpg" alt="Supervised Machine Learning" loading="lazy">
+                                    <span class="cert-name">Supervised Machine Learning</span>
+                                </a>
+                                <a href="https://coursera.org/share/8bdbcdfd08a8e0cecab7430f18c8a491" target="_blank" rel="noopener" class="cert-item">
+                                    <img src="images/certifications/unsupervised-learning.jpg" alt="Unsupervised Learning" loading="lazy">
+                                    <span class="cert-name">Unsupervised Learning</span>
+                                </a>
+                                <a href="https://coursera.org/share/542c49e0ba8dd0080218160efcacf851" target="_blank" rel="noopener" class="cert-item">
+                                    <img src="images/certifications/advanced-learning.jpg" alt="Advanced Learning Algorithms" loading="lazy">
+                                    <span class="cert-name">Advanced Learning Algorithms</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual">
+                        <div class="profile-container">
+                            <img src="images/hero/hero_photo.jpg" alt="Michael Chen" class="profile-image" loading="lazy">
+                            <div class="profile-accent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="experience" id="experience">
+            <div class="section-container">
+                <header class="section-header">
+                    <h2 class="section-title">Experience</h2>
+                    <p class="section-subtitle">Professional and leadership experience</p>
+                </header>
+                
+                <div class="experience-timeline">
+                    <article class="experience-item">
+                        <div class="experience-content">
+                            <div class="experience-header">
+                                <h3 class="experience-title">Software Engineer Intern/Part-Time</h3>
+                                <div class="experience-company">MOBIVOLT LLC</div>
+                                <div class="experience-duration">June 2023 – Present</div>
+                            </div>
+                            <ul class="experience-highlights">
+                                <li>Architected cross-platform desktop applications using C# 11/.NET 7.0 and Avalonia UI, increasing operational efficiency by 65%</li>
+                                <li>Developed firmware integration and bidirectional communication protocols for real-time command execution across 100,000+ operations</li>
+                                <li>Implemented high-performance data processing pipelines using ReactiveUI and Task Parallel Library (TPL), improving measurement accuracy by 60%</li>
+                            </ul>
+                        </div>
+                        <div class="experience-accent"></div>
+                    </article>
+                    
+                    <article class="experience-item">
+                        <div class="experience-content">
+                            <div class="experience-header">
+                                <h3 class="experience-title">Founder/President</h3>
+                                <div class="experience-company">AI at UCR (AIR)</div>
+                                <div class="experience-duration">October 2023 – Present</div>
+                            </div>
+                            <ul class="experience-highlights">
+                                <li>Founded and scaled UCR's first official AI organization from 0 to 50+ active members</li>
+                                <li>Led 10+ workshops on AI/ML trends, career development, and emerging technologies</li>
+                                <li>Increased workshop attendance by 45% through expert-led guest lectures and hands-on technical sessions</li>
+                            </ul>
+                        </div>
+                        <div class="experience-accent"></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="work" id="work">
+            <div class="section-container">
+                <header class="section-header">
+                    <h2 class="section-title">Selected Work</h2>
+                    <p class="section-subtitle">A collection of projects that showcase technical craftsmanship</p>
+                </header>
+                
+                <div class="projects-grid">
+                    <article class="project-card" data-project="philip">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">PHiLIP: Personalized Human-in-Loop Image Production</h3>
+                                <div class="project-badge award">AMD Award Winner</div>
+                            </div>
+                            <p class="project-description">AI-powered image generation suite with 2-second generation times and 71 style options. Winner of AMD University Program Award at the AMD Pervasive AI Developer Contest.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">PixArt-alpha</span>
+                                <span class="tech-tag">AMD GPU</span>
+                            </div>
+                            <button class="show-image-btn" data-project="philip">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="grantify">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Grantify.ai</h3>
+                                <div class="project-badge current">Current Project</div>
+                            </div>
+                            <p class="project-description">AI-driven grant search and recommendation engine using Next.js 15, Google Gemini, and semantic matching to connect researchers with 1000+ grants.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Next.js 15</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">Supabase</span>
+                                <span class="tech-tag">Google Gemini</span>
+                                <span class="tech-tag">pgvector</span>
+                            </div>
+                            <button class="show-image-btn" data-project="grantify">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="kelly-criterion">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Kelly Criterion Chrome Extension</h3>
+                                <div class="project-badge web">Web Extension</div>
+                            </div>
+                            <p class="project-description">Sports betting analytics Chrome extension implementing mathematical algorithms for financial optimization with dynamic URL filtering.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">Chrome APIs</span>
+                                <span class="tech-tag">HTML/CSS</span>
+                                <span class="tech-tag">Mathematical Algorithms</span>
+                            </div>
+                            <button class="show-image-btn" data-project="kelly-criterion">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="news-genie">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">News Genie</h3>
+                                <div class="project-badge web">Full-Stack</div>
+                            </div>
+                            <p class="project-description">Personalized news platform with React frontend, Flask backend, and Firebase integration. Deployed on Vercel and Render.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Vercel</span>
+                            </div>
+                            <button class="show-image-btn" data-project="news-genie">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="mafway">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">MafWay</h3>
+                                <div class="project-badge ai">AI/ML</div>
+                            </div>
+                            <p class="project-description">AI-powered mathematical formula recognition using deep learning models for real-time processing of mathematical expressions from images.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Deep Learning</span>
+                                <span class="tech-tag">Image Recognition</span>
+                                <span class="tech-tag">Machine Learning</span>
+                            </div>
+                            <button class="show-image-btn" data-project="mafway">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="homebase">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">HomeBase</h3>
+                                <div class="project-badge web">Full-Stack</div>
+                            </div>
+                            <p class="project-description">Collaborative home management app for roommates featuring chore management, expense tracking, and notification systems.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">SQL</span>
+                                <span class="tech-tag">Firebase</span>
+                            </div>
+                            <button class="show-image-btn" data-project="homebase">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="carbon-footprint">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">Flashy Carbon Footprint Estimator</h3>
+                                <div class="project-badge ai">AI/ML</div>
+                            </div>
+                            <p class="project-description">AI-powered environmental impact tracker with dual visual themes and personalized recommendations using OpenAI's API.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">TypeScript</span>
+                                <span class="tech-tag">OpenAI API</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                            <button class="show-image-btn" data-project="carbon-footprint">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-project="songsmith">
+                        <div class="project-content">
+                            <div class="project-header">
+                                <h3 class="project-title">SongsmithAI</h3>
+                                <div class="project-badge ai">AI/ML</div>
+                            </div>
+                            <p class="project-description">LSTM neural network for creative lyric generation with Spotify and Genius API integration. Demonstrates advanced NLP and deep learning capabilities.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">TensorFlow</span>
+                                <span class="tech-tag">Keras</span>
+                                <span class="tech-tag">Spotify API</span>
+                                <span class="tech-tag">LSTM</span>
+                            </div>
+                            <button class="show-image-btn" data-project="songsmith">View Details</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills" id="skills">
+            <div class="section-container">
+                <header class="section-header">
+                    <h2 class="section-title">Technical Skills</h2>
+                    <p class="section-subtitle">Technologies and tools I work with</p>
+                </header>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Programming Languages</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">C/C++/C#</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">GraphQL</span>
+                            <span class="skill-tag">XAML</span>
+                            <span class="skill-tag">Bash</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Frameworks & Libraries</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">React.js</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Next.js 15</span>
+                            <span class="skill-tag">Express.js</span>
+                            <span class="skill-tag">Flask</span>
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">.NET Framework</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Scikit-Learn</span>
+                            <span class="skill-tag">Keras</span>
+                            <span class="skill-tag">Tailwind CSS</span>
+                            <span class="skill-tag">Avalonia UI</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Development Tools & Technologies</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">RESTful APIs</span>
+                            <span class="skill-tag">CI/CD Pipelines</span>
+                            <span class="skill-tag">Unit Testing</span>
+                            <span class="skill-tag">Integration Testing</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">AI/ML & Data Processing</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">Natural Language Processing</span>
+                            <span class="skill-tag">Text Embeddings</span>
+                            <span class="skill-tag">Semantic Search</span>
+                            <span class="skill-tag">Recommendation Systems</span>
+                            <span class="skill-tag">Data Pipeline Processing</span>
+                            <span class="skill-tag">MCP (Model Context Protocol)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Databases & Security</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">Firebase</span>
+                            <span class="skill-tag">Supabase</span>
+                            <span class="skill-tag">Vector Similarity Search</span>
+                            <span class="skill-tag">pgvector</span>
+                            <span class="skill-tag">JWT</span>
+                            <span class="skill-tag">OAuth2</span>
+                            <span class="skill-tag">Enterprise Security</span>
+                            <span class="skill-tag">CSRF Protection</span>
+                            <span class="skill-tag">Row Level Security (RLS)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">Embedded Systems</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Real-time Data Acquisition</span>
+                            <span class="skill-tag">Hardware Integration</span>
+                            <span class="skill-tag">Arduino Development</span>
+                            <span class="skill-tag">Firmware Engineering</span>
+                            <span class="skill-tag">Serial Communication Protocols</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="section-container">
+                <div class="contact-content">
+                    <h2 class="section-title">Let's Connect</h2>
+                    <p class="contact-description">
+                        Interested in collaboration or have a project in mind?
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:michaelluochen1@gmail.com" class="contact-link">
+                            <span class="contact-method">Email</span>
+                            <span class="contact-value">michaelluochen1@gmail.com</span>
+                        </a>
+                        <a href="tel:+19253656778" class="contact-link">
+                            <span class="contact-method">Phone</span>
+                            <span class="contact-value">(925) 365-6778</span>
+                        </a>
+                        <a href="https://github.com/mchen04" class="contact-link" target="_blank">
+                            <span class="contact-method">GitHub</span>
+                            <span class="contact-value">github.com/mchen04</span>
+                        </a>
+                        <a href="https://linkedin.com/in/michael-luo-chen" class="contact-link" target="_blank">
+                            <span class="contact-method">LinkedIn</span>
+                            <span class="contact-value">linkedin.com/in/michael-luo-chen</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="project-modal" id="project-modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <!-- Project details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
