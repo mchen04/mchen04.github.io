@@ -15,6 +15,7 @@ class ZenPortfolio {
 
   init() {
     this.setupScrollProgress();
+    this.setupNavigationHighlighting();
     this.setupIntersectionObservers();
     this.setupProjectModals();
     this.setupSmoothScrolling();
@@ -23,6 +24,42 @@ class ZenPortfolio {
     this.setupMicroInteractions();
     
     console.log('🎋 Zen Portfolio initialized with mindful interactions');
+  }
+
+  /**
+   * Navigation Highlighting - Shows current section in navbar
+   */
+  setupNavigationHighlighting() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+    
+    if (!navLinks.length || !sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            
+            // Remove active class from all nav links
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to corresponding nav link
+            const activeLink = document.querySelector(`a[href="#${sectionId}"]`);
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-50% 0px -50% 0px',
+        threshold: 0
+      }
+    );
+
+    sections.forEach(section => observer.observe(section));
+    this.observers.set('navigation', observer);
   }
 
   /**

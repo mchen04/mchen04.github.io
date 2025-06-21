@@ -186,6 +186,31 @@ p {
   width: 100%;
 }
 
+/* Active navigation state - zen-inspired highlighting */
+.nav-link.active {
+  color: var(--color-sumi);
+  font-weight: 500;
+}
+
+.nav-link.active::after {
+  width: 100%;
+  background: var(--color-sabizome);
+}
+
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 3px;
+  background: var(--color-kohaku);
+  border-radius: 50%;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+}
+
 /* Main Content Container */
 .main-content {
   margin-top: 0;
