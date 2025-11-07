@@ -394,6 +394,24 @@ p {
   background: linear-gradient(to bottom, var(--color-washi), var(--color-koyumi));
 }
 
+.projects-section {
+  margin-top: var(--space-3xl);
+}
+
+.projects-section:first-of-type {
+  margin-top: var(--space-2xl);
+}
+
+.projects-section-title {
+  font-family: var(--font-accent);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-sumi);
+  margin-bottom: var(--space-lg);
+  letter-spacing: -0.02em;
+  opacity: 0.85;
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
