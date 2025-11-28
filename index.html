@@ -64,13 +64,24 @@
        Custom Properties
     ======================================== */
     :root {
-      --bg: #ffffff;
-      --bg-alt: #fafafa;
-      --text-primary: #0a0a0a;
-      --text-secondary: #555555;
-      --text-muted: #888888;
-      --border: #e5e5e5;
-      --border-dark: #d0d0d0;
+      /* Teal Accents */
+      --accent-primary: #1a5f5f;
+      --accent-primary-light: #2d8b8b;
+      --accent-primary-subtle: #e8f4f4;
+
+      /* Gold Accents */
+      --accent-gold: #b8986b;
+      --accent-gold-light: #d4b896;
+      --accent-gold-subtle: #fdf8f0;
+
+      /* Refined Neutrals */
+      --bg: #fefefe;
+      --bg-alt: #f8f9fa;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --border: #e2e8f0;
+      --border-dark: #cbd5e0;
 
       --font-display: 'Playfair Display', Georgia, serif;
       --font-body: 'Inter', -apple-system, sans-serif;
@@ -84,7 +95,13 @@
       --space-3xl: 8rem;
 
       --container: min(90%, 1100px);
+
+      /* Enhanced Transitions */
       --transition: 0.2s ease;
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-elegant: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     /* ========================================
@@ -145,15 +162,17 @@
       right: 0;
       z-index: 100;
       padding: var(--space-md) 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(254, 254, 254, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid transparent;
-      transition: border-color var(--transition);
+      transition: border-color var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
     }
 
     .nav.scrolled {
+      background: rgba(254, 254, 254, 0.95);
       border-bottom-color: var(--border);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
 
     .nav-inner {
@@ -166,6 +185,11 @@
       font-family: var(--font-display);
       font-size: 1.25rem;
       font-weight: 500;
+      transition: color var(--transition-base);
+    }
+
+    .nav-logo:hover {
+      color: var(--accent-primary);
     }
 
     .nav-links {
@@ -176,7 +200,7 @@
     .nav-link {
       font-size: 0.9rem;
       color: var(--text-secondary);
-      transition: color var(--transition);
+      transition: color var(--transition-base);
       position: relative;
     }
 
@@ -184,15 +208,17 @@
       content: '';
       position: absolute;
       bottom: -4px;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 0;
-      height: 1px;
-      background: var(--text-primary);
-      transition: width var(--transition);
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-light));
+      border-radius: 1px;
+      transition: width var(--transition-base);
     }
 
     .nav-link:hover {
-      color: var(--text-primary);
+      color: var(--accent-primary);
     }
 
     .nav-link:hover::after {
@@ -269,10 +295,66 @@
       text-align: center;
       padding-top: 80px;
       position: relative;
+      overflow: hidden;
+    }
+
+    /* Floating Blobs */
+    .hero::before,
+    .hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .hero::before {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+      top: 10%;
+      right: -10%;
+    }
+
+    .hero::after {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+      bottom: 15%;
+      left: -5%;
+      animation-delay: -10s;
+    }
+
+    /* Third blob using a wrapper element */
+    .hero-blob {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25;
+      pointer-events: none;
+      background: radial-gradient(circle, var(--accent-primary-light) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: float 25s ease-in-out infinite;
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(20px, -30px) scale(1.05); }
+      50% { transform: translate(-10px, 20px) scale(0.95); }
+      75% { transform: translate(-25px, -15px) scale(1.02); }
     }
 
     .hero-content {
       animation: fadeUp 0.8s ease-out;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-title {
@@ -288,9 +370,10 @@
 
     .hero-tagline {
       font-size: 0.9rem;
-      color: var(--text-muted);
+      color: var(--accent-primary);
       max-width: 500px;
       margin: 0 auto;
+      font-weight: 500;
     }
 
     .scroll-indicator {
@@ -305,6 +388,12 @@
       color: var(--text-muted);
       font-size: 0.75rem;
       animation: bounce 2s ease-in-out infinite;
+      transition: color var(--transition-base);
+      z-index: 1;
+    }
+
+    .scroll-indicator:hover {
+      color: var(--accent-primary);
     }
 
     .scroll-indicator svg {
@@ -349,7 +438,20 @@
       border-radius: 50%;
       object-fit: cover;
       margin: 0 auto;
-      border: 3px solid var(--border);
+      border: 4px solid white;
+      box-shadow:
+        0 0 0 2px var(--accent-gold-light),
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 60px rgba(184, 152, 107, 0.15);
+      transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+    }
+
+    .about-image:hover {
+      transform: scale(1.02);
+      box-shadow:
+        0 0 0 3px var(--accent-gold),
+        0 25px 50px rgba(0, 0, 0, 0.12),
+        0 0 80px rgba(184, 152, 107, 0.2);
     }
 
     @media (min-width: 768px) {
@@ -373,19 +475,32 @@
       display: inline-flex;
       align-items: center;
       gap: var(--space-xs);
-      background: #f5f5f5;
+      background: linear-gradient(135deg, var(--accent-gold-subtle) 0%, #fff 100%);
       padding: 0.5rem 1rem;
       border-radius: 100px;
       font-size: 0.875rem;
-      color: var(--text-primary);
+      color: var(--accent-gold);
       margin-top: var(--space-md);
+      border: 1px solid var(--accent-gold-light);
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(184, 152, 107, 0.15);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .about-highlight:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(184, 152, 107, 0.25);
+    }
+
+    .about-highlight svg {
+      color: var(--accent-gold);
     }
 
     /* ========================================
        Experience Section
     ======================================== */
     .experience {
-      background: var(--bg-alt);
+      background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
     }
 
     .experience-list {
@@ -423,12 +538,18 @@
 
     .experience-date {
       font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 0.25rem;
+      color: white;
+      background: var(--accent-primary);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
     }
 
     .experience-location {
       font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .experience-content h3 {
@@ -464,6 +585,13 @@
       padding: 0.3rem 0.6rem;
       border-radius: 4px;
       border: 1px solid var(--border);
+      transition: border-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    }
+
+    .experience-metric:hover {
+      border-color: var(--accent-primary-light);
+      color: var(--accent-primary);
+      transform: translateY(-1px);
     }
 
     /* ========================================
@@ -489,20 +617,24 @@
 
     .project-card {
       background: var(--bg);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
       border-radius: 12px;
       padding: var(--space-lg);
-      transition: transform var(--transition), box-shadow var(--transition);
+      transition: transform var(--transition-base), box-shadow var(--transition-slow), border-color var(--transition-base);
+      position: relative;
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+      transform: translateY(-8px);
+      border-color: var(--accent-primary);
+      box-shadow:
+        0 25px 50px rgba(26, 95, 95, 0.12),
+        0 0 20px rgba(26, 95, 95, 0.08);
     }
 
     .project-badge {
       display: inline-block;
-      background: #0a0a0a;
+      background: var(--accent-primary);
       color: #fff;
       font-size: 0.7rem;
       font-weight: 500;
@@ -511,6 +643,16 @@
       margin-bottom: var(--space-sm);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+
+    .project-badge.gold {
+      background: linear-gradient(135deg, var(--accent-gold) 0%, #c9a76c 100%);
+      box-shadow: 0 2px 8px rgba(184, 152, 107, 0.3);
+    }
+
+    .project-badge.teal {
+      background: var(--accent-primary);
+      box-shadow: 0 2px 8px rgba(26, 95, 95, 0.2);
     }
 
     .project-title {
@@ -554,6 +696,14 @@
       border: 1px solid var(--border);
       padding: 0.25rem 0.6rem;
       border-radius: 4px;
+      transition: all var(--transition-base);
+    }
+
+    .tech-tag:hover {
+      background: var(--accent-primary-subtle);
+      border-color: var(--accent-primary-light);
+      color: var(--accent-primary);
+      transform: translateY(-2px);
     }
 
     .project-link {
@@ -561,25 +711,31 @@
       align-items: center;
       gap: 0.5rem;
       font-size: 0.875rem;
-      color: var(--text-primary);
+      color: var(--accent-primary);
       font-weight: 500;
-      transition: gap var(--transition);
+      transition: gap var(--transition-base), color var(--transition-base);
     }
 
     .project-link:hover {
       gap: 0.75rem;
+      color: var(--accent-primary-light);
     }
 
     .project-link svg {
       width: 16px;
       height: 16px;
+      transition: transform var(--transition-base);
+    }
+
+    .project-link:hover svg {
+      transform: translateX(4px);
     }
 
     /* ========================================
        Skills Section
     ======================================== */
     .skills {
-      background: var(--bg-alt);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
     }
 
     .skills-grid {
@@ -602,8 +758,21 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--text-muted);
+      color: var(--accent-primary);
       margin-bottom: var(--space-md);
+      position: relative;
+      display: inline-block;
+    }
+
+    .skill-category h3::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-primary-light));
+      border-radius: 1px;
     }
 
     .skill-list {
@@ -618,11 +787,16 @@
       background: var(--bg);
       padding: 0.5rem 1rem;
       border-radius: 6px;
-      transition: background var(--transition);
+      border: 1px solid transparent;
+      transition: all var(--transition-base);
     }
 
     .skill-tag:hover {
-      background: #f0f0f0;
+      background: var(--accent-primary-subtle);
+      border-color: rgba(26, 95, 95, 0.15);
+      color: var(--accent-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 95, 95, 0.1);
     }
 
     /* ========================================
@@ -658,17 +832,57 @@
       padding: 0.75rem 1.5rem;
       border: 1px solid var(--border);
       border-radius: 100px;
-      transition: background var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: color var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+    }
+
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-primary);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform var(--transition-slow);
+      z-index: -1;
     }
 
     .contact-link:hover {
-      background: var(--bg-alt);
-      border-color: var(--border-dark);
+      color: white;
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .contact-link:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
     }
 
     .contact-link svg {
       width: 18px;
       height: 18px;
+      transition: transform var(--transition-base);
+    }
+
+    .contact-link:hover svg {
+      transform: scale(1.1);
+    }
+
+    /* Primary email button */
+    .contact-link.primary {
+      background: var(--accent-primary);
+      color: white;
+      border-color: var(--accent-primary);
+    }
+
+    .contact-link.primary::before {
+      background: var(--accent-primary-light);
+    }
+
+    .contact-link.primary:hover {
+      border-color: var(--accent-primary-light);
     }
 
     /* ========================================
@@ -680,6 +894,112 @@
       font-size: 0.8rem;
       color: var(--text-muted);
       background: var(--bg-alt);
+      border-top: 1px solid transparent;
+      background-image: linear-gradient(var(--bg-alt), var(--bg-alt)),
+                        linear-gradient(90deg, var(--accent-primary), var(--accent-gold));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+    }
+
+    /* ========================================
+       Scroll Reveal Animations
+    ======================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity var(--transition-elegant), transform var(--transition-elegant);
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity var(--transition-elegant), transform var(--transition-elegant);
+    }
+
+    .reveal-left.revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity var(--transition-elegant), transform var(--transition-elegant);
+    }
+
+    .reveal-right.revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity var(--transition-elegant), transform var(--transition-elegant);
+    }
+
+    .reveal-scale.revealed {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Stagger children */
+    .stagger-children > *:nth-child(1) { transition-delay: 0ms; }
+    .stagger-children > *:nth-child(2) { transition-delay: 100ms; }
+    .stagger-children > *:nth-child(3) { transition-delay: 200ms; }
+    .stagger-children > *:nth-child(4) { transition-delay: 300ms; }
+    .stagger-children > *:nth-child(5) { transition-delay: 400ms; }
+    .stagger-children > *:nth-child(6) { transition-delay: 500ms; }
+    .stagger-children > *:nth-child(7) { transition-delay: 600ms; }
+    .stagger-children > *:nth-child(8) { transition-delay: 700ms; }
+
+    /* ========================================
+       Custom Cursor
+    ======================================== */
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease, opacity 0.3s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(26, 95, 95, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-ring.hover {
+      width: 60px;
+      height: 60px;
+      border-color: var(--accent-primary);
+    }
+
+    /* Hide custom cursor on touch devices */
+    @media (hover: none) and (pointer: coarse) {
+      .cursor-dot, .cursor-ring {
+        display: none;
+      }
     }
 
     /* ========================================
@@ -691,10 +1011,25 @@
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
       }
+      .hero::before, .hero::after, .hero-blob {
+        animation: none;
+        opacity: 0.15;
+      }
+      .cursor-dot, .cursor-ring {
+        display: none;
+      }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
   <!-- Navigation -->
   <nav class="nav" id="nav">
     <div class="container nav-inner">
@@ -717,6 +1052,7 @@
   <main>
     <!-- Hero Section -->
     <section class="hero" id="hero">
+      <div class="hero-blob"></div>
       <div class="hero-content">
         <h1 class="text-hero hero-title">Michael Chen</h1>
         <p class="hero-subtitle">AMD Pervasive AI Winner | AI Engineer</p>
@@ -734,8 +1070,8 @@
     <section class="about" id="about">
       <div class="container">
         <div class="about-grid">
-          <img src="images/hero/hero_photo.jpg" alt="Michael Chen" class="about-image">
-          <div class="about-content">
+          <img src="images/hero/hero_photo.jpg" alt="Michael Chen" class="about-image reveal-scale">
+          <div class="about-content reveal-right">
             <h2 class="text-xl">About Me</h2>
             <p class="about-text">
               AI Engineer specializing in production LLM systems, RAG architectures, and autonomous agents. Currently building AI coding agents at Epoch and production test systems for DOD-funded programs at MOBIVOLT.
@@ -761,9 +1097,9 @@
           <h2 class="text-xl">Experience</h2>
           <p>Professional roles and leadership</p>
         </div>
-        <div class="experience-list">
+        <div class="experience-list stagger-children">
           <!-- Epoch -->
-          <div class="experience-item">
+          <div class="experience-item reveal">
             <div class="experience-meta">
               <div class="experience-date">Oct 2025 - Present</div>
               <div class="experience-location">Remote</div>
@@ -783,7 +1119,7 @@
           </div>
 
           <!-- MOBIVOLT -->
-          <div class="experience-item">
+          <div class="experience-item reveal">
             <div class="experience-meta">
               <div class="experience-date">Jun 2023 - Sep 2025</div>
               <div class="experience-location">Livermore, CA</div>
@@ -804,7 +1140,7 @@
           </div>
 
           <!-- AI@UCR -->
-          <div class="experience-item">
+          <div class="experience-item reveal">
             <div class="experience-meta">
               <div class="experience-date">Oct 2023 - Sep 2025</div>
               <div class="experience-location">Riverside, CA</div>
@@ -835,8 +1171,8 @@
         </div>
         <div class="projects-grid">
           <!-- PHiLIP -->
-          <div class="project-card">
-            <span class="project-badge">AMD Winner</span>
+          <div class="project-card reveal">
+            <span class="project-badge gold">AMD Winner</span>
             <h3 class="project-title">PHiLIP</h3>
             <p class="project-description">
               AI-powered image generation platform with text-to-image creation, 71 style options, and iterative user-guided refinement. Showcased live demo at AMD Advancing AI Event 2024 in San Francisco.
@@ -861,8 +1197,8 @@
           </div>
 
           <!-- Castor -->
-          <div class="project-card">
-            <span class="project-badge" style="background: #555;">Production SaaS</span>
+          <div class="project-card reveal">
+            <span class="project-badge teal">Production SaaS</span>
             <h3 class="project-title">Castor</h3>
             <p class="project-description">
               AI-powered GEO consultation platform with agentic RAG chatbot powered by 150,000+ word knowledge base from 80+ peer-reviewed sources with real-time internet access tools.
@@ -897,10 +1233,10 @@
           <h2 class="text-xl">Skills</h2>
           <p>Technologies I work with</p>
         </div>
-        <div class="skills-grid">
-          <div class="skill-category">
+        <div class="skills-grid stagger-children">
+          <div class="skill-category reveal">
             <h3>AI & Machine Learning</h3>
-            <div class="skill-list">
+            <div class="skill-list stagger-children">
               <span class="skill-tag">LLMs</span>
               <span class="skill-tag">RAG</span>
               <span class="skill-tag">AI Agents</span>
@@ -911,9 +1247,9 @@
               <span class="skill-tag">MCP</span>
             </div>
           </div>
-          <div class="skill-category">
+          <div class="skill-category reveal">
             <h3>Full-Stack</h3>
-            <div class="skill-list">
+            <div class="skill-list stagger-children">
               <span class="skill-tag">Next.js</span>
               <span class="skill-tag">TypeScript</span>
               <span class="skill-tag">React</span>
@@ -924,9 +1260,9 @@
               <span class="skill-tag">REST APIs</span>
             </div>
           </div>
-          <div class="skill-category">
+          <div class="skill-category reveal">
             <h3>Infrastructure</h3>
-            <div class="skill-list">
+            <div class="skill-list stagger-children">
               <span class="skill-tag">AWS</span>
               <span class="skill-tag">Docker</span>
               <span class="skill-tag">Kubernetes</span>
@@ -947,7 +1283,7 @@
         <h2 class="text-xl">Get In Touch</h2>
         <p class="contact-subtitle">Open to opportunities and collaborations</p>
         <div class="contact-links">
-          <a href="mailto:michaelluochen1@gmail.com" class="contact-link">
+          <a href="mailto:michaelluochen1@gmail.com" class="contact-link primary">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
@@ -1004,6 +1340,80 @@
         nav.classList.remove('scrolled');
       }
     }, { passive: true });
+
+    // ========================================
+    // Scroll Reveal Animation
+    // ========================================
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe all reveal elements
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // ========================================
+    // Custom Cursor
+    // ========================================
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorRing = document.querySelector('.cursor-ring');
+
+    // Only enable custom cursor on non-touch devices
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && cursorDot && cursorRing) {
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.left = mouseX + 'px';
+        cursorDot.style.top = mouseY + 'px';
+      }, { passive: true });
+
+      // Smooth ring follow
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.15;
+        ringY += (mouseY - ringY) * 0.15;
+        cursorRing.style.left = ringX + 'px';
+        cursorRing.style.top = ringY + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      // Hover effect on interactive elements
+      const interactiveElements = document.querySelectorAll('a, button, .project-card, .skill-tag, .tech-tag, .contact-link, .experience-metric');
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursorRing.classList.add('hover');
+        });
+        el.addEventListener('mouseleave', () => {
+          cursorRing.classList.remove('hover');
+        });
+      });
+
+      // Hide cursor when leaving window
+      document.addEventListener('mouseleave', () => {
+        cursorDot.style.opacity = '0';
+        cursorRing.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', () => {
+        cursorDot.style.opacity = '1';
+        cursorRing.style.opacity = '1';
+      });
+    } else {
+      // Hide custom cursor elements on touch devices
+      if (cursorDot) cursorDot.style.display = 'none';
+      if (cursorRing) cursorRing.style.display = 'none';
+    }
   </script>
 </body>
 </html>
