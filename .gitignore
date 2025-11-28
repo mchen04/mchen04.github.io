@@ -68,3 +68,4 @@ logs/
 # Personal files
 .claude/
 *.pdf
+docs/

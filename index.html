@@ -1,625 +1,1009 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
-    <title>Michael Chen - Software Engineer & AI Developer | Portfolio</title>
-    <meta name="title" content="Michael Chen - Software Engineer & AI Developer | Portfolio">
-    <meta name="description" content="AI Consultant at Zerg AI specializing in multi-LLM systems and autonomous AI agents. Former Software Engineer at MOBIVOLT LLC engineering $5M+ DOD fuel cell systems with zero downtime. AMD University Program Award Winner and founder of UCR's AI organization. Expertise in Next.js 15, React 19, TypeScript, RAG, and production AI systems. Current projects: Castor AI consultation platform and LocRaven business discovery.">
-    <meta name="keywords" content="Michael Chen, Software Engineer, AI Developer, AI Consultant, Zerg AI, RAG, Dify, AI Agents, Multi-LLM, DOD Contractor, Cloudflare Workers, Edge Computing, Next.js 15, React 19, TypeScript, PostgreSQL, Castor, LocRaven, AMD Award Winner, UCR AI Organization">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="English">
-    <meta name="author" content="Michael Chen">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mchen04.github.io/">
-    <meta property="og:title" content="Michael Chen - Software Engineer & AI Developer">
-    <meta property="og:description" content="AI Consultant at Zerg AI specializing in multi-LLM systems and autonomous AI agents. Former Software Engineer at MOBIVOLT LLC engineering $5M+ DOD fuel cell systems with zero downtime. AMD University Program Award Winner and founder of UCR's AI organization. Current projects: Castor AI consultation platform and LocRaven business discovery.">
-    <meta property="og:image" content="https://mchen04.github.io/images/hero/hero_photo.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Michael Chen Portfolio">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://mchen04.github.io/">
-    <meta property="twitter:title" content="Michael Chen - Software Engineer & AI Developer">
-    <meta property="twitter:description" content="AI Consultant at Zerg AI specializing in multi-LLM systems and autonomous AI agents. Former Software Engineer at MOBIVOLT LLC engineering $5M+ DOD fuel cell systems with zero downtime. AMD University Program Award Winner and founder of UCR's AI organization. Current projects: Castor AI consultation platform and LocRaven business discovery.">
-    <meta property="twitter:image" content="https://mchen04.github.io/images/hero/hero_photo.jpg">
-    
-    <!-- Additional Meta Tags -->
-    <meta name="theme-color" content="#2c2c2c">
-    <meta name="msapplication-TileColor" content="#2c2c2c">
-    <meta name="application-name" content="Michael Chen Portfolio">
-    
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Michael Chen",
-      "url": "https://mchen04.github.io",
-      "jobTitle": "Artificial Intelligence Consultant",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Zerg AI"
-      },
-      "knowsAbout": ["Software Engineering", "Machine Learning", "AI Development", "AI Agents", "Multi-LLM Systems", "RAG", "Dify", "Next.js 15", "React 19", "TypeScript", "Cloudflare Workers", "Edge Computing", "DOD Contracts", "Embedded Systems", "PostgreSQL", "Stripe API", "HuggingFace", "Vector Embeddings"],
-      "alumniOf": "University of California, Riverside",
-      "award": ["AMD University Program Award", "Sustainability Award - Cutie Hack 2022"],
-      "sameAs": [
-        "https://github.com/mchen04",
-        "https://linkedin.com/in/michael-luo-chen"
-      ]
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michael Chen | AI Engineer</title>
+  <meta name="description" content="AMD Pervasive AI Winner | AI Engineer building production AI systems. Full-stack developer specializing in LLMs, RAG, and autonomous agents.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Michael Chen | AI Engineer">
+  <meta property="og:description" content="AMD Pervasive AI Winner | Building production AI systems">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mchen04.github.io">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Michael Chen | AI Engineer">
+  <meta name="twitter:description" content="AMD Pervasive AI Winner | Building production AI systems">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================
+       CSS Reset & Base
+    ======================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    </script>
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="favicon.svg">
-    <link rel="mask-icon" href="favicon.svg" color="#2c2c2c">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+      color: #0a0a0a;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ========================================
+       Custom Properties
+    ======================================== */
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #fafafa;
+      --text-primary: #0a0a0a;
+      --text-secondary: #555555;
+      --text-muted: #888888;
+      --border: #e5e5e5;
+      --border-dark: #d0d0d0;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2rem;
+      --space-xl: 3rem;
+      --space-2xl: 5rem;
+      --space-3xl: 8rem;
+
+      --container: min(90%, 1100px);
+      --transition: 0.2s ease;
+    }
+
+    /* ========================================
+       Typography
+    ======================================== */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .text-hero {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      letter-spacing: -0.02em;
+    }
+
+    .text-xl {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .text-lg {
+      font-size: clamp(1.125rem, 2vw, 1.25rem);
+    }
+
+    /* ========================================
+       Layout
+    ======================================== */
+    .container {
+      width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--space-sm);
+    }
+
+    section {
+      padding: var(--space-3xl) 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .section-header h2 {
+      margin-bottom: var(--space-xs);
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+       Navigation
+    ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: var(--space-md) 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition);
+    }
+
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: color var(--transition);
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--text-primary);
+      transition: width var(--transition);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .nav-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        flex-direction: column;
+        align-items: center;
+        padding: var(--space-lg);
+        gap: var(--space-md);
+        border-bottom: 1px solid var(--border);
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      .nav-links.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-toggle.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+    }
+
+    /* ========================================
+       Hero Section
+    ======================================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .hero-title {
+      margin-bottom: var(--space-sm);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-tagline {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: var(--space-xl);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ========================================
+       About Section
+    ======================================== */
+    .about {
+      background: var(--bg);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 250px 1fr;
+        gap: var(--space-3xl);
+      }
+    }
+
+    .about-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto;
+      border: 3px solid var(--border);
+    }
+
+    @media (min-width: 768px) {
+      .about-image {
+        width: 250px;
+        height: 250px;
+      }
+    }
+
+    .about-content h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .about-text {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-sm);
+      max-width: 600px;
+    }
+
+    .about-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: #f5f5f5;
+      padding: 0.5rem 1rem;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      margin-top: var(--space-md);
+    }
+
+    /* ========================================
+       Experience Section
+    ======================================== */
+    .experience {
+      background: var(--bg-alt);
+    }
+
+    .experience-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .experience-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    @media (min-width: 640px) {
+      .experience-item {
+        grid-template-columns: 180px 1fr;
+        gap: var(--space-lg);
+      }
+    }
+
+    .experience-meta {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .experience-date {
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .experience-location {
+      font-size: 0.8rem;
+    }
+
+    .experience-content h3 {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .experience-company {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .experience-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-sm);
+    }
+
+    .experience-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .experience-metric {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--bg);
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    /* ========================================
+       Projects Section
+    ======================================== */
+    .projects {
+      background: var(--bg);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 640px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .project-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: var(--space-lg);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .project-badge {
+      display: inline-block;
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .project-description {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: var(--space-md);
+      line-height: 1.7;
+    }
+
+    .project-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .metric {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #f5f5f5;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .tech-tag {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      transition: gap var(--transition);
+    }
+
+    .project-link:hover {
+      gap: 0.75rem;
+    }
+
+    .project-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ========================================
+       Skills Section
+    ======================================== */
+    .skills {
+      background: var(--bg-alt);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .skill-category h3 {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: var(--space-md);
+    }
+
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      background: var(--bg);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: background var(--transition);
+    }
+
+    .skill-tag:hover {
+      background: #f0f0f0;
+    }
+
+    /* ========================================
+       Contact Section
+    ======================================== */
+    .contact {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contact h2 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .contact-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .contact-link:hover {
+      background: var(--bg-alt);
+      border-color: var(--border-dark);
+    }
+
+    .contact-link svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* ========================================
+       Footer
+    ======================================== */
+    .footer {
+      padding: var(--space-lg) 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--bg-alt);
+    }
+
+    /* ========================================
+       Reduced Motion
+    ======================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="navigation" role="navigation">
-        <div class="nav-container">
-            <a href="#" class="logo">MC</a>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#work" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <main class="main-content">
-        <section class="hero" id="hero">
-            <!-- Mountain Silhouette Background -->
-            <div class="mountain-silhouette"></div>
-            
-            <!-- Zen Elements Container -->
-            <div class="zen-elements-container">
-                <!-- Enso Circles -->
-                <div class="enso-circle large" style="top: 10%; left: 70%;"></div>
-                <div class="enso-circle medium" style="top: 60%; left: 15%;"></div>
-                <div class="enso-circle small incomplete" style="top: 30%; left: 80%;"></div>
-                
-                <!-- Stone Garden Flow Lines -->
-                <div class="zen-flow-line horizontal" style="top: 25%; left: 20%;"></div>
-                <div class="zen-flow-line diagonal" style="top: 70%; left: 40%;"></div>
-                <div class="zen-flow-line curved" style="top: 45%; left: 60%;"></div>
-                
-                <!-- Pebble Arrangements -->
-                <div class="zen-pebbles">
-                    <div class="zen-pebble size-1" style="top: 20%; left: 25%;"></div>
-                    <div class="zen-pebble size-2" style="top: 40%; left: 75%;"></div>
-                    <div class="zen-pebble size-3" style="top: 65%; left: 30%;"></div>
-                    <div class="zen-pebble size-4" style="top: 80%; left: 70%;"></div>
-                    <div class="zen-pebble size-1" style="top: 35%; left: 85%;"></div>
-                    <div class="zen-pebble size-2" style="top: 55%; left: 15%;"></div>
-                </div>
-                
-                <!-- Ink Brush Strokes -->
-                <div class="ink-stroke horizontal" style="top: 15%; left: 50%; transform: rotate(5deg);"></div>
-                <div class="ink-stroke vertical" style="top: 50%; left: 20%; transform: rotate(-10deg);"></div>
-                <div class="ink-stroke curved" style="top: 75%; left: 80%; transform: rotate(15deg);"></div>
-            </div>
-            
-            <div class="hero-container golden-section">
-                <div class="hero-content zen-breathing">
-                    <h1 class="hero-title">
-                        <span class="title-line">Michael Chen</span>
-                        <span class="title-line">Software Engineer & AI Leader</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        AI Consultant specializing in multi-LLM systems, autonomous AI agents, and production SaaS platforms
-                    </p>
-                    <p class="hero-details">
-                        From zero-downtime DOD systems to cutting-edge RAG implementations and university AI communities
-                    </p>
-                </div>
-                <div class="hero-visual">
-                    <div class="zen-shapes">
-                        <div class="geometric-accent primary"></div>
-                        <div class="geometric-accent secondary"></div>
-                        <div class="geometric-accent tertiary"></div>
-                        <div class="zen-line horizontal"></div>
-                        <div class="zen-line vertical"></div>
-                        <!-- Water Ripples -->
-                        <div class="water-ripple ripple-1" style="top: 75%; left: 20%;"></div>
-                        <div class="water-ripple ripple-2" style="top: 75%; left: 20%;"></div>
-                        <div class="water-ripple ripple-3" style="top: 75%; left: 20%;"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="about bamboo-section" id="about">
-            <!-- Bamboo Nodes -->
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            
-            <div class="section-container golden-section">
-                <div class="about-content golden-split">
-                    <div class="about-text zen-breathing">
-                        <h2 class="section-title">About</h2>
-                        <div class="about-education">
-                            <h3 class="education-school">University of California, Riverside</h3>
-                            <p class="education-details">Bachelor of Science in Computer Science</p>
-                            <p class="education-details">Minor: Entrepreneurship & Strategy</p>
-                            <p class="education-details">GPA: 3.72/4.0 • Dean's Honor List • Expected Graduation: June 2026</p>
-                        </div>
-                        <p class="about-description">
-                            AI Consultant at Zerg AI specializing in multi-LLM systems and autonomous agents. Previously engineered mission-critical $5M+ DOD fuel cell systems with zero downtime across 2000+ testing hours, achieving 95% reduction in manual processes. AMD University Program Award winner for AI innovation.
-                        </p>
-                        <p class="about-description">
-                            Founded UCR's first official AI organization, scaling to 50+ members. I architect production AI systems: from RAG platforms with >0.85 context precision serving 150K+ word knowledge bases, to full-stack SaaS with enterprise security (JWT, CSRF, RLS) and edge-optimized deployments achieving 50ms response times.
-                        </p>
-                        <div class="certifications">
-                            <h3 class="certifications-title">Certifications & Awards</h3>
-                            <div class="cert-grid">
-                                <a href="https://www.coursera.org/account/accomplishments/verify/RDHD7AHGBYYH" target="_blank" rel="noopener" class="cert-item">
-                                    <img src="images/certifications/supervised-learning.jpg" alt="Supervised Machine Learning" loading="lazy">
-                                    <span class="cert-name">Stanford: Supervised Machine Learning</span>
-                                </a>
-                                <a href="https://coursera.org/share/8bdbcdfd08a8e0cecab7430f18c8a491" target="_blank" rel="noopener" class="cert-item">
-                                    <img src="images/certifications/unsupervised-learning.jpg" alt="Unsupervised Learning" loading="lazy">
-                                    <span class="cert-name">Stanford: Unsupervised Learning</span>
-                                </a>
-                                <a href="https://coursera.org/share/542c49e0ba8dd0080218160efcacf851" target="_blank" rel="noopener" class="cert-item">
-                                    <img src="images/certifications/advanced-learning.jpg" alt="Advanced Learning Algorithms" loading="lazy">
-                                    <span class="cert-name">Stanford: Advanced Learning Algorithms</span>
-                                </a>
-                            </div>
-                            <div class="awards-list" style="margin-top: 1.5rem;">
-                                <p style="font-size: 0.95rem; color: var(--color-text-secondary);">• AMD University Program Award - Pervasive AI Competition (2024)</p>
-                                <p style="font-size: 0.95rem; color: var(--color-text-secondary);">• Sustainability Award - Cutie Hack 2022</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about-visual">
-                        <div class="profile-container">
-                            <img src="images/hero/hero_photo.jpg" alt="Michael Chen" class="profile-image" loading="lazy">
-                            <div class="profile-accent"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="experience bamboo-section" id="experience">
-            <!-- Zen Elements for Experience Section -->
-            <div class="enso-circle medium" style="top: 20%; right: 10%; opacity: 0.04;"></div>
-            <div class="zen-flow-line horizontal" style="top: 60%; left: 70%; width: 25%;"></div>
-            
-            <!-- Bamboo Nodes -->
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            
-            <div class="section-container golden-section">
-                <header class="section-header zen-breathing">
-                    <h2 class="section-title">Experience</h2>
-                    <p class="section-subtitle">Professional and leadership experience</p>
-                </header>
-                
-                <div class="experience-timeline">
-                    <article class="experience-item">
-                        <div class="experience-content">
-                            <div class="experience-header">
-                                <h3 class="experience-title">Artificial Intelligence Consultant</h3>
-                                <div class="experience-company">Zerg AI</div>
-                                <div class="experience-duration">October 2025 – Present</div>
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Developed terminal TUI client using Python/Textual with real-time LLM streaming capabilities via WebSocket architecture, enabling seamless interaction with multiple AI models (OpenAI, Claude, Gemini)</li>
-                                <li>Engineered multi-LLM backend infrastructure supporting dynamic model routing and autonomous AI coding agent deployment for enterprise-grade development workflows</li>
-                                <li>Architected WebSocket-based communication protocol for low-latency streaming responses, optimizing user experience for interactive AI-powered applications</li>
-                            </ul>
-                        </div>
-                        <div class="experience-accent"></div>
-                    </article>
-
-                    <article class="experience-item">
-                        <div class="experience-content">
-                            <div class="experience-header">
-                                <h3 class="experience-title">Software Engineer Intern</h3>
-                                <div class="experience-company">MOBIVOLT LLC</div>
-                                <div class="experience-duration">June 2023 – September 2025</div>
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Architected 5+ automated test systems for $5M+ DOD-funded fuel cell development program using C#/.NET with MVVM architecture, integrating 100+ sensors to enable continuous monitoring and data collection for military demonstrations, reducing manual data logging time by 95% and achieving zero downtime across 2000+ hours of testing</li>
-                                <li>Programmed embedded firmware for industrial equipment using Arduino/microcontrollers with RS-232/TTL/SPI protocols, achieving 50 Hz sampling rate for real-time monitoring during multi-week fuel cell endurance tests</li>
-                                <li>Automated Python data analysis pipeline for fuel cell test data, reducing analysis time by 67% (3 days to 1) and accelerating performance trend identification by 300% to support iterative design improvements</li>
-                            </ul>
-                        </div>
-                        <div class="experience-accent"></div>
-                    </article>
-                    
-                    <article class="experience-item">
-                        <div class="experience-content">
-                            <div class="experience-header">
-                                <h3 class="experience-title">Founder/President</h3>
-                                <div class="experience-company">AI at UCR (AIR)</div>
-                                <div class="experience-duration">October 2023 – September 2025</div>
-                            </div>
-                            <ul class="experience-highlights">
-                                <li>Founded and scaled UCR's first official AI organization from 0 to 50+ active members using strategic planning and project management</li>
-                                <li>Led technical education initiatives directing 10+ workshops on AI/ML trends, career development, and emerging technologies</li>
-                                <li>Increased workshop attendance by 45% through expert-led guest lectures and hands-on technical sessions, fostering collaborative software development practices</li>
-                            </ul>
-                        </div>
-                        <div class="experience-accent"></div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="work bamboo-section" id="work">
-            <!-- Enhanced Zen Elements for Projects -->
-            <div class="enso-circle large incomplete" style="top: 10%; left: 5%; opacity: 0.03;"></div>
-            <div class="enso-circle small" style="bottom: 20%; right: 15%; opacity: 0.05;"></div>
-            
-            <!-- Stone Garden Elements -->
-            <div class="zen-flow-line curved" style="top: 30%; left: 80%; width: 15%;"></div>
-            <div class="zen-flow-line diagonal" style="bottom: 40%; left: 10%; width: 20%;"></div>
-            
-            <!-- Ink Strokes -->
-            <div class="ink-stroke horizontal" style="top: 70%; right: 25%; transform: rotate(-8deg);"></div>
-            
-            <!-- Bamboo Nodes -->
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            
-            <div class="section-container">
-                <header class="section-header zen-breathing">
-                    <h2 class="section-title">Selected Work</h2>
-                    <p class="section-subtitle">A collection of projects that showcase technical craftsmanship</p>
-                </header>
-
-                <!-- Current Projects Section -->
-                <div class="projects-section">
-                    <h3 class="projects-section-title">Current Projects</h3>
-                    <div class="projects-grid">
-                    <article class="project-card" data-project="castor">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Castor: AI-Powered GEO Consultation Platform</h3>
-                                <div class="project-badge current">Current Project</div>
-                            </div>
-                            <p class="project-description">Production SaaS platform delivering expert-level geographic consultation through AI. Engineered 150,000+ word knowledge base from 80+ peer-reviewed sources with custom RAG implementation achieving >0.85 context precision. Built with Next.js 15, TypeScript, Supabase PostgreSQL, and Stripe integration. Implemented hybrid search strategy (55% semantic/45% keyword) with multi-model LLM routing for optimal response quality.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Next.js 15</span>
-                                <span class="tech-tag">TypeScript</span>
-                                <span class="tech-tag">Supabase</span>
-                                <span class="tech-tag">PostgreSQL</span>
-                                <span class="tech-tag">RAG</span>
-                                <span class="tech-tag">Dify</span>
-                                <span class="tech-tag">Stripe</span>
-                                <span class="tech-tag">Vector Embeddings</span>
-                            </div>
-                            <button class="show-image-btn" data-project="castor">View Details</button>
-                        </div>
-                    </article>
-
-                    <article class="project-card" data-project="locraven">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">LocRaven: AI-Powered Local Business Discovery Platform</h3>
-                                <div class="project-badge current">Current Project</div>
-                            </div>
-                            <p class="project-description">Architected full-stack local business discovery platform using Next.js 15.5, React 19, TypeScript, and PostgreSQL 17 with row-level security, implementing multi-tier Stripe subscriptions and edge-optimized Cloudflare Workers deployment. Engineered GEO-targeted content system for 6 intent types with server-side caching, achieving 50ms response times and 65% infrastructure cost reduction.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Next.js 15.5</span>
-                                <span class="tech-tag">React 19</span>
-                                <span class="tech-tag">TypeScript</span>
-                                <span class="tech-tag">PostgreSQL 17</span>
-                                <span class="tech-tag">Stripe API</span>
-                                <span class="tech-tag">Cloudflare Workers</span>
-                                <span class="tech-tag">Edge Computing</span>
-                                <span class="tech-tag">RLS</span>
-                            </div>
-                            <button class="show-image-btn" data-project="locraven">View Details</button>
-                        </div>
-                    </article>
-                    </div>
-                </div>
-
-                <!-- Featured Projects Section -->
-                <div class="projects-section">
-                    <h3 class="projects-section-title">Featured Projects</h3>
-                    <div class="projects-grid">
-                    <article class="project-card" data-project="philip">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">PHiLIP: Personalized Human-in-Loop Image Production</h3>
-                                <div class="project-badge award">AMD Award Winner</div>
-                            </div>
-                            <p class="project-description">Awarded AMD University Program Award at the AMD Pervasive AI Developer Contest. Developed AI-powered image generation suite with text-to-image creation (2-second generation), 71 style options, and iterative user-guided refinement optimized for AMD Instinct MI210 GPUs.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">PixArt-alpha</span>
-                                <span class="tech-tag">AMD GPU</span>
-                            </div>
-                            <button class="show-image-btn" data-project="philip">View Details</button>
-                        </div>
-                    </article>
-
-                    <article class="project-card" data-project="grantify">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Grantify: AI-Powered Grant Discovery Platform</h3>
-                                <div class="project-badge web">Production v1.3.0</div>
-                            </div>
-                            <p class="project-description">Production-ready grant discovery platform with AI-powered matching algorithm integrating 13+ official data sources. Built with Next.js 15.3.4, TypeScript 5, PostgreSQL 15, and Supabase. Implemented enterprise-grade security (JWT, CSRF protection, RLS, rate limiting), full-text search with smart filtering, Google OAuth authentication, Sentry monitoring, and comprehensive testing suite (Jest, Playwright).</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Next.js 15</span>
-                                <span class="tech-tag">TypeScript</span>
-                                <span class="tech-tag">PostgreSQL</span>
-                                <span class="tech-tag">Supabase</span>
-                                <span class="tech-tag">Express.js</span>
-                                <span class="tech-tag">Jest</span>
-                                <span class="tech-tag">Playwright</span>
-                                <span class="tech-tag">Sentry</span>
-                            </div>
-                            <button class="show-image-btn" data-project="grantify">View Details</button>
-                        </div>
-                    </article>
-
-                    <article class="project-card" data-project="moderaai">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">ModeraAI: Content Moderation Platform</h3>
-                                <div class="project-badge ai">AI/ML</div>
-                            </div>
-                            <p class="project-description">Comprehensive content moderation platform with AI-powered text and image analysis. Developed full-stack application using React, Node.js/Express, and Supabase with OpenAI API and Google Cloud Vision integration. Features toxicity detection, bias analysis, misinformation identification, adult content filtering, and violent imagery detection. Includes user dashboard with moderation history and external API for third-party integration.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">Express</span>
-                                <span class="tech-tag">Supabase</span>
-                                <span class="tech-tag">OpenAI API</span>
-                                <span class="tech-tag">Google Cloud Vision</span>
-                            </div>
-                            <button class="show-image-btn" data-project="moderaai">View Details</button>
-                        </div>
-                    </article>
-
-                    <article class="project-card" data-project="news-genie">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">News Genie</h3>
-                                <div class="project-badge web">Full-Stack</div>
-                            </div>
-                            <p class="project-description">Personalized news platform with automated news fetching and categorization system. Built with React frontend, Flask backend, and Firebase integration featuring topic-based retrieval, real-time news aggregation, and intelligent content categorization. Deployed on Vercel and Render with continuous integration.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">TypeScript</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">Firebase</span>
-                                <span class="tech-tag">Vercel</span>
-                            </div>
-                            <button class="show-image-btn" data-project="news-genie">View Details</button>
-                        </div>
-                    </article>
-
-                    <article class="project-card" data-project="mafway">
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">MafWay</h3>
-                                <div class="project-badge ai">AI/ML</div>
-                            </div>
-                            <p class="project-description">AI-powered mathematical formula recognition system developed for CitrusHack hackathon. Collaborative team project implementing custom-trained neural networks using Keras and TensorFlow for real-time processing of mathematical expressions from images. Features web-based interface for formula capture and recognition with high accuracy rates.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Keras</span>
-                                <span class="tech-tag">TensorFlow</span>
-                                <span class="tech-tag">Deep Learning</span>
-                                <span class="tech-tag">Image Recognition</span>
-                            </div>
-                            <button class="show-image-btn" data-project="mafway">View Details</button>
-                        </div>
-                    </article>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </section>
-
-        <section class="skills bamboo-section" id="skills">
-            <!-- Zen Elements for Skills Section -->
-            <div class="zen-pebbles">
-                <div class="zen-pebble size-2" style="top: 15%; left: 85%;"></div>
-                <div class="zen-pebble size-1" style="top: 45%; left: 90%;"></div>
-                <div class="zen-pebble size-3" style="top: 75%; left: 95%;"></div>
-                <div class="zen-pebble size-4" style="top: 25%; left: 5%;"></div>
-                <div class="zen-pebble size-1" style="top: 65%; left: 8%;"></div>
-            </div>
-            
-            <!-- Flow Lines -->
-            <div class="zen-flow-line horizontal" style="top: 40%; left: 15%; width: 30%;"></div>
-            <div class="zen-flow-line curved" style="bottom: 30%; right: 20%; width: 25%;"></div>
-            
-            <!-- Bamboo Nodes -->
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            
-            <div class="section-container golden-section">
-                <header class="section-header zen-breathing">
-                    <h2 class="section-title">Technical Skills</h2>
-                    <p class="section-subtitle">Technologies and tools I work with</p>
-                </header>
-                
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">Programming Languages</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">TypeScript</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">C/C++/C#</span>
-                            <span class="skill-tag">SQL</span>
-                            <span class="skill-tag">Swift</span>
-                            <span class="skill-tag">HTML/CSS</span>
-                            <span class="skill-tag">GraphQL</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">Frameworks & Libraries</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">React.js</span>
-                            <span class="skill-tag">Node.js</span>
-                            <span class="skill-tag">Next.js 15</span>
-                            <span class="skill-tag">Express.js</span>
-                            <span class="skill-tag">Flask</span>
-                            <span class="skill-tag">.NET Framework</span>
-                            <span class="skill-tag">WebSockets</span>
-                            <span class="skill-tag">PyTorch</span>
-                            <span class="skill-tag">TensorFlow</span>
-                            <span class="skill-tag">Scikit-Learn</span>
-                            <span class="skill-tag">Keras</span>
-                            <span class="skill-tag">Tailwind CSS</span>
-                            <span class="skill-tag">shadcn/ui</span>
-                            <span class="skill-tag">Radix UI</span>
-                            <span class="skill-tag">Avalonia UI</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">Development Tools & Technologies</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">Git</span>
-                            <span class="skill-tag">Linux</span>
-                            <span class="skill-tag">RESTful APIs</span>
-                            <span class="skill-tag">Stripe API</span>
-                            <span class="skill-tag">CI/CD Pipelines</span>
-                            <span class="skill-tag">GitHub Actions</span>
-                            <span class="skill-tag">Cloudflare Workers</span>
-                            <span class="skill-tag">Edge Computing</span>
-                            <span class="skill-tag">Unit Testing</span>
-                            <span class="skill-tag">Integration Testing</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">AI/ML & Data Processing</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Machine Learning</span>
-                            <span class="skill-tag">Natural Language Processing</span>
-                            <span class="skill-tag">HuggingFace</span>
-                            <span class="skill-tag">AI Agents</span>
-                            <span class="skill-tag">Dify</span>
-                            <span class="skill-tag">Text Embeddings</span>
-                            <span class="skill-tag">Vector Embeddings</span>
-                            <span class="skill-tag">Semantic Search</span>
-                            <span class="skill-tag">RAG (Retrieval-Augmented Generation)</span>
-                            <span class="skill-tag">Recommendation Systems</span>
-                            <span class="skill-tag">Data Pipeline Processing</span>
-                            <span class="skill-tag">Model Context Protocol (MCP)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">Databases & Security</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">PostgreSQL</span>
-                            <span class="skill-tag">MongoDB</span>
-                            <span class="skill-tag">Redis</span>
-                            <span class="skill-tag">Firebase</span>
-                            <span class="skill-tag">Supabase</span>
-                            <span class="skill-tag">Vector Similarity Search</span>
-                            <span class="skill-tag">pgvector</span>
-                            <span class="skill-tag">JWT</span>
-                            <span class="skill-tag">OAuth2</span>
-                            <span class="skill-tag">Enterprise Security</span>
-                            <span class="skill-tag">CSRF Protection</span>
-                            <span class="skill-tag">Row Level Security (RLS)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="skill-category">
-                        <h3 class="skill-category-title">Embedded Systems</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Real-time Data Acquisition</span>
-                            <span class="skill-tag">Hardware Integration</span>
-                            <span class="skill-tag">Arduino Development</span>
-                            <span class="skill-tag">ESP32</span>
-                            <span class="skill-tag">Firmware Engineering</span>
-                            <span class="skill-tag">Serial Communication Protocols</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="contact bamboo-section" id="contact">
-            <!-- Bamboo Nodes -->
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            <div class="bamboo-node"></div>
-            
-            <div class="section-container golden-section">
-                <div class="contact-content zen-breathing">
-                    <h2 class="section-title">Let's Connect</h2>
-                    <p class="contact-description">
-                        Interested in collaboration or have a project in mind?
-                    </p>
-                    <div class="contact-links">
-                        <a href="mailto:michaelluochen1@gmail.com" class="contact-link">
-                            <span class="contact-method">Email</span>
-                            <span class="contact-value">michaelluochen1@gmail.com</span>
-                        </a>
-                        <a href="tel:+19253656778" class="contact-link">
-                            <span class="contact-method">Phone</span>
-                            <span class="contact-value">(925) 365-6778</span>
-                        </a>
-                        <a href="https://github.com/mchen04" class="contact-link" target="_blank">
-                            <span class="contact-method">GitHub</span>
-                            <span class="contact-value">github.com/mchen04</span>
-                        </a>
-                        <a href="https://linkedin.com/in/michael-luo-chen" class="contact-link" target="_blank">
-                            <span class="contact-method">LinkedIn</span>
-                            <span class="contact-value">linkedin.com/in/michael-luo-chen</span>
-                        </a>
-                        <a href="images/documents/Michael_Chen_resume.pdf" class="contact-link" target="_blank" download>
-                            <span class="contact-method">Resume</span>
-                            <span class="contact-value">Download PDF</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <div class="project-modal" id="project-modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close modal">&times;</button>
-            <div class="modal-body">
-                <!-- Project details will be inserted here -->
-            </div>
-        </div>
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">MC</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <script src="script.js"></script>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="text-hero hero-title">Michael Chen</h1>
+        <p class="hero-subtitle">AMD Pervasive AI Winner | AI Engineer</p>
+        <p class="hero-tagline">Building production AI systems that solve real problems</p>
+      </div>
+      <div class="scroll-indicator">
+        <span>scroll</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <img src="images/hero/hero_photo.jpg" alt="Michael Chen" class="about-image">
+          <div class="about-content">
+            <h2 class="text-xl">About Me</h2>
+            <p class="about-text">
+              AI Engineer specializing in production LLM systems, RAG architectures, and autonomous agents. Currently building AI coding agents at Epoch and production test systems for DOD-funded programs at MOBIVOLT.
+            </p>
+            <p class="about-text">
+              Co-Founder of AI@UCR, where I scaled the organization from 0 to 50+ members. Pursuing B.S. Computer Science at UC Riverside (GPA: 3.72, Dean's Honor List).
+            </p>
+            <div class="about-highlight">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              AMD Pervasive AI Winner (1 of 8,231 participants)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="text-xl">Experience</h2>
+          <p>Professional roles and leadership</p>
+        </div>
+        <div class="experience-list">
+          <!-- Epoch -->
+          <div class="experience-item">
+            <div class="experience-meta">
+              <div class="experience-date">Oct 2025 - Present</div>
+              <div class="experience-location">Remote</div>
+            </div>
+            <div class="experience-content">
+              <h3>AI Consultant</h3>
+              <div class="experience-company">Epoch</div>
+              <p class="experience-description">
+                Building production TUI for Zerg AI, an autonomous AI coding agent with multi-phase development workflows, streaming LLM integration, event-driven orchestration, and sandbox isolation. Collaborating on agentic reasoning system with multi-LLM backends (OpenAI/Claude/Gemini/DeepSeek) and graph-based orchestrator for iterative spec-driven TDD workflows.
+              </p>
+              <div class="experience-metrics">
+                <span class="experience-metric">4+ LLM backends</span>
+                <span class="experience-metric">Graph orchestration</span>
+                <span class="experience-metric">TDD workflows</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MOBIVOLT -->
+          <div class="experience-item">
+            <div class="experience-meta">
+              <div class="experience-date">Jun 2023 - Sep 2025</div>
+              <div class="experience-location">Livermore, CA</div>
+            </div>
+            <div class="experience-content">
+              <h3>Software Engineer</h3>
+              <div class="experience-company">MOBIVOLT LLC</div>
+              <p class="experience-description">
+                Engineered 10+ automated test systems for $5M+ Department of Defense fuel cell program using C#/.NET, integrating 250+ sensors and achieving zero downtime across 5000+ hours of testing. Implemented embedded firmware for industrial equipment using Arduino with RS-232/TTL/SPI protocols at 50 Hz sampling rate.
+              </p>
+              <div class="experience-metrics">
+                <span class="experience-metric">5000+ hrs uptime</span>
+                <span class="experience-metric">250+ sensors</span>
+                <span class="experience-metric">99% faster logging</span>
+                <span class="experience-metric">$5M+ DOD program</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI@UCR -->
+          <div class="experience-item">
+            <div class="experience-meta">
+              <div class="experience-date">Oct 2023 - Sep 2025</div>
+              <div class="experience-location">Riverside, CA</div>
+            </div>
+            <div class="experience-content">
+              <h3>Founder & President</h3>
+              <div class="experience-company">AI at UCR</div>
+              <p class="experience-description">
+                Established UCR's first official AI organization, scaling membership from 0 to 50+ active members within 6 months. Delivered 10+ technical workshops on AI/ML implementation and emerging technologies, achieving 45% workshop attendance growth through strategic recruitment and expert guest lectures.
+              </p>
+              <div class="experience-metrics">
+                <span class="experience-metric">0 to 50+ members</span>
+                <span class="experience-metric">10+ workshops</span>
+                <span class="experience-metric">45% attendance growth</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="text-xl">Projects</h2>
+          <p>Personal and award-winning work</p>
+        </div>
+        <div class="projects-grid">
+          <!-- PHiLIP -->
+          <div class="project-card">
+            <span class="project-badge">AMD Winner</span>
+            <h3 class="project-title">PHiLIP</h3>
+            <p class="project-description">
+              AI-powered image generation platform with text-to-image creation, 71 style options, and iterative user-guided refinement. Showcased live demo at AMD Advancing AI Event 2024 in San Francisco.
+            </p>
+            <div class="project-metrics">
+              <span class="metric">2-sec generation</span>
+              <span class="metric">71 styles</span>
+              <span class="metric">Top 0.01%</span>
+            </div>
+            <div class="project-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">PyTorch</span>
+              <span class="tech-tag">HuggingFace</span>
+              <span class="tech-tag">AMD MI210</span>
+            </div>
+            <a href="https://github.com/mchen04/PHiLIP" class="project-link" target="_blank" rel="noopener">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- Castor -->
+          <div class="project-card">
+            <span class="project-badge" style="background: #555;">Production SaaS</span>
+            <h3 class="project-title">Castor</h3>
+            <p class="project-description">
+              AI-powered GEO consultation platform with agentic RAG chatbot powered by 150,000+ word knowledge base from 80+ peer-reviewed sources with real-time internet access tools.
+            </p>
+            <div class="project-metrics">
+              <span class="metric">>0.85 precision</span>
+              <span class="metric">150K+ words</span>
+              <span class="metric">80+ sources</span>
+            </div>
+            <div class="project-tech">
+              <span class="tech-tag">Next.js 15</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">Supabase</span>
+              <span class="tech-tag">RAG</span>
+              <span class="tech-tag">Stripe</span>
+            </div>
+            <a href="https://github.com/mchen04/Castor" class="project-link" target="_blank" rel="noopener">
+              View Project
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="text-xl">Skills</h2>
+          <p>Technologies I work with</p>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>AI & Machine Learning</h3>
+            <div class="skill-list">
+              <span class="skill-tag">LLMs</span>
+              <span class="skill-tag">RAG</span>
+              <span class="skill-tag">AI Agents</span>
+              <span class="skill-tag">PyTorch</span>
+              <span class="skill-tag">TensorFlow</span>
+              <span class="skill-tag">Langchain</span>
+              <span class="skill-tag">HuggingFace</span>
+              <span class="skill-tag">MCP</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Full-Stack</h3>
+            <div class="skill-list">
+              <span class="skill-tag">Next.js</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">Supabase</span>
+              <span class="skill-tag">GraphQL</span>
+              <span class="skill-tag">REST APIs</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h3>Infrastructure</h3>
+            <div class="skill-list">
+              <span class="skill-tag">AWS</span>
+              <span class="skill-tag">Docker</span>
+              <span class="skill-tag">Kubernetes</span>
+              <span class="skill-tag">CI/CD</span>
+              <span class="skill-tag">C#/.NET</span>
+              <span class="skill-tag">Arduino</span>
+              <span class="skill-tag">Git</span>
+              <span class="skill-tag">Linux</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <h2 class="text-xl">Get In Touch</h2>
+        <p class="contact-subtitle">Open to opportunities and collaborations</p>
+        <div class="contact-links">
+          <a href="mailto:michaelluochen1@gmail.com" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            Email
+          </a>
+          <a href="https://github.com/mchen04" target="_blank" rel="noopener" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/michael-luo-chen" target="_blank" rel="noopener" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Michael Chen</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    // Close mobile nav when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+
+    // Add scrolled class to nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+  </script>
 </body>
 </html>
