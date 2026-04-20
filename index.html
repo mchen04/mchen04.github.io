@@ -6,7 +6,8 @@
 <title>Michael Chen — AI Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/hero/hero_photo.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #f2ede4;
@@ -18,7 +19,7 @@
     --accent: #e5532b;
     --bg: var(--paper);
     --fg: var(--ink);
-    --display: 'Instrument Serif', 'Fraunces', Georgia, serif;
+    --display: 'Instrument Serif', Georgia, serif;
     --sans: 'Inter', -apple-system, system-ui, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
@@ -33,8 +34,7 @@
     --rule: #2a2620;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--fg); overflow-x: hidden; max-width: 100vw; }
-  html { scroll-behavior: smooth; }
+  html, body { background: var(--bg); color: var(--fg); overflow-x: hidden; }
   body {
     font-family: var(--sans);
     font-size: 16px;
@@ -47,18 +47,13 @@
   a { color: inherit; text-decoration: none; }
   ::selection { background: var(--accent); color: #fff; }
 
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
+  body {
+    background-color: var(--bg);
     background-image:
-      repeating-linear-gradient(0deg, transparent 0 39px, color-mix(in oklab, var(--fg) 5%, transparent) 39px 40px),
-      repeating-linear-gradient(90deg, transparent 0 39px, color-mix(in oklab, var(--fg) 5%, transparent) 39px 40px);
-    mix-blend-mode: multiply;
-    opacity: .25;
-    pointer-events: none;
-    z-index: 0;
+      repeating-linear-gradient(0deg, transparent 0 39px, rgba(13,12,10,.04) 39px 40px),
+      repeating-linear-gradient(90deg, transparent 0 39px, rgba(13,12,10,.04) 39px 40px);
+    background-attachment: fixed;
   }
-  [data-mode="ink"] body::before { mix-blend-mode: screen; opacity: .12; }
 
   .wrap { position: relative; z-index: 1; }
 
@@ -70,8 +65,10 @@
     font-family: var(--mono);
     font-size: 12px;
     letter-spacing: .02em;
-    mix-blend-mode: difference;
-    color: #f2ede4;
+    color: var(--ink);
+    background: color-mix(in oklab, var(--paper) 85%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
   nav.top .brand { font-weight: 500; }
   nav.top .links { display: flex; gap: 24px; }
@@ -183,7 +180,7 @@
     line-height: 1;
     white-space: nowrap;
   }
-  .marquee .track { display: inline-flex; gap: 48px; animation: scroll 40s linear infinite; }
+  .marquee .track { display: inline-flex; gap: 48px; animation: scroll 40s linear infinite; will-change: transform; }
   .marquee .track span { display: inline-flex; align-items: center; gap: 48px; padding-left: 48px; }
   .marquee .track .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
   @keyframes scroll {
@@ -522,6 +519,15 @@
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
+  .work, .exp, .awards-sec, .stack-sec, .certs-sec, .contact {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1200px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
   @media (max-width: 1100px) {
     .case-grid { grid-template-columns: 1fr 1fr; }
     .case-grid > div:nth-child(3) { grid-column: 1 / -1; }
@@ -606,7 +612,7 @@
         </h1>
       </div>
       <div class="hero-photo">
-        <img src="images/hero/hero_photo.jpg" alt="Michael Chen" />
+        <img src="images/hero/hero_photo.jpg" alt="Michael Chen" width="260" height="260" decoding="async" fetchpriority="high" />
       </div>
     </div>
 
@@ -991,23 +997,24 @@
 </div>
 
 <script>
+const tFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', hour12: false });
+const fFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+const tEl = document.getElementById('time');
+const fEl = document.getElementById('clock-foot');
 function tick() {
   const d = new Date();
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
-    hour: '2-digit', minute: '2-digit', hour12: false
-  }).format(d);
-  const fmt2 = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Los_Angeles',
-    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
-  }).format(d);
-  const t = document.getElementById('time'); if (t) t.textContent = `⏱ ${fmt} PT`;
-  const f = document.getElementById('clock-foot'); if (f) f.textContent = `${fmt2} · PT`;
+  if (tEl) tEl.textContent = `⏱ ${tFmt.format(d)} PT`;
+  if (fEl) fEl.textContent = `${fFmt.format(d)} · PT`;
 }
-tick(); setInterval(tick, 1000);
+tick();
+let clockTimer = null;
+function startClock() { if (!clockTimer) clockTimer = setInterval(tick, 1000); }
+function stopClock() { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } }
+startClock();
+document.addEventListener('visibilitychange', () => document.hidden ? stopClock() : (tick(), startClock()));
 
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+const io = new IntersectionObserver((entries, obs) => {
+  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
