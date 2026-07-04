@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Michael Chen - AI systems engineer</title>
-<meta name="description" content="Michael Chen builds autonomous coding-agent platforms, evaluation harnesses, and hardware-in-the-loop systems that are tested against real constraints." />
+<meta name="description" content="Michael Chen builds autonomous coding-agent platforms, reusable simulation frameworks, evaluation harnesses, and hardware-in-the-loop systems tested against real constraints." />
 <meta name="theme-color" content="#101513" />
 <meta property="og:title" content="Michael Chen - AI systems engineer" />
 <meta property="og:description" content="Project-first portfolio for agent infrastructure, continual validation, and fuel-cell HIL systems." />
@@ -637,6 +637,143 @@
     transform: rotate(0deg) scale(1.05);
   }
 
+  .sim-console {
+    display: grid;
+    grid-template-columns: minmax(0, .92fr) minmax(0, 1.38fr);
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--line);
+    box-shadow: var(--shadow);
+  }
+
+  .sim-spine {
+    min-height: 34rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.25rem;
+    background:
+      radial-gradient(circle at 18% 20%, rgba(199, 232, 106, .22), transparent 22rem),
+      var(--dark);
+    color: var(--white);
+  }
+
+  .sim-spine h3 {
+    max-width: 11ch;
+    color: var(--white);
+    font-size: 3.4rem;
+  }
+
+  .sim-spine p {
+    max-width: 42ch;
+    color: rgba(251, 252, 247, .76);
+  }
+
+  .sim-spine .mini-label {
+    color: var(--lime);
+  }
+
+  .sim-loop {
+    display: grid;
+    gap: .55rem;
+    font-family: var(--mono);
+    font-size: .76rem;
+  }
+
+  .sim-step {
+    min-height: 3.4rem;
+    display: grid;
+    grid-template-columns: 1.6rem 1fr;
+    gap: .65rem;
+    align-items: center;
+    padding: .65rem;
+    border: 1px solid rgba(251, 252, 247, .17);
+    border-radius: 6px;
+    background: rgba(251, 252, 247, .06);
+  }
+
+  .sim-step span:first-child {
+    display: grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border-radius: 5px;
+    background: var(--lime);
+    color: var(--dark);
+    font-weight: 700;
+  }
+
+  .sim-surfaces {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .sim-tile {
+    position: relative;
+    min-height: 17rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    overflow: hidden;
+    padding: 1.2rem;
+    background: var(--white);
+  }
+
+  .sim-tile::after {
+    content: "";
+    position: absolute;
+    right: -3rem;
+    bottom: -3rem;
+    width: 11rem;
+    height: 11rem;
+    border: 1px solid rgba(16, 21, 19, .12);
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, transparent 0 48%, rgba(31, 119, 107, .52) 48% 54%, transparent 54%),
+      linear-gradient(0deg, transparent 0 48%, rgba(199, 91, 56, .45) 48% 54%, transparent 54%),
+      repeating-linear-gradient(90deg, rgba(16, 21, 19, .13) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(0deg, rgba(16, 21, 19, .13) 0 1px, transparent 1px 18px);
+    opacity: .45;
+    transform: rotate(6deg);
+    transition: opacity .35s ease, transform .55s ease;
+  }
+
+  .sim-tile:hover::after {
+    opacity: .7;
+    transform: rotate(0deg) scale(1.04);
+  }
+
+  .sim-tile h3 {
+    max-width: 12ch;
+    font-size: 1.72rem;
+    line-height: 1;
+  }
+
+  .sim-tile p {
+    position: relative;
+    z-index: 1;
+    max-width: 42ch;
+    color: var(--ink-2);
+  }
+
+  .sim-tile code {
+    font-family: var(--mono);
+    font-size: .82em;
+    color: var(--teal-dark);
+  }
+
+  .sim-tile .mini-label,
+  .sim-tile h3 {
+    position: relative;
+    z-index: 1;
+  }
+
   .case-stack {
     display: grid;
     gap: 3rem;
@@ -1043,6 +1180,15 @@
       min-height: 17rem;
       flex: 1 1 auto;
     }
+    .sim-console {
+      grid-template-columns: 1fr;
+    }
+    .sim-spine {
+      min-height: 28rem;
+    }
+    .sim-surfaces {
+      grid-template-columns: 1fr;
+    }
     .case-meta { grid-template-columns: 1fr; }
     .timeline-row,
     .stack-row {
@@ -1064,6 +1210,8 @@
     .system-card { bottom: 0; }
     .case-card { padding: .65rem; }
     .case-visual { min-height: 22rem; }
+    .sim-spine h3 { font-size: 2.45rem; }
+    .sim-tile { min-height: 15rem; }
     .contact-grid { grid-template-columns: 1fr; }
   }
 </style>
@@ -1079,6 +1227,7 @@
     </a>
     <div class="nav-links">
       <a href="#proof">Proof</a>
+      <a href="#zerg-sim">Zerg</a>
       <a href="#work">Work</a>
       <a href="#experience">Experience</a>
       <a href="#stack">Stack</a>
@@ -1094,7 +1243,7 @@
       <p class="hero-kicker">AI SWE engineer at Epoch. CS at UC Riverside. Systems that keep working after the demo.</p>
       <h1 id="hero-title">Agents <span class="inline-photo" aria-hidden="true"></span> that prove their work.</h1>
       <p>
-        My strongest work is at the boundary between autonomous coding agents, deterministic evaluation, and hardware-adjacent production systems.
+        My strongest work is at the boundary between Zerg-style agent products, reusable simulation frameworks, deterministic evaluation, and hardware-adjacent production systems.
       </p>
       <div class="hero-actions" aria-label="Primary actions">
         <a class="btn btn-primary" href="#work">Review work</a>
@@ -1109,8 +1258,8 @@
       <div class="system-card media-scale" aria-hidden="true">
         <div class="terminal">
           <div class="terminal-row"><span>agent runtime</span><strong>online</strong></div>
-          <div class="terminal-row"><span>oracles</span><strong>state/tool/ui</strong></div>
-          <div class="terminal-row"><span>handoff</span><strong>human visible</strong></div>
+          <div class="terminal-row"><span>sim framework</span><strong>scenario/state</strong></div>
+          <div class="terminal-row"><span>proof loop</span><strong>tools/ui/artifacts</strong></div>
         </div>
       </div>
     </div>
@@ -1118,8 +1267,8 @@
 
   <div class="signal-strip" aria-hidden="true">
     <div class="marquee">
-      <span>Agent infrastructure <i></i> Terminal tooling <i></i> Evaluation harnesses <i></i> Hardware-in-loop <i></i> Nuxt and Postgres <i></i> Firmware-adjacent systems <i></i></span>
-      <span>Agent infrastructure <i></i> Terminal tooling <i></i> Evaluation harnesses <i></i> Hardware-in-loop <i></i> Nuxt and Postgres <i></i> Firmware-adjacent systems <i></i></span>
+      <span>ZTC workflows <i></i> ZergChat knowledge filesystem <i></i> ZergBoard workspaces <i></i> Simulation framework <i></i> Procurement review agents <i></i> Hardware-in-loop <i></i></span>
+      <span>ZTC workflows <i></i> ZergChat knowledge filesystem <i></i> ZergBoard workspaces <i></i> Simulation framework <i></i> Procurement review agents <i></i> Hardware-in-loop <i></i></span>
     </div>
   </div>
 
@@ -1135,13 +1284,13 @@
           <p class="mini-label">Current center of gravity</p>
           <h3>Autonomous software systems</h3>
           <p>
-            Zerg and ZTC are not demo wrappers. They are execution surfaces for coding agents: tool dispatch, session persistence, provider routing, workflow orchestration, web observability, and isolated batch work.
+            Zerg is the work surface: terminal runtime, chat product, board product, simulation framework, and customer-facing agent workflows tied together by observable execution.
           </p>
         </div>
         <div class="proof-list">
-          <div><strong>Runtime</strong><span>Graph-like orchestration, sub-agents, traces, and workflow control.</span></div>
-          <div><strong>Terminal</strong><span>Claude Code-style interface with mux, resume, headless, and web mirror paths.</span></div>
-          <div><strong>Product</strong><span>Agent capabilities embedded into chat, operations, and client workflows.</span></div>
+          <div><strong>Runtime</strong><span>Workflow orchestration, sub-agents, traces, and headless/web control.</span></div>
+          <div><strong>ZApps</strong><span>ZergChat and ZergBoard turn the agent layer into product workflows.</span></div>
+          <div><strong>Sim</strong><span>Scenario state, agent panes, events, scoring, and replayable evidence.</span></div>
         </div>
       </article>
 
@@ -1167,47 +1316,100 @@
 
   <section class="section section-tight" aria-labelledby="lanes-title">
     <div class="section-title reveal">
-      <p>How the work reads</p>
-      <h2 id="lanes-title">Four lanes, one engineering pattern.</h2>
+      <p>How the Zerg work reads</p>
+      <h2 id="lanes-title">Four surfaces, one execution pattern.</h2>
     </div>
 
     <div class="accordion reveal">
       <article class="lane">
         <a class="lane-link" href="#zerg" aria-label="Jump to Zerg and ZTC case study"></a>
         <div class="lane-content">
-          <p class="mini-label">Agent runtime</p>
+          <p class="mini-label">Terminal runtime</p>
           <h3>Zerg / ZTC</h3>
-          <p>Build software agents that can plan, edit, test, recover context, and expose their work while they run.</p>
+          <p>Build coding agents that plan, edit, test, delegate, resume, and expose traces while they run.</p>
         </div>
         <div class="lane-art" aria-hidden="true"></div>
       </article>
       <article class="lane">
-        <a class="lane-link" href="#validation" aria-label="Jump to validation case study"></a>
+        <a class="lane-link" href="#zerg-sim" aria-label="Jump to Zerg simulation framework section"></a>
         <div class="lane-content">
-          <p class="mini-label">Validation</p>
-          <h3>Embedded evals</h3>
-          <p>Turn AI product behavior into repeatable checks backed by state, DOM, artifacts, screenshots, and explicit contracts.</p>
+          <p class="mini-label">Chat product</p>
+          <h3>ZergChat</h3>
+          <p>Chat, files, artifacts, Slack sync, knowledge nodes, and custom agents backed by ZTC sessions.</p>
         </div>
         <div class="lane-art" aria-hidden="true"></div>
       </article>
       <article class="lane">
-        <a class="lane-link" href="#hil" aria-label="Jump to fuel-cell HIL case study"></a>
+        <a class="lane-link" href="#zerg-sim" aria-label="Jump to ZergBoard product surface"></a>
         <div class="lane-content">
-          <p class="mini-label">Hardware-in-loop</p>
-          <h3>Fuel-cell test systems</h3>
-          <p>Ship the tooling around a physical system: sensors, telemetry, GUI operators, simulations, and firmware migration tests.</p>
+          <p class="mini-label">Board product</p>
+          <h3>ZergBoard</h3>
+          <p>Workspace boards, cards, collaboration, integrations, and hardened run/session permissions.</p>
         </div>
         <div class="lane-art" aria-hidden="true"></div>
       </article>
       <article class="lane">
-        <a class="lane-link" href="#philip" aria-label="Jump to PHiLIP case study"></a>
+        <a class="lane-link" href="#zerg-sim" aria-label="Jump to simulation framework surface"></a>
         <div class="lane-content">
-          <p class="mini-label">Applied AI</p>
-          <h3>PHiLIP</h3>
-          <p>Compress creative feedback loops with human-in-loop generation, style presets, upscaling, and AMD ROCm deployment.</p>
+          <p class="mini-label">Simulation framework</p>
+          <h3>Agent sims</h3>
+          <p>Scenario YAML, SimState bootstraps, gamemaster loops, plugin hooks, SSE UI, and replayable evidence.</p>
         </div>
         <div class="lane-art" aria-hidden="true"></div>
       </article>
+    </div>
+  </section>
+
+  <section class="section" id="zerg-sim" aria-labelledby="zerg-sim-title">
+    <div class="section-title reveal">
+      <p>Zerg simulation framework</p>
+      <h2 id="zerg-sim-title">The durable work is the runtime, not one demo domain.</h2>
+    </div>
+
+    <div class="sim-console reveal">
+      <article class="sim-spine media-scale">
+        <div>
+          <p class="mini-label">Reusable simulation layer</p>
+          <h3>Scenarios, agents, state, evidence.</h3>
+          <p>The framework turns a domain brief into a running world: initialize state, coordinate agent panes, drive meetings/documents/actions, stream state over HTTP/SSE, then score and replay what happened.</p>
+        </div>
+        <div class="sim-loop" aria-label="Simulation framework loop">
+          <div class="sim-step"><span>1</span><p>Scenario YAML and bootstrap build the initial SimState.</p></div>
+          <div class="sim-step"><span>2</span><p>Gamemaster and plugin hooks run period cadence, roles, actions, and world updates.</p></div>
+          <div class="sim-step"><span>3</span><p>Browser, artifacts, scorecards, and traces make the run inspectable.</p></div>
+        </div>
+      </article>
+
+      <div class="sim-surfaces" aria-label="Zerg product and simulation surfaces">
+        <article class="sim-tile">
+          <div>
+            <p class="mini-label">ZTC workflows</p>
+            <h3>Bounded agent orchestration</h3>
+          </div>
+          <p>Sandboxed workflow scripts expose <code>agent()</code>, <code>parallel()</code>, <code>pipeline()</code>, and <code>phase()</code> with persisted run artifacts, headless triggers, and mirror-visible progress.</p>
+        </article>
+        <article class="sim-tile">
+          <div>
+            <p class="mini-label">ZergChat</p>
+            <h3>Knowledge as a product surface</h3>
+          </div>
+          <p>Nuxt/Tauri chat with SSE realtime, ZTC-backed custom agents, file-tree navigation, artifacts, Slack parity, and path-addressable knowledge nodes.</p>
+        </article>
+        <article class="sim-tile">
+          <div>
+            <p class="mini-label">ZergBoard</p>
+            <h3>Boards with real permissions</h3>
+          </div>
+          <p>Workspace boards, cards, invites, comments, integrations, and collaboration flows hardened around editor/controller access, SSRF gates, and non-stubbed paths.</p>
+        </article>
+        <article class="sim-tile">
+          <div>
+            <p class="mini-label">Customer workflows</p>
+            <h3>Procurement and ops simulations</h3>
+          </div>
+          <p>AI-review intake, multi-arm approval, source-grounded research, vendor follow-up, and regulated operations workflows tested through browser evidence and deterministic contracts.</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -1223,42 +1425,42 @@
           <div class="case-visual-inner">
             <div class="diagram">
               <div class="diagram-row">
-                <div class="diagram-box">human prompt</div>
+                <div class="diagram-box">request</div>
                 <div class="diagram-arrow">-></div>
-                <div class="diagram-box">agent plan</div>
+                <div class="diagram-box">workflow</div>
               </div>
               <div class="diagram-row">
-                <div class="diagram-box">parallel tools</div>
+                <div class="diagram-box">agent panes</div>
                 <div class="diagram-arrow">-></div>
-                <div class="diagram-box">worktree batch</div>
+                <div class="diagram-box">product surface</div>
               </div>
               <div class="diagram-row">
-                <div class="diagram-box">web mirror</div>
+                <div class="diagram-box">sim state</div>
                 <div class="diagram-arrow">-></div>
-                <div class="diagram-box">reviewable trace</div>
+                <div class="diagram-box">evidence</div>
               </div>
             </div>
-            <p><strong>ZTC</strong> makes autonomous work inspectable while it runs.</p>
+            <p><strong>Zerg</strong> makes autonomous work inspectable across terminal, product, and simulation surfaces.</p>
           </div>
         </div>
         <div class="case-copy">
           <header>
-            <p class="mini-label">Epoch - agent infrastructure</p>
-            <h3>Zerg / ZTC</h3>
-            <p>Autonomous coding-agent platform and Claude Code-style terminal for parallel tool use, isolated execution, provider routing, session persistence, and live observability.</p>
+            <p class="mini-label">Epoch - Zerg platform</p>
+            <h3>Zerg runtime and simulation framework</h3>
+            <p>Autonomous coding-agent platform, Claude Code-style terminal, product surfaces, and reusable simulation runtime for long-running multi-agent workflows.</p>
           </header>
           <div>
             <div class="case-meta">
-              <div><strong>Core</strong><span>Runtime and terminal systems</span></div>
-              <div><strong>Parallel</strong><span>Tool dispatch and sub-agents</span></div>
-              <div><strong>Live</strong><span>Browser-visible web mirror</span></div>
+              <div><strong>ZTC</strong><span>Terminal, workflows, mirror</span></div>
+              <div><strong>ZApps</strong><span>ZergChat and ZergBoard</span></div>
+              <div><strong>Sim</strong><span>Scenarios, state, scoring</span></div>
             </div>
             <ul class="case-points">
-              <li>Engineered runtime surfaces for long-running agents: tool calls, background delegation, provider routing, and worktree-isolated batch execution.</li>
-              <li>Worked on ZTC capabilities including mux-aware terminal workflows, workflow orchestration, headless/web surfaces, and plugin extraction paths.</li>
-              <li>Kept the system oriented around traces, deterministic checks, and human review rather than opaque automation.</li>
+              <li>Engineered runtime surfaces for long-running agents: tool calls, background delegation, provider routing, headless sessions, and worktree-isolated batch execution.</li>
+              <li>Worked across ZTC workflow orchestration, web-mirror hardening, plugin extraction paths, ZergChat knowledge/artifact flows, and ZergBoard workspace hardening.</li>
+              <li>Built on the simulation framework pattern: scenario definitions, SimState bootstrap, gamemaster/world loops, plugin hooks, browser UI, scorecards, and replayable traces.</li>
             </ul>
-            <div class="tag-row"><span>TypeScript</span><span>Python</span><span>Django</span><span>Nuxt</span><span>Socket.IO</span><span>LLM tooling</span></div>
+            <div class="tag-row"><span>TypeScript</span><span>Python</span><span>Nuxt</span><span>SSE</span><span>Workflow runtime</span><span>Simulation framework</span><span>LLM tooling</span></div>
           </div>
         </div>
       </article>
@@ -1290,7 +1492,7 @@
           <header>
             <p class="mini-label">Customer systems - embedded evaluation</p>
             <h3>Continual validation for AI products</h3>
-            <p>Evaluation harnesses for enterprise aerospace workflows, including internal operations and chart-slide tooling, where AI assistance must be checked against deterministic product reality.</p>
+            <p>Evaluation harnesses for regulated enterprise workflows where AI assistance must be checked against product state, generated artifacts, browser behavior, and explicit contracts.</p>
           </header>
           <div>
             <div class="case-meta">
@@ -1300,7 +1502,7 @@
             </div>
             <ul class="case-points">
               <li>Architected validation that scores outputs against state, tool, artifact, browser, and visual evidence.</li>
-              <li>Helped harden chart-slide and org-management workflows with export guards, root validation, depth defaults, and browser smoke coverage.</li>
+              <li>Helped harden planning, charting, and operational workflows with export guards, root validation, depth defaults, and browser smoke coverage.</li>
               <li>Used Zerg/ZTC as the agent substrate while keeping product-owned benchmark contracts authoritative.</li>
             </ul>
             <div class="tag-row"><span>Nuxt 4</span><span>Postgres</span><span>Playwright</span><span>Eval harnesses</span><span>Artifacts</span><span>RBAC</span></div>
