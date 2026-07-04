@@ -1,287 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Michael Chen - AI Software Engineer</title>
-    <meta
-      name="description"
-      content="Michael Chen builds coding-agent platforms, LLM evaluation harnesses, multi-agent simulation systems, and hardware test automation."
-    >
-    <meta name="theme-color" content="#11110f">
-    <meta property="og:title" content="Michael Chen - AI Software Engineer">
-    <meta
-      property="og:description"
-      content="Agentic developer tooling, deterministic AI evaluation, production simulation, and hardware-in-the-loop systems."
-    >
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mchen04.github.io/">
-    <meta property="og:image" content="https://mchen04.github.io/images/hero/hero_photo.jpg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    >
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Michael Chen's Portfolio - A showcase of projects and skills" />
+    <meta property="og:title" content="Michael Chen's Portfolio" />
+    <meta property="og:description" content="A modern portfolio website built with cutting-edge web technologies" />
+    <meta property="og:image" content="/og-image.png" />
+    <title>Michael Chen's Portfolio</title>
+    <script>
+      // Add CSS file based on environment
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = window.location.hostname === 'mchen04.github.io' ? '/mchen04.github.io/assets/index-DGY48wz8.css' : '/src/index.css';
+      document.head.appendChild(link);
+    </script>
+    <script>
+      (function() {
+        const redirect = localStorage.getItem('path');
+        if (redirect) {
+          localStorage.removeItem('path');
+          if (redirect !== '/mchen04.github.io/') {
+            window.history.replaceState(null, null, redirect);
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
-    <div class="ambient" aria-hidden="true"></div>
-    <nav class="site-nav" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="Michael Chen home">
-        <span class="brand-mark">MC</span>
-        <span>Michael Chen</span>
-      </a>
-      <div class="nav-links">
-        <a href="#systems">Systems</a>
-        <a href="#proof">Proof</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <a class="nav-action" href="Michael_Chen_resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-    </nav>
+    <div id="root"></div>
+    <script type="module" crossorigin>
+      // Fallback script loading with error handling
+      const loadScript = (src) => {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.crossOrigin = 'anonymous';
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = () => {
+            reject(new Error(`Failed to load script: ${src}`));
+          };
+          document.body.appendChild(script);
+        });
+      };
 
-    <main id="top" class="page-shell">
-      <section class="hero section-pad" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <h1 id="hero-title">
-            Michael Chen
-            <br class="mobile-break">
-            builds
-            <span class="inline-photo" aria-hidden="true"></span>
-            agents
-            <br class="mobile-break">
-            that prove work.
-          </h1>
-          <p class="hero-lede">
-            AI software engineer at Epoch focused on autonomous coding-agent platforms,
-            deterministic LLM evaluation, and long-running multi-agent simulations. Before
-            that: fuel-cell test automation, firmware-adjacent systems, and UCR's first AI
-            organization.
-          </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button button-light" href="mailto:michaelluochen1@gmail.com">Start a conversation</a>
-            <a class="button button-dark" href="https://github.com/mchen04" target="_blank" rel="noreferrer">Open GitHub</a>
-          </div>
-        </div>
-        <div class="hero-portrait" aria-label="Portrait of Michael Chen">
-          <img src="images/hero/hero_photo.jpg" alt="Michael Chen wearing a suit in an office setting">
-          <div class="portrait-note">
-            <span>Current focus</span>
-            Coding agents, eval harnesses, simulation runtimes
-          </div>
-        </div>
-      </section>
+      const mainScript = window.location.hostname === 'mchen04.github.io' 
+        ? '/mchen04.github.io/assets/index-BmvppP3d.js'
+        : '/src/main.tsx';
 
-      <section id="systems" class="section-pad systems-section" aria-labelledby="systems-title">
-        <div class="section-heading wide-heading">
-          <p class="eyebrow">Engineering Surface</p>
-          <h2 id="systems-title">
-            A portfolio built around systems that keep running after the demo.
-          </h2>
-        </div>
-
-        <div class="bento-grid" aria-label="Core engineering proof grid">
-          <article class="bento-card bento-agent group-card">
-            <div>
-              <p class="card-kicker">Epoch</p>
-              <h3>Zerg / ZTC agent runtime</h3>
-              <p>
-                Autonomous coding-agent platform and terminal with parallel tool dispatch,
-                background sub-agents, worktree-isolated batch execution, provider routing,
-                and live web-mirror observability.
-              </p>
-            </div>
-            <div class="terminal-panel" aria-hidden="true">
-              <div class="terminal-row"><span>dispatch</span><strong>parallel tools</strong></div>
-              <div class="terminal-row"><span>agents</span><strong>isolated worktrees</strong></div>
-              <div class="terminal-row"><span>mirror</span><strong>live observability</strong></div>
-              <div class="terminal-row"><span>routing</span><strong>multi-provider</strong></div>
-            </div>
-          </article>
-
-          <article class="bento-card bento-eval group-card">
-            <p class="card-kicker">Forward deployed AI</p>
-            <h3>Continual validation</h3>
-            <p>
-              Embedded evaluation harnesses score outputs against deterministic state, tool,
-              artifact, browser, and visual oracles.
-            </p>
-          </article>
-
-          <article class="bento-card bento-hardware group-card">
-            <p class="card-kicker">MOBIVOLT</p>
-            <h3>5,000+ hours</h3>
-            <p>
-              Automated fuel-cell test systems integrating 250+ sensors with C#/.NET,
-              Python/PyQt, serial firmware bridges, and hardware-in-the-loop simulation.
-            </p>
-          </article>
-
-          <article class="bento-card bento-community group-card">
-            <p class="card-kicker">AI@UCR</p>
-            <h3>0 to 50+</h3>
-            <p>
-              Founded UCR's first official AI organization and built workshop curriculum,
-              speaker programming, and onboarding infrastructure.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-pad project-accordion-section" aria-labelledby="projects-title">
-        <div class="section-heading">
-          <p class="eyebrow">Selected Work</p>
-          <h2 id="projects-title">Public builds and private systems share the same bias: make the loop tighter.</h2>
-        </div>
-
-        <div class="accordion" aria-label="Selected projects">
-          <article class="accordion-panel is-active" style="--panel-image: url('https://picsum.photos/seed/agent-terminal/1200/900');">
-            <div class="panel-index">ZTC</div>
-            <div class="panel-content">
-              <h3>Zerg / ZTC</h3>
-              <p>Agentic terminal infrastructure for coding agents, parallel tools, sub-agents, provider routing, and web-mirror observability.</p>
-              <span>Epoch AI</span>
-            </div>
-          </article>
-          <a class="accordion-panel" href="https://github.com/mchen04/PHiLIP" target="_blank" rel="noreferrer" style="--panel-image: url('https://picsum.photos/seed/human-loop-image/1200/900');">
-            <div class="panel-index">PHI</div>
-            <div class="panel-content">
-              <h3>PHiLIP</h3>
-              <p>AMD award-winning human-in-the-loop image generation platform with fast inference, 71 style presets, and PixArt-alpha fine-tuning on ROCm.</p>
-              <span>Python / PyTorch</span>
-            </div>
-          </a>
-          <a class="accordion-panel" href="https://github.com/mchen04/82-0" target="_blank" rel="noreferrer" style="--panel-image: url('https://picsum.photos/seed/server-authoritative-game/1200/900');">
-            <div class="panel-index">82</div>
-            <div class="panel-content">
-              <h3>Better 82-0</h3>
-              <p>Next.js multiplayer Cap Mode with private lobbies, server-authoritative state, shared drafts, and production-like verification loops.</p>
-              <span>TypeScript / Postgres</span>
-            </div>
-          </a>
-          <a class="accordion-panel" href="https://github.com/mchen04/ROCm-Doctor" target="_blank" rel="noreferrer" style="--panel-image: url('https://picsum.photos/seed/rocm-observability/1200/900');">
-            <div class="panel-index">RD</div>
-            <div class="panel-content">
-              <h3>ROCm-Doctor</h3>
-              <p>Self-healing model CI/CD concept for AMD MI300X deployments, classifying drift versus operator changes and applying audited repairs.</p>
-              <span>Python</span>
-            </div>
-          </a>
-          <a class="accordion-panel" href="https://github.com/mchen04/balldontlie" target="_blank" rel="noreferrer" style="--panel-image: url('https://picsum.photos/seed/market-model/1200/900');">
-            <div class="panel-index">EV</div>
-            <div class="panel-content">
-              <h3>Market models</h3>
-              <p>Go and Python systems for NBA betting opportunities, dynasty projections, and decision support with model-backed ranking.</p>
-              <span>Go / Python</span>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      <section id="proof" class="section-pad proof-section" aria-labelledby="proof-title">
-        <div class="proof-layout">
-          <div class="proof-copy">
-            <p class="eyebrow">Proof Loops</p>
-            <h2 id="proof-title">The through-line is instrumentation before confidence.</h2>
-            <p>
-              The resume reads like three versions of the same engineering instinct: build the
-              system, build the harness around it, then keep tightening the feedback loop until
-              failures become observable.
-            </p>
-          </div>
-          <div class="stack-list" aria-label="Stacked experience cards">
-            <article class="stack-card" style="--stack-image: url('https://picsum.photos/seed/eval-harness/1400/900');">
-              <div class="stack-media image-motion" aria-hidden="true"></div>
-              <div class="stack-body">
-                <span>AI infrastructure</span>
-                <h3>Evaluation harnesses with deterministic oracles</h3>
-                <p>State, tool, artifact, browser, and visual checks turn AI behavior into something that can be regression-tested.</p>
-              </div>
-            </article>
-            <article class="stack-card" style="--stack-image: url('https://picsum.photos/seed/fuel-cell-lab/1400/900');">
-              <div class="stack-media image-motion" aria-hidden="true"></div>
-              <div class="stack-body">
-                <span>Hardware systems</span>
-                <h3>Physical test loops with real sensors</h3>
-                <p>Fuel-cell automation tied hundreds of sensors, serial protocols, plant models, and long-duration collection into one operating surface.</p>
-              </div>
-            </article>
-            <article class="stack-card" style="--stack-image: url('https://picsum.photos/seed/technical-community/1400/900');">
-              <div class="stack-media image-motion" aria-hidden="true"></div>
-              <div class="stack-body">
-                <span>Community systems</span>
-                <h3>Workshops, curriculum, and AI@UCR infrastructure</h3>
-                <p>Technical programming and reusable materials helped students move from curiosity to applied AI contributions.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-pad signal-section" aria-labelledby="signal-title">
-        <div class="section-heading signal-heading">
-          <p class="eyebrow">Operating Signal</p>
-          <h2 id="signal-title">
-            Michael works where software has to touch
-            <span class="inline-wide" aria-hidden="true"></span>
-            messy reality.
-          </h2>
-        </div>
-
-        <div class="signal-carousel" aria-live="polite">
-          <div class="signal-portraits" aria-hidden="true">
-            <img src="images/hero/hero_photo.jpg" alt="">
-            <img src="https://picsum.photos/seed/terminal-observer/240/240" alt="">
-            <img src="https://picsum.photos/seed/lab-instruments/240/240" alt="">
-          </div>
-          <div class="signal-slide is-current" aria-hidden="false">
-            <p>Agent tools are only useful when their traces survive inspection.</p>
-            <span>Zerg / ZTC, web mirrors, provider routing, worktree isolation</span>
-          </div>
-          <div class="signal-slide" aria-hidden="true">
-            <p>Evaluation should be embedded in the product, not stapled on after launch.</p>
-            <span>Continual validation, browser oracles, visual checks, behavior regression</span>
-          </div>
-          <div class="signal-slide" aria-hidden="true">
-            <p>Hardware taught me that logs, timing, and failure modes matter more than happy paths.</p>
-            <span>Fuel-cell HIL simulation, sensor polling, firmware migration, C tests</span>
-          </div>
-          <div class="carousel-controls">
-            <button type="button" class="carousel-btn" data-carousel="prev" aria-label="Previous signal">Prev</button>
-            <button type="button" class="carousel-btn" data-carousel="next" aria-label="Next signal">Next</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="section-pad contact-section" aria-labelledby="contact-title">
-        <div class="contact-panel">
-          <div>
-            <p class="eyebrow">Open Loop</p>
-            <h2 id="contact-title">Bring the hard problem with the messy constraints.</h2>
-          </div>
-          <p>
-            Best fit: coding-agent infrastructure, AI evaluation, simulation-heavy workflows,
-            product systems that need real browser verification, or hardware-adjacent tooling
-            where correctness has to be visible.
-          </p>
-          <div class="contact-actions">
-            <a class="button button-light" href="mailto:michaelluochen1@gmail.com">Email Michael</a>
-            <a class="button button-dark" href="https://www.linkedin.com/in/michael-luo-chen" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a class="button button-dark" href="Michael_Chen_resume.pdf" target="_blank" rel="noreferrer">Resume PDF</a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <span>Michael Chen</span>
-      <a href="https://github.com/mchen04" target="_blank" rel="noreferrer">GitHub</a>
-      <a href="mailto:michaelluochen1@gmail.com">Email</a>
-      <a href="Michael_Chen_resume.pdf" target="_blank" rel="noreferrer">Resume</a>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="script.js"></script>
+      loadScript(mainScript).catch(error => {
+        console.error('Script loading failed:', error);
+        // Implement fallback logic here if needed
+      });
+    </script>
   </body>
 </html>
