@@ -1,1026 +1,974 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Michael Chen — AI Engineer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Michael Chen, AI software engineer</title>
+<meta name="description" content="Michael Chen builds software for people he knows, including himself. A distilled TTS engine that runs 57x faster and still misses its own quality bar, an NBA projection model with 210 quantile regressors, and a shelf of apps his friends actually use.">
+<meta name="author" content="Michael Chen">
+<link rel="canonical" href="https://mchen04.github.io/">
+<meta name="theme-color" content="#e8eae3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101417" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mchen04.github.io/">
+<meta property="og:title" content="Michael Chen, AI software engineer">
+<meta property="og:description" content="I build software for people I know, including me. Measured systems, shipped products, and the numbers that did not clear the bar.">
+<meta property="og:image" content="https://mchen04.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Michael Chen, AI software engineer">
+<meta name="twitter:description" content="I build software for people I know, including me.">
+<meta name="twitter:image" content="https://mchen04.github.io/og.png">
+
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="images/hero/hero_photo.jpg" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="preload" href="fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Michael Chen",
+"jobTitle":"AI Software Engineer","url":"https://mchen04.github.io/",
+"email":"mailto:michaelluochen1@gmail.com",
+"address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US","addressLocality":"Bay Area"},
+"alumniOf":{"@type":"CollegeOrUniversity","name":"University of California, Riverside"},
+"worksFor":{"@type":"Organization","name":"Epoch AI / Zerg AI"},
+"sameAs":["https://github.com/mchen04","https://www.linkedin.com/in/michael-luo-chen/","https://huggingface.co/mchen04"]}
+
+</script>
+
 <style>
-  :root {
-    --paper: #f2ede4;
-    --paper-2: #e8e2d5;
-    --ink: #0d0c0a;
-    --ink-2: #2a2824;
-    --mute: #7a7364;
-    --rule: #1a1815;
-    --accent: #e5532b;
-    --bg: var(--paper);
-    --fg: var(--ink);
-    --display: 'Instrument Serif', Georgia, serif;
-    --sans: 'Inter', -apple-system, system-ui, sans-serif;
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
-  }
-  [data-mode="ink"] {
-    --bg: #0d0c0a;
-    --fg: #f2ede4;
-    --paper: #0d0c0a;
-    --paper-2: #17150f;
-    --ink: #f2ede4;
-    --ink-2: #cec7b7;
-    --mute: #7a7364;
-    --rule: #2a2620;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--fg); overflow-x: hidden; }
-  body {
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    transition: background .5s ease, color .5s ease;
-  }
-  img { max-width: 100%; display: block; }
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: var(--accent); color: #fff; }
+/* ============================================================================
+   INSTRUMENT — a measurement readout.
+   Palette is plotter paper, not cream. Accent encodes measurement state:
+   --trace marks a reading that held, --flag marks one that did not.
+   Nothing is colored for decoration.
+   ========================================================================= */
 
-  body {
-    background-color: var(--bg);
-    background-image:
-      repeating-linear-gradient(0deg, transparent 0 39px, rgba(13,12,10,.04) 39px 40px),
-      repeating-linear-gradient(90deg, transparent 0 39px, rgba(13,12,10,.04) 39px 40px);
-    background-attachment: fixed;
-  }
+@font-face{font-family:'Bricolage';src:url(fonts/bricolage.woff2) format('woff2');
+  font-weight:400 800;font-stretch:75% 100%;font-display:swap;
+  unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF,U+2200-22FF}
+@font-face{font-family:'Newsreader';src:url(fonts/newsreader.woff2) format('woff2');
+  font-weight:300 600;font-display:swap;
+  unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF}
+@font-face{font-family:'PlexMono';src:url(fonts/plexmono.woff2) format('woff2');
+  font-weight:400;font-display:swap;
+  unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF}
 
-  .wrap { position: relative; z-index: 1; }
+:root{
+  color-scheme:light dark;
 
-  nav.top {
-    position: fixed; top: 0; left: 0; right: 0;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 18px 32px;
-    z-index: 50;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .02em;
-    color: var(--ink);
-    background: color-mix(in oklab, var(--paper) 85%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  nav.top .brand { font-weight: 500; }
-  nav.top .links { display: flex; gap: 24px; }
-  nav.top .links a { position: relative; padding: 4px 0; }
-  nav.top .links a:hover { color: var(--accent); }
-  nav.top .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: #7cff9e; display: inline-block; margin-right: 6px;
-    box-shadow: 0 0 0 0 rgba(124,255,158,.7);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(124,255,158,.5); }
-    70% { box-shadow: 0 0 0 8px rgba(124,255,158,0); }
-    100% { box-shadow: 0 0 0 0 rgba(124,255,158,0); }
-  }
+  /* --- surface ---------------------------------------------------------- */
+  --paper:#e8eae3;          /* cool plotter stock, deliberately not cream    */
+  --paper-lift:#f1f2ec;
+  --ink:#14181c;            /* blue-black, never #000                        */
+  --ink-2:#3b4348;
+  --mute:#5d6763;
+  --rule:#c6cbc0;
+  --rule-soft:#d6dacf;
 
-  section { padding: 0 32px; }
+  /* --- measurement state ------------------------------------------------ */
+  --trace:#08636b;          /* a reading that held                           */
+  --flag:#a8102a;           /* a reading that missed its bar                 */
+  --trace-wash:#08636b1a;
+  --flag-wash:#a8102a14;
 
-  .hero {
-    min-height: 100svh;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-    padding-top: 80px;
-    padding-bottom: 32px;
-    position: relative;
-  }
-  .hero-meta {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-    color: var(--mute);
-    padding-bottom: 24px;
-    border-bottom: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-  }
-  .hero-meta .loc { display: flex; gap: 32px; }
-  .hero-meta .num { font-size: 14px; color: var(--fg); }
-  .hero-main {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 40px;
-    align-items: center;
-    padding: 40px 0;
-  }
-  .hero-head h1 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(56px, 10vw, 180px);
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    display: block;
-  }
-  .hero-head h1 .it { font-style: italic; color: var(--accent); }
-  .hero-head h1 .line { display: block; margin-bottom: 0.04em; }
-  .hero-head .tag {
-    display: inline-flex; align-items: baseline; gap: 10px;
-    font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--mute);
-    padding-bottom: 18px;
-  }
-  .hero-head .tag .bar { width: 40px; height: 1px; background: var(--mute); }
+  /* --- type ------------------------------------------------------------- */
+  --display:'Bricolage','Trebuchet MS',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,'Times New Roman',serif;
+  --data:'PlexMono',ui-monospace,SFMono-Regular,Menlo,monospace;
 
-  .hero-photo {
-    width: clamp(180px, 18vw, 260px);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    overflow: hidden;
-    filter: grayscale(1) contrast(1.05);
-    border: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    transition: filter .4s ease, transform .4s ease;
-  }
-  .hero-photo:hover { filter: grayscale(0); transform: scale(1.03); }
-  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  /* fluid scale, 8pt-derived */
+  --t-mega:clamp(2.9rem,7.6vw,7rem);
+  --t-xl:clamp(2.1rem,4.6vw,4rem);
+  --t-lg:clamp(1.6rem,2.6vw,2.4rem);
+  --t-md:clamp(1.15rem,1.5vw,1.4rem);
+  --t-body:1.0625rem;
+  --t-data:.8125rem;
+  --t-micro:.6875rem;
 
-  .hero-foot {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 24px;
-    padding-top: 24px;
-    border-top: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    font-family: var(--mono);
-    font-size: 12px;
-  }
-  .hero-foot .cell .k { color: var(--mute); text-transform: uppercase; letter-spacing: .06em; font-size: 10px; margin-bottom: 6px; }
-  .hero-foot .cell .v { color: var(--fg); font-size: 13px; }
-  .hero-foot a.v:hover { color: var(--accent); }
+  /* --- rhythm (intentionally uneven per section, see each block) --------- */
+  --gut:clamp(1.25rem,4.2vw,3.5rem);
+  --measure:64ch;
+  --tap:44px;          /* minimum comfortable touch target */
+  --head:53px;         /* masthead height; JS re-syncs it after font load */
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
 
-  .scroll-hint {
-    position: absolute;
-    right: 32px; bottom: 120px;
-    font-family: var(--mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--mute);
-    writing-mode: vertical-rl;
-    display: flex; align-items: center; gap: 12px;
+[data-theme="scope"]{
+  --paper:#101417;
+  --paper-lift:#171c20;
+  --ink:#e4e8e2;
+  --ink-2:#b3bcb7;
+  --mute:#8b958f;
+  --rule:#2a3237;
+  --rule-soft:#20272b;
+  --trace:#7fb8bc;
+  --flag:#e08494;
+  --trace-wash:#7fb8bc17;
+  --flag-wash:#e0849414;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="bench"]){
+    --paper:#101417;--paper-lift:#171c20;
+    --ink:#e4e8e2;--ink-2:#b3bcb7;--mute:#8b958f;
+    --rule:#2a3237;--rule-soft:#20272b;
+    --trace:#7fb8bc;--flag:#e08494;
+    --trace-wash:#7fb8bc17;--flag-wash:#e0849414;
   }
-  .scroll-hint::after { content: ""; width: 1px; height: 60px; background: currentColor; }
+}
 
-  .marquee {
-    overflow: hidden;
-    border-block: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    padding: 18px 0;
-    margin: 0 -32px;
-    font-family: var(--display);
-    font-style: italic;
-    font-size: clamp(32px, 5vw, 64px);
-    line-height: 1;
-    white-space: nowrap;
-  }
-  .marquee .track { display: inline-flex; gap: 48px; animation: scroll 40s linear infinite; will-change: transform; }
-  .marquee .track span { display: inline-flex; align-items: center; gap: 48px; padding-left: 48px; }
-  .marquee .track .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:var(--t-body);line-height:1.6;
+  font-variation-settings:'opsz' 16;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:600;line-height:1.02;
+  letter-spacing:-.025em;font-variation-settings:'wdth' 90}
+p,figure,dl,dd{margin:0}
+:focus-visible{outline:2px solid var(--trace);outline-offset:3px;border-radius:2px}
+::selection{background:var(--ink);color:var(--paper)}
 
-  .sec-head {
-    display: grid;
-    grid-template-columns: 120px 1fr auto;
-    gap: 32px;
-    align-items: baseline;
-    padding: 80px 0 32px;
-  }
-  .sec-head .idx {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .1em;
-    color: var(--mute);
-    text-transform: uppercase;
-  }
-  .sec-head h2 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1;
-    letter-spacing: -0.01em;
-  }
-  .sec-head h2 em { color: var(--accent); }
-  .sec-head .meta {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--mute);
-    text-transform: uppercase;
-    letter-spacing: .06em;
-  }
+.shell{max-width:1400px;margin-inline:auto;padding-inline:var(--gut)}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
+  padding:.75rem 1rem;font-family:var(--data);font-size:var(--t-data);z-index:99}
+.skip:focus{left:.5rem;top:.5rem}
 
-  .work { padding-bottom: 80px; }
-  .case {
-    padding: 56px 0;
-    border-top: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    position: relative;
-    display: block;
-  }
-  .case:hover h3 .arrow { transform: translate(6px,-6px); color: var(--accent); }
-  .case:hover .case-kicker .status::before { background: var(--accent); }
+/* --- utility label. lowercase on purpose: all-caps eyebrows are a tell --- */
+.tag{font-family:var(--data);font-size:var(--t-micro);letter-spacing:.06em;
+  color:var(--mute);display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .6rem;line-height:1.5}
+.tag b{color:var(--ink);font-weight:400}
+.num{font-family:var(--data);font-variant-numeric:tabular-nums}
 
-  .case-kicker {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 24px;
-    font-family: var(--mono);
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--mute);
-    margin-bottom: 28px;
-  }
-  .case-kicker .left { display: flex; gap: 28px; align-items: center; }
-  .case-kicker .left b { color: var(--fg); font-weight: 500; }
-  .case-kicker .status { display: inline-flex; align-items: center; gap: 8px; color: var(--fg); }
-  .case-kicker .status::before {
-    content: ""; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--mute); display: inline-block;
-    transition: background .3s ease;
-  }
+/* ============================ masthead =================================== */
+.masthead{position:sticky;top:0;z-index:40;background:var(--paper);
+  border-bottom:1px solid var(--rule-soft)}
+.masthead .shell{display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;height:52px;font-family:var(--data);font-size:var(--t-data)}
+.masthead nav ul{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;list-style:none;margin:0;padding:0}
+.masthead nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;
+  display:flex;align-items:center;min-height:var(--tap);padding:0 .1rem;border-bottom:1px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease)}
+.masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);border-bottom-color:var(--trace)}
+.masthead nav a[aria-current]{color:var(--ink);border-bottom-color:var(--ink)}
+.mark{font-family:var(--display);font-weight:700;letter-spacing:-.03em;font-size:.95rem;
+  text-decoration:none;font-variation-settings:'wdth' 78;
+  display:inline-flex;align-items:center;min-height:var(--tap);padding-right:.5rem}
+.themer{display:none;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  background:none;border:0;padding:.55rem 0 .55rem .1rem;min-height:var(--tap);cursor:pointer;
+  gap:.5rem;transition:color .18s var(--ease)}
+.js .themer{display:inline-flex;align-items:center}
+.themer::before{content:"";width:7px;height:7px;border-radius:50%;
+  border:1px solid var(--mute);background:transparent;transition:background .18s var(--ease),border-color .18s var(--ease)}
+[data-theme="scope"] .themer::before{background:var(--trace);border-color:var(--trace)}
+.themer:hover{color:var(--ink)}
+.themer:hover::before{border-color:var(--ink)}
 
-  .case h3 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(56px, 10vw, 160px);
-    line-height: 0.9;
-    letter-spacing: -0.035em;
-    margin-bottom: 32px;
-    display: flex; align-items: flex-start; gap: 16px;
-    flex-wrap: wrap;
-  }
-  .case h3 em { color: var(--accent); font-style: italic; font-family: var(--display); }
-  .case h3 .arrow {
-    font-family: var(--sans); font-size: 28px; display: inline-block;
-    transition: transform .3s ease, color .3s ease;
-    color: var(--mute);
-    margin-top: 18px;
-  }
+/* ============================ hero ======================================= */
+/* Shape: oversized display type left, readings ledger right. No section below
+   repeats it. */
+.hero{padding-top:clamp(2.5rem,8vh,6rem);border-bottom:1px solid var(--rule)}
+.hero h1{font-size:var(--t-mega);max-width:15ch;font-weight:700;
+  font-variation-settings:'wdth' 84;letter-spacing:-.038em;text-wrap:balance}
+.hero-role{margin-top:1.7rem;max-width:26ch;font-family:var(--display);font-weight:600;
+  font-size:clamp(1.6rem,3.2vw,2.75rem);line-height:1.15;letter-spacing:-.025em;
+  font-variation-settings:'wdth' 86}
+.hero-role b{font-weight:600;color:var(--trace)}
+.hero-lead{margin-top:1rem;max-width:44ch;font-size:var(--t-md);color:var(--ink-2);
+  font-variation-settings:'opsz' 24}
 
-  .case-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 40px;
-    align-items: start;
-    padding-top: 16px;
-    border-top: 1px solid color-mix(in oklab, var(--fg) 15%, transparent);
-  }
-  .case-grid .col-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--mute);
-    padding-bottom: 12px;
-    margin-bottom: 16px;
-    border-bottom: 1px dashed color-mix(in oklab, var(--fg) 20%, transparent);
-  }
-  .case-grid .lede {
-    font-family: var(--display);
-    font-size: clamp(22px, 2.4vw, 30px);
-    line-height: 1.25;
-    letter-spacing: -0.01em;
-    color: var(--fg);
-  }
-  .case-grid .lede em { font-style: italic; color: var(--accent); }
-  .case-grid .body {
-    font-size: 15px; line-height: 1.65;
-    color: var(--ink-2);
-    column-count: 1;
-  }
-  .case-grid .meta-list {
-    display: flex; flex-direction: column; gap: 8px;
-    font-family: var(--mono); font-size: 11px;
-    color: var(--ink-2);
-  }
-  .case-grid .meta-list .kv {
-    display: flex; justify-content: space-between; gap: 12px;
-    padding: 6px 0;
-    border-bottom: 1px dotted color-mix(in oklab, var(--fg) 18%, transparent);
-  }
-  .case-grid .meta-list .kv .k { color: var(--mute); text-transform: uppercase; letter-spacing: .06em; font-size: 10px; }
-  .case-grid .meta-list .kv .v { color: var(--fg); text-align: right; max-width: 60%; }
+/* two columns at desktop: the claim, and the readings that back it */
+.hero-body{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
+@media (min-width:1120px){
+  .hero-body{grid-template-columns:minmax(0,1fr) 19rem;gap:clamp(2rem,5vw,5rem);align-items:start}
+}
+.readings{border:1px solid var(--rule);background:var(--paper-lift)}
+.readings .rhead{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
+  letter-spacing:.06em;padding:.7rem .9rem;border-bottom:1px solid var(--rule);
+  font-variation-settings:normal}
+.readings dl{margin:0}
+.readings div{display:grid;grid-template-columns:1fr auto;gap:.15rem .75rem;align-items:baseline;
+  padding:.7rem .9rem .6rem;border-bottom:1px solid var(--rule-soft)}
+.readings div:last-child{border-bottom:0}
+.readings dt{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin:0}
+.readings dd{margin:0;font-family:var(--display);font-weight:600;font-size:1.15rem;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right}
+.readings .off dt,.readings .off dd{color:var(--flag)}
 
-  .case-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    margin-top: 40px;
-    background: color-mix(in oklab, var(--fg) 18%, transparent);
-    border: 1px solid color-mix(in oklab, var(--fg) 18%, transparent);
-  }
-  .case-stats .s {
-    background: var(--bg);
-    padding: 20px 22px;
-    display: flex; flex-direction: column; gap: 8px;
-  }
-  .case-stats .s .idx {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--mute);
-  }
-  .case-stats .s .n {
-    font-family: var(--display);
-    font-size: clamp(36px, 4vw, 52px);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: var(--fg);
-  }
-  .case-stats .s .n em { font-style: italic; color: var(--accent); }
-  .case-stats .s .l {
-    font-family: var(--mono); font-size: 10px;
-    text-transform: uppercase; letter-spacing: .06em;
-    color: var(--mute);
-    margin-top: auto;
-  }
+.hero-strip{margin-top:2.25rem;display:flex;flex-wrap:wrap;
+  gap:.5rem 2.5rem;font-family:var(--data);font-size:var(--t-data);color:var(--mute)}
+.hero-strip b{color:var(--ink);font-weight:400}
+.hero-links{margin-top:1.1rem;display:flex;flex-wrap:wrap;gap:.15rem 1.75rem;font-family:var(--data);font-size:var(--t-data)}
+.hero-links a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);
+  padding:.6rem 0 .25rem;min-height:var(--tap);display:inline-flex;align-items:center;transition:border-color .18s var(--ease),color .18s var(--ease)}
+.hero-links a:hover,.hero-links a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
 
-  .case-tags {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    font-family: var(--mono); font-size: 10px;
-    text-transform: uppercase; letter-spacing: .06em;
-    margin-top: 24px;
-  }
-  .case-tags span {
-    padding: 4px 10px;
-    border: 1px solid color-mix(in oklab, var(--fg) 22%, transparent);
-    border-radius: 100px;
-    color: var(--ink-2);
-  }
-  .case-read {
-    display: inline-flex; gap: 10px; align-items: center;
-    margin-top: 28px;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--fg);
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--fg);
-    transition: color .2s ease, border-color .2s ease, gap .3s ease;
-  }
-  .case-read:hover { color: var(--accent); border-color: var(--accent); gap: 18px; }
 
-  .exp { padding-bottom: 40px; }
-  .exp-row {
-    display: grid;
-    grid-template-columns: 140px 1fr 1fr 180px;
-    gap: 32px;
-    padding: 32px 0;
-    border-top: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    align-items: baseline;
-    transition: background .3s ease;
-    margin: 0 -16px;
-    padding-left: 16px; padding-right: 16px;
-  }
-  .exp-row:hover { background: color-mix(in oklab, var(--accent) 6%, transparent); }
-  .exp-row .year {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    letter-spacing: .06em; text-transform: uppercase;
-  }
-  .exp-row .role {
-    font-family: var(--display); font-size: 28px; line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .exp-row .role em { color: var(--accent); font-style: italic; }
-  .exp-row .co {
-    font-family: var(--mono); font-size: 12px; color: var(--mute);
-    margin-top: 6px; text-transform: uppercase; letter-spacing: .05em;
-  }
-  .exp-row .desc { font-size: 14px; color: var(--ink-2); max-width: 50ch; }
-  .exp-row .place {
-    font-family: var(--mono); font-size: 11px; color: var(--mute);
-    text-align: right; text-transform: uppercase; letter-spacing: .06em;
-  }
+/* ============================ section frame ============================== */
+/* Deliberately different vertical rhythm per shelf. Uniform section padding
+   is a named signature of generated pages. */
+.shelf{border-bottom:1px solid var(--rule);padding-bottom:4rem}
+.shelf-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem 1.5rem;
+  padding-block:2.25rem 1rem}
+/* four sections sit the deck under the heading; tools and about keep it
+   right-aligned, so the header band is not one repeated formula six times */
+.shelf-head.wide{display:block}
+.shelf-head.wide .said{margin:.6rem 0 0;text-align:left;
+  max-width:56ch;font-family:var(--body);font-size:1.05rem;color:var(--ink-2)}
+.shelf-head h2{font-size:var(--t-xl);font-weight:700;font-variation-settings:'wdth' 80}
+/* the shelves are not equal, so they do not announce themselves equally */
+#measured .shelf-head h2{font-size:clamp(2.4rem,5.4vw,4.75rem)}
+#friends .shelf-head h2,#tools .shelf-head h2,#about .shelf-head h2{
+  font-size:clamp(1.7rem,3vw,2.6rem)}
+.shelf-head .said{font-family:var(--data);font-size:var(--t-data);color:var(--mute);
+  max-width:52ch;margin-left:auto;text-align:right}
+@media (max-width:820px){
+  .shelf-head .said,.shelf-head.wide .said{font-family:var(--body);font-size:1rem;color:var(--ink-2)}
+.shelf-head .said{margin-left:0;text-align:left}}
 
-  .awards-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    padding-bottom: 80px;
-  }
-  .award {
-    border: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-    transition: transform .4s cubic-bezier(.2,.8,.2,1);
-  }
-  .award::before {
-    content: ""; position: absolute; inset: 0;
-    background: var(--accent);
-    transform: translateY(100%);
-    transition: transform .5s cubic-bezier(.2,.8,.2,1);
-    z-index: 0;
-  }
-  .award:hover::before { transform: translateY(0); }
-  .award:hover * { color: #fff !important; }
-  .award:hover .medal { border-color: #fff; color: #fff; }
-  .award > * { position: relative; z-index: 1; transition: color .3s ease; }
-  .award .medal {
-    width: 56px; height: 56px; border-radius: 50%;
-    border: 1px solid color-mix(in oklab, var(--fg) 30%, transparent);
-    display: grid; place-items: center;
-    font-family: var(--display); font-style: italic; font-size: 26px;
-    color: var(--accent);
-    margin-bottom: 24px;
-  }
-  .award h4 {
-    font-family: var(--display); font-weight: 400;
-    font-size: 28px; line-height: 1.1; letter-spacing: -0.01em;
-    margin-bottom: 12px;
-  }
-  .award .where {
-    font-family: var(--mono); font-size: 11px;
-    text-transform: uppercase; letter-spacing: .06em;
-    color: var(--mute);
-  }
-  .award .date {
-    position: absolute; right: 24px; top: 24px;
-    font-family: var(--mono); font-size: 11px;
-    color: var(--mute); text-transform: uppercase; letter-spacing: .06em;
-  }
+/* ---------- 01 measured: asymmetric case studies with real plots --------- */
+#measured{padding-bottom:5rem}
+.cases{list-style:none;margin:0;padding:0}
+.case{padding-block:clamp(2.5rem,6vh,4rem);border-top:1px solid var(--rule-soft);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(1.5rem,4vw,4rem);align-items:start}
+.cases > li:first-child .case{border-top:0}
+.case.solo{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.case.solo .aside{grid-column:2;grid-row:1}
+.case.solo .case-what{max-width:var(--measure)}
+@media (max-width:980px){
+  .case.solo{grid-template-columns:minmax(0,1fr)}
+  .case.solo .aside{grid-column:1;grid-row:2}
+}
+.case-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1rem}
+.case-title h3{font-size:var(--t-lg);font-weight:700}
+.case-title a{color:inherit;text-decoration:none;border-bottom:2px solid var(--trace);
+  transition:color .45s var(--ease)}
+.case-title a:hover,.case-title a:focus-visible{color:var(--trace)}
+.case-what{margin-top:1rem;max-width:var(--measure);color:var(--ink-2)}
+.case-what + .case-what{margin-top:.85rem}
+.case-what strong{font-weight:600;color:var(--ink)}
 
-  .stack-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: color-mix(in oklab, var(--fg) 20%, transparent);
-    border: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    padding-bottom: 80px;
-    margin-bottom: 80px;
-  }
-  .stack-cell {
-    background: var(--bg);
-    padding: 28px 24px;
-    min-height: 180px;
-    display: flex; flex-direction: column; gap: 16px;
-  }
-  .stack-cell .title {
-    display: flex; justify-content: space-between; align-items: baseline;
-    font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
-    color: var(--mute);
-  }
-  .stack-cell .title .name { color: var(--fg); }
-  .stack-cell .items {
-    display: flex; flex-wrap: wrap; gap: 6px 12px;
-    font-family: var(--sans); font-size: 13px;
-    color: var(--ink-2);
-  }
-  .stack-cell .items span { cursor: default; transition: color .2s ease; }
-  .stack-cell .items span:hover { color: var(--accent); }
+.readout{margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.readout div{background:var(--paper);padding:.7rem .8rem;display:flex;flex-direction:column}
+@media (max-width:560px){
+  /* stack as label/value rows so a short final row cannot leave an empty cell */
+  .readout{grid-template-columns:1fr}
+  .readout div{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:.75rem}
+  .readout dt{min-height:0}
+  .readout dd{margin-top:0;text-align:right}
+}
 
-  .contact {
-    padding-top: 80px; padding-bottom: 120px;
-    position: relative;
-  }
-  .contact h2 {
-    font-family: var(--display);
-    font-weight: 400;
-    font-size: clamp(80px, 14vw, 240px);
-    line-height: 0.88;
-    letter-spacing: -0.03em;
-  }
-  .contact h2 .it { font-style: italic; color: var(--accent); }
-  .contact .cta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    padding-top: 60px;
-    border-top: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    margin-top: 60px;
-  }
-  .contact .cta a {
-    display: flex; align-items: baseline; justify-content: space-between;
-    padding: 18px 0;
-    border-bottom: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
-    color: var(--mute);
-    transition: color .2s ease, padding-left .3s ease;
-  }
-  .contact .cta a:hover { color: var(--accent); padding-left: 12px; }
-  .contact .cta a .big {
-    font-family: var(--display); font-style: italic;
-    font-size: 40px; color: var(--fg); text-transform: none; letter-spacing: -0.01em;
-  }
-  .contact .cta a:hover .big { color: var(--accent); }
+.readout dt{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin:0;
+  min-height:2.1em;padding-bottom:.15rem}
+.readout .u{font-size:.6em}
+.readout dd{margin:auto 0 0;font-family:var(--display);font-size:1.4rem;font-weight:600;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 
-  footer {
-    padding: 24px 32px;
-    border-top: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
-    display: flex; justify-content: space-between; align-items: center;
-    font-family: var(--mono); font-size: 11px;
-    color: var(--mute);
-    text-transform: uppercase; letter-spacing: .06em;
-  }
-  footer .clock { color: var(--fg); }
+/* the honest miss. its own visual state, not a footnote. */
+.miss{margin-top:1.5rem;border-left:3px solid var(--flag);background:var(--flag-wash);
+  padding:.9rem 1.1rem}
+.miss .tag b{color:var(--flag)}
+.miss p{margin-top:.5rem;color:var(--ink-2);max-width:60ch}
 
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
-  .reveal.in { opacity: 1; transform: translateY(0); }
+.plot{position:sticky;top:calc(var(--head) + 14px);border:1px solid var(--rule);
+  background:var(--paper-lift);padding:1rem 1.1rem 1.1rem;grid-column:2}
+.case > div{grid-column:1;grid-row:1}
+.plot figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.5;margin-bottom:.9rem}
+.plot figcaption b{color:var(--ink);font-weight:400}
+.plot svg{width:100%;height:auto;overflow:visible;max-width:520px}
+.src{margin-top:1.1rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.9}
+.plot .src{margin-top:.85rem;line-height:2}
+.src a{color:var(--ink-2)}
+.src a:hover,.src a:focus-visible,
+.essay p a:hover,.essay p a:focus-visible{color:var(--trace)}
+.go,.h{white-space:nowrap}
+.gridline{stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.barok{fill:var(--trace)}
+.barbad{fill:var(--flag)}
+.plotlabel{font-family:var(--data);font-size:7px;fill:var(--mute)}
+.plotbar-label{font-family:var(--data);font-size:7.5px;fill:var(--ink)}
 
-  .work, .exp, .awards-sec, .stack-sec, .certs-sec, .contact {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 1200px;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
-    .reveal { opacity: 1; transform: none; }
-  }
+/* ---------- 02 shipped: a ledger. rows, not cards. ---------------------- */
+.ledger{border-top:1px solid var(--rule);list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:.4rem 2rem;
+  padding-block:1.5rem;border-bottom:1px solid var(--rule-soft);
+  transition:background .12s linear}
+.ledger > li:hover .row{background:var(--trace-wash)}
+@media (min-width:1100px){
+  .row{grid-template-columns:7.5rem minmax(0,1fr) 11rem;gap:.4rem 1.75rem}
+  .row .built{grid-column:3;grid-row:1;margin-top:.4rem}
+}
+.row > .when{font-family:var(--data);font-size:var(--t-data);color:var(--mute);padding-top:.2rem}
+.row h3{font-size:1.35rem;font-weight:600}
+.row h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .18s var(--ease),color .18s var(--ease)}
+.row h3 a:hover,.row h3 a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.row p{margin-top:.55rem;color:var(--ink-2);max-width:var(--measure)}
+.row .built{margin-top:.7rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
 
-  @media (max-width: 1100px) {
-    .case-grid { grid-template-columns: 1fr 1fr; }
-    .case-grid > div:nth-child(3) { grid-column: 1 / -1; }
-    .case-stats { grid-template-columns: 1fr 1fr; }
-    .stack-grid { grid-template-columns: 1fr 1fr; }
-    .certs-grid { grid-template-columns: 1fr 1fr !important; }
-    .exp-row { grid-template-columns: 120px 1fr 1fr; }
-    .exp-row .place { display: none; }
+/* ---------- 03 books: narrow prose. widest margins on the page. --------- */
+#books{padding-bottom:4.5rem}
+.essay{max-width:62ch;padding-top:1rem}
+.essay p{margin-top:1.15rem;font-size:1.15rem;line-height:1.65;font-variation-settings:'opsz' 22}
+.essay p:first-child{margin-top:0;font-size:1.3rem;line-height:1.5}
+#books .three{margin-top:2.25rem;display:grid;gap:1px;background:var(--rule);list-style:none;padding:0;
+  border:1px solid var(--rule)}
+#books .three > li{background:var(--paper);padding:.9rem 1rem;
+  display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:.3rem 1rem;align-items:baseline;
+  transition:background .22s var(--ease)}
+#books .three > li:hover{background:var(--paper-lift)}
+#books .three a{text-decoration:none;color:inherit}
+.essay p a{transition:color .26s var(--ease)}
+#books .three h3 a{transition:color .22s var(--ease)}
+#books .three h3 a:hover,#books .three h3 a:focus-visible{color:var(--trace)}
+#books .three h3 a,.strip h3 a,.row h3 a{display:inline-block;padding-block:.6rem .4rem}
+#books .three .n{font-family:var(--display);font-weight:600;font-size:1.05rem;margin:0;
+  letter-spacing:-.015em;transition:color .22s var(--ease)}
+#books .three .d{grid-column:1/-1;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);line-height:1.6}
+@media (min-width:900px){
+  /* the three artefacts run the full measure under the narrative, so the
+     section reads as essay-then-evidence and leaves no dead column */
+  #books .three{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+#books .three .go{font-family:var(--data);font-size:var(--t-micro);color:var(--trace)}
+
+/* ---------- 04 friends: a directory listing. one line each. ------------- */
+.dir{border-top:1px solid var(--rule);font-family:var(--data);font-size:var(--t-data);
+  list-style:none;margin:0;padding:0}
+.dir a{display:grid;grid-template-columns:1.5rem 11.5rem minmax(0,1fr) auto;
+  gap:.9rem;align-items:baseline;padding:.8rem .25rem;min-height:var(--tap);text-decoration:none;
+  border-bottom:1px solid var(--rule-soft);transition:background .09s linear,padding-left .34s var(--ease)}
+.dir a:hover,.dir a:focus-visible{background:var(--trace-wash);padding-left:.75rem}
+.dir .i{color:var(--mute);font-variant-numeric:tabular-nums}
+.dir .n{color:var(--ink);font-family:var(--display);font-weight:600;font-size:.95rem;
+  letter-spacing:-.01em;margin:0;line-height:1.3}
+.dir .d{color:var(--mute);line-height:1.5}
+.dir .h{color:var(--trace)}
+@media (max-width:720px){
+  .dir a{grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.25rem .8rem}
+  .dir .n{grid-column:2;grid-row:1}
+  /* .d spans the full width on row 2, so .h must be placed or it wraps to a
+     third row and hangs off the left edge */
+  .dir .h{grid-column:3;grid-row:1}
+  .dir .d{grid-column:2/-1;grid-row:2}
+}
+
+/* ---------- 05 tools: compact strip ------------------------------------- */
+.strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);list-style:none;margin:0;padding:0}
+.strip > li{display:flex}
+@media (max-width:560px){.strip{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:1150px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.strip article{background:var(--paper);padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;flex:1;
+  transition:background .12s linear;position:relative}
+.strip li:hover article{background:var(--paper-lift)}
+.strip h3{font-size:1.05rem;font-weight:600}
+.strip h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .18s var(--ease),color .18s var(--ease)}
+/* the whole card is the target; the title stays the visible affordance */
+.strip h3 a::after{content:"";position:absolute;inset:0}
+.strip h3 a:hover,.strip h3 a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.strip p{font-size:.95rem;color:var(--ink-2)}
+.strip .why{margin-top:auto;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+
+/* ---------- 06 about: colophon ------------------------------------------ */
+.colophon{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));
+  gap:2rem clamp(1.5rem,4vw,4rem);border-top:1px solid var(--rule);padding-top:1.75rem}
+.colophon h3{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
+  letter-spacing:.06em;margin-bottom:.75rem}
+.colophon p{color:var(--ink-2)}
+.colophon p + p{margin-top:.7rem}
+.colophon a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .26s var(--ease),color .26s var(--ease);
+  display:inline-block;padding-block:.35rem .1rem}
+.colophon a:hover,.colophon a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.colophon .big{font-family:var(--display);font-size:1.25rem;font-weight:600;letter-spacing:-.02em}
+
+footer{padding-block:2rem 3rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
+
+/* ============================ motion ===================================== */
+/* Scroll reveal is IntersectionObserver only: it adds a class once and cannot
+   strand content mid-animation, which a scroll-driven timeline did on tall
+   viewports. Nothing is hidden without JS: .rv only hides once <html> has .js. */
+.js .rv{opacity:0;transform:translateY(14px)}
+.js .rv.on{opacity:1;transform:none;transition:opacity .55s var(--ease),transform .55s var(--ease)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .js .rv{opacity:1!important;transform:none!important;animation:none!important}
+}
+:target,.shelf{scroll-margin-top:calc(var(--head) + 14px)}
+
+/* ============================ responsive ================================= */
+@media (max-width:980px){
+  .case{grid-template-columns:minmax(0,1fr);gap:1.75rem}
+  .plot{position:static;grid-column:1;grid-row:2;width:100%}
+  .plotlabel{font-size:9.5px}
+  .plotbar-label{font-size:10px}
+}
+@media (max-width:640px){
+  :root{--t-body:1rem}
+  .masthead .shell{height:auto;padding-block:.5rem;flex-wrap:wrap;gap:.5rem}
+  .masthead nav{order:3;width:100%}
+  .masthead nav ul{gap:1.3rem .4rem;font-size:.68rem;justify-content:space-between;flex-wrap:nowrap}
+@media (max-width:360px){.masthead nav ul{flex-wrap:wrap;justify-content:flex-start;gap:0 .9rem}}
+  .masthead nav a{padding:0 .28rem}
+  .themer{padding:.62rem .8rem}
+  .mark{padding-inline:.3rem .8rem}
+  .row{grid-template-columns:1fr;gap:.15rem}
+  .row > .when{padding-top:0}
+  .hero-strip{gap:.35rem 1.5rem}
+  .readout dd{font-size:1.2rem}
+}
+@media print{
+  /* override the tokens, not body: descendants read tokens, so a dark-theme
+     print was emitting dark panels and grey text onto white paper */
+  /* must match the specificity of :root:not([data-theme="bench"]) in the
+     prefers-color-scheme block, or a dark-theme print keeps the dark tokens */
+  :root,:root:not([data-theme="bench"]),[data-theme="scope"]{
+    --paper:#fff;--paper-lift:#fff;--ink:#000;--ink-2:#222;--mute:#444;
+    --rule:#999;--rule-soft:#ccc;--trace:#000;--flag:#000;
+    --trace-wash:transparent;--flag-wash:transparent;
   }
-  @media (max-width: 900px) {
-    nav.top { padding: 14px 20px; gap: 12px; flex-wrap: wrap; }
-    nav.top .links { gap: 14px; }
-    nav.top .status { display: none; }
-    section { padding: 0 20px; }
-    .marquee { margin: 0 -20px; }
-    .hero { padding-top: 96px; }
-    .hero-meta { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .hero-meta .loc { gap: 16px; flex-wrap: wrap; }
-    .hero-main { grid-template-columns: 1fr; gap: 24px; padding: 24px 0; }
-    .hero-photo { justify-self: start; width: 120px; order: -1; }
-    .hero-foot { grid-template-columns: 1fr 1fr; }
-    .sec-head { grid-template-columns: 1fr; gap: 12px; padding-top: 56px; }
-    .case { padding: 36px 0; }
-    .case h3 { font-size: clamp(44px, 14vw, 72px); }
-    .case-grid { grid-template-columns: 1fr; gap: 24px; }
-    .case-grid > div:nth-child(3) { grid-column: auto; }
-    .case-stats { grid-template-columns: 1fr 1fr; }
-    .case-kicker { grid-template-columns: 1fr; gap: 8px; }
-    .case-kicker .left { flex-wrap: wrap; gap: 14px; }
-    .exp-row { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
-    .exp-row .place { display: block; text-align: left; }
-    .awards-grid { grid-template-columns: 1fr; }
-    .stack-grid { grid-template-columns: 1fr; }
-    .certs-grid { grid-template-columns: 1fr !important; }
-    .contact .cta-grid { grid-template-columns: 1fr; gap: 16px; padding-top: 32px; margin-top: 32px; }
-    .scroll-hint { display: none; }
-    .contact .cta a .big { font-size: 22px; word-break: break-all; }
-    footer { flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; padding: 20px; }
-    .case-stats .s .n { font-size: clamp(28px, 8vw, 44px); }
-  }
-  @media (max-width: 480px) {
-    .hero-foot { grid-template-columns: 1fr; }
-    .case-stats { grid-template-columns: 1fr; }
-    nav.top .brand { font-size: 10px; }
-    nav.top .links { font-size: 11px; gap: 12px; }
-  }
+  .masthead{display:none}
+  .row,.case,.strip li,.dir li{break-inside:avoid}
+  .js .rv{opacity:1!important;transform:none!important;animation:none!important}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#top">Skip to content</a>
 
-<nav class="top">
-  <div class="brand">MC — PORTFOLIO '26</div>
-  <div class="links">
-    <a href="#work">Work</a>
-    <a href="#experience">Experience</a>
-    <a href="#awards">Awards</a>
-    <a href="#stack">Stack</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#contact">Contact</a>
+<header class="masthead" aria-label="Site header">
+  <div class="shell">
+    <a class="mark" href="#top">MC</a>
+    <nav aria-label="Sections">
+      <ul role="list">
+        <li><a href="#measured">measured</a></li>
+        <li><a href="#shipped">shipped</a></li>
+        <li><a href="#books">books</a></li>
+        <li><a href="#friends">friends</a></li>
+        <li><a href="#tools">tools</a></li>
+        <li><a href="#about">about</a></li>
+      </ul>
+    </nav>
+    <button class="themer" id="themer" type="button" aria-pressed="false">
+      <span id="themer-label">theme</span>
+    </button>
   </div>
-  <div class="status"><span class="dot"></span>Incoming FT @ Epoch · Jul '26</div>
-</nav>
+</header>
 
-<div class="wrap">
+<main id="top" tabindex="-1">
 
-  <section class="hero">
-    <div class="hero-meta">
-      <div class="loc">
-        <span>◎ Riverside, CA</span>
-        <span id="time">—:—</span>
+  <!-- ========================= 00 hero ================================= -->
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="shell">
+      <p class="tag"><b>Michael Chen</b> · AI software engineer</p>
+
+      <div class="hero-body">
+        <div>
+          <h1 id="h-hero">I build software for people I know, including me.</h1>
+          <p class="hero-role">Agent runtimes, tool dispatch and evaluation harnesses at
+            <b>Epoch AI / Zerg AI</b>.</p>
+          <p class="hero-lead">The rest of it started because a friend wanted something that
+            didn't exist yet. A few I measured properly afterwards. That's how I found out where
+            they fall short.</p>
+        </div>
+
+        <section class="readings" aria-labelledby="h-readings">
+          <h2 class="rhead" id="h-readings">latest readings</h2>
+          <dl>
+            <div><dt>kestrel real-time factor</dt><dd>×706</dd></div>
+            <div class="off"><dt>kestrel MCD</dt><dd>11.8 / 3.9</dd></div>
+                                    <div><dt>PHiLIP, contest entrants</dt><dd>8,231</dd></div>
+          </dl>
+        </section>
       </div>
-      <div class="num">Nº 001 / Portfolio / 2026</div>
+
+      <div class="hero-strip">
+        <span>now &nbsp;<b>AI software engineer, full-time</b></span>
+        <span>school &nbsp;<b>CS, UC Riverside, 2026</b></span>
+        <span>here &nbsp;<b>Bay Area</b></span>
+      </div>
+      <p class="hero-links">
+        <a href="https://github.com/mchen04" rel="me noopener">github.com/mchen04</a>
+        <a href="https://www.linkedin.com/in/michael-luo-chen/" rel="me noopener">linkedin</a>
+        <a href="mailto:michaelluochen1@gmail.com">michaelluochen1@gmail.com</a>
+      </p>
+
+          </div>
+  </section>
+
+  <!-- ========================= 01 measured ============================= -->
+  <section class="shelf" id="measured" aria-labelledby="h-measured">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-measured">Measured</h2>
+        <p class="said">Two projects on a bench, with the readings. One of them missed its own
+          bar, and those numbers are here too.</p>
+      </div>
+
+      <ul role="list" class="cases">
+      <!-- ---- kestrel ---- -->
+      <li><article class="case rv">
+        <div>
+          <div class="case-title">
+            <h3><a href="https://github.com/mchen04/kestrel-tts" rel="noopener">Kestrel</a></h3>
+            <span class="tag">distilled TTS for Apple Silicon · <b>open weights</b></span>
+          </div>
+          <p class="case-what">I took Kokoro-82M apart and rebuilt it for MLX as a single-voice
+            audiobook engine, down to about <strong>10M active parameters</strong> from 82M. The
+            vocoder is a per-bin complex mask over an exact-phase harmonic template. It never leaves
+            frame rate. On an M2 MacBook with 16GB, a 163-second chapter renders in
+            <strong>0.239s</strong> on the <span class="num">student-fast</span> preset: a
+            real-time factor of 706, and 57x faster than stock Kokoro. That factor is measured
+            against the roughly 168 seconds of audio the preset actually emits, because its
+            durations drift.</p>
+          <p class="case-what">Content survived the compression. ASR intelligibility sits at parity
+            with the teacher, <strong>5.42% WER against 5.65%</strong>, and pitch tracks to about
+            9Hz RMSE. The <span class="num">student</span> preset is slower at 1.117s but keeps
+            durations bit-exact against the teacher.</p>
+
+          <dl class="readout">
+            <div><dt>chapter render</dt><dd>0.239<span class="u">s</span></dd></div>
+            <div><dt>real-time factor</dt><dd>×706</dd></div>
+            <div><dt>WER, teacher 5.65%</dt><dd>5.42<span class="u">%</span></dd></div>
+            <div><dt>active params</dt><dd>~10<span class="u">M</span></dd></div>
+          </dl>
+
+          <p class="case-what">Instrumenting my stack against the PyTorch reference turned up
+            five places where the MLX port of Kokoro diverges from it, so I wrote them up and
+            <a href="https://github.com/Blaizzy/mlx-audio/pull/859" rel="noopener">sent a patch
+            upstream to mlx-audio <span class="go" aria-hidden="true">↗</span></a>. The loud one is a constant
+            <strong>2.5 dB attenuation</strong>: the inverse STFT divided by the sum of the window
+            instead of its square, which for this configuration is exactly 0.75x. The subtle one
+            is a one-frame misalignment in the upsample path that sits directly in the pitch
+            contour, where predicted F0 went from <strong>0.134 relative RMSE against the
+            reference to 0.0000</strong>. Across a 55-utterance battery, MCD 7.29 to 4.09 dB and
+            F0 error 11.5 to 5.1 Hz. It is open, not merged.</p>
+
+          <div class="miss">
+            <p class="tag"><b>did not clear</b> <span>the reason this is the lead project</span></p>
+            <p>Texture is audibly hazier than Kokoro under direct A/B. Mel-cepstral distortion
+              comes in around <strong>11.8 against a 3.9 pass bar</strong>, and speaker similarity
+              at <strong>0.9374 against a 0.998 gate</strong>. Both are failing gates. The frozen zero-loss
+              battery isn't passed, and the README says so on its first screen.</p>
+            <p>The figures above are the repo's. The
+              <a href="https://github.com/mchen04/kestrel-tts/blob/main/experiments/23-final/AUDIT.md" rel="noopener">independent no-cheating audit <span class="go" aria-hidden="true">↗</span></a>
+              re-timed the same preset at <strong>0.340s</strong> and reproduced the speedup as
+              <strong>40x</strong>. It ran on 29 July 2026 against the build before the compile
+              round, and docs/REPORT.md logs what closed the gap after it: mx.compile with
+              fixed-shape padding across the student stages, 0.333s down to 0.239s. Same engine
+              either side of one optimization, not a dispute. What the audit says about the goal
+              does stand, and it's the line worth quoting: 1000x wasn't reached, and the
+              configuration that does pass the gates, <span class="num">ship-q8</span>, is roughly
+              1x. That preset is still the default provider, and Kestrel stays opt-in until the
+              gap closes.</p>
+          </div>
+        </div>
+          <figure class="plot">
+          <figcaption><b>fig. 1</b> · mel-cepstral distortion against the frozen pass bar. The bar is
+            3.9. Kestrel reads 11.8. Lower is better, and this is the one that did not clear.</figcaption>
+          <svg viewBox="0 0 220 96" role="img" aria-label="Bar chart. The pass bar for mel-cepstral distortion is 3.9. Kestrel measures 11.8, about three times over the bar.">
+            <line class="gridline" x1="54" y1="8" x2="54" y2="80"></line>
+            <line class="gridline" x1="54" y1="80" x2="190" y2="80"></line>
+            <text class="plotlabel" x="0" y="31">pass bar</text>
+            <rect class="barok" x="54" y="20" width="44" height="14"></rect>
+            <text class="plotbar-label" x="102" y="31">3.9</text>
+            <text class="plotlabel" x="0" y="59">kestrel</text>
+            <rect class="barbad" x="54" y="48" width="134" height="14"></rect>
+            <text class="plotbar-label" x="192" y="59">11.8</text>
+            <line class="gridline" x1="98" y1="8" x2="98" y2="80" stroke-dasharray="2 3"></line>
+            <text class="plotlabel" x="54" y="92">0</text>
+            <text class="plotlabel" x="190" y="92" text-anchor="end">12 MCD</text>
+          </svg>
+          <p class="src"><a href="https://huggingface.co/mchen04/kestrel-tts" rel="noopener">weights on
+            Hugging Face <span class="go" aria-hidden="true">↗</span></a> · every figure above is in
+            <a href="https://github.com/mchen04/kestrel-tts/blob/main/docs/REPORT.md" rel="noopener">docs/REPORT.md <span class="go" aria-hidden="true">↗</span></a></p>
+        </figure>
+      </article></li>
+
+
+      <!-- ---- philip ---- -->
+      <li><article class="case solo rv">
+        <div>
+          <div class="case-title">
+            <h3><a href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" rel="noopener">PHiLIP</a></h3>
+            <span class="tag">human-in-the-loop image generation on AMD ROCm</span>
+          </div>
+          <p class="case-what">Generate, look, adjust, generate again. The point was making that
+            loop short enough that a person stays inside it, which meant getting inference to about
+            <strong>two seconds</strong> on ROCm with a fine-tuned PixArt-alpha. It also ships
+            <strong>71 style presets</strong>, because exploring shouldn't mean writing prompts all
+            day.</p>
+          <p class="case-what">It won the University category of the AMD Pervasive AI Developer
+            Contest, out of <strong>8,231 entrants</strong>, and we demoed it live at AMD Advancing
+            AI 2024 at Moscone Center.</p>
+
+        </div>
+        <div class="aside">
+          <dl class="readout">
+            <div><dt>inference</dt><dd>~2<span class="u">s</span></dd></div>
+            <div><dt>style presets</dt><dd>71</dd></div>
+            <div><dt>contest field</dt><dd>8,231</dd></div>
+          </dl>
+
+          <p class="src">the timing, the award and the demo are documented in the
+            <a href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" rel="noopener">contest writeup <span class="go" aria-hidden="true">↗</span></a>.
+            The <a href="https://github.com/mchen04/PHiLIP" rel="noopener">repo <span class="go" aria-hidden="true">↗</span></a> is the 2024
+            source and carries no README. The presets are the only claim it backs on its own.</p>
+        </div>
+      </article></li>
+      </ul>
     </div>
+  </section>
 
-    <div class="hero-main">
-      <div class="hero-head">
-        <div class="tag"><span class="bar"></span>Michael Chen · AI Engineer</div>
-        <h1>
-          <span class="line">Building <span class="it">Just‑in‑</span></span>
-          <span class="line">Time software</span>
-          <span class="line">with <span class="it">AI agents.</span></span>
-        </h1>
+  <!-- ========================= 02 shipped ============================== -->
+  <section class="shelf" id="shipped" aria-labelledby="h-shipped">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-shipped">Shipped</h2>
+        <p class="said">Work people paid for. Some of it I can only describe in outline.</p>
       </div>
-      <div class="hero-photo">
-        <img src="images/hero/hero_photo.jpg" alt="Michael Chen" width="260" height="260" decoding="async" fetchpriority="high" />
-      </div>
+
+      <ul class="ledger" role="list">
+        <li><article class="row rv">
+          <p class="when">2025 to now</p>
+          <div>
+            <h3><a href="https://zergai.com" rel="noopener">Zerg and ZTC</a></h3>
+            <p>An autonomous coding-agent platform, and the agentic terminal that drives it. I worked
+              on parallel tool dispatch so agents stop queueing behind each other, background
+              sub-agents for work that outlives a single turn, worktree-isolated batch execution so
+              concurrent writers do not collide, a sandboxed multi-agent workflow runtime, MCP and
+              provider routing, and the live web mirror. A human can watch a run while it happens.</p>
+          </div>
+          <p class="built">Epoch AI / Zerg AI · TypeScript, Python</p>
+        </article></li>
+
+        <li><article class="row rv">
+          <p class="when">2025 to now</p>
+          <div>
+            <h3><a href="https://zergai.com/products" rel="noopener">ZergChat</a></h3>
+            <p>An agent-native chat product built on the platform, where an agent sits in the channel and answers
+              like anyone else in it.</p>
+          </div>
+          <p class="built">Epoch AI / Zerg AI</p>
+        </article></li>
+
+        <li><article class="row rv">
+          <p class="when">2025 to now</p>
+          <div>
+            <h3><a href="https://zergai.com/products" rel="noopener">ZergBoard</a></h3>
+            <p>The board-shaped product on the same platform. Same runtime underneath, a different
+              surface for work that lives in cards.</p>
+          </div>
+          <p class="built">Epoch AI / Zerg AI</p>
+        </article></li>
+
+        <li><article class="row rv">
+          <p class="when">2025 to now</p>
+          <div>
+            <h3>Forward-deployed engineering</h3>
+            <p>Two undisclosed customers. One is an org-management and resource-planning platform,
+              where I built continual-validation harnesses that score agent output against
+              deterministic state, tool, artifact, browser, and visual oracles. A regression shows up as a failing check on the
+              way in. The other is an AI procurement intake
+              and approval portal with grounded vendor research, approvals that stay owned by a
+              human, and RBAC with separation-of-duties controls.</p>
+          </div>
+          <p class="built">Epoch AI / Zerg AI · customer names withheld, no public artifact</p>
+        </article></li>
+
+        <li><article class="row rv">
+          <p class="when">2023 to 2025</p>
+          <div>
+            <h3>MOBIVOLT</h3>
+            <p>A $5M+ DOD-funded fuel-cell program. I wrote a Python and PyQt hardware-in-the-loop
+              simulator with a serial firmware bridge, injecting sensor values every 100ms and
+              polling at 200ms against plant models. Firmware could then be
+              exercised without a rig. I ported PIC32MZ firmware onto Harmony v3 across 50+ application and
+              driver modules with 2,500+ lines of C tests, and kept 5 automated test stands
+              processing 100+ concurrent data streams with zero downtime across 18 months.</p>
+          </div>
+          <p class="built">C, C#, Python, PyQt, PIC32MZ, Harmony v3 · defense program, no public artifact</p>
+        </article></li>
+
+        <li><article class="row rv">
+          <p class="when">2023 to 2025</p>
+          <div>
+            <h3>AI at UCR</h3>
+            <p>I started UC Riverside's first official AI organization and ran it to 50+ members,
+              10+ technical workshops, and 45% growth in attendance. Most of the work was booking rooms and writing curriculum.</p>
+          </div>
+          <p class="built">founder and president</p>
+        </article></li>
+      </ul>
     </div>
+  </section>
 
-    <div class="hero-foot">
-      <div class="cell"><div class="k">Currently</div><div class="v">AI SWE @ Epoch — Zerg / ZTC</div></div>
-      <div class="cell"><div class="k">Incoming</div><div class="v">Full‑time @ Epoch · Jul 2026</div></div>
-      <div class="cell"><div class="k">Email</div><a class="v" href="mailto:michaelluochen1@gmail.com">michaelluochen1@gmail.com</a></div>
-      <div class="cell"><div class="k">Profiles</div>
-        <div class="v">
-          <a href="https://github.com/mchen04">GitHub</a> ·
-          <a href="https://www.linkedin.com/in/michael-luo-chen/">LinkedIn</a>
+  <!-- ========================= 03 books ================================ -->
+  <section class="shelf" id="books" aria-labelledby="h-books">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-books">Books, and the audio stack they caused</h2>
+        <p class="said">Where Kestrel, Epub Listener and Hark came from. It starts with wanting to
+          listen to a web novel on a walk and ends with me distilling a vocoder, which is a
+          ridiculous way to solve that problem.</p>
+      </div>
+
+      <div class="essay">
+        <p>I read a lot of web novels and light novels. The good ones run to hundreds of chapters and
+          the translation pace means you are always waiting, so at some point I wanted to listen to
+          them instead of reading them, mostly so I could do it while walking somewhere.</p>
+        <p>Nothing would do it. So I wrote a CLI that takes an EPUB and gives back a narrated MP3
+          with real chapter markers, which is <a href="https://github.com/mchen04/Epub_Listener" rel="noopener">Epub Listener</a>.
+          The files turned out too big and too awkward to move around, so I built
+          <a href="https://github.com/mchen04/audiobook_pwa" rel="noopener">Hark</a> to hold them,
+          which parses the MP3 in the browser and keeps the audio on the device. The server only ever
+          sees chapter titles and where I stopped.</p>
+        <p>A 600-chapter book was still hours of waiting. That is when I went and distilled
+          the vocoder. That is <a href="https://github.com/mchen04/kestrel-tts" rel="noopener">Kestrel</a>,
+          the same project as the benchmark table further up. It's fast enough now that the pipeline stopped
+          being the thing I waited on. It also still sounds slightly worse than the model it came from, which is the
+          part I did not manage to fix.</p>
+        <p>Hark got a read-along mode out of it, because Epub Listener already knew the word timings
+          the TTS engine produced and it seemed wasteful to throw them away. The narrated sentence
+          highlights the narrated sentence, marks the word being spoken, and jumps if you tap
+          somewhere else. It works on a plane, in airplane mode.</p>
+
+        </div>
+        <ul class="three" role="list">
+          <li>
+            <h3 class="n"><a href="https://github.com/mchen04/Epub_Listener" rel="noopener">Epub Listener<span class="go" aria-hidden="true"> github ↗</span></a></h3>
+            <span class="d">Python CLI. EPUB in, chaptered MP3 out, via Edge-TTS or local Kokoro.
+              Checksum-based resume so a failed run does not start over. Embeds a timestamped
+              read-along transcript, median word-onset error under 30ms.</span>
+          </li>
+          <li>
+            <h3 class="n"><a href="https://github.com/mchen04/kestrel-tts" rel="noopener">Kestrel<span class="go" aria-hidden="true"> github ↗</span></a></h3>
+            <span class="d">The reason the pipeline is fast enough to use, and the one that fails
+              its own quality battery. The numbers and the audit are up under Measured.</span>
+          </li>
+          <li>
+            <h3 class="n"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark<span class="go" aria-hidden="true"> live ↗</span><span class="go"> (sign-in)</span></a></h3>
+            <span class="d">Installable offline-first audiobook PWA. Audio parsed in-browser and
+              stored on-device, server sees metadata only. Karaoke-style read-along with
+              sentence highlight and word-level marking. Works fully offline.</span>
+          </li>
+        </div>
+    </ul>
+  </section>
+
+  <!-- ========================= 04 friends ============================== -->
+  <section class="shelf" id="friends" aria-labelledby="h-friends">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-friends">For my friends</h2>
+        <p class="said">Built because someone asked, usually the night before we needed it.</p>
+      </div>
+
+      <ul class="dir" role="list">
+        <li><a href="https://pokernow.vercel.app" rel="noopener"><span class="i num">01</span><h3 class="n">Feltline Poker</h3><span class="d">private play-money hold'em rooms, no signup, every table feature free</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://github.com/mchen04/CodeNames" rel="noopener"><span class="i num">02</span><h3 class="n">Codenames</h3><span class="d">realtime rooms, curated word packs, chat so people can argue about the clue</span><span class="h" aria-hidden="true">github ↗</span></a></li>
+        <li><a href="https://loldle-app.vercel.app" rel="noopener"><span class="i num">03</span><h3 class="n">LoLdle</h3><span class="d">19 modes. The stats persist, which was the actual request.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://drinking-games-eosin.vercel.app" rel="noopener"><span class="i num">04</span><h3 class="n">Pour Decisions</h3><span class="d">36 games and one shared player roster.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://kings-cup-liard.vercel.app" rel="noopener"><span class="i num">05</span><h3 class="n">Kings Cup</h3><span class="d">The cup meter surviving a refresh took longer than the rest of it.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://82-0-orpin.vercel.app" rel="noopener"><span class="i num">06</span><h3 class="n">Better 82-0</h3><span class="d">multiplayer NBA cap draft with server-authoritative roster legality</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://splitwisest-kappa.vercel.app" rel="noopener"><span class="i num">07</span><h3 class="n">SplitWisest</h3><span class="d">shared expenses, simplified debts, settle offline</span><span class="h"><span aria-hidden="true">live ↗</span> (sign-in)</span></a></li>
+        <li><a href="https://github.com/mchen04/Sayable" rel="noopener"><span class="i num">08</span><h3 class="n">Sayable</h3><span class="d">no login. guests answer from a link and the host gets an aggregate back</span><span class="h" aria-hidden="true">github ↗</span></a></li>
+        <li><a href="https://first-or-eighth.vercel.app" rel="noopener"><span class="i num">09</span><h3 class="n">First-Or-Eighth</h3><span class="d">the hub for the rest of these</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://casino-topaz-gamma.vercel.app" rel="noopener"><span class="i num">10</span><h3 class="n">Neon Royale</h3><span class="d">34 play-money casino games and a localStorage chip wallet</span><span class="h"><span aria-hidden="true">live ↗</span> (sign-in)</span></a></li>
+        <li><a href="https://25-words-or-less.vercel.app" rel="noopener"><span class="i num">11</span><h3 class="n">25 Words or Less</h3><span class="d">Bid low, then hope your partner is on your wavelength.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://github.com/jormyy/valence" rel="noopener"><span class="i num">12</span><h3 class="n">Valence</h3><span class="d">Jordan's sports stream aggregator. I sent patches</span><span class="h" aria-hidden="true">github ↗</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========================= 05 tools ================================ -->
+  <section class="shelf" id="tools" aria-labelledby="h-tools">
+    <div class="shell">
+      <div class="shelf-head">
+        <h2 id="h-tools">Tools I made for myself</h2>
+        <p class="said">Four things I use most days. I would rebuild all four.</p>
+      </div>
+
+      <ul class="strip" role="list">
+        <li><article class="rv">
+          <h3><a href="https://github.com/mchen04/tcd" rel="noopener">tcd <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>zsh and tmux helper that launches, finds, and reattaches long-running AI CLI sessions by
+            partial name. <span class="num">tcd zer</span> gets me back into the
+            session I left open on that repo, whatever the generated name was.</p>
+          <p class="why">Sessions survive reboots and phone reconnects. I use it from my phone on the train. The partial-name matching exists because of that.</p>
+        </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/mchen04/claude-switch-application" rel="noopener">cs <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Rust CLI for macOS that swaps Claude Code accounts by replacing the Keychain entry in
+            place, plus a per-profile usage dashboard.</p>
+          <p class="why">The built-in flow is logout, login, wait. This is under a second, and it
+            keeps each account's settings and skills separate.</p>
+        </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/mchen04/ESPN_Season_Lineup_Setup" rel="noopener">ESPN lineup bot <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Chrome extension plus a Node server that wakes five minutes before the first game each
+            day and sets my fantasy basketball lineup off live injury reports. It reads the injury wire
+            rather than a projection, because projections lag the news by hours and the waiver order
+            does not wait.</p>
+                  </article></li>
+        <li><article class="rv">
+          <h3><a href="https://kyle-financial.vercel.app" rel="noopener">House by 30 <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Offline-capable budgeting PWA that turns annual income, estimated taxes, payroll
+            benefits, and planned expenses into an honest monthly remainder.</p>
+          <p class="why">Named after the goal. Built it for a friend, then kept using it myself. Opens on a sign-in.</p>
+        </article></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========================= 06 about ================================ -->
+  <section class="shelf" id="about" aria-labelledby="h-about">
+    <div class="shell">
+      <div class="shelf-head">
+        <h2 id="h-about">About</h2>
+              </div>
+
+      <div class="colophon">
+        <div>
+          <h3>school</h3>
+          <p class="big">UC Riverside</p>
+          <p>B.S. Computer Science, June 2026. GPA 3.66, with a minor in Strategy &amp;
+            Entrepreneurship.</p>
+          <p>Founder and president of AI at UCR, the university's first official AI organization.</p>
+        </div>
+        <div>
+          <h3>awards</h3>
+          <p class="big">AMD Pervasive AI, University category</p>
+          <p>For PHiLIP, an award-winning human-in-the-loop image-generation platform on AMD ROCm
+            with two-second inference and PixArt-alpha fine-tuning.
+            <a href="https://www.hackster.io/contests/amd2023#category-1092" rel="noopener">Official results <span class="go" aria-hidden="true">↗</span></a></p>
+          <p>Cutie Hack 2022, first place in the sustainability track.</p>
+        </div>
+        <div>
+          <h3>reaching me</h3>
+          <p class="big"><a href="mailto:michaelluochen1@gmail.com">michaelluochen1@gmail.com</a></p>
+          <p><a href="https://github.com/mchen04" rel="me noopener">github.com/mchen04</a></p>
+          <p><a href="https://www.linkedin.com/in/michael-luo-chen/" rel="me noopener">linkedin <span class="go" aria-hidden="true">↗</span></a></p>
         </div>
       </div>
     </div>
-
-    <div class="scroll-hint">Scroll ↓</div>
   </section>
+</main>
 
-  <div class="marquee">
-    <div class="track" aria-hidden="true">
-      <span>LLM Infrastructure <span class="dot"></span> Autonomous Agents <span class="dot"></span> RAG Systems <span class="dot"></span> Multi‑Agent Orchestration <span class="dot"></span> Full‑stack AI <span class="dot"></span></span>
-      <span>LLM Infrastructure <span class="dot"></span> Autonomous Agents <span class="dot"></span> RAG Systems <span class="dot"></span> Multi‑Agent Orchestration <span class="dot"></span> Full‑stack AI <span class="dot"></span></span>
-    </div>
+<footer aria-label="Colophon">
+  <div class="shell">
+    <span>© 2026 Michael Chen</span>
+    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Every number under Measured comes from a repo you can open.</span>
   </div>
-
-  <section class="work" id="work">
-    <div class="sec-head reveal">
-      <div class="idx">§ 01 / Selected Work</div>
-      <h2>Case <em>studies</em>.</h2>
-      <div class="meta">04 featured · 2023 — present</div>
-    </div>
-
-    <article class="case reveal">
-      <div class="case-kicker">
-        <div class="left">
-          <span>№ 01</span>
-          <span><b>Zerg</b></span>
-          <span>Oct 2025 — present</span>
-        </div>
-        <span class="status">Live · Core systems</span>
-      </div>
-      <h3>Zerg <span class="arrow">↗</span></h3>
-      <div class="case-grid">
-        <div>
-          <div class="col-label">Thesis</div>
-          <p class="lede">A software framework that writes and <em>maintains itself</em> — just-in-time.</p>
-        </div>
-        <div>
-          <div class="col-label">Contribution</div>
-          <div class="body">Engineered core systems for Zerg, an autonomous coding-agent platform. Built multi-agent simulation infrastructure for enterprise decision scenarios — extracting domain plugins, hardening HTTP/SSE runtime surfaces, and modeling tool, meeting, event, and lifecycle workflows for long-running agents. As a Forward Deployed Engineer for an aerospace customer, architected continual-validation and embedded evaluation harnesses that score outputs against deterministic state, tool, artifact, browser, and visual oracles.</div>
-        </div>
-        <div>
-          <div class="col-label">Details</div>
-          <div class="meta-list">
-            <div class="kv"><span class="k">Role</span><span class="v">AI SWE Engineer</span></div>
-            <div class="kv"><span class="k">Org</span><span class="v">Epoch</span></div>
-            <div class="kv"><span class="k">Domain</span><span class="v">Agent infra</span></div>
-            <div class="kv"><span class="k">Status</span><span class="v">In production</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="case-stats">
-        <div class="s"><div class="idx">01</div><div class="n"><em>JIT</em></div><div class="l">Build paradigm</div></div>
-        <div class="s"><div class="idx">02</div><div class="n">Multi-<em>agent</em></div><div class="l">Enterprise sim</div></div>
-        <div class="s"><div class="idx">03</div><div class="n">FDE</div><div class="l">Aerospace deploy</div></div>
-        <div class="s"><div class="idx">04</div><div class="n"><em>5</em></div><div class="l">Eval oracle types</div></div>
-      </div>
-      <div class="case-tags">
-        <span>Agent Platform</span><span>Multi-agent Sim</span><span>Eval Harness</span><span>HTTP/SSE</span><span>Python</span>
-      </div>
-    </article>
-
-    <article class="case reveal">
-      <div class="case-kicker">
-        <div class="left">
-          <span>№ 02</span>
-          <span><b>ZTC</b></span>
-          <span>2025</span>
-        </div>
-        <span class="status">Shipped · Agentic terminal</span>
-      </div>
-      <h3><em>ZTC</em> — the terminal, thinking. <span class="arrow">↗</span></h3>
-      <div class="case-grid">
-        <div>
-          <div class="col-label">Thesis</div>
-          <p class="lede">A Claude-Code-style agentic terminal with <em>parallel tools</em>, isolated worktrees, provider routing, and a live web mirror.</p>
-        </div>
-        <div>
-          <div class="col-label">Contribution</div>
-          <div class="body">Built ZTC's execution engine: parallel tool dispatch so agents don't wait in line, background sub-agents that run long tasks without blocking the main loop, worktree-isolated batch execution for clean multi-repo edits, provider routing across model backends, and a real-time web mirror that lets humans watch autonomous multi-step coding unfold in the browser.</div>
-        </div>
-        <div>
-          <div class="col-label">Details</div>
-          <div class="meta-list">
-            <div class="kv"><span class="k">Role</span><span class="v">Engine design</span></div>
-            <div class="kv"><span class="k">Org</span><span class="v">Epoch</span></div>
-            <div class="kv"><span class="k">Stack</span><span class="v">TypeScript, WS</span></div>
-            <div class="kv"><span class="k">Status</span><span class="v">Internal tool</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="case-stats">
-        <div class="s"><div class="idx">01</div><div class="n">‖</div><div class="l">Parallel dispatch</div></div>
-        <div class="s"><div class="idx">02</div><div class="n"><em>n</em> bg</div><div class="l">Sub-agents</div></div>
-        <div class="s"><div class="idx">03</div><div class="n">Worktree</div><div class="l">Isolated batches</div></div>
-        <div class="s"><div class="idx">04</div><div class="n">Live</div><div class="l">Real-time mirror</div></div>
-      </div>
-      <div class="case-tags">
-        <span>Tool Dispatch</span><span>Sub-agents</span><span>Worktrees</span><span>Provider Routing</span><span>WebSockets</span><span>TypeScript</span>
-      </div>
-    </article>
-
-    <article class="case reveal">
-      <div class="case-kicker">
-        <div class="left">
-          <span>№ 03</span>
-          <span><b>PHiLIP</b></span>
-          <span>Nov 2023 — Jul 2024</span>
-        </div>
-        <span class="status">Awarded · AMD Pervasive AI</span>
-      </div>
-      <h3>PH<em>i</em>LIP <span class="arrow">↗</span></h3>
-      <div class="case-grid">
-        <div>
-          <div class="col-label">Thesis</div>
-          <p class="lede">Image generation with a <em>human in the loop</em> — two-second inference, seventy-one presets, infinite refinement.</p>
-        </div>
-        <div>
-          <div class="col-label">Contribution</div>
-          <div class="body">Designed a human-in-loop image production platform that compresses the generate/review cycle to two seconds. Fine-tuned PixArt-α on AMD ROCm, stacked Stable Diffusion upscaling, and built 71 style presets for rapid exploration. Presented a live demo at AMD Advancing AI 2024 in San Francisco.</div>
-          <a class="case-read" href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" target="_blank" rel="noopener">Read the writeup →</a>
-        </div>
-        <div>
-          <div class="col-label">Details</div>
-          <div class="meta-list">
-            <div class="kv"><span class="k">Award</span><span class="v">AMD University · $2.5k</span></div>
-            <div class="kv"><span class="k">Entrants</span><span class="v">8,200+</span></div>
-            <div class="kv"><span class="k">Stack</span><span class="v">PyTorch, HF, ROCm</span></div>
-            <div class="kv"><span class="k">Team</span><span class="v">Engineers @ UCR</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="case-stats">
-        <div class="s"><div class="idx">01</div><div class="n"><em>2</em>s</div><div class="l">Inference time</div></div>
-        <div class="s"><div class="idx">02</div><div class="n">71</div><div class="l">Style presets</div></div>
-        <div class="s"><div class="idx">03</div><div class="n">$<em>2.5</em>k</div><div class="l">Prize</div></div>
-        <div class="s"><div class="idx">04</div><div class="n">8.2k</div><div class="l">Contest entrants</div></div>
-      </div>
-      <div class="case-tags">
-        <span>Diffusion</span><span>Human-in-loop</span><span>PixArt-α</span><span>ROCm</span><span>PyTorch</span><span>HuggingFace</span>
-      </div>
-    </article>
-
-    <article class="case reveal">
-      <div class="case-kicker">
-        <div class="left">
-          <span>№ 04</span>
-          <span><b>Check</b></span>
-          <span>Dec 2025 — present</span>
-        </div>
-        <span class="status">Beta · Live at check-tau-taupe.vercel.app</span>
-      </div>
-      <h3>Ch<em>e</em>ck <span class="arrow">↗</span></h3>
-      <div class="case-grid">
-        <div>
-          <div class="col-label">Thesis</div>
-          <p class="lede">An API that <em>catches LLM hallucinations</em> by voting seven verification paradigms against each other.</p>
-        </div>
-        <div>
-          <div class="col-label">Contribution</div>
-          <div class="body">Architected a seven-paradigm verification engine with FPR-weighted consensus voting. Parallel method execution via Promise.all(), mathjs autoformalization for symbolic proof generation, and BiPRM × Formal cross-paradigm confidence calibration. Streaming, real-time verification updates across 7 LLM providers — OpenAI, Anthropic, Google, Mistral, Azure, Bedrock, OpenRouter.</div>
-          <a class="case-read" href="https://check-tau-taupe.vercel.app/" target="_blank" rel="noopener">Open the product →</a>
-        </div>
-        <div>
-          <div class="col-label">Details</div>
-          <div class="meta-list">
-            <div class="kv"><span class="k">Role</span><span class="v">Architect + build</span></div>
-            <div class="kv"><span class="k">Stack</span><span class="v">Next 15, Supabase</span></div>
-            <div class="kv"><span class="k">Billing</span><span class="v">Stripe</span></div>
-            <div class="kv"><span class="k">Status</span><span class="v">Beta · onboarding</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="case-stats">
-        <div class="s"><div class="idx">01</div><div class="n"><em>7</em></div><div class="l">Verification paradigms</div></div>
-        <div class="s"><div class="idx">02</div><div class="n">7</div><div class="l">LLM providers</div></div>
-        <div class="s"><div class="idx">03</div><div class="n"><em>∥</em></div><div class="l">Parallel execution</div></div>
-        <div class="s"><div class="idx">04</div><div class="n">Stream</div><div class="l">Real-time updates</div></div>
-      </div>
-      <div class="case-tags">
-        <span>Next.js 15</span><span>TypeScript</span><span>Supabase</span><span>Stripe</span><span>mathjs</span><span>7 Providers</span>
-      </div>
-    </article>
-  </section>
-
-  <section class="exp" id="experience">
-    <div class="sec-head reveal">
-      <div class="idx">§ 02 / Experience</div>
-      <h2>Where I've <em>been</em>.</h2>
-      <div class="meta">2023 → now</div>
-    </div>
-
-    <div class="exp-row reveal">
-      <div class="year">Oct 2025 — Present</div>
-      <div>
-        <div class="role">AI SWE <em>Engineer</em></div>
-        <div class="co">Epoch · Remote</div>
-      </div>
-      <div class="desc">Engineered Zerg and ZTC — an autonomous coding-agent platform and Claude-Code-style terminal with parallel tool dispatch, background sub-agents, worktree-isolated batch execution, provider routing, and live web-mirror observability. As a Forward Deployed Engineer for an aerospace customer, architected continual-validation and embedded evaluation harnesses scoring outputs against deterministic state, tool, artifact, browser, and visual oracles. Orchestrated multi-agent simulation infrastructure for enterprise decision scenarios.</div>
-      <div class="place">Remote · Incoming FT Jul 2026</div>
-    </div>
-
-    <div class="exp-row reveal">
-      <div class="year">Jun 2023 — Sep 2025</div>
-      <div>
-        <div class="role">Software <em>Engineer</em> Intern</div>
-        <div class="co">MOBIVOLT LLC</div>
-      </div>
-      <div class="desc">Developed 10+ automated test systems for a $5M+ DOD-funded fuel cell program using C#/.NET — 250+ sensors, 5,000+ hours runtime, data logging time reduced 99%. Built a Python/PyQt hardware-in-the-loop simulator for Tardigrade fuel-cell systems (serial firmware bridge, 100ms sensor injection, 200ms polling, plant models for stack, battery, pressure, water, actuator, thermal). Ported PIC32MZ Puma/Tardigrade firmware into a Harmony V3 target — 50+ app/driver modules, 2,500+ lines of C tests.</div>
-      <div class="place">Livermore, CA</div>
-    </div>
-
-    <div class="exp-row reveal">
-      <div class="year">Oct 2023 — Sep 2025</div>
-      <div>
-        <div class="role"><em>Founder</em> / President</div>
-        <div class="co">AI at UCR (AIR)</div>
-      </div>
-      <div class="desc">Established UCR's first official AI organization. Scaled 0 → 50+ active members in 6 months with 45% workshop attendance growth. Delivered 10+ technical workshops on AI/ML implementation and emerging tech. Produced reusable curriculum, GitHub learning materials, speaker programming, and onboarding infrastructure that helped technical and non-technical students contribute to applied AI projects.</div>
-      <div class="place">Riverside, CA</div>
-    </div>
-
-    <div class="exp-row reveal">
-      <div class="year">2022 — Jun 2026</div>
-      <div>
-        <div class="role">B.S. Computer <em>Science</em></div>
-        <div class="co">UC Riverside · Minor: Entrepreneurship & Strategy</div>
-      </div>
-      <div class="desc">GPA 3.66 · Dean's Honor List. Coursework: Data Structures & Algorithms, AI, Software Engineering, Software Construction, Database Management, Operating Systems, Data Analysis, Linear Algebra, Computer Architecture, Assembly, Logic Design.</div>
-      <div class="place">Riverside, CA</div>
-    </div>
-  </section>
-
-  <section class="awards-sec" id="awards">
-    <div class="sec-head reveal">
-      <div class="idx">§ 03 / Awards</div>
-      <h2>Recognized <em>work</em>.</h2>
-      <div class="meta">2 wins · selected</div>
-    </div>
-
-    <div class="awards-grid">
-      <a class="award reveal" href="https://www.hackster.io/contests/amd2023#category-1092" target="_blank" rel="noopener">
-        <div class="date">Sep 2024</div>
-        <div class="medal">I</div>
-        <h4>University Program Award</h4>
-        <p class="where" style="margin-top:8px;">AMD Pervasive AI Developer Contest · $2,500 · 8,200+ participants</p>
-      </a>
-      <a class="award reveal" href="https://devpost.com/software/2020-us-energy-based-carbon-emissions-by-state-map" target="_blank" rel="noopener">
-        <div class="date">Nov 2022</div>
-        <div class="medal">II</div>
-        <h4>Sustainability Award</h4>
-        <p class="where" style="margin-top:8px;">Cutie Hack 2022 · U.S. energy‑based carbon emissions visualization</p>
-      </a>
-    </div>
-  </section>
-
-  <section class="stack-sec" id="stack">
-    <div class="sec-head reveal">
-      <div class="idx">§ 04 / Stack</div>
-      <h2>Tools I <em>reach</em> for.</h2>
-      <div class="meta">updated · jun 2026</div>
-    </div>
-
-    <div class="stack-grid">
-      <div class="stack-cell">
-        <div class="title"><span class="name">AI / ML</span><span>A.01</span></div>
-        <div class="items">
-          <span>LLMs</span><span>AI Agents</span><span>Tool Use</span><span>RAG</span><span>MCP</span><span>Prompt Eng</span><span>LLM Evaluation</span><span>SWE-bench</span><span>Multi-Agent Sim</span><span>LangChain</span><span>LangGraph</span><span>PyTorch</span><span>HuggingFace</span><span>TensorFlow</span><span>Scikit‑learn</span><span>Vector Embeddings</span>
-        </div>
-      </div>
-      <div class="stack-cell">
-        <div class="title"><span class="name">Languages</span><span>A.02</span></div>
-        <div class="items">
-          <span>Python</span><span>TypeScript</span><span>JavaScript</span><span>C++</span><span>C</span><span>Java</span><span>C#</span><span>Go</span><span>Rust</span><span>SQL</span><span>Bash</span>
-        </div>
-      </div>
-      <div class="stack-cell">
-        <div class="title"><span class="name">Backend</span><span>A.03</span></div>
-        <div class="items">
-          <span>Node.js</span><span>Express</span><span>FastAPI</span><span>Django</span><span>Flask</span><span>REST</span><span>GraphQL</span><span>WebSockets</span><span>Server-Sent Events</span><span>Socket.IO</span>
-        </div>
-      </div>
-      <div class="stack-cell">
-        <div class="title"><span class="name">Frontend</span><span>A.04</span></div>
-        <div class="items">
-          <span>React</span><span>Next.js</span><span>Tailwind</span><span>shadcn/ui</span><span>Vite</span><span>SSR</span>
-        </div>
-      </div>
-      <div class="stack-cell">
-        <div class="title"><span class="name">Databases</span><span>A.05</span></div>
-        <div class="items">
-          <span>PostgreSQL</span><span>Supabase</span><span>Redis</span><span>MongoDB</span><span>Pinecone</span><span>pgvector</span>
-        </div>
-      </div>
-      <div class="stack-cell">
-        <div class="title"><span class="name">Cloud / DevOps</span><span>A.06</span></div>
-        <div class="items">
-          <span>Docker</span><span>Kubernetes</span><span>k3d</span><span>AWS</span><span>GCP</span><span>Azure</span><span>Vercel</span><span>Modal</span><span>Fly.io</span><span>GitHub Actions</span><span>CI/CD</span><span>Git</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="certs-sec" id="certifications">
-    <div class="sec-head reveal">
-      <div class="idx">§ 05 / Certifications</div>
-      <h2>Verified <em>credentials</em>.</h2>
-      <div class="meta">3 certifications · coursera</div>
-    </div>
-
-    <div class="certs-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: color-mix(in oklab, var(--fg) 20%, transparent); border: 1px solid color-mix(in oklab, var(--fg) 20%, transparent); margin-bottom: 80px;">
-      <a class="stack-cell reveal" href="https://www.coursera.org/account/accomplishments/verify/RDHD7AHGBYYH" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="title"><span class="name">Cert · Coursera</span><span>C.01</span></div>
-        <div style="font-family:var(--display); font-size:26px; line-height:1.12; letter-spacing:-.01em;">Supervised <em style="color:var(--accent);font-style:italic;">Machine Learning</em></div>
-        <div style="font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin-top:auto;">Verify ↗</div>
-      </a>
-      <a class="stack-cell reveal" href="https://www.coursera.org/account/accomplishments/verify/U33T2QRT8MFC" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="title"><span class="name">Cert · Coursera</span><span>C.02</span></div>
-        <div style="font-family:var(--display); font-size:26px; line-height:1.12; letter-spacing:-.01em;">Advanced <em style="color:var(--accent);font-style:italic;">Learning Algorithms</em></div>
-        <div style="font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin-top:auto;">Verify ↗</div>
-      </a>
-      <a class="stack-cell reveal" href="https://www.coursera.org/account/accomplishments/verify/N5KVD3ZTD6W6" target="_blank" rel="noopener" style="text-decoration:none;">
-        <div class="title"><span class="name">Cert · Coursera</span><span>C.03</span></div>
-        <div style="font-family:var(--display); font-size:26px; line-height:1.12; letter-spacing:-.01em;">Unsupervised, <em style="color:var(--accent);font-style:italic;">Recommenders, RL</em></div>
-        <div style="font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--mute); margin-top:auto;">Verify ↗</div>
-      </a>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="sec-head reveal">
-      <div class="idx">§ 06 / Contact</div>
-      <h2 style="font-size:clamp(36px, 5vw, 64px);">Let's <em>talk</em>.</h2>
-      <div class="meta">resp · within 24h</div>
-    </div>
-
-    <h2 class="reveal">Say <span class="it">hello.</span></h2>
-
-    <div class="cta-grid reveal">
-      <div class="cta">
-        <a href="mailto:michaelluochen1@gmail.com">
-          <span>① Email</span>
-          <span class="big">michaelluochen1@gmail.com</span>
-          <span>↗</span>
-        </a>
-        <a href="tel:+19253656778">
-          <span>② Phone</span>
-          <span class="big">(925) 365‑6778</span>
-          <span>↗</span>
-        </a>
-      </div>
-      <div class="cta">
-        <a href="https://www.linkedin.com/in/michael-luo-chen/" target="_blank" rel="noopener">
-          <span>③ LinkedIn</span>
-          <span class="big">/michael-luo-chen</span>
-          <span>↗</span>
-        </a>
-        <a href="https://github.com/mchen04" target="_blank" rel="noopener">
-          <span>④ GitHub</span>
-          <span class="big">@mchen04</span>
-          <span>↗</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div>© 2026 Michael Chen — All rights reserved</div>
-    <div>Set in Instrument Serif, Inter, JetBrains Mono</div>
-    <div class="clock" id="clock-foot">—:—:—</div>
-  </footer>
-</div>
+</footer>
 
 <script>
-const tFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', hour12: false });
-const fFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-const tEl = document.getElementById('time');
-const fEl = document.getElementById('clock-foot');
-function tick() {
-  const d = new Date();
-  if (tEl) tEl.textContent = `⏱ ${tFmt.format(d)} PT`;
-  if (fEl) fEl.textContent = `${fFmt.format(d)} · PT`;
-}
-tick();
-let clockTimer = null;
-function startClock() { if (!clockTimer) clockTimer = setInterval(tick, 1000); }
-function stopClock() { if (clockTimer) { clearInterval(clockTimer); clockTimer = null; } }
-startClock();
-document.addEventListener('visibilitychange', () => document.hidden ? stopClock() : (tick(), startClock()));
+document.documentElement.classList.add('js');
 
-const io = new IntersectionObserver((entries, obs) => {
-  for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* The sticky masthead changes height with viewport and font load. Anchor
+   offsets are derived from its measured height so a nav tap can never park a
+   heading underneath it. */
+(function(){
+  var head=document.querySelector('.masthead');
+  function sync(){ document.documentElement.style.setProperty('--head', head.offsetHeight+'px'); }
+  sync();
+  if(window.ResizeObserver) new ResizeObserver(sync).observe(head);
+  else addEventListener('resize',sync,{passive:true});
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(sync);
+})();
+
+/* ---- theme: system by default, explicit choice remembered ------------- */
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themer');
+  var saved=null; try{saved=localStorage.getItem('mc-theme')}catch(e){}
+  if(saved) root.setAttribute('data-theme',saved);
+  function isDark(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t==='scope';
+    return matchMedia('(prefers-color-scheme:dark)').matches;
+  }
+  var lbl=document.getElementById('themer-label');
+  function sync(){
+    var d=isDark();
+    btn.setAttribute('aria-pressed',String(d));
+    lbl.textContent=d?'theme: dark':'theme: light';
+    btn.setAttribute('aria-label',d?'theme: dark. Switch to light.':'theme: light. Switch to dark.');
+  }
+  sync();
+  btn.addEventListener('click',function(){
+    var next=isDark()?'bench':'scope';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('mc-theme',next)}catch(e){}
+    sync();
+  });
+})();
+
+/* ---- scroll reveal ---- */
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('on')}); return; }
+  var io=new IntersectionObserver(function(en,o){
+    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); o.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -12% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+
+/* ---- in-page navigation: move focus with the scroll, and say where we are --
+   Without this a keyboard user clicks "about", the page scrolls, and the next
+   Tab returns them to the masthead.                                        */
+(function(){
+  var links=[].slice.call(document.querySelectorAll('.masthead nav a'));
+  var targets=links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]'); if(!a) return;
+    var el=document.querySelector(a.getAttribute('href')); if(!el) return;
+    el.setAttribute('tabindex','-1');
+    setTimeout(function(){ el.focus({preventScroll:true}); },0);
+  });
+
+  /* Read positions directly on scroll instead of caching intersection ratios:
+     a cached ratio from a jumped-past section could out-vote the visible one. */
+  var ticking=false;
+  function mark(){
+    ticking=false;
+    /* whichever section owns the middle of the viewport owns the nav state */
+    var mid=innerHeight/2, cur=null;
+    targets.forEach(function(t){
+      var r=t.getBoundingClientRect();
+      if(r.top<=mid && r.bottom>mid) cur=t.id;
+    });
+    if(!cur) targets.forEach(function(t){ if(t.getBoundingClientRect().top<=mid) cur=t.id; });
+    /* only fall back to the last section if nothing owns the viewport middle */
+    if(!cur && innerHeight+scrollY>=document.documentElement.scrollHeight-2)
+      cur=targets[targets.length-1].id;
+    links.forEach(function(a){
+      if(cur && a.getAttribute('href')==='#'+cur) a.setAttribute('aria-current','true');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(mark); } },{passive:true});
+  addEventListener('resize',function(){ if(!ticking){ ticking=true; requestAnimationFrame(mark); } },{passive:true});
+  mark();
+})();
 </script>
-
 </body>
 </html>
