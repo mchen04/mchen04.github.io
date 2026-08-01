@@ -332,6 +332,23 @@ p,figure,dl,dd{margin:0}
 #books .three > li:hover{background:var(--paper-lift)}
 #books .three a{text-decoration:none;color:inherit}
 .essay p a{transition:color .26s var(--ease)}
+/* the books essay runs beside its screenshot, same two-column read as a case. */
+.essay-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(1.5rem,4vw,4rem);align-items:start}
+.essay-wrap .essay{grid-column:1}
+.shot{grid-column:2;position:sticky;top:calc(var(--head) + 14px);margin-top:1rem;
+  border:1px solid var(--rule);background:var(--paper-lift);padding:1rem 1.1rem 1.1rem}
+.shot figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.5;margin-bottom:.9rem}
+.shot figcaption b{color:var(--ink);font-weight:400}
+.shot img{display:block;width:100%;max-width:260px;height:auto;margin-inline:auto;
+  border:1px solid var(--rule-soft);border-radius:14px}
+.shot .src{margin-top:.85rem;line-height:2}
+@media (max-width:900px){
+  .essay-wrap{grid-template-columns:minmax(0,1fr)}
+  .essay-wrap .essay,.shot{grid-column:1}
+  .shot{position:static;margin-top:2rem}
+}
 #books .three h3 a{transition:color .22s var(--ease)}
 #books .three h3 a:hover,#books .three h3 a:focus-visible{color:var(--trace)}
 #books .three h3 a,.strip h3 a,.row h3 a{display:inline-block;padding-block:.6rem .4rem}
@@ -730,6 +747,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           ridiculous way to solve that problem.</p>
       </div>
 
+      <div class="essay-wrap">
       <div class="essay">
         <p>I read a lot of web novels and light novels. The good ones run to hundreds of chapters and
           the translation pace means you are always waiting, so at some point I wanted to listen to
@@ -751,6 +769,20 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           somewhere else. It works on a plane, in airplane mode.</p>
 
         </div>
+
+        <figure class="shot">
+          <figcaption><b>fig. 2</b> · Hark installed to the iPhone Home Screen, playing a test
+            import. The MP3 was parsed in the browser and stored on the device; nothing on this
+            screen came off a server.</figcaption>
+          <img src="images/hark-player.png" width="477" height="800" loading="lazy" decoding="async"
+            alt="Hark's player running as an installed iPhone app: cover art, the book title, a
+              position slider at four seconds, a large pause button, and controls for speed,
+              sleep timer, chapters and history.">
+          <p class="src"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark
+            live <span class="go" aria-hidden="true">↗</span></a> · captured from the iPhone e2e
+            suite in <a href="https://github.com/mchen04/audiobook_pwa" rel="noopener">the repo <span class="go" aria-hidden="true">↗</span></a></p>
+        </figure>
+      </div>
         <ul class="three" role="list">
           <li>
             <h3 class="n"><a href="https://github.com/mchen04/Epub_Listener" rel="noopener">Epub Listener<span class="go" aria-hidden="true"> github ↗</span></a></h3>
