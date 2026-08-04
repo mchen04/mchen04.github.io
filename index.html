@@ -509,7 +509,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         <section class="readings" aria-labelledby="h-readings">
           <h2 class="rhead" id="h-readings">latest readings</h2>
           <dl>
-            <div><dt>kestrel real-time factor</dt><dd>×706</dd></div>
+            <div><dt>kestrel real-time factor</dt><dd>×622</dd></div>
             <div class="off"><dt>kestrel MCD</dt><dd>11.8 / 3.9</dd></div>
                                     <div><dt>PHiLIP, contest entrants</dt><dd>8,231</dd></div>
           </dl>
@@ -549,20 +549,24 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           </div>
           <p class="case-what">I took Kokoro-82M apart and rebuilt it for MLX as a single-voice
             audiobook engine, down to about <strong>10M active parameters</strong> from 82M. The
-            vocoder is a per-bin complex mask over an exact-phase harmonic template. It never leaves
-            frame rate. On an M2 MacBook with 16GB, a 163-second chapter renders in
-            <strong>0.239s</strong> on the <span class="num">student-fast</span> preset: a
-            real-time factor of 706, and 57x faster than stock Kokoro. That factor is measured
-            against the roughly 168 seconds of audio the preset actually emits, because its
-            durations drift.</p>
+            vocoder is now a source-filter head over an exact-phase harmonic template, swapped in on
+            cycle 107 for the per-bin complex mask it started as. It never leaves frame rate. On an
+            M2 MacBook with 16GB, a 163-second chapter renders in <strong>0.271s</strong> on the
+            <span class="num">student-fast</span> preset: a real-time factor of 622, and 53x faster
+            than stock Kokoro. That factor is measured against the roughly 168 seconds of audio the
+            preset actually emits, because its durations drift.</p>
           <p class="case-what">Content survived the compression. ASR intelligibility sits at parity
-            with the teacher, <strong>5.42% WER against 5.65%</strong>, and pitch tracks to about
-            9Hz RMSE. The <span class="num">student</span> preset is slower at 1.117s but keeps
-            durations bit-exact against the teacher.</p>
+            with the teacher, <strong>5.42% WER against 5.65%</strong>, speaker cosine similarity
+            reads 0.98, and the new vocoder head pulled naturalness up to <strong>4.180 UTMOS
+            against the teacher's 4.477</strong>. The <span class="num">student</span> preset is
+            slower at 1.117s but keeps durations bit-exact against the teacher. Weights are about
+            51MB, Apache-2.0, in the repo and mirrored on
+            <a href="https://huggingface.co/mchen04/kestrel-tts" rel="noopener">Hugging Face <span class="go" aria-hidden="true">↗</span></a>.
+            The research loop closed on 4 August 2026 after 113 cycles.</p>
 
           <dl class="readout">
-            <div><dt>chapter render</dt><dd>0.239<span class="u">s</span></dd></div>
-            <div><dt>real-time factor</dt><dd>×706</dd></div>
+            <div><dt>chapter render</dt><dd>0.271<span class="u">s</span></dd></div>
+            <div><dt>real-time factor</dt><dd>×622</dd></div>
             <div><dt>WER, teacher 5.65%</dt><dd>5.42<span class="u">%</span></dd></div>
             <div><dt>active params</dt><dd>~10<span class="u">M</span></dd></div>
           </dl>
@@ -589,7 +593,8 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
               re-timed the same preset at <strong>0.340s</strong> and reproduced the speedup as
               <strong>40x</strong>. It ran on 29 July 2026 against the build before the compile
               round, and docs/REPORT.md logs what closed the gap after it: mx.compile with
-              fixed-shape padding across the student stages, 0.333s down to 0.239s. Same engine
+              fixed-shape padding across the student stages, 0.333s down to the 0.25-0.27s it
+              holds now. Same engine
               either side of one optimization, not a dispute. What the audit says about the goal
               does stand, and it's the line worth quoting: 1000x wasn't reached, and the
               configuration that does pass the gates, <span class="num">ship-q8</span>, is roughly
