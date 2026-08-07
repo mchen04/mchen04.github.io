@@ -155,7 +155,15 @@ p,figure,dl,dd{margin:0}
   border-bottom:1px solid var(--rule-soft)}
 .masthead .shell{display:flex;align-items:center;justify-content:space-between;
   gap:1rem;height:52px;font-family:var(--data);font-size:var(--t-data)}
+.masthead nav{min-width:0}
 .masthead nav ul{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;list-style:none;margin:0;padding:0}
+/* Seven sections stopped fitting on a phone. The bar is a fixed 52px, so a
+   wrapped second row would be clipped; scroll the nav instead of the page. */
+@media (max-width:560px){
+  .masthead nav{overflow-x:auto;scrollbar-width:none}
+  .masthead nav::-webkit-scrollbar{display:none}
+  .masthead nav ul{flex-wrap:nowrap}
+}
 .masthead nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;
   display:flex;align-items:center;min-height:var(--tap);padding:0 .1rem;border-bottom:1px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease)}
 .masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);border-bottom-color:var(--trace)}
@@ -389,6 +397,8 @@ p,figure,dl,dd{margin:0}
 .strip > li{display:flex}
 @media (max-width:560px){.strip{grid-template-columns:minmax(0,1fr)}}
 @media (min-width:1150px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* upstream holds two entries, one of them long-form: never stretch it to four */
+@media (min-width:1150px){#upstream .strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .strip article{background:var(--paper);padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;flex:1;
   transition:background .12s linear;position:relative}
 .strip li:hover article{background:var(--paper-lift)}
@@ -478,6 +488,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         <li><a href="#measured">measured</a></li>
         <li><a href="#shipped">shipped</a></li>
         <li><a href="#books">books</a></li>
+        <li><a href="#upstream">upstream</a></li>
         <li><a href="#friends">friends</a></li>
         <li><a href="#tools">tools</a></li>
         <li><a href="#about">about</a></li>
@@ -810,7 +821,42 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
     </ul>
   </section>
 
-  <!-- ========================= 04 friends ============================== -->
+  <!-- ========================= 04 upstream ============================= -->
+  <section class="shelf" id="upstream" aria-labelledby="h-upstream">
+    <div class="shell">
+      <div class="shelf-head">
+        <h2 id="h-upstream">Other people's repositories</h2>
+        <p class="said">Patches I sent somewhere I do not own. Both started as me using the thing
+          and finding it wrong.</p>
+      </div>
+
+      <ul class="strip" role="list">
+        <li><article class="rv">
+          <h3><a href="https://github.com/Blaizzy/mlx-audio/pull/859" rel="noopener">mlx-audio <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Five places where the MLX iSTFTNet decoders (Kokoro, KittenTTS) diverged from the
+            PyTorch reference they were ported from. Found by instrumenting both stacks
+            layer by layer on identical phoneme and style inputs and diffing every intermediate
+            tensor. Merged upstream.</p>
+          <p>Two were audible. Every Kokoro render came out
+            <span class="num">2.5 dB</span> quiet, because MLX's <span class="num">istft</span>
+            divides the overlap-add by <span class="num">Σw</span> and
+            <span class="num">torch.istft</span> divides by <span class="num">Σw²</span>. And the
+            upsample path in the pitch and energy predictor was misaligned by one frame against its
+            own shortcut: F0 relative RMSE <span class="num">0.134 → 0.0000</span>.</p>
+          <p class="why">Checked against frozen fp32 reference audio over 55 utterances, with the
+            thresholds calibrated to the reference model's own render-to-render noise floor, since
+            the decoder is stochastic. MCD <span class="num">7.29 → 4.09 dB</span>, F0 RMSE
+            <span class="num">11.5 → 5.1 Hz</span>. I hit this while building Kestrel.</p>
+        </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/jormyy/valence" rel="noopener">Valence <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Jeremy's sports stream aggregator. I sent patches.</p>
+        </article></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========================= 05 friends ============================== -->
   <section class="shelf" id="friends" aria-labelledby="h-friends">
     <div class="shell">
       <div class="shelf-head wide">
@@ -830,12 +876,11 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         <li><a href="https://first-or-eighth.vercel.app" rel="noopener"><span class="i num">09</span><h3 class="n">First-Or-Eighth</h3><span class="d">the hub for the rest of these</span><span class="h" aria-hidden="true">live ↗</span></a></li>
         <li><a href="https://casino-topaz-gamma.vercel.app" rel="noopener"><span class="i num">10</span><h3 class="n">Neon Royale</h3><span class="d">34 play-money casino games and a localStorage chip wallet</span><span class="h"><span aria-hidden="true">live ↗</span> (sign-in)</span></a></li>
         <li><a href="https://25-words-or-less.vercel.app" rel="noopener"><span class="i num">11</span><h3 class="n">25 Words or Less</h3><span class="d">Bid low, then hope your partner is on your wavelength.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
-        <li><a href="https://github.com/jormyy/valence" rel="noopener"><span class="i num">12</span><h3 class="n">Valence</h3><span class="d">Jeremy's sports stream aggregator. I sent patches</span><span class="h" aria-hidden="true">github ↗</span></a></li>
       </ul>
     </div>
   </section>
 
-  <!-- ========================= 05 tools ================================ -->
+  <!-- ========================= 06 tools ================================ -->
   <section class="shelf" id="tools" aria-labelledby="h-tools">
     <div class="shell">
       <div class="shelf-head">
@@ -875,7 +920,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
     </div>
   </section>
 
-  <!-- ========================= 06 about ================================ -->
+  <!-- ========================= 07 about ================================ -->
   <section class="shelf" id="about" aria-labelledby="h-about">
     <div class="shell">
       <div class="shelf-head">
