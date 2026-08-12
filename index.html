@@ -399,6 +399,8 @@ p,figure,dl,dd{margin:0}
 @media (min-width:1150px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
 /* upstream mixes one long-form entry with short ones: never stretch it to four */
 @media (min-width:1150px){#upstream .strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* five entries in two columns would otherwise leave a lit empty cell */
+@media (min-width:561px){#upstream .strip > li:last-child:nth-child(odd){grid-column:1/-1}}
 .strip article{background:var(--paper);padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;flex:1;
   transition:background .12s linear;position:relative}
 .strip li:hover article{background:var(--paper-lift)}
@@ -925,8 +927,9 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           <h3><a href="https://github.com/mchen04/claude-switch-application" rel="noopener">cs <span class="go" aria-hidden="true">↗</span></a></h3>
           <p>Rust CLI for macOS that swaps Claude Code accounts by replacing the Keychain entry in
             place, plus a per-profile usage dashboard.</p>
-          <p class="why">The built-in flow is logout, login, wait. This is under a second, and it
-            keeps each account's settings and skills separate.</p>
+          <p class="why">The built-in flow is logout, login, wait. This is under a second. Each
+            account keeps its own settings, and one master profile's skills, commands and agents
+            follow me into all of them.</p>
         </article></li>
         <li><article class="rv">
           <h3><a href="https://github.com/mchen04/ESPN_Season_Lineup_Setup" rel="noopener">ESPN lineup bot <span class="go" aria-hidden="true">↗</span></a></h3>
