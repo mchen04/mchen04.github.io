@@ -774,16 +774,19 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           The files turned out too big and too awkward to move around, so I built
           <a href="https://github.com/mchen04/audiobook_pwa" rel="noopener">Hark</a> to hold them,
           which parses the MP3 in the browser and keeps the audio on the device. The server only ever
-          sees chapter titles and where I stopped.</p>
+          sees titles, chapters, my position and my playback history.</p>
         <p>A 600-chapter book was still hours of waiting. That is when I went and distilled
           the vocoder. That is <a href="https://github.com/mchen04/kestrel-tts" rel="noopener">Kestrel</a>,
           the same project as the benchmark table further up. It's fast enough now that the pipeline stopped
           being the thing I waited on. It also still sounds slightly worse than the model it came from, which is the
           part I did not manage to fix.</p>
         <p>Hark got a read-along mode out of it, because Epub Listener already knew the word timings
-          the TTS engine produced and it seemed wasteful to throw them away. The narrated sentence
+          the TTS engine produced and it seemed wasteful to throw them away. The player
           highlights the narrated sentence, marks the word being spoken, and jumps if you tap
           somewhere else. It works on a plane, in airplane mode.</p>
+        <p>In August the loop closed on itself. Kestrel now runs inside Hark, so the browser takes a
+          PDF or an EPUB and narrates it on the device. The CLI is no longer in the path, and
+          neither is my laptop.</p>
 
         </div>
 
@@ -803,7 +806,9 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         <ul class="three" role="list">
           <li>
             <h3 class="n"><a href="https://github.com/mchen04/Epub_Listener" rel="noopener">Epub Listener<span class="go" aria-hidden="true"> github ↗</span></a></h3>
-            <span class="d">Python CLI. EPUB in, chaptered MP3 out, via Edge-TTS or local Kokoro.
+            <span class="d">Python CLI. EPUB in, chaptered MP3 out, via Edge-TTS, local Kokoro,
+              Kestrel on Apple Silicon, any Hugging Face text-to-speech pipeline model, or any
+              local command that writes audio.
               Checksum-based resume so a failed run does not start over. Embeds a timestamped
               read-along transcript, median word-onset error under 30ms.</span>
           </li>
@@ -814,9 +819,12 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           </li>
           <li>
             <h3 class="n"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark<span class="go" aria-hidden="true"> live ↗</span><span class="go"> (sign-in)</span></a></h3>
-            <span class="d">Installable offline-first audiobook PWA. Audio parsed in-browser and
-              stored on-device, server sees metadata only. Karaoke-style read-along with
-              sentence highlight and word-level marking. Works fully offline.</span>
+            <span class="d">Installable offline-first audiobook PWA. Import a chaptered MP3, or a
+              PDF, EPUB, DOCX, text, Markdown or HTML file it narrates on the device with Kestrel
+              through WebGPU, WASM where there is none. Everything is parsed and stored on-device,
+              server sees metadata only. Karaoke-style read-along with sentence highlight and
+              word-level marking. Playback and read-along work offline; only the first narration
+              downloads the model, about 39MB of weights and a 24MB runtime.</span>
           </li>
         </div>
     </ul>
