@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Michael Chen, AI software engineer</title>
-<meta name="description" content="Michael Chen builds software for people he knows, including himself. A distilled TTS engine that runs 57x faster and still misses its own quality bar, an NBA projection model with 210 quantile regressors, and a shelf of apps his friends actually use.">
+<meta name="description" content="Michael Chen builds software for people he knows, including himself. A distilled TTS engine that runs 53x faster and still misses its own quality bar, patches in other people's repositories, and a shelf of apps his friends actually use.">
 <meta name="author" content="Michael Chen">
 <link rel="canonical" href="https://mchen04.github.io/">
 <meta name="theme-color" content="#e8eae3" media="(prefers-color-scheme: light)">
@@ -521,7 +521,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           <h2 class="rhead" id="h-readings">latest readings</h2>
           <dl>
             <div><dt>kestrel real-time factor</dt><dd>×622</dd></div>
-            <div class="off"><dt>kestrel MCD</dt><dd>11.8 / 3.9</dd></div>
+            <div class="off"><dt>kestrel MCD</dt><dd>13.89 / 3.98</dd></div>
                                     <div><dt>PHiLIP, contest entrants</dt><dd>8,231</dd></div>
           </dl>
         </section>
@@ -567,7 +567,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             than stock Kokoro. That factor is measured against the roughly 168 seconds of audio the
             preset actually emits, because its durations drift.</p>
           <p class="case-what">Content survived the compression. ASR intelligibility sits at parity
-            with the teacher, <strong>5.42% WER against 5.65%</strong>, speaker cosine similarity
+            with the teacher, <strong>5.46% WER against 5.65%</strong>, speaker cosine similarity
             reads 0.98, and the new vocoder head pulled naturalness up to <strong>4.180 UTMOS
             against the teacher's 4.477</strong>. The <span class="num">student</span> preset is
             slower at 1.117s but keeps durations bit-exact against the teacher. Weights are about
@@ -578,7 +578,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           <dl class="readout">
             <div><dt>chapter render</dt><dd>0.271<span class="u">s</span></dd></div>
             <div><dt>real-time factor</dt><dd>×622</dd></div>
-            <div><dt>WER, teacher 5.65%</dt><dd>5.42<span class="u">%</span></dd></div>
+            <div><dt>WER, teacher 5.65%</dt><dd>5.46<span class="u">%</span></dd></div>
             <div><dt>active params</dt><dd>~10<span class="u">M</span></dd></div>
           </dl>
 
@@ -591,21 +591,22 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             is a one-frame misalignment in the upsample path that sits directly in the pitch
             contour, where predicted F0 went from <strong>0.134 relative RMSE against the
             reference to 0.0000</strong>. Across a 55-utterance battery, MCD 7.29 to 4.09 dB and
-            F0 error 11.5 to 5.1 Hz. It is open, not merged.</p>
+            F0 error 11.5 to 5.1 Hz. It merged on 5 August 2026.</p>
 
           <div class="miss">
             <p class="tag"><b>did not clear</b> <span>the reason this is the lead project</span></p>
             <p>Texture is audibly hazier than Kokoro under direct A/B. Mel-cepstral distortion
-              comes in around <strong>11.8 against a 3.9 pass bar</strong>, and speaker similarity
-              at <strong>0.9374 against a 0.998 gate</strong>. Both are failing gates. The frozen zero-loss
+              comes in at <strong>13.89 against a 3.98 pass bar</strong>, and speaker similarity
+              at <strong>0.981 mean, 0.874 worst, against a 0.998 gate</strong>. Both are failing gates. The frozen zero-loss
               battery isn't passed, and the README says so on its first screen.</p>
             <p>The figures above are the repo's. The
               <a href="https://github.com/mchen04/kestrel-tts/blob/main/experiments/23-final/AUDIT.md" rel="noopener">independent no-cheating audit <span class="go" aria-hidden="true">↗</span></a>
               re-timed the same preset at <strong>0.340s</strong> and reproduced the speedup as
               <strong>40x</strong>. It ran on 29 July 2026 against the build before the compile
-              round, and docs/REPORT.md logs what closed the gap after it: mx.compile with
-              fixed-shape padding across the student stages, 0.333s down to the 0.25-0.27s it
-              holds now. Same engine
+              round, and docs/history/REPORT.md logs what closed the gap after it: mx.compile with
+              fixed-shape padding across the student stages, 0.333s down to 0.239s. The
+              source-filter head swapped in after that costs 8% chapter wall, which is the 0.271s
+              it holds now. Same engine
               either side of one optimization, not a dispute. What the audit says about the goal
               does stand, and it's the line worth quoting: 1000x wasn't reached, and the
               configuration that does pass the gates, <span class="num">ship-q8</span>, is roughly
@@ -615,23 +616,23 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         </div>
           <figure class="plot">
           <figcaption><b>fig. 1</b> · mel-cepstral distortion against the frozen pass bar. The bar is
-            3.9. Kestrel reads 11.8. Lower is better, and this is the one that did not clear.</figcaption>
-          <svg viewBox="0 0 220 96" role="img" aria-label="Bar chart. The pass bar for mel-cepstral distortion is 3.9. Kestrel measures 11.8, about three times over the bar.">
+            3.98. Kestrel reads 13.89. Lower is better, and this is the one that did not clear.</figcaption>
+          <svg viewBox="0 0 220 96" role="img" aria-label="Bar chart. The pass bar for mel-cepstral distortion is 3.98. Kestrel measures 13.89, about three and a half times over the bar.">
             <line class="gridline" x1="54" y1="8" x2="54" y2="80"></line>
             <line class="gridline" x1="54" y1="80" x2="190" y2="80"></line>
             <text class="plotlabel" x="0" y="31">pass bar</text>
-            <rect class="barok" x="54" y="20" width="44" height="14"></rect>
-            <text class="plotbar-label" x="102" y="31">3.9</text>
+            <rect class="barok" x="54" y="20" width="39" height="14"></rect>
+            <text class="plotbar-label" x="97" y="31">3.98</text>
             <text class="plotlabel" x="0" y="59">kestrel</text>
-            <rect class="barbad" x="54" y="48" width="134" height="14"></rect>
-            <text class="plotbar-label" x="192" y="59">11.8</text>
-            <line class="gridline" x1="98" y1="8" x2="98" y2="80" stroke-dasharray="2 3"></line>
+            <rect class="barbad" x="54" y="48" width="135" height="14"></rect>
+            <text class="plotbar-label" x="193" y="59">13.89</text>
+            <line class="gridline" x1="93" y1="8" x2="93" y2="80" stroke-dasharray="2 3"></line>
             <text class="plotlabel" x="54" y="92">0</text>
-            <text class="plotlabel" x="190" y="92" text-anchor="end">12 MCD</text>
+            <text class="plotlabel" x="190" y="92" text-anchor="end">14 MCD</text>
           </svg>
           <p class="src"><a href="https://huggingface.co/mchen04/kestrel-tts" rel="noopener">weights on
             Hugging Face <span class="go" aria-hidden="true">↗</span></a> · every figure above is in
-            <a href="https://github.com/mchen04/kestrel-tts/blob/main/docs/REPORT.md" rel="noopener">docs/REPORT.md <span class="go" aria-hidden="true">↗</span></a></p>
+            <a href="https://github.com/mchen04/kestrel-tts/blob/main/docs/MODEL_CARD.md" rel="noopener">docs/MODEL_CARD.md <span class="go" aria-hidden="true">↗</span></a></p>
         </figure>
       </article></li>
 
