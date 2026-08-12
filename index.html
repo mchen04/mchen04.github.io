@@ -397,7 +397,7 @@ p,figure,dl,dd{margin:0}
 .strip > li{display:flex}
 @media (max-width:560px){.strip{grid-template-columns:minmax(0,1fr)}}
 @media (min-width:1150px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
-/* upstream holds two entries, one of them long-form: never stretch it to four */
+/* upstream mixes one long-form entry with short ones: never stretch it to four */
 @media (min-width:1150px){#upstream .strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .strip article{background:var(--paper);padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;flex:1;
   transition:background .12s linear;position:relative}
@@ -835,8 +835,8 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
     <div class="shell">
       <div class="shelf-head">
         <h2 id="h-upstream">Other people's repositories</h2>
-        <p class="said">Patches I sent somewhere I do not own. Both started as me using the thing
-          and finding it wrong.</p>
+        <p class="said">Code I wrote somewhere I do not own. The first one started as me using the
+          thing and finding it wrong. The rest are friends' projects I kept showing up to.</p>
       </div>
 
       <ul class="strip" role="list">
@@ -859,7 +859,23 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         </article></li>
         <li><article class="rv">
           <h3><a href="https://github.com/jormyy/valence" rel="noopener">Valence <span class="go" aria-hidden="true">↗</span></a></h3>
-          <p>Jeremy's sports stream aggregator. I sent patches.</p>
+          <p>Jeremy's sports stream aggregator. Three merged pull requests, and 54 of the commits
+            on main against his 13.</p>
+        </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/jormyy/pancake" rel="noopener">Pancake <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Jeremy's dynasty fantasy basketball app, still being built. Thirty-eight merged pull
+            requests are mine, and 185 of the commits on main against his 175.</p>
+        </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/jormyy/ding" rel="noopener">Ding <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Jeremy's collaborative poker-ranking game. 96 of its 140 commits are mine, committed
+            straight to main rather than sent as patches.</p>
+        </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/matthewh8/25-words-or-less" rel="noopener">25 Words or Less <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>Matthew's same-screen party word game. Bid low, then hope your partner is on your
+            wavelength. 34 of its 39 commits are mine.</p>
         </article></li>
       </ul>
     </div>
@@ -884,7 +900,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         <li><a href="https://github.com/mchen04/Sayable" rel="noopener"><span class="i num">08</span><h3 class="n">Sayable</h3><span class="d">no login. guests answer from a link and the host gets an aggregate back</span><span class="h" aria-hidden="true">github ↗</span></a></li>
         <li><a href="https://first-or-eighth.vercel.app" rel="noopener"><span class="i num">09</span><h3 class="n">First-Or-Eighth</h3><span class="d">the hub for the rest of these</span><span class="h" aria-hidden="true">live ↗</span></a></li>
         <li><a href="https://casino-topaz-gamma.vercel.app" rel="noopener"><span class="i num">10</span><h3 class="n">Neon Royale</h3><span class="d">34 play-money casino games and a localStorage chip wallet</span><span class="h" aria-hidden="true">live ↗</span></a></li>
-        <li><a href="https://25-words-or-less.vercel.app" rel="noopener"><span class="i num">11</span><h3 class="n">25 Words or Less</h3><span class="d">Bid low, then hope your partner is on your wavelength.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://selfie-a-day.vercel.app" rel="noopener"><span class="i num">11</span><h3 class="n">Selfie a Day</h3><span class="d">one photo a day, lined up against the ghost of yesterday's so the face stops jumping. Never leaves the device.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
       </ul>
     </div>
   </section>
