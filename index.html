@@ -772,9 +772,9 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           the translation pace means you are always waiting, so at some point I wanted to listen to
           them instead of reading them, mostly so I could do it while walking somewhere.</p>
         <p>Nothing would do it. So I wrote a CLI that takes an EPUB and gives back a narrated MP3
-          with real chapter markers, which is <a href="https://github.com/mchen04/Epub_Listener" rel="noopener">Epub Listener</a>.
+          with real chapter markers, which is <a href="https://github.com/mchen04/epub-listener" rel="noopener">Epub Listener</a>.
           The files turned out too big and too awkward to move around, so I built
-          <a href="https://github.com/mchen04/audiobook_pwa" rel="noopener">Hark</a> to hold them,
+          <a href="https://github.com/mchen04/hark-audiobook" rel="noopener">Hark</a> to hold them,
           which parses the MP3 in the browser and keeps the audio on the device. The server only ever
           sees titles, chapters, my position and my playback history.</p>
         <p>A 600-chapter book was still hours of waiting. That is when I went and distilled
@@ -802,12 +802,12 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
               sleep timer, chapters and history.">
           <p class="src"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark
             live <span class="go" aria-hidden="true">↗</span></a> · captured from the iPhone e2e
-            suite in <a href="https://github.com/mchen04/audiobook_pwa" rel="noopener">the repo <span class="go" aria-hidden="true">↗</span></a></p>
+            suite in <a href="https://github.com/mchen04/hark-audiobook" rel="noopener">the repo <span class="go" aria-hidden="true">↗</span></a></p>
         </figure>
       </div>
         <ul class="three" role="list">
           <li>
-            <h3 class="n"><a href="https://github.com/mchen04/Epub_Listener" rel="noopener">Epub Listener<span class="go" aria-hidden="true"> github ↗</span></a></h3>
+            <h3 class="n"><a href="https://github.com/mchen04/epub-listener" rel="noopener">Epub Listener<span class="go" aria-hidden="true"> github ↗</span></a></h3>
             <span class="d">Python CLI. EPUB in, chaptered MP3 out, via Edge-TTS, local Kokoro,
               Kestrel on Apple Silicon, any Hugging Face text-to-speech pipeline model, or any
               local command that writes audio.
@@ -893,7 +893,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
 
       <ul class="dir" role="list">
         <li><a href="https://pokernow.vercel.app" rel="noopener"><span class="i num">01</span><h3 class="n">Felt</h3><span class="d">private play-money hold'em rooms, no signup, every table feature free</span><span class="h" aria-hidden="true">live ↗</span></a></li>
-        <li><a href="https://github.com/mchen04/CodeNames" rel="noopener"><span class="i num">02</span><h3 class="n">Codenames</h3><span class="d">realtime rooms, curated word packs, chat so people can argue about the clue</span><span class="h" aria-hidden="true">github ↗</span></a></li>
+        <li><a href="https://github.com/mchen04/codenames" rel="noopener"><span class="i num">02</span><h3 class="n">Codenames</h3><span class="d">realtime rooms, curated word packs, chat so people can argue about the clue</span><span class="h" aria-hidden="true">github ↗</span></a></li>
         <li><a href="https://loldle-app.vercel.app" rel="noopener"><span class="i num">03</span><h3 class="n">LoLdle</h3><span class="d">19 modes. The stats persist, which was the actual request.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
         <li><a href="https://drinking-games-eosin.vercel.app" rel="noopener"><span class="i num">04</span><h3 class="n">Pour Decisions</h3><span class="d">36 games and one shared player roster.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
         <li><a href="https://kings-cup-liard.vercel.app" rel="noopener"><span class="i num">05</span><h3 class="n">Kings Cup</h3><span class="d">The cup meter surviving a refresh took longer than the rest of it.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
@@ -924,7 +924,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
           <p class="why">Sessions survive reboots and phone reconnects. I use it from my phone on the train. The partial-name matching exists because of that.</p>
         </article></li>
         <li><article class="rv">
-          <h3><a href="https://github.com/mchen04/claude-switch-application" rel="noopener">cs <span class="go" aria-hidden="true">↗</span></a></h3>
+          <h3><a href="https://github.com/mchen04/claude-switch" rel="noopener">cs <span class="go" aria-hidden="true">↗</span></a></h3>
           <p>Rust CLI for macOS that swaps Claude Code accounts by replacing the Keychain entry in
             place, plus a per-profile usage dashboard.</p>
           <p class="why">The built-in flow is logout, login, wait. This is under a second. Each
@@ -932,7 +932,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             follow me into all of them.</p>
         </article></li>
         <li><article class="rv">
-          <h3><a href="https://github.com/mchen04/ESPN_Season_Lineup_Setup" rel="noopener">ESPN lineup bot <span class="go" aria-hidden="true">↗</span></a></h3>
+          <h3><a href="https://github.com/mchen04/espn-fantasy-lineup-bot" rel="noopener">ESPN lineup bot <span class="go" aria-hidden="true">↗</span></a></h3>
           <p>Chrome extension plus a Node server that wakes five minutes before the first game each
             day and sets my fantasy basketball lineup off live injury reports. It reads the injury wire
             rather than a projection, because projections lag the news by hours and the waiver order
