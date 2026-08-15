@@ -163,6 +163,15 @@ p,figure,dl,dd{margin:0}
   .masthead nav{overflow-x:auto;scrollbar-width:none}
   .masthead nav::-webkit-scrollbar{display:none}
   .masthead nav ul{flex-wrap:nowrap}
+  /* fade the clipped edge so a cut-off item reads as scrollable, not broken;
+     JS drops the class once the list is scrolled to its end */
+  .masthead nav.more{-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  .masthead nav.morel{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%);
+    mask-image:linear-gradient(90deg,transparent,#000 12%)}
+  .masthead nav.more.morel{
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 }
 .masthead nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;
   display:flex;align-items:center;min-height:var(--tap);padding:0 .1rem;border-bottom:1px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease)}
@@ -184,10 +193,10 @@ p,figure,dl,dd{margin:0}
 /* ============================ hero ======================================= */
 /* Shape: oversized display type left, readings ledger right. No section below
    repeats it. */
-.hero{padding-top:clamp(2.5rem,8vh,6rem);border-bottom:1px solid var(--rule)}
+.hero{padding-top:clamp(2rem,6vh,4.5rem);border-bottom:1px solid var(--rule)}
 .hero h1{font-size:var(--t-mega);max-width:15ch;font-weight:700;
   font-variation-settings:'wdth' 84;letter-spacing:-.038em;text-wrap:balance}
-.hero-role{margin-top:1.7rem;max-width:26ch;font-family:var(--display);font-weight:600;
+.hero-role{margin-top:1.35rem;max-width:26ch;font-family:var(--display);font-weight:600;
   font-size:clamp(1.6rem,3.2vw,2.75rem);line-height:1.15;letter-spacing:-.025em;
   font-variation-settings:'wdth' 86}
 .hero-role b{font-weight:600;color:var(--trace)}
@@ -197,7 +206,8 @@ p,figure,dl,dd{margin:0}
 /* two columns at desktop: the claim, and the readings that back it */
 .hero-body{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
 @media (min-width:1120px){
-  .hero-body{grid-template-columns:minmax(0,1fr) 19rem;gap:clamp(2rem,5vw,5rem);align-items:start}
+  .hero-body{grid-template-columns:minmax(0,1fr) 19rem;
+    gap:1.25rem clamp(2rem,5vw,5rem);align-items:start}
 }
 .readings{border:1px solid var(--rule);background:var(--paper-lift)}
 .readings .rhead{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
@@ -220,6 +230,38 @@ p,figure,dl,dd{margin:0}
   padding:.6rem 0 .25rem;min-height:var(--tap);display:inline-flex;align-items:center;transition:border-color .18s var(--ease),color .18s var(--ease)}
 .hero-links a:hover,.hero-links a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
 
+
+/* --- hero wire: a chart-recorder band drawn from the live events API ----- */
+/* JS-only by design: the pen needs the fetch, and without JS the hero simply
+   ends at the links, which is how it always ended. Fixed height, so the late
+   draw cannot shift layout. */
+.wire{display:none}
+.js .wire{display:block;grid-column:1/-1;margin-top:1rem;
+  border-top:1px solid var(--rule-soft);padding-top:.8rem}
+.wire figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  letter-spacing:.02em;line-height:1.6;display:flex;flex-wrap:wrap;gap:.2rem 1.5rem;
+  justify-content:space-between}
+.wire figcaption b{color:var(--ink);font-weight:400}
+.wire .wire-meta{color:var(--mute)}
+.wire .wire-meta b{color:var(--trace)}
+.wire svg{width:100%;height:132px;margin-top:.4rem;cursor:crosshair;touch-action:pan-y}
+.wire .scrubline{stroke:var(--mute);stroke-width:1;stroke-dasharray:1 3}
+.wire .scrubdot{fill:var(--flag)}
+.wire .scrubtext{fill:var(--ink);font-size:10.5px}
+.wire .scrub{transition:opacity .2s linear}
+.wire .needle{transition:transform .16s var(--ease)}
+@media (prefers-reduced-motion:reduce){.wire .needle{transition:none}}
+.wire .pen{stroke:var(--trace);fill:none;stroke-width:1.6;stroke-linejoin:round;
+  stroke-linecap:round}
+.wire .base{stroke:var(--rule);stroke-width:1}
+.wire .daytick{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
+.wire .nib{fill:var(--trace)}
+.wire text{font-family:var(--data);font-size:10px;fill:var(--mute)}
+@media (max-width:640px){.wire text{font-size:11px}.wire .scrubtext{font-size:11.5px}}
+@media (prefers-reduced-motion:no-preference){
+  .js .wire .nib{animation:nib 1.6s steps(2,start) infinite}
+}
+@keyframes nib{50%{opacity:.25}}
 
 /* ============================ section frame ============================== */
 /* Deliberately different vertical rhythm per shelf. Uniform section padding
@@ -440,7 +482,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
     transition-duration:.001ms!important;scroll-behavior:auto!important}
   .js .rv{opacity:1!important;transform:none!important;animation:none!important}
 }
-:target,.shelf{scroll-margin-top:calc(var(--head) + 14px)}
+:target,.shelf{scroll-margin-top:calc(var(--head) + 22px)}
 
 /* ============================ responsive ================================= */
 @media (max-width:980px){
@@ -527,6 +569,15 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
                                     <div><dt>PHiLIP, contest entrants</dt><dd>8,231</dd></div>
           </dl>
         </section>
+
+        <figure class="wire" id="wire">
+          <figcaption>
+            <span><b>fig. 0</b> · public events on github.com/mchen04, one strike per hour,
+              drawn in your browser from the live API</span>
+            <span class="wire-meta" id="wire-meta">reading…</span>
+          </figcaption>
+          <svg id="wire-svg" role="img" aria-label="Chart-recorder trace of Michael's public GitHub events, one pen strike per hour over the last few days."></svg>
+        </figure>
       </div>
 
       <div class="hero-strip">
@@ -1004,6 +1055,18 @@ document.documentElement.classList.add('js');
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(sync);
 })();
 
+/* ---- masthead nav: show a fade while more sections sit off-screen ------ */
+(function(){
+  var nav=document.querySelector('.masthead nav');
+  function sync(){
+    nav.classList.toggle('more',nav.scrollWidth-nav.clientWidth-nav.scrollLeft>2);
+    nav.classList.toggle('morel',nav.scrollLeft>2);
+  }
+  nav.addEventListener('scroll',sync,{passive:true});
+  addEventListener('resize',sync,{passive:true});
+  sync();
+})();
+
 /* ---- theme: system by default, explicit choice remembered ------------- */
 (function(){
   var root=document.documentElement, btn=document.getElementById('themer');
@@ -1022,6 +1085,8 @@ document.documentElement.classList.add('js');
     btn.setAttribute('aria-label',d?'theme: dark. Switch to light.':'theme: light. Switch to dark.');
   }
   sync();
+  /* keep the label honest if the OS scheme changes while the page is open */
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change',sync);
   btn.addEventListener('click',function(){
     var next=isDark()?'bench':'scope';
     root.setAttribute('data-theme',next);
@@ -1030,13 +1095,158 @@ document.documentElement.classList.add('js');
   });
 })();
 
+/* ---- hero wire: chart recorder over the public events API -------------- */
+/* The pen draws whatever the API returns right now. If the fetch fails or is
+   rate-limited, it draws the cached reading below and says so on the label,
+   because an instrument with no signal should still show its last plot. */
+(function(){
+  var svg=document.getElementById('wire-svg'), meta=document.getElementById('wire-meta');
+  if(!svg||!('fetch' in window)) return;
+  var CACHED={stamp:'14 aug 2026',pairs:[["2026-08-12T03",19,"cs170-eight-puzzle-search"],
+    ["2026-08-12T05",5,"mchen04.github.io"],["2026-08-13T17",5,"hark-audiobook"],
+    ["2026-08-13T19",5,"hark-audiobook"],["2026-08-13T20",15,"hark-audiobook"],
+    ["2026-08-13T23",5,"hark-audiobook"],["2026-08-14T15",7,"pancake"],
+    ["2026-08-14T16",3,"pancake"],["2026-08-14T17",10,"pancake"],["2026-08-14T18",5,"pancake"],
+    ["2026-08-14T19",10,"pancake"],["2026-08-14T22",5,"pancake"],["2026-08-14T23",6,"pancake"]]};
+  var NS='http://www.w3.org/2000/svg';
+  var state=null, calm=matchMedia('(prefers-reduced-motion:reduce)');
+
+  function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e;}
+  function hour(k){return Date.UTC(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10),+k.slice(11,13));}
+
+  function draw(animate){
+    if(!state) return;
+    var W=svg.clientWidth||600, H=132, y0=H-26, top=16;
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var pairs=state.pairs, t0=hour(pairs[0][0]), t1=hour(pairs[pairs.length-1][0]);
+    var HR=36e5, n=Math.round((t1-t0)/HR)+1, counts={}, max=1, i;
+    for(i=0;i<pairs.length;i++){var bi=Math.round((hour(pairs[i][0])-t0)/HR);
+      counts[bi]={c:pairs[i][1],repo:pairs[i][2]||''};
+      if(pairs[i][1]>max)max=pairs[i][1];}
+    var pad=8, x0=pad, x1=W-pad, step=(x1-x0)/Math.max(n-1,1);
+    svg.appendChild(el('line',{'class':'base',x1:x0,y1:y0,x2:x1,y2:y0}));
+    /* day boundaries */
+    var d0=new Date(t0); d0=Date.UTC(d0.getUTCFullYear(),d0.getUTCMonth(),d0.getUTCDate())+864e5;
+    var MO=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    for(var t=d0;t<=t1;t+=864e5){
+      var x=x0+((t-t0)/HR)*step, d=new Date(t);
+      svg.appendChild(el('line',{'class':'daytick',x1:x,y1:top,x2:x,y2:y0}));
+      var lb=el('text',{x:x+5,y:H-8}); lb.textContent=MO[d.getUTCMonth()]+' '+d.getUTCDate();
+      svg.appendChild(lb);
+    }
+    /* the pen line: baseline with one sharp strike per active hour */
+    var d='M'+x0+' '+y0, span=(y0-top);
+    for(i=0;i<n;i++){var c=counts[i];if(!c)continue;
+      var x=x0+i*step, h=Math.max(6,(c.c/max)*span), w=Math.min(step*.45,4);
+      d+=' L'+(x-w).toFixed(1)+' '+y0+' L'+x.toFixed(1)+' '+(y0-h).toFixed(1)+' L'+(x+w).toFixed(1)+' '+y0;}
+    d+=' L'+x1+' '+y0;
+    var pen=el('path',{'class':'pen',d:d});
+    svg.appendChild(pen);
+    svg.appendChild(el('circle',{'class':'nib',cx:x1,cy:y0,r:2.5}));
+
+    /* scrub: run a hairline over the strip and it reads out the hour under it */
+    var scrub=el('g',{'class':'scrub',opacity:'0'});
+    var needle=el('g',{'class':'needle'});
+    var hairline=el('line',{'class':'scrubline',x1:0,y1:top-4,x2:0,y2:y0});
+    var dot=el('circle',{'class':'scrubdot',r:2.5,cx:0,cy:y0});
+    needle.appendChild(hairline);needle.appendChild(dot);
+    var ro=el('text',{'class':'scrubtext',x:0,y:top-6});
+    scrub.appendChild(needle);scrub.appendChild(ro);
+    svg.appendChild(scrub);
+    var MO2=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    /* the needle only rests on readings: it snaps to the nearest strike, and
+       parks on the busiest hour when the pointer is elsewhere */
+    var active=[], peak=-1;
+    for(i=0;i<n;i++) if(counts[i]){active.push(i);
+      if(peak<0||counts[i].c>counts[peak].c) peak=i;}
+    function showScrub(i){
+      var x=x0+i*step, c=counts[i], dt=new Date(t0+i*HR);
+      needle.style.transform='translateX('+x.toFixed(1)+'px)';
+      var h=c?Math.max(6,(c.c/max)*span):0;
+      dot.setAttribute('cy',y0-h);
+      var when=MO2[dt.getUTCMonth()]+' '+dt.getUTCDate()+' · '
+        +('0'+dt.getUTCHours()).slice(-2)+':00 utc · ';
+      var what=c?c.c+(c.c>1?' events':' event'):'quiet';
+      ro.textContent=when+what+(c&&c.repo?' · '+c.repo:'');
+      /* clamp the readout onto the paper: shed the repo name if the strip is
+         too narrow for it, then pin the label inside the edges */
+      if(ro.getComputedTextLength()>W-8) ro.textContent=when+what;
+      var anchor=x>(x0+x1)/2?'end':'start';
+      ro.setAttribute('text-anchor',anchor);
+      ro.setAttribute('x',anchor==='end'?x-6:x+6);
+      var tl=ro.getComputedTextLength();
+      if(anchor==='start'&&x+6+tl>W-2){ro.setAttribute('x',Math.max(2,W-2-tl));}
+      else if(anchor==='end'&&x-6-tl<2){ro.setAttribute('text-anchor','start');ro.setAttribute('x',2);}
+      scrub.setAttribute('opacity','1');
+    }
+    function nearestStrike(cx){
+      var want=(cx-x0)/step, best=active[0];
+      for(var a=0;a<active.length;a++)
+        if(Math.abs(active[a]-want)<Math.abs(best-want)) best=active[a];
+      return best;
+    }
+    var park=null;
+    function parkLater(){clearTimeout(park);park=setTimeout(function(){showScrub(peak);},4000);}
+    svg.onpointermove=function(e){var r=svg.getBoundingClientRect();
+      showScrub(nearestStrike(e.clientX-r.left));parkLater();};
+    svg.onpointerleave=function(){clearTimeout(park);showScrub(peak);};
+    svg.onpointercancel=parkLater;
+    if(animate&&!calm.matches&&active.length>1){
+      /* after the pen finishes, one pass of the needle across the strikes,
+         then park on the peak: announces that the strip is scrubbable
+         without a word of copy */
+      setTimeout(function(){
+        var ai=0, run=setInterval(function(){
+          if(ai>=active.length){clearInterval(run);showScrub(peak);return;}
+          showScrub(active[ai++]);
+        },130);
+      },1900);
+    } else showScrub(peak);
+    if(animate&&!calm.matches){
+      var L=pen.getTotalLength();
+      pen.style.strokeDasharray=L; pen.style.strokeDashoffset=L;
+      pen.getBoundingClientRect();
+      pen.style.transition='stroke-dashoffset 1.8s cubic-bezier(.22,.61,.36,1)';
+      pen.style.strokeDashoffset='0';
+    }
+    var total=0; for(i=0;i<pairs.length;i++) total+=pairs[i][1];
+    var hrs=Math.round((t1-t0)/HR)+1;
+    meta.innerHTML='<b>'+total+'</b> events / '+hrs+'h · '+(state.live?'live':'cached '+CACHED.stamp);
+  }
+
+  fetch('https://api.github.com/users/mchen04/events/public?per_page=100')
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(function(ev){
+      if(!ev.length) throw 0;
+      var h={},k; ev.forEach(function(e){
+        k=e.created_at.slice(0,13);
+        var b=h[k]||(h[k]={n:0,repos:{}}); b.n++;
+        var rn=(e.repo&&e.repo.name||'').split('/').pop();
+        if(rn) b.repos[rn]=(b.repos[rn]||0)+1;
+      });
+      state={live:true,pairs:Object.keys(h).sort().map(function(k){
+        var b=h[k],top='',tc=0;
+        for(var r in b.repos) if(b.repos[r]>tc){tc=b.repos[r];top=r;}
+        return[k,b.n,top];
+      })};
+      draw(true);
+    })
+    .catch(function(){state={live:false,pairs:CACHED.pairs};draw(true);});
+
+  var rt=null;
+  addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){draw(false);},120);},{passive:true});
+  /* PlexMono swaps in late; re-measure the readout with the real metrics */
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){draw(false);});
+})();
+
 /* ---- scroll reveal ---- */
 (function(){
   var els=document.querySelectorAll('.rv');
   if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('on')}); return; }
   var io=new IntersectionObserver(function(en,o){
     en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); o.unobserve(e.target); } });
-  },{rootMargin:'0px 0px -12% 0px'});
+  },{rootMargin:innerWidth<700?'0px 0px -4% 0px':'0px 0px -12% 0px'});
   els.forEach(function(e){io.observe(e)});
 })();
 
