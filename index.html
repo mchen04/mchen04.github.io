@@ -14,13 +14,15 @@
 <meta property="og:url" content="https://mchen04.github.io/">
 <meta property="og:title" content="Michael Chen, AI software engineer">
 <meta property="og:description" content="I build software for people I know, including me. Measured systems, shipped products, and the numbers that did not clear the bar.">
-<meta property="og:image" content="https://mchen04.github.io/og.png">
+<meta property="og:image" content="https://mchen04.github.io/og.png?v=3">
+<meta property="og:image:alt" content="Michael Chen, AI software engineer in the Bay Area. I build software for people I know, including me.">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Michael Chen, AI software engineer">
 <meta name="twitter:description" content="I build software for people I know, including me.">
-<meta name="twitter:image" content="https://mchen04.github.io/og.png">
+<meta name="twitter:image" content="https://mchen04.github.io/og.png?v=3">
+<meta name="twitter:image:alt" content="Michael Chen, AI software engineer in the Bay Area. I build software for people I know, including me.">
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -31,7 +33,7 @@
 <link rel="preload" href="fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Michael Chen",
+{"@context":"https://schema.org","@type":"Person","@id":"https://mchen04.github.io/#person","name":"Michael Chen",
 "jobTitle":"AI Software Engineer","url":"https://mchen04.github.io/",
 "email":"mailto:michaelluochen1@gmail.com",
 "address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US","addressLocality":"Bay Area"},
@@ -221,6 +223,7 @@ p,figure,dl,dd{margin:0}
 .readings dd{margin:0;font-family:var(--display);font-weight:600;font-size:1.15rem;
   letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right}
 .readings .off dt,.readings .off dd{color:var(--flag)}
+.reading-source{padding:.7rem .9rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
 
 .hero-strip{margin-top:2.25rem;display:flex;flex-wrap:wrap;
   gap:.5rem 2.5rem;font-family:var(--data);font-size:var(--t-data);color:var(--mute)}
@@ -232,12 +235,17 @@ p,figure,dl,dd{margin:0}
 
 
 /* --- hero wire: a chart-recorder band drawn from the live events API ----- */
-/* JS-only by design: the pen needs the fetch, and without JS the hero simply
-   ends at the links, which is how it always ended. Fixed height, so the late
-   draw cannot shift layout. */
-.wire{display:none}
-.js .wire{display:block;grid-column:1/-1;margin-top:1rem;
+.wire{display:block;grid-column:1/-1;min-width:0;margin-top:1rem;
   border-top:1px solid var(--rule-soft);padding-top:.8rem}
+.wire-source,.wire-details{font-family:var(--data);font-size:var(--t-micro);margin-top:.7rem}
+.wire-details summary{cursor:pointer;padding:.65rem 0;width:fit-content}
+.wire-table{max-height:20rem;overflow:auto;margin-top:.5rem}
+.wire table{width:100%;border-collapse:collapse;text-align:left}
+.wire caption{text-align:left;padding:.5rem 0;color:var(--mute)}
+.wire th,.wire td{padding:.55rem .7rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+.wire th{font-weight:400}
+.wire tbody th{white-space:nowrap}
+.wire td:last-child{overflow-wrap:anywhere}
 .wire figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
   letter-spacing:.02em;line-height:1.6;display:flex;flex-wrap:wrap;gap:.2rem 1.5rem;
   justify-content:space-between}
@@ -245,6 +253,7 @@ p,figure,dl,dd{margin:0}
 .wire .wire-meta{color:var(--mute)}
 .wire .wire-meta b{color:var(--trace)}
 .wire svg{width:100%;height:132px;margin-top:.4rem;cursor:crosshair;touch-action:pan-y}
+.wire svg[hidden]{display:none}
 .wire .scrubline{stroke:var(--mute);stroke-width:1;stroke-dasharray:1 3}
 .wire .scrubdot{fill:var(--flag)}
 .wire .scrubtext{fill:var(--ink);font-size:10.5px}
@@ -453,6 +462,7 @@ p,figure,dl,dd{margin:0}
 .strip h3 a::after{content:"";position:absolute;inset:0}
 .strip h3 a:hover,.strip h3 a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
 .strip p{font-size:.95rem;color:var(--ink-2)}
+#tools .strip li:last-child{grid-column:1/-1}
 .strip .why{margin-top:auto;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
 
 /* ---------- 06 about: colophon ------------------------------------------ */
@@ -472,15 +482,9 @@ footer{padding-block:2rem 3rem;font-family:var(--data);font-size:var(--t-micro);
 footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
 
 /* ============================ motion ===================================== */
-/* Scroll reveal is IntersectionObserver only: it adds a class once and cannot
-   strand content mid-animation, which a scroll-driven timeline did on tall
-   viewports. Nothing is hidden without JS: .rv only hides once <html> has .js. */
-.js .rv{opacity:0;transform:translateY(14px)}
-.js .rv.on{opacity:1;transform:none;transition:opacity .55s var(--ease),transform .55s var(--ease)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
     transition-duration:.001ms!important;scroll-behavior:auto!important}
-  .js .rv{opacity:1!important;transform:none!important;animation:none!important}
 }
 :target,.shelf{scroll-margin-top:calc(var(--head) + 22px)}
 
@@ -517,7 +521,6 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
   }
   .masthead{display:none}
   .row,.case,.strip li,.dir li{break-inside:avoid}
-  .js .rv{opacity:1!important;transform:none!important;animation:none!important}
 }
 </style>
 </head>
@@ -562,21 +565,47 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         </div>
 
         <section class="readings" aria-labelledby="h-readings">
-          <h2 class="rhead" id="h-readings">latest readings</h2>
+          <h2 class="rhead" id="h-readings">project readings</h2>
           <dl>
             <div><dt>kestrel real-time factor</dt><dd>×622</dd></div>
             <div class="off"><dt>kestrel MCD</dt><dd>13.89 / 3.98</dd></div>
-                                    <div><dt>PHiLIP, contest entrants</dt><dd>8,231</dd></div>
+            <div><dt>PHiLIP award</dt><dd>AMD University Program</dd></div>
           </dl>
+          <p class="reading-source">Kestrel: <a href="#measured">source-reported evaluation, August 1, 2026</a>.</p>
         </section>
 
         <figure class="wire" id="wire">
           <figcaption>
-            <span><b>fig. 0</b> · public events on github.com/mchen04, one strike per hour,
-              drawn in your browser from the live API</span>
-            <span class="wire-meta" id="wire-meta">reading…</span>
+            <span><b>fig. 0</b> · Recent sample of up to 100 public GitHub events. Times are UTC.
+              A dated cached sample appears if GitHub is unavailable.</span>
+            <span class="wire-meta" id="wire-meta" aria-live="polite">Cached sample from August 14, 2026 · 100 events · 2026-08-12 03:00 to 2026-08-14 23:00 UTC</span>
           </figcaption>
-          <svg id="wire-svg" role="img" aria-label="Chart-recorder trace of Michael's public GitHub events, one pen strike per hour over the last few days."></svg>
+          <svg id="wire-svg" role="img" aria-label="Public GitHub activity. Hourly readings appear in the table below." aria-describedby="wire-meta" hidden></svg>
+          <p class="wire-source"><a href="https://github.com/mchen04" rel="noopener">View public activity on GitHub</a></p>
+          <details class="wire-details">
+            <summary>View hourly activity</summary>
+            <div class="wire-table" tabindex="0" role="region" aria-label="Hourly activity table" aria-describedby="wire-meta">
+              <table>
+                <caption>Hours with events in this sample. Unlisted hours contain no sampled events.</caption>
+                <thead><tr><th scope="col">Hour (UTC)</th><th scope="col">Events</th><th scope="col">Most frequent repository</th></tr></thead>
+                <tbody id="wire-rows">
+                <tr><th scope="row">2026-08-12 03:00</th><td>19</td><td>cs170-eight-puzzle-search</td></tr>
+                <tr><th scope="row">2026-08-12 05:00</th><td>5</td><td>mchen04.github.io</td></tr>
+                <tr><th scope="row">2026-08-13 17:00</th><td>5</td><td>hark-audiobook</td></tr>
+                <tr><th scope="row">2026-08-13 19:00</th><td>5</td><td>hark-audiobook</td></tr>
+                <tr><th scope="row">2026-08-13 20:00</th><td>15</td><td>hark-audiobook</td></tr>
+                <tr><th scope="row">2026-08-13 23:00</th><td>5</td><td>hark-audiobook</td></tr>
+                <tr><th scope="row">2026-08-14 15:00</th><td>7</td><td>pancake</td></tr>
+                <tr><th scope="row">2026-08-14 16:00</th><td>3</td><td>pancake</td></tr>
+                <tr><th scope="row">2026-08-14 17:00</th><td>10</td><td>pancake</td></tr>
+                <tr><th scope="row">2026-08-14 18:00</th><td>5</td><td>pancake</td></tr>
+                <tr><th scope="row">2026-08-14 19:00</th><td>10</td><td>pancake</td></tr>
+                <tr><th scope="row">2026-08-14 22:00</th><td>5</td><td>pancake</td></tr>
+                <tr><th scope="row">2026-08-14 23:00</th><td>6</td><td>pancake</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
         </figure>
       </div>
 
@@ -619,6 +648,12 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             <span class="num">student-fast</span> preset: a real-time factor of 622, and 53x faster
             than stock Kokoro. That factor is measured against the roughly 168 seconds of audio the
             preset actually emits, because its durations drift.</p>
+          <p class="case-what">The final <span class="num">student-fast</span> preset reports
+            <strong>4.97% mean duration drift and 50.30% worst-case drift</strong> on the frozen evaluation set.
+            The worst case uses adversarial, punctuation-dense text.
+            The <a href="https://huggingface.co/mchen04/kestrel-tts" rel="noopener">weights page</a>
+            reports <strong>0–8% on narration</strong>.
+            Use the slower <span class="num">student</span> preset when matching teacher durations matters.</p>
           <p class="case-what">Content survived the compression. ASR intelligibility sits at parity
             with the teacher, <strong>5.46% WER against 5.65%</strong>, speaker cosine similarity
             reads 0.98, and the new vocoder head pulled naturalness up to <strong>4.180 UTMOS
@@ -628,6 +663,9 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             <a href="https://huggingface.co/mchen04/kestrel-tts" rel="noopener">Hugging Face <span class="go" aria-hidden="true">↗</span></a>.
             The research loop closed on 4 August 2026 after 113 cycles.</p>
 
+          <p class="src">Final <span class="num">student-fast</span> preset;
+            <a href="https://github.com/mchen04/kestrel-tts/blob/e78371008341fba2b723f6bedc18afaa92bebc7e/docs/MODEL_CARD.md" rel="noopener">model card evaluation dated August 1, 2026</a>.
+            Source-reported measurements, not a new benchmark.</p>
           <dl class="readout">
             <div><dt>chapter render</dt><dd>0.271<span class="u">s</span></dd></div>
             <div><dt>real-time factor</dt><dd>×622</dd></div>
@@ -697,27 +735,28 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             <h3><a href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" rel="noopener">PHiLIP</a></h3>
             <span class="tag">human-in-the-loop image generation on AMD ROCm</span>
           </div>
-          <p class="case-what">Generate, look, adjust, generate again. The point was making that
-            loop short enough that a person stays inside it, which meant getting inference to about
-            <strong>two seconds</strong> on ROCm with a fine-tuned PixArt-alpha. It also ships
-            <strong>71 style presets</strong>, because exploring shouldn't mean writing prompts all
-            day.</p>
-          <p class="case-what">It won the University category of the AMD Pervasive AI Developer
-            Contest, out of <strong>8,231 entrants</strong>, and we demoed it live at AMD Advancing
-            AI 2024 at Moscone Center.</p>
-
+          <p class="case-what">PHiLIP is a human-in-the-loop image-generation prototype built on
+            AMD ROCm and PixArt-alpha. It won the <strong>AMD University Program Award</strong>
+            in the AMD Pervasive AI Developer Contest.</p>
+          <p class="case-what">The team's 2024 writeup reports about <strong>five seconds for nine
+            guidance images</strong> and about <strong>five seconds for enhancement</strong>.
+            The public source contains <strong>71 style presets</strong>.</p>
+          <p class="case-what">These are historical prototype timings. The current README documents
+            route and configuration mismatches, plus machine-specific dependency paths.
+            It does not verify model loading or end-to-end operation.</p>
         </div>
         <div class="aside">
           <dl class="readout">
-            <div><dt>inference</dt><dd>~2<span class="u">s</span></dd></div>
+            <div><dt>guidance images</dt><dd>~5<span class="u">s per 9</span></dd></div>
+            <div><dt>enhancement</dt><dd>~5<span class="u">s</span></dd></div>
             <div><dt>style presets</dt><dd>71</dd></div>
-            <div><dt>contest field</dt><dd>8,231</dd></div>
           </dl>
-
-          <p class="src">the timing, the award and the demo are documented in the
-            <a href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" rel="noopener">contest writeup <span class="go" aria-hidden="true">↗</span></a>.
-            The <a href="https://github.com/mchen04/PHiLIP" rel="noopener">repo <span class="go" aria-hidden="true">↗</span></a> is the 2024
-            source and carries no README. The presets are the only claim it backs on its own.</p>
+          <p class="src">The <a href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" rel="noopener">team writeup</a>
+            describes the prototype and its historical timing.
+            <a href="https://www.hackster.io/contests/amd2023#category-1092" rel="noopener">Official contest results</a>
+            confirm the award. The <a href="https://github.com/mchen04/PHiLIP#readme" rel="noopener">repository README</a>
+            documents the code and its current limits.
+            <a href="https://github.com/mchen04/PHiLIP/blob/35722ec046f4fa27a9815367d48af4adb6ee0ce3/style_prompt.json" rel="noopener">Style preset source</a>.</p>
         </div>
       </article></li>
       </ul>
@@ -912,23 +951,19 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         </article></li>
         <li><article class="rv">
           <h3><a href="https://github.com/jormyy/valence" rel="noopener">Valence <span class="go" aria-hidden="true">↗</span></a></h3>
-          <p>Jeremy's sports stream aggregator. Three merged pull requests, and 54 of the commits
-            on main against his 13.</p>
+          <p>I contribute patches to Jeremy's sports stream aggregator.</p>
         </article></li>
         <li><article class="rv">
           <h3><a href="https://github.com/jormyy/pancake" rel="noopener">Pancake <span class="go" aria-hidden="true">↗</span></a></h3>
-          <p>Jeremy's dynasty fantasy basketball app, still being built. Thirty-eight merged pull
-            requests are mine, and 185 of the commits on main against his 175.</p>
+          <p>I contribute to Jeremy's dynasty fantasy basketball app.</p>
         </article></li>
         <li><article class="rv">
           <h3><a href="https://github.com/jormyy/ding" rel="noopener">Ding <span class="go" aria-hidden="true">↗</span></a></h3>
-          <p>Jeremy's collaborative poker-ranking game. 96 of its 140 commits are mine, committed
-            straight to main rather than sent as patches.</p>
+          <p>I contribute to Jeremy's collaborative poker-ranking game.</p>
         </article></li>
         <li><article class="rv">
           <h3><a href="https://github.com/matthewh8/25-words-or-less" rel="noopener">25 Words or Less <span class="go" aria-hidden="true">↗</span></a></h3>
-          <p>Matthew's same-screen party word game. Bid low, then hope your partner is on your
-            wavelength. 34 of its 39 commits are mine.</p>
+          <p>I contribute to Matthew's same-screen party word game.</p>
         </article></li>
       </ul>
     </div>
@@ -954,6 +989,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         <li><a href="https://first-or-eighth.vercel.app" rel="noopener"><span class="i num">09</span><h3 class="n">First-Or-Eighth</h3><span class="d">the hub for the rest of these</span><span class="h" aria-hidden="true">live ↗</span></a></li>
         <li><a href="https://casino-topaz-gamma.vercel.app" rel="noopener"><span class="i num">10</span><h3 class="n">Neon Royale</h3><span class="d">34 play-money casino games and a localStorage chip wallet</span><span class="h" aria-hidden="true">live ↗</span></a></li>
         <li><a href="https://selfie-a-day.vercel.app" rel="noopener"><span class="i num">11</span><h3 class="n">Selfie a Day</h3><span class="d">one photo a day, lined up against the ghost of yesterday's so the face stops jumping. Never leaves the device.</span><span class="h" aria-hidden="true">live ↗</span></a></li>
+        <li><a href="https://nba-draft-eta.vercel.app" rel="noopener"><span class="i num">12</span><h3 class="n">NBA Draft Room</h3><span class="d">standalone fantasy basketball drafts with ESPN projections, third-round reversal, and CSV export for manual ESPN entry</span><span class="h" aria-hidden="true">live ↗</span></a></li>
       </ul>
     </div>
   </section>
@@ -963,7 +999,7 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
     <div class="shell">
       <div class="shelf-head">
         <h2 id="h-tools">Tools I made for myself</h2>
-        <p class="said">Four things I use most days. I would rebuild all four.</p>
+        <p class="said">Tools I use and experiment with.</p>
       </div>
 
       <ul class="strip" role="list">
@@ -995,6 +1031,10 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
             benefits, and planned expenses into an honest monthly remainder.</p>
           <p class="why">Named after the goal. Built it for a friend, then kept using it myself. Opens on a sign-in.</p>
         </article></li>
+        <li><article class="rv">
+          <h3><a href="https://github.com/mchen04/creator-harness" rel="noopener">Creator Harness <span class="go" aria-hidden="true">↗</span></a></h3>
+          <p>A local content studio with writing review, media generation, restart recovery, and human approval steps.</p>
+        </article></li>
       </ul>
     </div>
   </section>
@@ -1016,9 +1056,8 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
         </div>
         <div>
           <h3>awards</h3>
-          <p class="big">AMD Pervasive AI, University category</p>
-          <p>For PHiLIP, an award-winning human-in-the-loop image-generation platform on AMD ROCm
-            with two-second inference and PixArt-alpha fine-tuning.
+          <p class="big">AMD University Program Award</p>
+          <p>For PHiLIP, a human-in-the-loop image-generation prototype on AMD ROCm and PixArt-alpha.
             <a href="https://www.hackster.io/contests/amd2023#category-1092" rel="noopener">Official results <span class="go" aria-hidden="true">↗</span></a></p>
           <p>Cutie Hack 2022, first place in the sustainability track.</p>
         </div>
@@ -1101,21 +1140,44 @@ document.documentElement.classList.add('js');
    because an instrument with no signal should still show its last plot. */
 (function(){
   var svg=document.getElementById('wire-svg'), meta=document.getElementById('wire-meta');
-  if(!svg||!('fetch' in window)) return;
-  var CACHED={stamp:'14 aug 2026',pairs:[["2026-08-12T03",19,"cs170-eight-puzzle-search"],
-    ["2026-08-12T05",5,"mchen04.github.io"],["2026-08-13T17",5,"hark-audiobook"],
-    ["2026-08-13T19",5,"hark-audiobook"],["2026-08-13T20",15,"hark-audiobook"],
-    ["2026-08-13T23",5,"hark-audiobook"],["2026-08-14T15",7,"pancake"],
-    ["2026-08-14T16",3,"pancake"],["2026-08-14T17",10,"pancake"],["2026-08-14T18",5,"pancake"],
-    ["2026-08-14T19",10,"pancake"],["2026-08-14T22",5,"pancake"],["2026-08-14T23",6,"pancake"]]};
+  if(!svg) return;
+  var rows=document.getElementById('wire-rows');
+  var CACHED={pairs:Array.from(rows.rows,function(row){
+    return [row.cells[0].textContent.replace(' ','T').slice(0,13),
+      Number(row.cells[1].textContent),row.cells[2].textContent];
+  })};
   var NS='http://www.w3.org/2000/svg';
   var state=null, calm=matchMedia('(prefers-reduced-motion:reduce)');
 
   function el(n,at){var e=document.createElementNS(NS,n);for(var k in at)e.setAttribute(k,at[k]);return e;}
   function hour(k){return Date.UTC(+k.slice(0,4),+k.slice(5,7)-1,+k.slice(8,10),+k.slice(11,13));}
 
+  function showSample(next){
+    state=next;
+    rows.replaceChildren();
+    state.pairs.forEach(function(pair){
+      var row=document.createElement('tr');
+      [pair[0].replace('T',' ')+':00',pair[1],pair[2]||'Not supplied'].forEach(function(value,i){
+        var cell=document.createElement(i===0?'th':'td');
+        if(i===0) cell.scope='row';
+        cell.textContent=value;
+        row.appendChild(cell);
+      });
+      rows.appendChild(row);
+    });
+    var pairs=state.pairs;
+    var label=state.live?'Live API sample':'Cached sample from August 14, 2026';
+    if(pairs.length){
+      var total=pairs.reduce(function(sum,pair){return sum+pair[1];},0);
+      meta.textContent=label+' · '+total+' events · '+pairs[0][0].replace('T',' ')+':00 to '
+        +pairs[pairs.length-1][0].replace('T',' ')+':00 UTC';
+    } else meta.textContent=label+' · No public events returned.';
+    svg.toggleAttribute('hidden',!pairs.length);
+    draw(true);
+  }
+
   function draw(animate){
-    if(!state) return;
+    if(!state||!state.pairs.length){svg.replaceChildren();return;}
     var W=svg.clientWidth||600, H=132, y0=H-26, top=16;
     svg.setAttribute('viewBox','0 0 '+W+' '+H);
     while(svg.firstChild) svg.removeChild(svg.firstChild);
@@ -1129,11 +1191,14 @@ document.documentElement.classList.add('js');
     /* day boundaries */
     var d0=new Date(t0); d0=Date.UTC(d0.getUTCFullYear(),d0.getUTCMonth(),d0.getUTCDate())+864e5;
     var MO=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    var lastLabelX=-Infinity;
     for(var t=d0;t<=t1;t+=864e5){
       var x=x0+((t-t0)/HR)*step, d=new Date(t);
       svg.appendChild(el('line',{'class':'daytick',x1:x,y1:top,x2:x,y2:y0}));
-      var lb=el('text',{x:x+5,y:H-8}); lb.textContent=MO[d.getUTCMonth()]+' '+d.getUTCDate();
-      svg.appendChild(lb);
+      if(x-lastLabelX>=65&&x<W-45){
+        var lb=el('text',{x:x+5,y:H-8}); lb.textContent=MO[d.getUTCMonth()]+' '+d.getUTCDate();
+        svg.appendChild(lb);lastLabelX=x;
+      }
     }
     /* the pen line: baseline with one sharp strike per active hour */
     var d='M'+x0+' '+y0, span=(y0-top);
@@ -1210,46 +1275,40 @@ document.documentElement.classList.add('js');
       pen.style.transition='stroke-dashoffset 1.8s cubic-bezier(.22,.61,.36,1)';
       pen.style.strokeDashoffset='0';
     }
-    var total=0; for(i=0;i<pairs.length;i++) total+=pairs[i][1];
-    var hrs=Math.round((t1-t0)/HR)+1;
-    meta.innerHTML='<b>'+total+'</b> events / '+hrs+'h · '+(state.live?'live':'cached '+CACHED.stamp);
   }
 
-  fetch('https://api.github.com/users/mchen04/events/public?per_page=100')
-    .then(function(r){if(!r.ok)throw 0;return r.json();})
-    .then(function(ev){
-      if(!ev.length) throw 0;
-      var h={},k; ev.forEach(function(e){
-        k=e.created_at.slice(0,13);
-        var b=h[k]||(h[k]={n:0,repos:{}}); b.n++;
-        var rn=(e.repo&&e.repo.name||'').split('/').pop();
-        if(rn) b.repos[rn]=(b.repos[rn]||0)+1;
-      });
-      state={live:true,pairs:Object.keys(h).sort().map(function(k){
-        var b=h[k],top='',tc=0;
-        for(var r in b.repos) if(b.repos[r]>tc){tc=b.repos[r];top=r;}
-        return[k,b.n,top];
-      })};
-      draw(true);
-    })
-    .catch(function(){state={live:false,pairs:CACHED.pairs};draw(true);});
+  showSample({live:false,pairs:CACHED.pairs});
+  if('fetch' in window){
+    var controller=new AbortController();
+    var timeout=setTimeout(function(){controller.abort();},8000);
+    fetch('https://api.github.com/users/mchen04/events/public?per_page=100',{signal:controller.signal})
+      .then(function(r){if(!r.ok)throw new Error('GitHub unavailable');return r.json();})
+      .then(function(ev){
+        if(!Array.isArray(ev)) throw new Error('Invalid event sample');
+        var h={};
+        ev.slice(0,100).forEach(function(e){
+          if(!e||typeof e.created_at!=='string'||!Number.isFinite(Date.parse(e.created_at)))
+            throw new Error('Invalid event time');
+          var k=new Date(e.created_at).toISOString().slice(0,13);
+          var b=h[k]||(h[k]={n:0,repos:Object.create(null)}); b.n++;
+          var rn=(e.repo&&e.repo.name||'').split('/').pop();
+          if(rn) b.repos[rn]=(b.repos[rn]||0)+1;
+        });
+        showSample({live:true,pairs:Object.keys(h).sort().map(function(k){
+          var b=h[k],top='',tc=0;
+          for(var r in b.repos) if(b.repos[r]>tc){tc=b.repos[r];top=r;}
+          return[k,b.n,top];
+        })});
+      })
+      .catch(function(){showSample({live:false,pairs:CACHED.pairs});})
+      .finally(function(){clearTimeout(timeout);});
+  }
 
   var rt=null;
   addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){draw(false);},120);},{passive:true});
   /* PlexMono swaps in late; re-measure the readout with the real metrics */
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){draw(false);});
 })();
-
-/* ---- scroll reveal ---- */
-(function(){
-  var els=document.querySelectorAll('.rv');
-  if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('on')}); return; }
-  var io=new IntersectionObserver(function(en,o){
-    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('on'); o.unobserve(e.target); } });
-  },{rootMargin:innerWidth<700?'0px 0px -4% 0px':'0px 0px -12% 0px'});
-  els.forEach(function(e){io.observe(e)});
-})();
-
 
 /* ---- in-page navigation: move focus with the scroll, and say where we are --
    Without this a keyboard user clicks "about", the page scrolls, and the next
