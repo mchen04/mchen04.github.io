@@ -17,6 +17,7 @@
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/site.css">
+<script src="/site.js"></script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
@@ -24,15 +25,21 @@
 <header class="masthead" aria-label="Site header">
   <div class="shell">
     <a class="mark" href="/">Michael Chen</a>
-    <nav aria-label="Site">
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span>Menu</span>
+    </button>
+    <nav id="site-nav" aria-label="Site">
       <ul role="list">
         <li><a href="/">Home</a></li>
-        <li><a href="/work/">Work &amp; Projects</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/projects/">Projects &amp; Fun</a></li>
         <li><a href="/writing/">Writing</a></li>
         <li><a href="/about/">About</a></li>
       </ul>
     </nav>
     <button class="themer" id="themer" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
       <span id="themer-label">theme</span>
     </button>
   </div>
@@ -46,7 +53,8 @@
       <p class="said">Nothing is published at this address.</p>
       <ul role="list">
         <li><a href="/">Home</a></li>
-        <li><a href="/work/">Work &amp; Projects</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/projects/">Projects &amp; Fun</a></li>
         <li><a href="/writing/">Writing</a></li>
         <li><a href="/about/">About</a></li>
       </ul>
@@ -62,6 +70,5 @@
   </div>
 </footer>
 
-<script src="/site.js"></script>
 </body>
 </html>

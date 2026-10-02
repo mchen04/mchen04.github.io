@@ -113,21 +113,13 @@ p,figure,dl,dd{margin:0}
   gap:1rem;height:52px;font-family:var(--data);font-size:var(--t-data)}
 .masthead nav{min-width:0}
 .masthead nav ul{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;list-style:none;margin:0;padding:0}
-/* On a phone the nav takes its own row under the name (see the 640px block);
-   if a narrow screen still clips it, scroll the nav instead of the page. */
+/* With JavaScript a phone gets one header row and a Menu button (640px block).
+   Without it the nav takes its own row under the name; if a narrow screen
+   still clips it, scroll the nav instead of the page. */
 @media (max-width:560px){
   .masthead nav{overflow-x:auto;scrollbar-width:none}
   .masthead nav::-webkit-scrollbar{display:none}
   .masthead nav ul{flex-wrap:nowrap}
-  /* fade the clipped edge so a cut-off item reads as scrollable, not broken;
-     JS drops the class once the list is scrolled to its end */
-  .masthead nav.more{-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);
-    mask-image:linear-gradient(90deg,#000 88%,transparent)}
-  .masthead nav.morel{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%);
-    mask-image:linear-gradient(90deg,transparent,#000 12%)}
-  .masthead nav.more.morel{
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
-    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 }
 .masthead nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;
   display:flex;align-items:center;min-height:var(--tap);padding:0 .1rem;border-bottom:1px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease)}
@@ -141,11 +133,17 @@ p,figure,dl,dd{margin:0}
   background:none;border:0;padding:.55rem 0 .55rem .1rem;min-height:var(--tap);cursor:pointer;
   gap:.5rem;transition:color .18s var(--ease)}
 .js .themer{display:inline-flex;align-items:center}
-.themer::before{content:"";width:7px;height:7px;border-radius:50%;
-  border:1px solid var(--mute);background:transparent;transition:background .18s var(--ease),border-color .18s var(--ease)}
-[data-theme="scope"] .themer::before{background:var(--trace);border-color:var(--trace)}
+/* drawn icons, not font glyphs: they inherit the text colour, so both themes
+   and forced-colours modes recolour them */
+.icon{width:12px;height:12px;flex:none}
+.themer .icon{transition:transform .18s var(--ease),color .18s var(--ease)}
+.themer[aria-pressed="true"] .icon{color:var(--trace);transform:rotate(180deg)}
 .themer:hover{color:var(--ink)}
-.themer:hover::before{border-color:var(--ink)}
+.ext{display:inline-block;width:.72em;height:.72em;vertical-align:baseline}
+.menu-toggle{display:none}
+.menu-toggle .x{display:none}
+.menu-toggle[aria-expanded="true"] .bars{display:none}
+.menu-toggle[aria-expanded="true"] .x{display:inline}
 
 /* ============================ hero ======================================= */
 /* Shape: oversized display type left, readings ledger right. No section below
@@ -464,6 +462,24 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
   .row > .when{padding-top:0}
   .hero-strip{gap:.35rem 1.5rem}
   .readout dd{font-size:1.2rem}
+  /* one header row: name, Menu, theme. The links open in a panel beneath. */
+  .js .masthead .shell{flex-wrap:wrap;height:auto;padding-block:6px;gap:0 .25rem}
+  .js .mark{margin-right:auto}
+  .js .menu-toggle{display:inline-flex;align-items:center;gap:.5rem;order:2;min-height:var(--tap);
+    padding:0 .8rem;font:inherit;color:var(--ink);background:none;border:1px solid var(--rule);
+    border-radius:2px;cursor:pointer}
+  .js .menu-toggle .icon,.js .themer .icon{width:16px;height:16px}
+  .js .menu-toggle[aria-expanded="true"]{border-color:var(--ink)}
+  .js .themer{order:3;width:var(--tap);height:var(--tap);padding:0;justify-content:center}
+  .js #themer-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .js .masthead nav{display:none;order:4;width:100%;overflow:visible}
+  .js .masthead.nav-open nav{display:block}
+  .js .masthead nav ul{flex-direction:column;flex-wrap:nowrap;gap:0;font-size:var(--t-data);
+    padding:.25rem 0 .75rem;justify-content:flex-start}
+  .js .masthead nav li+li{border-top:1px solid var(--rule-soft)}
+  .js .masthead nav a{min-height:48px;padding:0 .3rem 0 .75rem;border-bottom:0;border-left:2px solid transparent}
+  .js .masthead nav a:hover,.js .masthead nav a:focus-visible{border-left-color:var(--trace)}
+  .js .masthead nav a[aria-current]{border-left-color:var(--ink)}
 }
 @media print{
   /* override the tokens, not body: descendants read tokens, so a dark-theme
