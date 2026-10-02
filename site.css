@@ -1,0 +1,589 @@
+/* ============================================================================
+   INSTRUMENT — a measurement readout.
+   Palette is plotter paper, not cream. Accent encodes measurement state:
+   --trace marks a reading that held, --flag marks one that did not.
+   Nothing is colored for decoration.
+   ========================================================================= */
+
+@font-face{font-family:'Bricolage';src:url(fonts/bricolage.woff2) format('woff2');
+  font-weight:400 800;font-stretch:75% 100%;font-display:swap;
+  unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF,U+2200-22FF}
+@font-face{font-family:'Newsreader';src:url(fonts/newsreader.woff2) format('woff2');
+  font-weight:300 600;font-display:swap;
+  unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF}
+@font-face{font-family:'PlexMono';src:url(fonts/plexmono.woff2) format('woff2');
+  font-weight:400;font-display:swap;
+  unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF}
+
+:root{
+  color-scheme:light dark;
+
+  /* --- surface ---------------------------------------------------------- */
+  --paper:#e8eae3;          /* cool plotter stock, deliberately not cream    */
+  --paper-lift:#f1f2ec;
+  --ink:#14181c;            /* blue-black, never #000                        */
+  --ink-2:#3b4348;
+  --mute:#5d6763;
+  --rule:#c6cbc0;
+  --rule-soft:#d6dacf;
+
+  /* --- measurement state ------------------------------------------------ */
+  --trace:#08636b;          /* a reading that held                           */
+  --flag:#a8102a;           /* a reading that missed its bar                 */
+  --trace-wash:#08636b1a;
+  --flag-wash:#a8102a14;
+
+  /* --- type ------------------------------------------------------------- */
+  --display:'Bricolage','Trebuchet MS',system-ui,sans-serif;
+  --body:'Newsreader',Georgia,'Times New Roman',serif;
+  --data:'PlexMono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  /* fluid scale, 8pt-derived */
+  --t-mega:clamp(2.9rem,7.6vw,7rem);
+  --t-xl:clamp(2.1rem,4.6vw,4rem);
+  --t-lg:clamp(1.6rem,2.6vw,2.4rem);
+  --t-md:clamp(1.15rem,1.5vw,1.4rem);
+  --t-body:1.0625rem;
+  --t-data:.8125rem;
+  --t-micro:.6875rem;
+
+  /* --- rhythm (intentionally uneven per section, see each block) --------- */
+  --gut:clamp(1.25rem,4.2vw,3.5rem);
+  --measure:64ch;
+  --tap:44px;          /* minimum comfortable touch target */
+  --head:53px;         /* masthead height; JS re-syncs it after font load */
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+[data-theme="scope"]{
+  --paper:#101417;
+  --paper-lift:#171c20;
+  --ink:#e4e8e2;
+  --ink-2:#b3bcb7;
+  --mute:#8b958f;
+  --rule:#2a3237;
+  --rule-soft:#20272b;
+  --trace:#7fb8bc;
+  --flag:#e08494;
+  --trace-wash:#7fb8bc17;
+  --flag-wash:#e0849414;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="bench"]){
+    --paper:#101417;--paper-lift:#171c20;
+    --ink:#e4e8e2;--ink-2:#b3bcb7;--mute:#8b958f;
+    --rule:#2a3237;--rule-soft:#20272b;
+    --trace:#7fb8bc;--flag:#e08494;
+    --trace-wash:#7fb8bc17;--flag-wash:#e0849414;
+  }
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:var(--t-body);line-height:1.6;
+  font-variation-settings:'opsz' 16;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+svg{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:600;line-height:1.02;
+  letter-spacing:-.025em;font-variation-settings:'wdth' 90}
+p,figure,dl,dd{margin:0}
+:focus-visible{outline:2px solid var(--trace);outline-offset:3px;border-radius:2px}
+::selection{background:var(--ink);color:var(--paper)}
+
+.shell{max-width:1400px;margin-inline:auto;padding-inline:var(--gut)}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
+  padding:.75rem 1rem;font-family:var(--data);font-size:var(--t-data);z-index:99}
+.skip:focus{left:.5rem;top:.5rem}
+
+/* --- utility label. lowercase on purpose: all-caps eyebrows are a tell --- */
+.tag{font-family:var(--data);font-size:var(--t-micro);letter-spacing:.06em;
+  color:var(--mute);display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .6rem;line-height:1.5}
+.tag b{color:var(--ink);font-weight:400}
+.num{font-family:var(--data);font-variant-numeric:tabular-nums}
+
+/* ============================ masthead =================================== */
+.masthead{position:sticky;top:0;z-index:40;background:var(--paper);
+  border-bottom:1px solid var(--rule-soft)}
+.masthead .shell{display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;height:52px;font-family:var(--data);font-size:var(--t-data)}
+.masthead nav{min-width:0}
+.masthead nav ul{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;list-style:none;margin:0;padding:0}
+/* On a phone the nav takes its own row under the name (see the 640px block);
+   if a narrow screen still clips it, scroll the nav instead of the page. */
+@media (max-width:560px){
+  .masthead nav{overflow-x:auto;scrollbar-width:none}
+  .masthead nav::-webkit-scrollbar{display:none}
+  .masthead nav ul{flex-wrap:nowrap}
+  /* fade the clipped edge so a cut-off item reads as scrollable, not broken;
+     JS drops the class once the list is scrolled to its end */
+  .masthead nav.more{-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  .masthead nav.morel{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%);
+    mask-image:linear-gradient(90deg,transparent,#000 12%)}
+  .masthead nav.more.morel{
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+}
+.masthead nav a{text-decoration:none;color:var(--ink-2);white-space:nowrap;
+  display:flex;align-items:center;min-height:var(--tap);padding:0 .1rem;border-bottom:1px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease)}
+.masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);border-bottom-color:var(--trace)}
+.masthead nav a[aria-current]{color:var(--ink);border-bottom-color:var(--ink)}
+.masthead nav{margin-left:auto}
+.mark{font-family:var(--display);font-weight:700;letter-spacing:-.03em;font-size:1.02rem;white-space:nowrap;
+  text-decoration:none;font-variation-settings:'wdth' 78;
+  display:inline-flex;align-items:center;min-height:var(--tap);padding-right:.5rem}
+.themer{display:none;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  background:none;border:0;padding:.55rem 0 .55rem .1rem;min-height:var(--tap);cursor:pointer;
+  gap:.5rem;transition:color .18s var(--ease)}
+.js .themer{display:inline-flex;align-items:center}
+.themer::before{content:"";width:7px;height:7px;border-radius:50%;
+  border:1px solid var(--mute);background:transparent;transition:background .18s var(--ease),border-color .18s var(--ease)}
+[data-theme="scope"] .themer::before{background:var(--trace);border-color:var(--trace)}
+.themer:hover{color:var(--ink)}
+.themer:hover::before{border-color:var(--ink)}
+
+/* ============================ hero ======================================= */
+/* Shape: oversized display type left, readings ledger right. No section below
+   repeats it. */
+.hero{padding-top:clamp(2rem,6vh,4.5rem);border-bottom:1px solid var(--rule)}
+.hero h1{font-size:var(--t-mega);max-width:15ch;font-weight:700;
+  font-variation-settings:'wdth' 84;letter-spacing:-.038em;text-wrap:balance}
+.hero-role{margin-top:1.35rem;max-width:26ch;font-family:var(--display);font-weight:600;
+  font-size:clamp(1.6rem,3.2vw,2.75rem);line-height:1.15;letter-spacing:-.025em;
+  font-variation-settings:'wdth' 86}
+.hero-role b{font-weight:600;color:var(--trace)}
+.hero-lead{margin-top:1rem;max-width:44ch;font-size:var(--t-md);color:var(--ink-2);
+  font-variation-settings:'opsz' 24}
+
+/* two columns at desktop: the claim, and the readings that back it */
+.hero-body{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
+@media (min-width:1120px){
+  .hero-body{grid-template-columns:minmax(0,1fr) 19rem;
+    gap:1.25rem clamp(2rem,5vw,5rem);align-items:start}
+}
+.readings{border:1px solid var(--rule);background:var(--paper-lift)}
+.readings .rhead{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
+  letter-spacing:.06em;padding:.7rem .9rem;border-bottom:1px solid var(--rule);
+  font-variation-settings:normal}
+.readings dl{margin:0}
+.readings div{display:grid;grid-template-columns:1fr auto;gap:.15rem .75rem;align-items:baseline;
+  padding:.7rem .9rem .6rem;border-bottom:1px solid var(--rule-soft)}
+.readings div:last-child{border-bottom:0}
+.readings dt{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin:0}
+.readings dd{margin:0;font-family:var(--display);font-weight:600;font-size:1.15rem;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right}
+.readings .off dt,.readings .off dd{color:var(--flag)}
+.reading-source{padding:.7rem .9rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+
+.hero-strip{margin-top:2.25rem;display:flex;flex-wrap:wrap;
+  gap:.5rem 2.5rem;font-family:var(--data);font-size:var(--t-data);color:var(--mute)}
+.hero-strip b{color:var(--ink);font-weight:400}
+.hero-links{margin-top:1.1rem;display:flex;flex-wrap:wrap;gap:.15rem 1.75rem;font-family:var(--data);font-size:var(--t-data)}
+.hero-links a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);
+  padding:.6rem 0 .25rem;min-height:var(--tap);display:inline-flex;align-items:center;transition:border-color .18s var(--ease),color .18s var(--ease)}
+.hero-links a:hover,.hero-links a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+
+
+/* --- hero wire: a chart-recorder band drawn from the live events API ----- */
+.wire{display:block;grid-column:1/-1;min-width:0;margin-top:1rem;
+  border-top:1px solid var(--rule-soft);padding-top:.8rem}
+.wire-source,.wire-details{font-family:var(--data);font-size:var(--t-micro);margin-top:.7rem}
+.wire-details summary{cursor:pointer;padding:.65rem 0;width:fit-content}
+.wire-table{max-height:20rem;overflow:auto;margin-top:.5rem}
+.wire table{width:100%;border-collapse:collapse;text-align:left}
+.wire caption{text-align:left;padding:.5rem 0;color:var(--mute)}
+.wire th,.wire td{padding:.55rem .7rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+.wire th{font-weight:400}
+.wire tbody th{white-space:nowrap}
+.wire td:last-child{overflow-wrap:anywhere}
+.wire figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  letter-spacing:.02em;line-height:1.6;display:flex;flex-wrap:wrap;gap:.2rem 1.5rem;
+  justify-content:space-between}
+.wire figcaption b{color:var(--ink);font-weight:400}
+.wire .wire-meta{color:var(--mute)}
+.wire .wire-meta b{color:var(--trace)}
+.wire svg{width:100%;height:132px;margin-top:.4rem;cursor:crosshair;touch-action:pan-y}
+.wire svg[hidden]{display:none}
+.wire .scrubline{stroke:var(--mute);stroke-width:1;stroke-dasharray:1 3}
+.wire .scrubdot{fill:var(--flag)}
+.wire .scrubtext{fill:var(--ink);font-size:10.5px}
+.wire .scrub{transition:opacity .2s linear}
+.wire .needle{transition:transform .16s var(--ease)}
+@media (prefers-reduced-motion:reduce){.wire .needle{transition:none}}
+.wire .pen{stroke:var(--trace);fill:none;stroke-width:1.6;stroke-linejoin:round;
+  stroke-linecap:round}
+.wire .base{stroke:var(--rule);stroke-width:1}
+.wire .daytick{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4}
+.wire .nib{fill:var(--trace)}
+.wire text{font-family:var(--data);font-size:10px;fill:var(--mute)}
+@media (max-width:640px){.wire text{font-size:11px}.wire .scrubtext{font-size:11.5px}}
+@media (prefers-reduced-motion:no-preference){
+  .js .wire .nib{animation:nib 1.6s steps(2,start) infinite}
+}
+@keyframes nib{50%{opacity:.25}}
+
+/* ============================ section frame ============================== */
+/* Deliberately different vertical rhythm per shelf. Uniform section padding
+   is a named signature of generated pages. */
+.shelf{border-bottom:1px solid var(--rule);padding-bottom:4rem}
+.shelf-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.75rem 1.5rem;
+  padding-block:2.25rem 1rem}
+/* four sections sit the deck under the heading; tools and about keep it
+   right-aligned, so the header band is not one repeated formula six times */
+.shelf-head.wide{display:block}
+.shelf-head.wide .said{margin:.6rem 0 0;text-align:left;
+  max-width:56ch;font-family:var(--body);font-size:1.05rem;color:var(--ink-2)}
+.shelf-head h2{font-size:var(--t-xl);font-weight:700;font-variation-settings:'wdth' 80}
+/* the shelves are not equal, so they do not announce themselves equally */
+#measured .shelf-head h2{font-size:clamp(2.4rem,5.4vw,4.75rem)}
+#friends .shelf-head h2,#tools .shelf-head h2,#about .shelf-head h2{
+  font-size:clamp(1.7rem,3vw,2.6rem)}
+.shelf-head .said{font-family:var(--data);font-size:var(--t-data);color:var(--mute);
+  max-width:52ch;margin-left:auto;text-align:right}
+@media (max-width:820px){
+  .shelf-head .said,.shelf-head.wide .said{font-family:var(--body);font-size:1rem;color:var(--ink-2)}
+.shelf-head .said{margin-left:0;text-align:left}}
+
+/* ---------- 01 measured: asymmetric case studies with real plots --------- */
+#measured{padding-bottom:5rem}
+.cases{list-style:none;margin:0;padding:0}
+.case{padding-block:clamp(2.5rem,6vh,4rem);border-top:1px solid var(--rule-soft);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(1.5rem,4vw,4rem);align-items:start}
+.cases > li:first-child .case{border-top:0}
+.case.solo{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.case.solo .aside{grid-column:2;grid-row:1}
+.case.solo .case-what{max-width:var(--measure)}
+@media (max-width:980px){
+  .case.solo{grid-template-columns:minmax(0,1fr)}
+  .case.solo .aside{grid-column:1;grid-row:2}
+}
+.case-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem 1rem}
+.case-title h3{font-size:var(--t-lg);font-weight:700}
+.case-title a{color:inherit;text-decoration:none;border-bottom:2px solid var(--trace);
+  transition:color .45s var(--ease)}
+.case-title a:hover,.case-title a:focus-visible{color:var(--trace)}
+.case-what{margin-top:1rem;max-width:var(--measure);color:var(--ink-2)}
+.case-what + .case-what{margin-top:.85rem}
+.case-what strong{font-weight:600;color:var(--ink)}
+
+.readout{margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.readout div{background:var(--paper);padding:.7rem .8rem;display:flex;flex-direction:column}
+@media (max-width:560px){
+  /* stack as label/value rows so a short final row cannot leave an empty cell */
+  .readout{grid-template-columns:1fr}
+  .readout div{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:.75rem}
+  .readout dt{min-height:0}
+  .readout dd{margin-top:0;text-align:right}
+}
+
+.readout dt{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin:0;
+  min-height:2.1em;padding-bottom:.15rem}
+.readout .u{font-size:.6em}
+.readout dd{margin:auto 0 0;font-family:var(--display);font-size:1.4rem;font-weight:600;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+
+/* the honest miss. its own visual state, not a footnote. */
+.miss{margin-top:1.5rem;border-left:3px solid var(--flag);background:var(--flag-wash);
+  padding:.9rem 1.1rem}
+.miss .tag b{color:var(--flag)}
+.miss p{margin-top:.5rem;color:var(--ink-2);max-width:60ch}
+
+.plot{position:sticky;top:calc(var(--head) + 14px);border:1px solid var(--rule);
+  background:var(--paper-lift);padding:1rem 1.1rem 1.1rem;grid-column:2}
+.case > div{grid-column:1;grid-row:1}
+.plot figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.5;margin-bottom:.9rem}
+.plot figcaption b{color:var(--ink);font-weight:400}
+.plot svg{width:100%;height:auto;overflow:visible;max-width:520px}
+.src{margin-top:1.1rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.9}
+.plot .src{margin-top:.85rem;line-height:2}
+.src a{color:var(--ink-2)}
+.src a:hover,.src a:focus-visible,
+.essay p a:hover,.essay p a:focus-visible{color:var(--trace)}
+.go,.h{white-space:nowrap}
+.gridline{stroke:var(--rule);stroke-width:1;vector-effect:non-scaling-stroke}
+.barok{fill:var(--trace)}
+.barbad{fill:var(--flag)}
+.plotlabel{font-family:var(--data);font-size:7px;fill:var(--mute)}
+.plotbar-label{font-family:var(--data);font-size:7.5px;fill:var(--ink)}
+
+/* ---------- 02 shipped: a ledger. rows, not cards. ---------------------- */
+.ledger{border-top:1px solid var(--rule);list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:.4rem 2rem;
+  padding-block:1.5rem;border-bottom:1px solid var(--rule-soft);
+  transition:background .12s linear}
+.ledger > li:hover .row{background:var(--trace-wash)}
+@media (min-width:1100px){
+  .row{grid-template-columns:7.5rem minmax(0,1fr) 11rem;gap:.4rem 1.75rem}
+  .row .built{grid-column:3;grid-row:1;margin-top:.4rem}
+}
+.row > .when{font-family:var(--data);font-size:var(--t-data);color:var(--mute);padding-top:.2rem}
+.row h3{font-size:1.35rem;font-weight:600}
+.row h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .18s var(--ease),color .18s var(--ease)}
+.row h3 a:hover,.row h3 a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.row p{margin-top:.55rem;color:var(--ink-2);max-width:var(--measure)}
+.row .built{margin-top:.7rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+
+/* ---------- 03 books: narrow prose. widest margins on the page. --------- */
+#books{padding-bottom:4.5rem}
+.essay{max-width:62ch;padding-top:1rem}
+.essay p{margin-top:1.15rem;font-size:1.15rem;line-height:1.65;font-variation-settings:'opsz' 22}
+.essay p:first-child{margin-top:0;font-size:1.3rem;line-height:1.5}
+#books .three{margin-top:2.25rem;display:grid;gap:1px;background:var(--rule);list-style:none;padding:0;
+  border:1px solid var(--rule)}
+#books .three > li{background:var(--paper);padding:.9rem 1rem;
+  display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:.3rem 1rem;align-items:baseline;
+  transition:background .22s var(--ease)}
+#books .three > li:hover{background:var(--paper-lift)}
+#books .three a{text-decoration:none;color:inherit}
+.essay p a{transition:color .26s var(--ease)}
+/* the books essay runs beside its screenshot, same two-column read as a case. */
+.essay-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(1.5rem,4vw,4rem);align-items:start}
+.essay-wrap .essay{grid-column:1}
+.shot{grid-column:2;position:sticky;top:calc(var(--head) + 14px);margin-top:1rem;
+  border:1px solid var(--rule);background:var(--paper-lift);padding:1rem 1.1rem 1.1rem}
+.shot figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.5;margin-bottom:.9rem}
+.shot figcaption b{color:var(--ink);font-weight:400}
+.shot img{display:block;width:100%;max-width:260px;height:auto;margin-inline:auto;
+  border:1px solid var(--rule-soft);border-radius:14px}
+.shot .src{margin-top:.85rem;line-height:2}
+@media (max-width:900px){
+  .essay-wrap{grid-template-columns:minmax(0,1fr)}
+  .essay-wrap .essay,.shot{grid-column:1}
+  .shot{position:static;margin-top:2rem}
+}
+#books .three h3 a{transition:color .22s var(--ease)}
+#books .three h3 a:hover,#books .three h3 a:focus-visible{color:var(--trace)}
+#books .three h3 a,.strip h3 a,.row h3 a{display:inline-block;padding-block:.6rem .4rem}
+#books .three .n{font-family:var(--display);font-weight:600;font-size:1.05rem;margin:0;
+  letter-spacing:-.015em;transition:color .22s var(--ease)}
+#books .three .d{grid-column:1/-1;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);line-height:1.6}
+@media (min-width:900px){
+  /* the three artefacts run the full measure under the narrative, so the
+     section reads as essay-then-evidence and leaves no dead column */
+  #books .three{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+#books .three .go{font-family:var(--data);font-size:var(--t-micro);color:var(--trace)}
+
+/* ---------- 04 friends: a directory listing. one line each. ------------- */
+.dir{border-top:1px solid var(--rule);font-family:var(--data);font-size:var(--t-data);
+  list-style:none;margin:0;padding:0}
+.dir a{display:grid;grid-template-columns:1.5rem 11.5rem minmax(0,1fr) auto;
+  gap:.9rem;align-items:baseline;padding:.8rem .25rem;min-height:var(--tap);text-decoration:none;
+  border-bottom:1px solid var(--rule-soft);transition:background .09s linear,padding-left .34s var(--ease)}
+.dir a:hover,.dir a:focus-visible{background:var(--trace-wash);padding-left:.75rem}
+.dir .i{color:var(--mute);font-variant-numeric:tabular-nums}
+.dir .n{color:var(--ink);font-family:var(--display);font-weight:600;font-size:.95rem;
+  letter-spacing:-.01em;margin:0;line-height:1.3}
+.dir .d{color:var(--mute);line-height:1.5}
+.dir .h{color:var(--trace)}
+@media (max-width:720px){
+  .dir a{grid-template-columns:1.5rem minmax(0,1fr) auto;gap:.25rem .8rem}
+  .dir .n{grid-column:2;grid-row:1}
+  /* .d spans the full width on row 2, so .h must be placed or it wraps to a
+     third row and hangs off the left edge */
+  .dir .h{grid-column:3;grid-row:1}
+  .dir .d{grid-column:2/-1;grid-row:2}
+}
+
+/* ---------- 05 tools: compact strip ------------------------------------- */
+.strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule);list-style:none;margin:0;padding:0}
+.strip > li{display:flex}
+@media (max-width:560px){.strip{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:1150px){.strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* upstream mixes one long-form entry with short ones: never stretch it to four */
+@media (min-width:1150px){#upstream .strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* five entries in two columns would otherwise leave a lit empty cell */
+@media (min-width:561px){#upstream .strip > li:last-child:nth-child(odd){grid-column:1/-1}}
+.strip article{background:var(--paper);padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.5rem;flex:1;
+  transition:background .12s linear;position:relative}
+.strip li:hover article{background:var(--paper-lift)}
+.strip h3{font-size:1.05rem;font-weight:600}
+.strip h3 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .18s var(--ease),color .18s var(--ease)}
+/* the whole card is the target; the title stays the visible affordance */
+.strip h3 a::after{content:"";position:absolute;inset:0}
+.strip h3 a:hover,.strip h3 a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.strip p{font-size:.95rem;color:var(--ink-2)}
+#tools .strip li:last-child{grid-column:1/-1}
+.strip .why{margin-top:auto;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+
+/* ---------- 06 about: colophon ------------------------------------------ */
+.colophon{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));
+  gap:2rem clamp(1.5rem,4vw,4rem);border-top:1px solid var(--rule);padding-top:1.75rem}
+.colophon h3{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
+  letter-spacing:.06em;margin-bottom:.75rem}
+.colophon p{color:var(--ink-2)}
+.colophon p + p{margin-top:.7rem}
+.colophon a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);
+  transition:border-color .26s var(--ease),color .26s var(--ease);
+  display:inline-block;padding-block:.35rem .1rem}
+.colophon a:hover,.colophon a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.colophon .big{font-family:var(--display);font-size:1.25rem;font-weight:600;letter-spacing:-.02em}
+
+footer{padding-block:2rem 3rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
+
+/* ============================ motion ===================================== */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
+:target,.shelf,[id]{scroll-margin-top:calc(var(--head) + 22px)}
+
+/* ============================ responsive ================================= */
+@media (max-width:980px){
+  .case{grid-template-columns:minmax(0,1fr);gap:1.75rem}
+  .plot{position:static;grid-column:1;grid-row:2;width:100%}
+  .plotlabel{font-size:9.5px}
+  .plotbar-label{font-size:10px}
+}
+@media (max-width:640px){
+  :root{--t-body:1rem}
+  .masthead .shell{height:auto;padding-block:.5rem;flex-wrap:wrap;gap:.5rem}
+  .masthead nav{order:3;width:100%}
+  .masthead nav{margin-left:0}
+  .masthead nav ul{gap:1.3rem .4rem;font-size:.75rem;justify-content:space-between;flex-wrap:nowrap}
+@media (max-width:360px){.masthead nav ul{flex-wrap:wrap;justify-content:flex-start;gap:0 .9rem}}
+  .masthead nav a{padding:0 .28rem}
+  .themer{padding:.62rem .8rem}
+  .mark{padding-inline:.3rem .8rem}
+  .row{grid-template-columns:1fr;gap:.15rem}
+  .row > .when{padding-top:0}
+  .hero-strip{gap:.35rem 1.5rem}
+  .readout dd{font-size:1.2rem}
+}
+@media print{
+  /* override the tokens, not body: descendants read tokens, so a dark-theme
+     print was emitting dark panels and grey text onto white paper */
+  /* must match the specificity of :root:not([data-theme="bench"]) in the
+     prefers-color-scheme block, or a dark-theme print keeps the dark tokens */
+  :root,:root:not([data-theme="bench"]),[data-theme="scope"]{
+    --paper:#fff;--paper-lift:#fff;--ink:#000;--ink-2:#222;--mute:#444;
+    --rule:#999;--rule-soft:#ccc;--trace:#000;--flag:#000;
+    --trace-wash:transparent;--flag-wash:transparent;
+  }
+  .masthead{display:none}
+  .row,.case,.strip li,.dir li{break-inside:avoid}
+}
+
+/* ============================ multi-page shell =========================== */
+/* Everything below serves the split from one long page into Home, Work &
+   Projects, project pages, Writing and About. Same tokens, same type. */
+
+/* page header: a breadcrumb, the page title and its deck */
+.page-head{padding-block:clamp(2rem,6vh,4rem) 2rem;border-bottom:1px solid var(--rule)}
+.page-head h1{font-size:var(--t-xl);font-weight:700;font-variation-settings:'wdth' 80;
+  letter-spacing:-.035em;max-width:22ch;text-wrap:balance}
+.page-head .tag{margin-top:1rem}
+.page-head .said{margin-top:1rem;max-width:56ch;font-size:1.05rem;color:var(--ink-2)}
+.crumbs{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin-bottom:1.1rem}
+.crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.2rem .5rem}
+.crumbs li+li::before{content:"/";margin-right:.5rem;color:var(--rule)}
+.crumbs a{color:var(--ink-2);display:inline-flex;align-items:center;min-height:var(--tap)}
+.crumbs a:hover,.crumbs a:focus-visible{color:var(--trace)}
+.crumbs [aria-current]{display:inline-flex;align-items:center;min-height:var(--tap)}
+
+/* the "where it went" link at the foot of a summary on Home */
+.more{margin-top:1.25rem;font-family:var(--data);font-size:var(--t-data)}
+.more a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--trace);
+  display:inline-flex;align-items:center;min-height:var(--tap);transition:color .18s var(--ease)}
+.more a:hover,.more a:focus-visible{color:var(--trace)}
+
+/* home: the selected projects, each a summary with a detail page behind it */
+.picks{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){.picks{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.picks > li{background:var(--paper);padding:1.4rem 1.3rem 1.2rem;display:flex;flex-direction:column}
+.picks h3{font-size:var(--t-md);font-weight:700}
+.picks h3 a{color:inherit;text-decoration:none;border-bottom:2px solid var(--trace);
+  display:inline-block;padding-block:.35rem .1rem;transition:color .18s var(--ease)}
+.picks h3 a:hover,.picks h3 a:focus-visible{color:var(--trace)}
+.picks .tag{margin-top:.6rem}
+.picks p:not(.tag):not(.more):not(.src){margin-top:.8rem;color:var(--ink-2);font-size:1rem}
+.picks .miss{margin-top:1rem}
+.picks .miss p{font-size:.95rem}
+.picks .src{margin-top:.8rem}
+.picks .more{margin-top:auto;padding-top:1rem}
+.picks img{display:block;width:100%;max-width:150px;height:auto;margin-top:1rem;
+  border:1px solid var(--rule-soft);border-radius:10px}
+
+/* home: an index of the sections that moved to Work & Projects */
+.index{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);grid-template-columns:minmax(0,1fr)}
+@media (min-width:760px){.index{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.index > li{background:var(--paper);padding:1.3rem 1.3rem 1.1rem;display:flex;flex-direction:column}
+.index h2{font-size:clamp(1.5rem,2.4vw,2.1rem);font-weight:700;font-variation-settings:'wdth' 80}
+.index p{margin-top:.6rem;color:var(--ink-2)}
+.index .names{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);line-height:1.8}
+.index .more{margin-top:auto;padding-top:.9rem}
+.index > li[id]{scroll-margin-top:calc(var(--head) + 22px)}
+
+/* home: the short about */
+.home-about .colophon{margin-top:.5rem}
+
+/* project pages: the case runs at full width, with the figure beside it */
+.project .case{border-top:0;padding-top:2rem}
+
+/* work: real screenshots beside the friends directory */
+.screens{display:grid;gap:1.5rem;margin-top:2rem;grid-template-columns:minmax(0,1fr)}
+@media (min-width:860px){.screens{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.screens figure{border:1px solid var(--rule);background:var(--paper-lift);padding:1rem 1.1rem 1.1rem}
+.screens img{display:block;width:100%;height:auto;border:1px solid var(--rule-soft);border-radius:6px}
+.screens figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  line-height:1.6;margin-top:.8rem}
+.screens figcaption b{color:var(--ink);font-weight:400}
+
+/* writing: the honest empty state, and the article layout the editor uses */
+.empty{padding-block:2.5rem 1rem;color:var(--ink-2);font-size:var(--t-md)}
+.posts{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.posts li{padding-block:1.2rem;border-bottom:1px solid var(--rule-soft)}
+.posts h2{font-size:var(--t-md);font-weight:600}
+.posts h2 a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+.posts h2 a:hover,.posts h2 a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
+.posts p{margin-top:.4rem;color:var(--ink-2)}
+.article{max-width:var(--measure);padding-block:2rem 3rem}
+.article .meta{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
+  display:flex;flex-wrap:wrap;gap:.2rem 1.25rem}
+.article p,.article ul,.article ol,.article blockquote{margin:1.15rem 0 0;font-size:1.15rem;
+  line-height:1.65;font-variation-settings:'opsz' 22}
+.article h2{font-size:var(--t-lg);margin-top:2.5rem}
+.article h3{font-size:var(--t-md);margin-top:2rem}
+.article a{color:var(--ink);text-decoration-color:var(--trace);text-underline-offset:.2em}
+.article a:hover,.article a:focus-visible{color:var(--trace)}
+.article figure{margin:2rem 0 0;border:1px solid var(--rule);background:var(--paper-lift);padding:1rem}
+.article figure img{display:block;width:100%;height:auto}
+.article figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin-top:.7rem;line-height:1.6}
+.article blockquote{border-left:3px solid var(--trace);padding-left:1rem;color:var(--ink-2)}
+.article .sources{margin-top:2.5rem;border-top:1px solid var(--rule);padding-top:1rem;
+  font-family:var(--data);font-size:var(--t-data);color:var(--mute)}
+.article .sources li{margin-top:.4rem}
+
+/* 404 */
+.lost ul{list-style:none;margin:1.5rem 0 0;padding:0;font-family:var(--data);font-size:var(--t-data)}
+.lost li a{color:var(--ink);display:inline-flex;align-items:center;min-height:var(--tap)}
+@media (min-width:900px){.picks.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.index{display:grid}
+.index > section{background:var(--paper);padding:1.3rem 1.3rem 1.1rem;display:flex;flex-direction:column}
+.readings dt small,.readout dt small{display:block;margin-top:.2rem;font-size:.95em;color:var(--mute)}
+.readings dd small{display:block;margin-top:.15rem;font-family:var(--data);font-size:var(--t-micro);
+  font-weight:400;letter-spacing:0;color:var(--flag)}
+.about-line{margin-top:1.4rem;max-width:26ch;font-family:var(--display);font-weight:600;
+  font-size:clamp(1.6rem,3.2vw,2.75rem);line-height:1.15;letter-spacing:-.025em;font-variation-settings:'wdth' 86}
+.page-head .hero-role{font-size:clamp(1.2rem,2vw,1.6rem)}
+.page-head .hero-strip{margin-top:1.5rem}
+.picks .readout,.strip .readout{margin-top:1rem}
+.essay p.more{font-size:var(--t-data);line-height:1.6;margin-top:1.4rem;font-variation-settings:normal}
+.page-head + .shelf > .shell > .colophon{border-top:0;padding-top:2.25rem}

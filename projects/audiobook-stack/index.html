@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Books, and the audio stack they caused · Michael Chen</title>
+<meta name="description" content="How wanting to listen to web novels on a walk led Michael Chen to Epub Listener, the Hark audiobook player, and the Kestrel TTS engine.">
+<meta name="author" content="Michael Chen">
+<link rel="canonical" href="https://michaelluochen.com/projects/audiobook-stack/">
+<meta name="theme-color" content="#e8eae3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101417" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Michael Chen">
+<meta property="og:url" content="https://michaelluochen.com/projects/audiobook-stack/">
+<meta property="og:title" content="Books, and the audio stack they caused · Michael Chen">
+<meta property="og:description" content="How wanting to listen to web novels on a walk led Michael Chen to Epub Listener, the Hark audiobook player, and the Kestrel TTS engine.">
+<meta property="og:image" content="https://michaelluochen.com/og.png?v=3">
+<meta property="og:image:alt" content="Michael Chen, AI software engineer in the Bay Area. I build software for people I know, including me.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Books, and the audio stack they caused · Michael Chen">
+<meta name="twitter:description" content="How wanting to listen to web novels on a walk led Michael Chen to Epub Listener, the Hark audiobook player, and the Kestrel TTS engine.">
+<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=3">
+<meta name="twitter:image:alt" content="Michael Chen, AI software engineer in the Bay Area. I build software for people I know, including me.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"WebPage","@id":"https://michaelluochen.com/projects/audiobook-stack/#page","url":"https://michaelluochen.com/projects/audiobook-stack/","name":"Books, and the audio stack they caused","description":"How wanting to listen to web novels on a walk led Michael Chen to Epub Listener, the Hark audiobook player, and the Kestrel TTS engine.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"Work & Projects","item":"https://michaelluochen.com/work/"},{"@type":"ListItem","position":3,"name":"Books, and the audio stack they caused","item":"https://michaelluochen.com/projects/audiobook-stack/"}]}]}
+</script>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="masthead" aria-label="Site header">
+  <div class="shell">
+    <a class="mark" href="/">Michael Chen</a>
+    <nav aria-label="Site">
+      <ul role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/work/" aria-current="page">Work &amp; Projects</a></li>
+        <li><a href="/writing/">Writing</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+    <button class="themer" id="themer" type="button" aria-pressed="false">
+      <span id="themer-label">theme</span>
+    </button>
+  </div>
+</header>
+
+<main id="top" tabindex="-1">
+
+  <div class="page-head">
+    <div class="shell">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/work/">Work &amp; Projects</a></li><li><span aria-current="page">Books, and the audio stack they caused</span></li></ol></nav>
+      <h1>Books, and the audio stack they caused</h1>
+        <p class="said">Where Kestrel, Epub Listener and Hark came from. It starts with wanting to
+          listen to a web novel on a walk and ends with me distilling a vocoder, which is a
+          ridiculous way to solve that problem.</p>
+    </div>
+  </div>
+
+  <section class="shelf" aria-label="The story">
+    <div class="shell">
+      <div class="essay-wrap">
+      <div class="essay">
+        <p>I read a lot of web novels and light novels. The good ones run to hundreds of chapters and
+          the translation pace means you are always waiting, so at some point I wanted to listen to
+          them instead of reading them, mostly so I could do it while walking somewhere.</p>
+        <p>Nothing would do it. So I wrote a CLI that takes an EPUB and gives back a narrated MP3
+          with real chapter markers, which is <a href="https://github.com/mchen04/epub-listener" rel="noopener">Epub Listener</a>.
+          The files turned out too big and too awkward to move around, so I built
+          <a href="https://github.com/mchen04/hark-audiobook" rel="noopener">Hark</a> to hold them,
+          which parses the MP3 in the browser and keeps the audio on the device. The server only ever
+          sees titles, chapters, my position and my playback history.</p>
+        <p>A 600-chapter book was still hours of waiting. That is when I went and distilled
+          the vocoder. That is <a href="https://github.com/mchen04/kestrel-tts" rel="noopener">Kestrel</a>,
+          the same project as the <a href="/projects/kestrel-tts/">benchmark table on its own page</a>. It's fast enough now that the pipeline stopped
+          being the thing I waited on. It also still sounds slightly worse than the model it came from, which is the
+          part I did not manage to fix.</p>
+        <p>Hark got a read-along mode out of it, because Epub Listener already knew the word timings
+          the TTS engine produced and it seemed wasteful to throw them away. The player
+          highlights the narrated sentence, marks the word being spoken, and jumps if you tap
+          somewhere else. It works on a plane, in airplane mode.</p>
+        <p>In August the loop closed on itself. Kestrel now runs inside Hark, so the browser takes a
+          PDF or an EPUB and narrates it on the device. The CLI is no longer in the path, and
+          neither is my laptop.</p>
+
+        </div>
+
+        <figure class="shot">
+          <figcaption><b>fig. 2</b> · Hark installed to the iPhone Home Screen, playing a test
+            import. The MP3 was parsed in the browser and stored on the device; nothing on this
+            screen came off a server.</figcaption>
+          <img src="/images/hark-player.png" width="477" height="800" loading="lazy" decoding="async"
+            alt="Hark's player running as an installed iPhone app: cover art, the book title, a
+              position slider at four seconds, a large pause button, and controls for speed,
+              sleep timer, chapters and history.">
+          <p class="src"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark
+            live <span class="go" aria-hidden="true">↗</span></a> · captured from the iPhone e2e
+            suite in <a href="https://github.com/mchen04/hark-audiobook" rel="noopener">the repo <span class="go" aria-hidden="true">↗</span></a></p>
+        </figure>
+      </div>
+        <ul class="three" role="list">
+          <li>
+            <h3 class="n"><a href="https://github.com/mchen04/epub-listener" rel="noopener">Epub Listener<span class="go" aria-hidden="true"> github ↗</span></a></h3>
+            <span class="d">Python CLI. EPUB in, chaptered MP3 out, via Edge-TTS, local Kokoro,
+              Kestrel on Apple Silicon, any Hugging Face text-to-speech pipeline model, or any
+              local command that writes audio.
+              Checksum-based resume so a failed run does not start over. Embeds a timestamped
+              read-along transcript, median word-onset error under 30ms.</span>
+          </li>
+          <li>
+            <h3 class="n"><a href="https://github.com/mchen04/kestrel-tts" rel="noopener">Kestrel<span class="go" aria-hidden="true"> github ↗</span></a></h3>
+            <span class="d">The reason the pipeline is fast enough to use, and the one that fails
+              its own quality battery. The numbers and the audit are under <a href="/projects/kestrel-tts/">Measured</a>.</span>
+          </li>
+          <li>
+            <h3 class="n"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark<span class="go" aria-hidden="true"> live ↗</span><span class="go"> (sign-in)</span></a></h3>
+            <span class="d">Installable offline-first audiobook PWA. Import a chaptered MP3, or a
+              PDF, EPUB, DOCX, text, Markdown or HTML file it narrates on the device with Kestrel
+              through WebGPU, WASM where there is none. Everything is parsed and stored on-device,
+              server sees metadata only. Karaoke-style read-along with sentence highlight and
+              word-level marking. Playback and read-along work offline; only the first narration
+              downloads the model, about 39MB of weights and a 24MB runtime.</span>
+          </li>
+        </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer aria-label="Colophon">
+  <div class="shell">
+    <span>© 2026 Michael Chen</span>
+    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Every number under Measured comes from a repo you can open.</span>
+  </div>
+</footer>
+
+<script src="/site.js"></script>
+</body>
+</html>
