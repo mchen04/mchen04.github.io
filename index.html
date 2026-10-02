@@ -33,6 +33,7 @@
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/site.css">
+<script src="/site.js"></script>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI Software Engineer","url":"https://michaelluochen.com/","email":"mailto:michaelluochen1@gmail.com","address":{"@type":"PostalAddress","addressRegion":"CA","addressCountry":"US","addressLocality":"Bay Area"},"alumniOf":{"@type":"CollegeOrUniversity","name":"University of California, Riverside"},"worksFor":{"@type":"Organization","name":"Epoch AI / Zerg AI"},"sameAs":["https://github.com/mchen04","https://www.linkedin.com/in/michael-luo-chen/","https://huggingface.co/mchen04"]},{"@type":"WebPage","@id":"https://michaelluochen.com/#page","url":"https://michaelluochen.com/","name":"Michael Chen, AI software engineer","description":"Michael Chen builds software for people he knows, including himself. A distilled TTS engine that runs 53x faster and still misses its own quality bar, patches in other people's repositories, and a shelf of apps his friends actually use.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","about":{"@id":"https://michaelluochen.com/#person"}}]}
@@ -44,15 +45,21 @@
 <header class="masthead" aria-label="Site header">
   <div class="shell">
     <a class="mark" href="/">Michael Chen</a>
-    <nav aria-label="Site">
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span>Menu</span>
+    </button>
+    <nav id="site-nav" aria-label="Site">
       <ul role="list">
         <li><a href="/" aria-current="page">Home</a></li>
-        <li><a href="/work/">Work &amp; Projects</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/projects/">Projects &amp; Fun</a></li>
         <li><a href="/writing/">Writing</a></li>
         <li><a href="/about/">About</a></li>
       </ul>
     </nav>
     <button class="themer" id="themer" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
       <span id="themer-label">theme</span>
     </button>
   </div>
@@ -212,8 +219,8 @@
               position slider at four seconds, a large pause button, and controls for speed,
               sleep timer, chapters and history.">
           <p class="src"><a href="https://audiobook-pwa-plum.vercel.app" rel="noopener">Hark
-            live <span class="go" aria-hidden="true">↗</span></a> · captured from the iPhone e2e
-            suite in <a href="https://github.com/mchen04/hark-audiobook" rel="noopener">the repo <span class="go" aria-hidden="true">↗</span></a></p>
+            live <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · captured from the iPhone e2e
+            suite in <a href="https://github.com/mchen04/hark-audiobook" rel="noopener">the repo <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
         </figure>
       </div>
     </div>
@@ -226,27 +233,28 @@
         <section id="shipped" aria-labelledby="h-shipped">
           <h2 id="h-shipped">Shipped</h2>
         <p class="said">Work people paid for. Some of it I can only describe in outline.</p>
-          <p class="names">Zerg and ZTC · ZergChat · Zergboard · Forward-deployed engineering · MOBIVOLT · AI at UCR</p>
-          <p class="more"><a href="/work/#shipped">Shipped, on Work &amp; Projects</a></p>
+          <p class="names">Zerg and ZTC · ZergChat · Zergboard · Forward-deployed engineering · MOBIVOLT</p>
+          <p class="more"><a href="/work/#shipped">Shipped, on Work</a></p>
+          <p class="more"><a href="/work/#leadership">Leadership: AI at UCR, on Work</a></p>
         </section>
         <section id="upstream" aria-labelledby="h-upstream">
           <h2 id="h-upstream">Other people's repositories</h2>
         <p class="said">Code I wrote somewhere I do not own. The first one started as me using the
           thing and finding it wrong. The rest are friends' projects I kept showing up to.</p>
           <p class="names">mlx-audio · Valence · Pancake · Ding · 25 Words or Less</p>
-          <p class="more"><a href="/work/#upstream">Other people's repositories, on Work &amp; Projects</a></p>
+          <p class="more"><a href="/projects/#upstream">Other people's repositories, on Projects &amp; Fun</a></p>
         </section>
         <section id="friends" aria-labelledby="h-friends">
           <h2 id="h-friends">For my friends</h2>
         <p class="said">Built because someone asked, usually the night before we needed it.</p>
           <p class="names">Felt · Codenames · LoLdle · Pour Decisions · Kings Cup · Better 82-0 · SplitWisest · Sayable · First-Or-Eighth · Neon Royale · Selfie a Day · NBA Draft Room</p>
-          <p class="more"><a href="/work/#friends">For my friends, on Work &amp; Projects</a></p>
+          <p class="more"><a href="/projects/#friends">For my friends, on Projects &amp; Fun</a></p>
         </section>
         <section id="tools" aria-labelledby="h-tools">
           <h2 id="h-tools">Tools I made for myself</h2>
         <p class="said">Tools I use and experiment with.</p>
           <p class="names">tcd · cs · ESPN lineup bot · House by 30 · Creator Harness</p>
-          <p class="more"><a href="/work/#tools">Tools I made for myself, on Work &amp; Projects</a></p>
+          <p class="more"><a href="/projects/#tools">Tools I made for myself, on Projects &amp; Fun</a></p>
         </section>
       </div>
     </div>
@@ -270,14 +278,14 @@
           <h3>awards</h3>
           <p class="big">AMD University Program Award</p>
           <p>For PHiLIP, a human-in-the-loop image-generation prototype on AMD ROCm and PixArt-alpha.
-            <a href="https://www.hackster.io/contests/amd2023#category-1092" rel="noopener">Official results <span class="go" aria-hidden="true">↗</span></a></p>
+            <a href="https://www.hackster.io/contests/amd2023#category-1092" rel="noopener">Official results <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
           <p>Cutie Hack 2022, first place in the sustainability track.</p>
         </div>
         <div>
           <h3>reaching me</h3>
           <p class="big"><a href="mailto:michaelluochen1@gmail.com">michaelluochen1@gmail.com</a></p>
           <p><a href="https://github.com/mchen04" rel="me noopener">github.com/mchen04</a></p>
-          <p><a href="https://www.linkedin.com/in/michael-luo-chen/" rel="me noopener">linkedin <span class="go" aria-hidden="true">↗</span></a></p>
+          <p><a href="https://www.linkedin.com/in/michael-luo-chen/" rel="me noopener">linkedin <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
         </div>
       </div>
       <p class="more"><a href="/about/">About Michael Chen</a></p>
@@ -293,6 +301,5 @@
   </div>
 </footer>
 
-<script src="/site.js"></script>
 </body>
 </html>

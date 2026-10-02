@@ -8,8 +8,10 @@ Every page is plain HTML that works without JavaScript:
 - [index.html](index.html): Home. It keeps the old single-page anchors
   (`#measured`, `#shipped`, `#books`, `#upstream`, `#friends`, `#tools`, `#about`)
   as short summaries that link to where each section now lives.
-- [work/](work/index.html): Work & Projects, with the full section content.
-- [projects/](projects/): one page per detailed project.
+- [work/](work/index.html): Work: Shipped and Leadership. Its old project anchors
+  link on to Projects & Fun.
+- [projects/](projects/index.html): Projects & Fun, with the full project sections,
+  plus one page per detailed project under `projects/<slug>/`.
 - [writing/](writing/index.html): Writing. Articles go in `writing/<slug>/index.html`
   and use the `.article` layout in `site.css`.
 - [about/](about/index.html): About.

@@ -1,4 +1,50 @@
+/* site.js loads from <head>, before the body exists, so the js class and a saved theme are in place
+   before first paint: the phone header renders collapsed and dark mode does not flash. Everything that
+   touches the page waits for DOMContentLoaded. If this file never loads, there is no js class, so the
+   navigation stays fully visible and the Menu button stays hidden. */
 document.documentElement.classList.add('js');
+(function(){
+  var saved=null; try{saved=localStorage.getItem('mc-theme')}catch(e){}
+  if(saved) document.documentElement.setAttribute('data-theme',saved);
+})();
+
+function onReady(fn){
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn);
+  else fn();
+}
+
+onReady(function(){
+
+/* ---- phone menu: a disclosure button over an ordinary list of links -----
+   W3C APG disclosure navigation: a real button with aria-expanded and
+   aria-controls, links stay links (no role=menu), Tab moves normally and
+   nothing traps focus. Escape closes and returns focus to the button;
+   following a link, clicking outside, tabbing out of the header or widening
+   past the phone layout closes it too. Wider screens show the nav inline. */
+(function(){
+  var head=document.querySelector('.masthead'), btn=document.getElementById('menu-toggle'),
+      nav=document.getElementById('site-nav');
+  if(!head||!btn||!nav) return;
+  var phone=matchMedia('(max-width:640px)');
+  function isOpen(){ return btn.getAttribute('aria-expanded')==='true'; }
+  function set(open,returnFocus){
+    btn.setAttribute('aria-expanded',String(open));
+    head.classList.toggle('nav-open',open);
+    if(!open&&returnFocus) btn.focus();
+  }
+  btn.addEventListener('click',function(){ set(!isOpen()); });
+  head.addEventListener('keydown',function(e){
+    if((e.key==='Escape'||e.key==='Esc')&&isOpen()){ e.preventDefault(); set(false,true); }
+  });
+  nav.addEventListener('click',function(e){ if(e.target.closest('a')) set(false); });
+  head.addEventListener('focusout',function(e){
+    if(isOpen()&&e.relatedTarget&&!head.contains(e.relatedTarget)) set(false);
+  });
+  document.addEventListener('click',function(e){ if(isOpen()&&!head.contains(e.target)) set(false); });
+  phone.addEventListener('change',function(){ set(false); });
+  /* the back/forward cache can restore a page with the menu still open */
+  addEventListener('pageshow',function(){ set(false); });
+})();
 
 /* The sticky masthead changes height with viewport and font load. Anchor
    offsets are derived from its measured height so a nav tap can never park a
@@ -12,23 +58,9 @@ document.documentElement.classList.add('js');
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(sync);
 })();
 
-/* ---- masthead nav: show a fade while more sections sit off-screen ------ */
-(function(){
-  var nav=document.querySelector('.masthead nav');
-  function sync(){
-    nav.classList.toggle('more',nav.scrollWidth-nav.clientWidth-nav.scrollLeft>2);
-    nav.classList.toggle('morel',nav.scrollLeft>2);
-  }
-  nav.addEventListener('scroll',sync,{passive:true});
-  addEventListener('resize',sync,{passive:true});
-  sync();
-})();
-
 /* ---- theme: system by default, explicit choice remembered ------------- */
 (function(){
   var root=document.documentElement, btn=document.getElementById('themer');
-  var saved=null; try{saved=localStorage.getItem('mc-theme')}catch(e){}
-  if(saved) root.setAttribute('data-theme',saved);
   function isDark(){
     var t=root.getAttribute('data-theme');
     if(t) return t==='scope';
@@ -239,3 +271,5 @@ document.documentElement.classList.add('js');
     setTimeout(function(){ el.focus({preventScroll:true}); },0);
   });
 })();
+
+});
