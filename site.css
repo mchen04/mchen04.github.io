@@ -587,3 +587,5 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
 .picks .readout,.strip .readout{margin-top:1rem}
 .essay p.more{font-size:var(--t-data);line-height:1.6;margin-top:1.4rem;font-variation-settings:normal}
 .page-head + .shelf > .shell > .colophon{border-top:0;padding-top:2.25rem}
+.article .sources h2{font-size:var(--t-md);color:var(--ink);margin-top:0}
+.article .sources ul{font-size:var(--t-data);line-height:1.6;padding-left:1.1rem;margin-top:.6rem}
