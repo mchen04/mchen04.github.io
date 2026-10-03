@@ -25,7 +25,7 @@ onReady(function(){
   var head=document.querySelector('.masthead'), btn=document.getElementById('menu-toggle'),
       nav=document.getElementById('site-nav');
   if(!head||!btn||!nav) return;
-  var phone=matchMedia('(max-width:640px)');
+  var phone=matchMedia('(max-width:860px)');
   function isOpen(){ return btn.getAttribute('aria-expanded')==='true'; }
   function set(open,returnFocus){
     btn.setAttribute('aria-expanded',String(open));
@@ -258,6 +258,58 @@ onReady(function(){
   addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){draw(false);},120);},{passive:true});
   /* PlexMono swaps in late; re-measure the readout with the real metrics */
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){draw(false);});
+})();
+
+/* ---- writing topics: filter the archive by topic -------------------------
+   The publishing helper writes the archive list; this only reads it. An
+   entry's primary topic is its bold label, and the JSON map under the list
+   adds secondary topics by slug. Only topics with at least one article get a
+   button, so there are never empty views. Without JavaScript the whole list
+   shows and no buttons appear. */
+(function(){
+  var box=document.getElementById('topic-filter'), data=document.getElementById('writing-topics'),
+      status=document.getElementById('topic-status');
+  if(!box||!data) return;
+  var conf; try{conf=JSON.parse(data.textContent);}catch(e){return;}
+  var schema=conf.topics||[], also=conf.also||{};
+  var items=Array.prototype.slice.call(document.querySelectorAll('li[data-slug]'));
+  items.forEach(function(li){
+    var b=li.querySelector('.tag b'), primary=b?b.textContent.trim():'';
+    var extra=(also[li.getAttribute('data-slug')]||[]).filter(function(t){
+      return schema.indexOf(t)>=0&&t!==primary;});
+    li._topics=[primary].concat(extra);
+    if(extra.length&&b){
+      var tag=document.createElement('span'); tag.className='also';
+      tag.textContent='also '+extra.join(', ');
+      b.parentNode.appendChild(document.createTextNode(' · ')); b.parentNode.appendChild(tag);
+    }
+  });
+  var used=schema.filter(function(t){
+    return items.some(function(li){return li._topics.indexOf(t)>=0;});});
+  if(!used.length) return;
+  var buttons=[];
+  function count(t){
+    return t===null?items.length:items.filter(function(li){return li._topics.indexOf(t)>=0;}).length;}
+  function show(t){
+    var n=0;
+    items.forEach(function(li){
+      var on=t===null||li._topics.indexOf(t)>=0; li.hidden=!on; if(on) n++;});
+    buttons.forEach(function(btn){btn.setAttribute('aria-pressed',String(btn._topic===t));});
+    status.textContent='Showing '+n+(n===1?' article':' articles')+(t===null?'':' in '+t)+'.';
+  }
+  [null].concat(used).forEach(function(t){
+    var btn=document.createElement('button'); btn.type='button'; btn._topic=t;
+    btn.innerHTML='<span></span> <small></small>';
+    btn.firstChild.textContent=t===null?'All':t; btn.lastChild.textContent=count(t);
+    btn.addEventListener('click',function(){show(t);});
+    box.appendChild(btn); buttons.push(btn);
+  });
+  /* sit under the archive heading the helper writes, so the order reads
+     heading, filter, list */
+  var head=document.getElementById('h-articles'), sh=head&&head.closest('.shelf-head');
+  if(sh){ sh.parentNode.insertBefore(box,sh.nextSibling); sh.parentNode.insertBefore(status,box.nextSibling); }
+  box.hidden=false;
+  buttons[0].setAttribute('aria-pressed','true');
 })();
 
 /* ---- in-page links: move focus with the scroll ---------------------------

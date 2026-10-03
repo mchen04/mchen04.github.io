@@ -56,6 +56,7 @@
       <ul role="list">
         <li><a href="/">Home</a></li>
         <li><a href="/work/">Work</a></li>
+        <li><a href="/ml/">ML &amp; Research</a></li>
         <li><a href="/projects/">Projects &amp; Fun</a></li>
         <li><a href="/writing/" aria-current="page">Writing</a></li>
         <li><a href="/about/">About</a></li>
@@ -74,16 +75,22 @@
     <div class="shell">
       <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Writing</span></li></ol></nav>
       <h1>Writing</h1>
+      <p class="topics">I write about books and web fiction, tech and building, fantasy sports, and whatever else is on my mind.</p>
     </div>
   </div>
   <section class="shelf" aria-label="Articles">
     <div class="shell">
+      <div class="topic-filter" id="topic-filter" role="group" aria-label="Show articles by topic" hidden></div>
+      <p class="topic-status" id="topic-status" aria-live="polite"></p>
       <!-- pwe:archive -->
       <div class="shelf-head"><h2 id="h-articles">Articles</h2></div>
       <ul role="list" class="picks" style="grid-template-columns:minmax(0,1fr)">
         <li data-slug="light-novels-audiobook-stack" data-date="2026-10-02"><h3><a href="/writing/light-novels-audiobook-stack/">I just wanted something to listen to on the drive</a></h3><p class="tag"><b>Books &amp; Web Fiction</b> · <time datetime="2026-10-02">2026-10-02</time></p><p>I wanted something that would keep me interested for longer. Something with a story I could follow instead of just more background noise.</p></li>
       </ul>
       <!-- /pwe:archive -->
+      <!-- Topic schema for the filter. Each article's primary topic comes from its entry above;
+           "also" adds secondary topics by slug. Topics must be one of the four listed. -->
+      <script type="application/json" id="writing-topics">{"topics":["Books & Web Fiction","Tech & Building","Fantasy Sports","Miscellaneous"],"also":{"light-novels-audiobook-stack":["Tech & Building"]}}</script>
     </div>
   </section>
 

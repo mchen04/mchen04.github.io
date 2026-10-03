@@ -56,6 +56,7 @@
       <ul role="list">
         <li><a href="/">Home</a></li>
         <li><a href="/work/" aria-current="page">Work</a></li>
+        <li><a href="/ml/">ML &amp; Research</a></li>
         <li><a href="/projects/">Projects &amp; Fun</a></li>
         <li><a href="/writing/">Writing</a></li>
         <li><a href="/about/">About</a></li>
@@ -90,12 +91,13 @@
           <p class="when">2025 to now</p>
           <div>
             <h3><a href="https://zergai.com" rel="noopener">Zerg and ZTC</a></h3>
-            <p>I work on an autonomous coding-agent platform and its terminal. My work includes parallel tool dispatch so agents stop queueing behind each other, background
+            <p>Zerg is a spec-driven framework for autonomous coding agents, and ZTC is its terminal client.
+              My work includes parallel tool dispatch so agents stop queueing behind each other, background
               sub-agents for work that outlives a single turn, worktree-isolated batch execution so
               concurrent writers do not collide, a sandboxed multi-agent workflow runtime, MCP and
               provider routing, and the live web interface. People can watch a run as it happens.</p>
           </div>
-          <p class="built">Epoch AI / Zerg AI · TypeScript, Python</p>
+          <p class="built">Epoch AI / Zerg AI · ZTC: TypeScript on Node, Rust native packages, React browser mirror · Zerg: Python core, Vue web IDE</p>
         </article></li>
 
         <li><article class="row">
@@ -132,14 +134,16 @@
           <p class="when">2023 to 2025</p>
           <div>
             <h3>MOBIVOLT</h3>
-            <p>For this $5M+ DOD-funded fuel-cell program, I wrote a Python and PyQt hardware-in-the-loop
+            <p>For this $5M+ DOD-funded fuel-cell program, I built the desktop apps that run the automated
+              test stands, in C# on .NET with Avalonia. I wrote a Python and PyQt hardware-in-the-loop
               simulator with a serial firmware bridge, injecting sensor values every 100ms and
               polling at 200ms against plant models. Firmware could then be
               exercised without a rig. I ported PIC32MZ firmware onto Harmony v3 across 50+ application and
               driver modules with 2,500+ lines of C tests, and kept 5 automated test stands
-              processing 100+ concurrent data streams with zero downtime across 18 months.</p>
+              processing 100+ concurrent data streams with zero downtime across 18 months. I also handled
+              migrations and did circuit work in KiCad and ngspice.</p>
           </div>
-          <p class="built">C, C#, Python, PyQt, PIC32MZ, Harmony v3 · defense program, no public artifact</p>
+          <p class="built">C#, .NET, Avalonia, Python, PyQt, C, PIC32MZ, Harmony v3, KiCad, ngspice · defense program, no public artifact</p>
         </article></li>
       </ul>
     </div>
@@ -168,13 +172,13 @@
   <section class="shelf tide" id="moved" aria-labelledby="h-moved">
     <div class="shell">
       <div class="shelf-head">
-        <h2 id="h-moved">Projects &amp; Fun</h2>
+        <h2 id="h-moved">Elsewhere on the site</h2>
       </div>
-      <p class="more"><span id="measured"></span><a href="/projects/#measured">Kestrel and PHiLIP</a></p>
+      <p class="more"><span id="measured"></span><a href="/ml/">Kestrel, PHiLIP and other ML work, now in ML &amp; Research</a></p>
       <p class="more"><span id="books"></span><a href="/projects/#books">My audiobook setup</a></p>
       <p class="more"><span id="friends"></span><a href="/projects/#friends">Apps for friends</a></p>
       <p class="more"><span id="tools"></span><a href="/projects/#tools">Personal tools</a></p>
-      <p class="more"><span id="upstream"></span><a href="/projects/#upstream">Open-source contributions</a></p>
+      <p class="more"><span id="upstream"></span><a href="/projects/#upstream">Contributions to friends' projects</a></p>
     </div>
   </section>
 
