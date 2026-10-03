@@ -777,16 +777,31 @@ footer::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;bac
 main:has(.contact:last-child) + footer::before{background:#ffffff1f}
 
 /* ============================ work ======================================= */
-/* Professional and plain: the coast in the header is hatched like a printed
-   chart, and the roles hang off one drawn rail in date order. */
-.page-work .page-head::after{opacity:.85;
-  background:repeating-linear-gradient(172deg,var(--rule) 0 1px,transparent 1px 7px)}
-.page-work #leadership{--band:var(--shallow)}
-.page-work #moved{--band:var(--shallow-2)}
+/* Professional and plain: depth soundings in the header, and the roles hang
+   off one wavering rail in date order. The page goes from shore to open
+   water as the record goes back in time, rising in long slow swells. */
+.page-work .page-head::after{opacity:.2;mask-image:url('/images/soundings.svg');mask-size:contain;
+  mask-position:right center;height:100%;width:min(62%,720px)}
+.page-work #shipped{background:linear-gradient(var(--paper),var(--shallow))}
+.page-work #leadership{--band:var(--shallow-2)}
+.page-work #moved{--band:var(--deep);color:var(--deep-ink)}
+.page-work .shelf.tide::before{top:-47px;height:48px;mask-image:url('/images/swell.svg')}
+.page-work #moved::before{transform:scaleX(-1)}
+.page-work #moved::after{content:"";position:absolute;right:0;bottom:0;width:min(60%,640px);height:100%;
+  background:var(--deep-trace);opacity:.09;pointer-events:none;
+  mask:url('/images/soundings.svg') right bottom / contain no-repeat}
+.page-work #moved .shelf-head h2{color:var(--deep-ink)}
+.page-work #moved .shelf-head h2::after{border-top-color:var(--deep-trace)}
+.page-work #moved .more a{color:var(--deep-ink);border-bottom-color:var(--deep-mute)}
+.page-work #moved .more a:hover,.page-work #moved .more a:focus-visible{color:var(--deep-trace);border-bottom-color:var(--deep-trace)}
+.page-work #moved :focus-visible{outline-color:var(--deep-trace)}
+.page-work + footer{background:var(--deep);color:var(--deep-mute)}
+.page-work + footer::before{background:#ffffff1f}
 .page-work .ledger{border-top:0;position:relative}
 @media (min-width:641px){
-  .page-work .ledger::before{content:"";position:absolute;left:6.6rem;top:1.9rem;bottom:1rem;width:1.5px;
-    background:linear-gradient(var(--trace),var(--rule) 25%,var(--rule) 80%,transparent)}
+  .page-work .ledger::before{content:"";position:absolute;left:calc(6.6rem - 4px);top:1.9rem;bottom:1rem;width:10px;
+    background:linear-gradient(var(--trace),var(--rule) 25%,var(--rule) 80%,transparent);
+    mask:url('/images/rail.svg') center / 100% 100% no-repeat}
   .page-work .row > .when{position:relative}
   .page-work .row > .when::after{content:"";position:absolute;left:6.25rem;top:.45rem;width:.7rem;height:.7rem;
     border:1.5px solid var(--trace);border-radius:52% 48% 55% 45%;background:var(--band,var(--paper))}
@@ -815,10 +830,29 @@ main:has(.contact:last-child) + footer::before{background:#ffffff1f}
 .page-projects #friends{--band:var(--paper)}
 .page-projects #tools{--band:var(--shallow)}
 .page-projects #upstream{--band:var(--shallow-2)}
+/* bands meet on short, uneven chop, and rings spread where something dropped in */
+.page-projects .shelf.tide::before{top:-29px;height:30px;mask-image:url('/images/chop.svg')}
+.page-projects #friends::before,.page-projects #upstream::before{transform:scaleX(-1)}
+.page-projects .shelf.tide::after{content:"";position:absolute;z-index:0;pointer-events:none;
+  width:clamp(220px,30vw,420px);aspect-ratio:1;opacity:.5;
+  background:repeating-radial-gradient(circle,transparent 0 22px,color-mix(in srgb,var(--trace) 22%,transparent) 22px 23.5px,transparent 23.5px 34px);
+  mask-image:radial-gradient(circle,#000 20%,transparent 70%)}
+.page-projects #books::after{right:2%;top:8%}
+.page-projects #friends::after{left:1%;bottom:6%}
+.page-projects #tools::after{right:6%;bottom:4%;width:clamp(160px,22vw,300px)}
+.page-projects #upstream::after{left:30%;top:4%;width:clamp(180px,24vw,340px)}
+.page-projects .shelf.tide > .shell{position:relative;z-index:1}
+.page-projects + footer{background:var(--shallow-2)}
+.page-projects + footer::before{content:none}
 .page-projects .strip{gap:1rem}
 .page-projects .strip article,.page-case .three > li,.page-projects .three > li{
   background:var(--paper-lift);border:1px solid var(--rule-soft);border-radius:18px 6px 20px 8px;
   padding:1.25rem 1.3rem;transition:transform .3s var(--ease),border-color .3s var(--ease)}
+.page-projects .strip article,.page-projects .three > li,.page-projects .screens figure{
+  background:color-mix(in srgb,var(--paper-lift) 52%,transparent);
+  border-color:color-mix(in srgb,var(--trace) 24%,transparent)}
+.page-projects #tools .strip > li:nth-child(4n+1) article{background:color-mix(in srgb,var(--trace) 7%,transparent)}
+.page-projects #tools .strip > li:nth-child(4n+3) article{background:color-mix(in srgb,#5f8fa6 9%,transparent)}
 .page-projects .strip > li:nth-child(even) article,.page-projects .three > li:nth-child(even){border-radius:6px 20px 8px 18px}
 .page-projects .strip li:hover article,.page-projects .three > li:hover{transform:translateY(-3px);border-color:var(--trace);
   background:var(--paper-lift)}
@@ -911,7 +945,16 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 /* Personal: a topographic map of the coast where I live sits behind the
    introduction, and the details read as three columns divided by hand. */
 .page-about .page-head{padding-block:clamp(3rem,8vw,6rem) clamp(3rem,6vw,4.5rem)}
-.page-about .tide{--band:var(--shallow)}
+.page-about .tide{--band:var(--shallow);background:linear-gradient(var(--shallow) 40%,var(--shallow-2))}
+/* the details band laps in on two layers of water, and the map's rings carry
+   on faintly underneath the columns, the way contours keep going offshore */
+.page-about .shelf.tide::before{top:-43px;height:44px;mask-image:url('/images/lap.svg')}
+.page-about .shelf.tide::after{content:"";position:absolute;z-index:0;pointer-events:none;left:max(var(--gut),calc((100vw - 1200px) / 2 + var(--gut)));
+  bottom:clamp(1rem,3vw,2rem);width:min(46vw,520px);aspect-ratio:1;opacity:.1;background:var(--trace);
+  mask:url('/images/about-contours.svg') center / contain no-repeat}
+.page-about .shelf.tide > .shell{position:relative;z-index:1}
+.page-about + footer{background:var(--shallow-2)}
+.page-about + footer::before{content:none}
 .page-about .colophon{gap:2.5rem clamp(2rem,5vw,4.5rem)}
 @media (min-width:880px){
   .page-about .colophon > div + div{position:relative}
@@ -1006,39 +1049,52 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
   .page-projects .page-head .said{max-width:30ch}
 }
 
-/* Writing: a reading room. A bound page in the middle of the screen, a
-   ribbon bookmark hanging into the title, and no water at all. */
-.page-writing{background:linear-gradient(90deg,transparent,var(--shallow) 50%,transparent)}
-.page-writing .page-head{background:transparent;padding-block:clamp(3.5rem,9vw,6.5rem) clamp(2rem,4vw,3rem);text-align:center}
+/* Writing: a shoreline. Dry sand under the title, a horizon drawn under it,
+   then the list sits where the water comes in, each entry set off by its own
+   thin wash line and the entries stepping in and out like the tide. */
+.page-writing{background:linear-gradient(180deg,var(--paper) 0,var(--paper-lift) 18rem,var(--shallow) 30rem,var(--shallow-2))}
+.page-writing .page-head{background:transparent;padding-block:clamp(3.5rem,9vw,6.5rem) clamp(3.5rem,7vw,5rem);text-align:center}
 .page-writing .page-head::before{content:none}
-.page-writing .page-head::after{content:"";mask:none;top:0;left:50%;right:auto;width:16px;height:clamp(4.5rem,9vw,6.5rem);
-  translate:calc(min(26rem,40vw) - 8px) 0;opacity:1;background:var(--flag);
-  clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)}
+.page-writing .page-head::after{top:auto;bottom:clamp(.75rem,2vw,1.5rem);left:0;right:0;width:auto;height:18px;opacity:.55;
+  background:var(--trace);mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
 .page-writing .page-head .crumbs ol{justify-content:center}
 .page-writing .page-head h1{font-style:italic;font-weight:400;font-size:clamp(3rem,8vw,6rem);letter-spacing:-.04em;
   margin-inline:auto;max-width:none}
-.page-writing .page-head h1::after{content:"";display:block;width:5.5rem;margin:1.1rem auto 0;
-  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);height:4px}
-.page-writing .page-head + .shelf{padding-top:clamp(1.5rem,4vw,2.5rem)}
-.page-writing .page-head + .shelf > .shell{background:var(--paper-lift);border:1px solid var(--rule-soft);
-  border-radius:3px;padding:clamp(1.5rem,4vw,3rem) clamp(1.25rem,5vw,4rem) clamp(1rem,3vw,2rem);
-  box-shadow:0 1px 0 var(--rule-soft),0 14px 30px -24px color-mix(in srgb,var(--ink) 45%,transparent)}
-@media (max-width:640px){
-  .page-writing .page-head::after{translate:calc(50vw - var(--gut) - 16px) 0;width:12px}
-  .page-writing .page-head + .shelf > .shell{margin-inline:.75rem}
+.page-writing .page-head + .shelf{padding-top:clamp(2.5rem,5vw,3.5rem);background:linear-gradient(var(--shallow),var(--shallow-2))}
+.page-writing .page-head + .shelf::before{content:"";position:absolute;left:0;right:0;top:-33px;height:34px;
+  background:var(--shallow);mask:url('/images/foam.svg') center / 100% 100% no-repeat}
+.page-writing .picks > li{border-top:0;position:relative}
+.page-writing .picks > li::before{content:"";position:absolute;left:0;top:0;width:min(100%,24rem);height:10px;
+  background:var(--trace);opacity:.5;mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+@media (min-width:760px){
+  .page-writing .picks > li:nth-child(even of :not([hidden])){padding-left:clamp(2rem,8vw,6rem)}
+  .page-writing .picks > li:nth-child(even of :not([hidden]))::before{left:auto;right:0}
 }
+.page-writing + footer{background:var(--shallow-2)}
+.page-writing + footer::before{content:none}
 
 /* ============================ ML & Research ============================== */
-/* A lab notebook, not the sea: a coral margin rule down the page, a plotted
-   bench chart with error bars in the header, monospace titles, tick-mark
-   rulers under headings, and each experiment as a log entry whose left
-   column records machine, licence and status before the result. */
-.page-ml .page-head::after{content:none}
-.page-ml .page-head,.page-ml .shelf{background:var(--paper)}
-.page-ml{position:relative;
-  background:linear-gradient(90deg,transparent calc(max(var(--gut),(100vw - 1200px) / 2 + var(--gut)) - 1.6rem),
-    color-mix(in srgb,var(--flag) 55%,transparent) 0 calc(max(var(--gut),(100vw - 1200px) / 2 + var(--gut)) - 1.6rem + 1px),transparent 0)}
-.page-ml .page-head,.page-ml .shelf{background:transparent}
+/* A lab notebook set in water: a tide gauge, ticked like a ruler, down the
+   margin, a plotted bench chart and three recorded traces in the header,
+   monospace titles, tick-mark rulers under headings, and each section rising
+   over the last on a regular, measured sine. Each experiment is a log entry
+   whose left column records machine, licence and status before the result. */
+.page-ml .page-head::after{opacity:.12;top:auto;bottom:0;left:0;width:100%;height:clamp(70px,11vw,140px);
+  mask:url('/images/signal.svg') center bottom / 100% 100% no-repeat}
+.page-ml{position:relative;--gauge:max(4px,calc(max(var(--gut),(100vw - 1200px) / 2 + var(--gut)) - 1.6rem))}
+.page-ml::before{content:"";position:absolute;z-index:1;top:0;bottom:0;left:var(--gauge);width:9px;pointer-events:none;
+  background:linear-gradient(90deg,var(--trace) 1px,transparent 1px) 0 0 / 1px 100% no-repeat,
+    repeating-linear-gradient(180deg,var(--trace) 0 1px,transparent 1px 24px) 0 0 / 5px 100% no-repeat,
+    repeating-linear-gradient(180deg,var(--trace) 0 1px,transparent 1px 120px) 0 0 / 9px 100% no-repeat;
+  opacity:.5}
+.page-ml .page-head{background:var(--paper)}
+.page-ml .shelf{--band:var(--paper);background:var(--band)}
+.page-ml .shelf:nth-of-type(2){--band:var(--shallow)}
+.page-ml .shelf:nth-of-type(3){--band:var(--shallow-2)}
+.page-ml .shelf + .shelf::before{content:"";position:absolute;left:0;right:0;top:-23px;height:24px;
+  background:var(--band);mask:url('/images/sine.svg') center / 100% 100% no-repeat}
+.page-ml + footer{background:var(--shallow-2)}
+.page-ml + footer::before{content:none}
 .page-ml .page-head h1{font-family:var(--data);font-weight:400;font-variation-settings:normal;
   font-size:clamp(2.2rem,5.6vw,4.4rem);letter-spacing:-.04em}
 .page-ml .page-head .said{max-width:52ch}
@@ -1063,7 +1119,6 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 .ml-index a{display:inline-flex;align-items:center;min-height:var(--tap);color:var(--ink);text-decoration:none;
   border-bottom:1px dashed var(--rule)}
 .ml-index a:hover,.ml-index a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
-.page-ml .shelf + .shelf::before{background:var(--rule-soft);mask:none;height:1px}
 .page-ml .page-head + .shelf::before{background:var(--rule);mask:none;height:1px}
 .page-ml .shelf-head h2::after{width:7rem;height:.45rem;border:0;border-radius:0;transform:none;margin-top:.7rem;
   background:repeating-linear-gradient(90deg,var(--trace) 0 1px,transparent 1px 8px) bottom / 100% .45rem no-repeat,
@@ -1084,7 +1139,7 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 .entry-body h3 a:hover,.entry-body h3 a:focus-visible{color:var(--trace)}
 .entry-body > p{margin-top:.8rem;color:var(--ink-2);max-width:66ch}
 .entry-body .readout{margin-top:1.1rem;border-radius:2px;max-width:46rem}
-.entry-body .readout div{background:var(--paper)}
+.entry-body .readout div{background:var(--band,var(--paper))}
 .entry-body .readout .off dt,.entry-body .readout .off dd{color:var(--flag)}
 .entry-body .limits{border-left:2px solid var(--flag);padding-left:.9rem;font-size:1rem}
 .entry-body .limits b{font-weight:600;color:var(--ink)}
@@ -1119,3 +1174,7 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
   .home #writing .picks .tag{margin:0;justify-content:flex-end}
 }
 .home #writing .picks > li + li{border-top:1px solid var(--rule-soft)}
+/* the new edges keep their drawn proportions on narrow screens instead of
+   squeezing into spikes */
+.page-work .shelf.tide::before,.page-ml .shelf + .shelf::before,.page-projects .shelf.tide::before,
+.page-writing .page-head + .shelf::before,.page-about .shelf.tide::before{mask-size:max(100%,1440px) 100%}
