@@ -3,27 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PHiLIP · Michael Chen</title>
-<meta name="description" content="PHiLIP, a human-in-the-loop image-generation prototype on AMD ROCm and PixArt-alpha that won the AMD University Program Award, with its historical timings and current limits.">
+<title>PHiLIP: image-generation prototype · Michael Chen</title>
+<meta name="description" content="PHiLIP is a team-built image-generation prototype on AMD ROCm and PixArt-alpha. I describe our award, historical timings and current limits.">
 <meta name="author" content="Michael Chen">
+<meta name="robots" content="index,follow">
 <link rel="canonical" href="https://michaelluochen.com/projects/philip/">
 <meta name="theme-color" content="#e6ebe7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101f1e" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Michael Chen">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://michaelluochen.com/projects/philip/">
-<meta property="og:title" content="PHiLIP · Michael Chen">
-<meta property="og:description" content="PHiLIP, a human-in-the-loop image-generation prototype on AMD ROCm and PixArt-alpha that won the AMD University Program Award, with its historical timings and current limits.">
-<meta property="og:image" content="https://michaelluochen.com/og.png?v=3">
-<meta property="og:image:alt" content="Michael Chen, AI software engineer in the Bay Area. I build software for people I know, including me.">
+<meta property="og:title" content="PHiLIP: image-generation prototype · Michael Chen">
+<meta property="og:description" content="PHiLIP is a team-built image-generation prototype on AMD ROCm and PixArt-alpha. I describe our award, historical timings and current limits.">
+<meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
+<meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="PHiLIP · Michael Chen">
-<meta name="twitter:description" content="PHiLIP, a human-in-the-loop image-generation prototype on AMD ROCm and PixArt-alpha that won the AMD University Program Award, with its historical timings and current limits.">
-<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=3">
-<meta name="twitter:image:alt" content="Michael Chen, AI software engineer in the Bay Area. I build software for people I know, including me.">
+<meta name="twitter:title" content="PHiLIP: image-generation prototype · Michael Chen">
+<meta name="twitter:description" content="PHiLIP is a team-built image-generation prototype on AMD ROCm and PixArt-alpha. I describe our award, historical timings and current limits.">
+<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
+<meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
@@ -36,7 +39,7 @@
 <script src="/site.js"></script>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"WebPage","@id":"https://michaelluochen.com/projects/philip/#page","url":"https://michaelluochen.com/projects/philip/","name":"PHiLIP","description":"PHiLIP, a human-in-the-loop image-generation prototype on AMD ROCm and PixArt-alpha that won the AMD University Program Award, with its historical timings and current limits.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","about":{"@type":"CreativeWork","name":"PHiLIP"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"Projects & Fun","item":"https://michaelluochen.com/projects/"},{"@type":"ListItem","position":3,"name":"PHiLIP","item":"https://michaelluochen.com/projects/philip/"}]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"publisher":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI engineer","url":"https://michaelluochen.com/about/"},{"@type":"WebPage","@id":"https://michaelluochen.com/projects/philip/#page","url":"https://michaelluochen.com/projects/philip/","name":"PHiLIP","description":"PHiLIP is a team-built image-generation prototype on AMD ROCm and PixArt-alpha. I describe our award, historical timings and current limits.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","breadcrumb":{"@id":"https://michaelluochen.com/projects/philip/#breadcrumb"},"citation":["https://github.com/mchen04/PHiLIP#readme","https://github.com/mchen04/PHiLIP/blob/35722ec046f4fa27a9815367d48af4adb6ee0ce3/style_prompt.json"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"Projects & Fun","item":"https://michaelluochen.com/projects/"},{"@type":"ListItem","position":3,"name":"PHiLIP","item":"https://michaelluochen.com/projects/philip/"}],"@id":"https://michaelluochen.com/projects/philip/#breadcrumb"}]}
 </script>
 </head>
 <body>
@@ -70,7 +73,7 @@
   <div class="page-head">
     <div class="shell">
       <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/projects/">Projects &amp; Fun</a></li><li><span aria-current="page">PHiLIP</span></li></ol></nav>
-      <p class="tag"><b>Measured</b></p>
+      <p class="tag"><b>Project</b></p>
       <h1>PHiLIP</h1>
       <p class="tag">human-in-the-loop image generation on AMD ROCm</p>
       <p class="tag"><a href="https://www.hackster.io/engineers-ucr/philip-personalized-human-in-loop-image-production-b90133" rel="noopener">team writeup on Hackster</a></p>
@@ -81,7 +84,7 @@
     <div class="shell">
       <article class="case solo">
         <div>
-          <p class="case-what">PHiLIP is a human-in-the-loop image-generation prototype built on
+          <p class="case-what">Our PHiLIP prototype combines human feedback with image generation using
             AMD ROCm and PixArt-alpha. It won the <strong>AMD University Program Award</strong>
             in the AMD Pervasive AI Developer Contest.</p>
           <p class="case-what">The team's 2024 writeup reports about <strong>five seconds for nine
@@ -113,7 +116,7 @@
 <footer aria-label="Colophon">
   <div class="shell">
     <span>© 2026 Michael Chen</span>
-    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Every number under Measured comes from a repo you can open.</span>
+    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Project measurements include source links.</span>
   </div>
 </footer>
 
