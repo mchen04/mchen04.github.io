@@ -143,8 +143,7 @@ p,figure,dl,dd{margin:0}
 .menu-toggle[aria-expanded="true"] .x{display:inline}
 
 /* ============================ hero ======================================= */
-/* Shape: oversized display type left, readings ledger right. No section below
-   repeats it. */
+/* Shape: oversized display type, then the role and the ways to reach me. */
 .hero{padding-top:clamp(2rem,6vh,4.5rem);border-bottom:1px solid var(--rule)}
 .hero h1{font-size:var(--t-mega);max-width:15ch;font-weight:700;
   font-variation-settings:'wdth' 84;letter-spacing:-.038em;text-wrap:balance}
@@ -155,25 +154,6 @@ p,figure,dl,dd{margin:0}
 .hero-lead{margin-top:1rem;max-width:44ch;font-size:var(--t-md);color:var(--ink-2);
   font-variation-settings:'opsz' 24}
 
-/* two columns at desktop: the claim, and the readings that back it */
-.hero-body{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem}
-@media (min-width:1120px){
-  .hero-body{grid-template-columns:minmax(0,1fr) 19rem;
-    gap:1.25rem clamp(2rem,5vw,5rem);align-items:start}
-}
-.readings{border:1px solid var(--rule);background:var(--paper-lift)}
-.readings .rhead{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
-  letter-spacing:.06em;padding:.7rem .9rem;border-bottom:1px solid var(--rule);
-  font-variation-settings:normal}
-.readings dl{margin:0}
-.readings div{display:grid;grid-template-columns:1fr auto;gap:.15rem .75rem;align-items:baseline;
-  padding:.7rem .9rem .6rem;border-bottom:1px solid var(--rule-soft)}
-.readings div:last-child{border-bottom:0}
-.readings dt{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);margin:0}
-.readings dd{margin:0;font-family:var(--display);font-weight:600;font-size:1.15rem;
-  letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:right}
-.readings .off dt,.readings .off dd{color:var(--flag)}
-.reading-source{padding:.7rem .9rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
 
 .hero-strip{margin-top:2.25rem;display:flex;flex-wrap:wrap;
   gap:.5rem 2.5rem;font-family:var(--data);font-size:var(--t-data);color:var(--mute)}
@@ -184,7 +164,7 @@ p,figure,dl,dd{margin:0}
 .hero-links a:hover,.hero-links a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
 
 
-/* --- hero wire: a chart-recorder band drawn from the live events API ----- */
+/* --- activity wire (Projects & Fun): a chart-recorder band from the events API */
 .wire{display:block;grid-column:1/-1;min-width:0;margin-top:1rem;
   border-top:1px solid var(--rule-soft);padding-top:.8rem}
 .wire-source,.wire-details{font-family:var(--data);font-size:var(--t-micro);margin-top:.7rem}
@@ -443,17 +423,16 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
 .hero-role{font-weight:400;font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.3}
 .hero-role b{font-weight:500}
 .shelf{padding-block:clamp(3rem,7vw,5.5rem)}
-.shelf-head h2,.page-head h1,.index h2{font-weight:400;line-height:1.12}
+.shelf-head h2,.page-head h1{font-weight:400;line-height:1.12}
 .shelf-head{margin-bottom:2rem}
 .shelf-head h2::after{content:"";display:block;width:3.5rem;height:.5rem;margin-top:.65rem;
   border-top:2px solid var(--trace);border-radius:50%;transform:rotate(-3deg)}
 .said{line-height:1.7}
-.readings,.shot,.plot,.screens figure{border-radius:8px 3px 9px 4px}
-.readings{background:var(--paper-lift)}
-.picks,.index,.strip{background:transparent;border:0;gap:clamp(1.5rem,4vw,3rem)}
-.picks > li,.index > section,.strip article{background:transparent;border-top:1px solid var(--rule);
+.shot,.plot,.screens figure{border-radius:8px 3px 9px 4px}
+.picks,.strip{background:transparent;border:0;gap:clamp(1.5rem,4vw,3rem)}
+.picks > li,.strip article{background:transparent;border-top:1px solid var(--rule);
   padding:1.5rem 0}
-.picks h3,.index h2{font-weight:400}
+.picks h3{font-weight:400}
 .picks h3 a,.strip h3 a,.row h3 a{border-bottom-width:1px;text-decoration-thickness:1px}
 .row{padding-block:2rem}
 .miss{border-radius:0 8px 8px 0}
@@ -461,7 +440,6 @@ footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-b
 .themer{color:var(--ink-2)}
 .menu-toggle,.themer{border-radius:6px}
 footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
-@media (min-width:1120px){.hero-body{grid-template-columns:minmax(0,1fr) 18rem;gap:2rem 3rem}}
 @media (max-width:640px){
   .hero::after,.page-head::after{width:100%;height:160px;opacity:.09}
   .hero{padding-block:2.75rem 2rem}
@@ -570,19 +548,7 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
 .picks img{display:block;width:100%;max-width:150px;height:auto;margin-top:1rem;
   border:1px solid var(--rule-soft);border-radius:10px}
 
-/* home: an index of the sections that moved to Work & Projects */
-.index{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--rule);
-  border:1px solid var(--rule);grid-template-columns:minmax(0,1fr)}
-@media (min-width:760px){.index{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.index > li{background:var(--paper);padding:1.3rem 1.3rem 1.1rem;display:flex;flex-direction:column}
-.index h2{font-size:clamp(1.5rem,2.4vw,2.1rem);font-weight:700;font-variation-settings:'wdth' 80}
-.index p{margin-top:.6rem;color:var(--ink-2)}
-.index .names{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);line-height:1.8}
-.index .more{margin-top:auto;padding-top:.9rem}
-.index > li[id]{scroll-margin-top:calc(var(--head) + 22px)}
 
-/* home: the short about */
-.home-about .colophon{margin-top:.5rem}
 
 /* project pages: the case runs at full width, with the figure beside it */
 .project .case{border-top:0;padding-top:2rem}
@@ -624,12 +590,7 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
 /* 404 */
 .lost ul{list-style:none;margin:1.5rem 0 0;padding:0;font-family:var(--data);font-size:var(--t-data)}
 .lost li a{color:var(--ink);display:inline-flex;align-items:center;min-height:var(--tap)}
-@media (min-width:900px){.picks.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.index{display:grid}
-.index > section{background:var(--paper);padding:1.3rem 1.3rem 1.1rem;display:flex;flex-direction:column}
-.readings dt small,.readout dt small{display:block;margin-top:.2rem;font-size:.95em;color:var(--mute)}
-.readings dd small{display:block;margin-top:.15rem;font-family:var(--data);font-size:var(--t-micro);
-  font-weight:400;letter-spacing:0;color:var(--flag)}
+.readout dt small{display:block;margin-top:.2rem;font-size:.95em;color:var(--mute)}
 .about-line{margin-top:1.4rem;max-width:26ch;font-family:var(--display);font-weight:600;
   font-size:clamp(1.6rem,3.2vw,2.75rem);line-height:1.15;letter-spacing:-.025em;font-variation-settings:'wdth' 86}
 .page-head .hero-role{font-size:clamp(1.2rem,2vw,1.6rem)}
@@ -639,3 +600,367 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
 .page-head + .shelf > .shell > .colophon{border-top:0;padding-top:2.25rem}
 .article .sources h2{font-size:var(--t-md);color:var(--ink);margin-top:0}
 .article .sources ul{font-size:var(--t-data);line-height:1.6;padding-left:1.1rem;margin-top:.6rem}
+
+/* ============================ tides ====================================== */
+/* The site reads like walking from the shore out to sea: light shallows at the
+   top of a page, deeper water toward the end. Section edges are drawn waves,
+   not ruled lines. Each page then gets one motif shaped by its subject. */
+:root{
+  --grot:'Bricolage','Helvetica Neue',Arial,sans-serif;
+  --shallow:#dce6e0;
+  --shallow-2:#d1ddd7;
+  --deep:#1d3833;
+  --deep-ink:#e6efe9;
+  --deep-mute:#b2cabf;
+  --deep-trace:#94d8cc;
+  --mark:#21635b26;
+}
+[data-theme="scope"]{
+  --shallow:#132624;--shallow-2:#17302c;
+  --deep:#0a1716;--deep-ink:#e0eae4;--deep-mute:#a6c0b4;--deep-trace:#81cfc3;
+  --mark:#81cfc32e;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="bench"]){
+    --shallow:#132624;--shallow-2:#17302c;
+    --deep:#0a1716;--deep-ink:#e0eae4;--deep-mute:#a6c0b4;--deep-trace:#81cfc3;
+    --mark:#81cfc32e;
+  }
+}
+
+/* waves replace the ruled section edges */
+.shelf,.hero,.page-head{border-bottom:0;position:relative}
+.shelf + .shelf::before,.page-head + .shelf::before,.page-head + .shell::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:16px;background:var(--rule);
+  mask:url('/images/wave-line.svg') center / 100% 100% no-repeat;pointer-events:none}
+.page-head + .shell{position:relative;display:block}
+.shelf:nth-of-type(even)::before{transform:scaleX(-1)}
+/* a filled wave: the next band of water rises over the last one */
+.tide,.contact,.home #writing{background:var(--band,var(--paper))}
+.shelf.tide::before,.shelf.contact::before{content:"";position:absolute;left:0;right:0;top:-27px;height:28px;
+  background:var(--band,var(--paper));mask:url('/images/wave-fill.svg') center / 100% 100% no-repeat;
+  transform:none}
+
+/* footer sits on the floor of whatever band ends the page */
+footer{border-top:0;position:relative}
+footer::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;background:var(--rule-soft);
+  mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+
+/* the drawn underline under section headings, kept from the last design */
+.shelf-head h2::after{border-top-color:var(--trace)}
+
+/* ---- arrival: content settles in once, never loops --------------------- */
+@media (prefers-reduced-motion:no-preference){
+  .hero .shell > *,.page-head .shell > *{animation:settle .7s var(--ease) both}
+  .hero .shell > :nth-child(2),.page-head .shell > :nth-child(2){animation-delay:.06s}
+  .hero .shell > :nth-child(3),.page-head .shell > :nth-child(3){animation-delay:.12s}
+  .hero .shell > :nth-child(n+4),.page-head .shell > :nth-child(n+4){animation-delay:.18s}
+  .hero::after,.page-head::after{animation:drift 1.6s var(--ease) both}
+  @view-transition{navigation:auto}
+  .masthead{view-transition-name:masthead}
+  ::view-transition-old(root){animation:.18s ease-in both ebb}
+  ::view-transition-new(root){animation:.42s var(--ease) both flow}
+}
+@keyframes settle{from{opacity:0;transform:translateY(10px)}}
+@keyframes drift{from{opacity:0;translate:24px 0}}
+@keyframes ebb{to{opacity:0}}
+@keyframes flow{from{opacity:0;transform:translateY(8px)}}
+
+/* ============================ home ======================================= */
+/* Restrained: who I am, the work, the record, how to reach me. The bands
+   deepen as the page goes on and it ends in deep water at Contact. */
+.home .hero{padding-block:clamp(3.5rem,9vw,7rem) clamp(3.5rem,7vw,5.5rem)}
+.home .hero h1{max-width:16ch}
+.home .hero-lead{max-width:58ch;margin-top:1.25rem;font-size:clamp(1.05rem,1.4vw,1.25rem);line-height:1.6}
+.home .hero-strip{margin-top:2.5rem}
+.home #shipped{--band:var(--paper)}
+.home #upstream{--band:var(--shallow)}
+.home #about{--band:var(--shallow-2)}
+.home #writing{--band:var(--shallow-2);padding-block:0 clamp(3rem,6vw,4.5rem)}
+.home #about + #writing::before,.home #about + .shelf::before{content:none}
+
+.works{list-style:none;margin:0;padding:0}
+.work{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:.4rem 2rem;padding-block:1.9rem;
+  border-top:1px solid var(--rule-soft)}
+.works > li:first-child .work{border-top:0;padding-top:.5rem}
+@media (min-width:1100px){
+  .work{grid-template-columns:8.5rem minmax(0,1fr) 12rem}
+  .work .built{grid-column:3;grid-row:1;margin-top:.45rem}
+}
+.work .when{font-family:var(--data);font-size:var(--t-data);color:var(--mute);padding-top:.35rem}
+.work h3{font-size:clamp(1.35rem,2vw,1.7rem);font-weight:500}
+.work h3 a{text-decoration:none;color:inherit;background:linear-gradient(var(--trace),var(--trace)) 0 100% / 0 2px no-repeat;
+  padding-bottom:.1rem;transition:background-size .45s var(--ease),color .2s var(--ease)}
+.work h3 a:hover,.work h3 a:focus-visible{background-size:100% 2px;color:var(--trace)}
+.work p{margin-top:.6rem;color:var(--ink-2);max-width:var(--measure)}
+.work .built{font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+/* the result line wears a soft highlighter stroke, slightly off-level like a pen */
+.result{color:var(--ink)!important;font-style:italic}
+.result{text-decoration:underline;text-decoration-color:var(--mark);text-decoration-thickness:.42em;
+  text-underline-offset:-.22em;text-decoration-skip-ink:none}
+.work .result{margin-top:.7rem}
+@media (max-width:640px){.work{grid-template-columns:1fr;gap:.2rem}.work .when{padding-top:0}}
+
+.contrib{display:grid;gap:1rem clamp(2rem,6vw,6rem)}
+@media (min-width:980px){.contrib{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:start}
+  .contrib .shelf-head{padding-top:0}}
+.contrib-body h3{font-size:clamp(1.35rem,2vw,1.7rem);font-weight:500}
+.contrib-body h3 a{color:inherit;text-decoration-color:var(--trace);text-underline-offset:.22em;text-decoration-thickness:1px}
+.contrib-body h3 a:hover,.contrib-body h3 a:focus-visible{color:var(--trace)}
+.contrib-body > p:not(.more){margin-top:.8rem;color:var(--ink-2);max-width:60ch}
+.contrib .readout{max-width:34rem;background:var(--rule-soft);border-color:var(--rule-soft);border-radius:6px 2px 8px 3px;overflow:hidden}
+.contrib .readout div{background:var(--band)}
+
+.record{display:grid;gap:3rem clamp(2rem,6vw,6rem)}
+@media (min-width:900px){.record{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr)}}
+.record-head{font-family:var(--data);font-size:var(--t-micro);font-weight:400;color:var(--mute);
+  letter-spacing:.06em;margin-bottom:1rem;font-variation-settings:normal}
+/* the timeline rail is drawn, not ruled: a soft wavering line down the left */
+.timeline{list-style:none;margin:0;padding:0 0 0 1.6rem;position:relative}
+.timeline::before{content:"";position:absolute;left:.3rem;top:.6rem;bottom:.6rem;width:1.5px;
+  border-radius:2px;background:linear-gradient(var(--trace),var(--rule) 30%,var(--rule) 85%,transparent)}
+.timeline li{position:relative;padding-bottom:1.6rem}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{content:"";position:absolute;left:-1.6rem;top:.45rem;width:.75rem;height:.75rem;
+  border:1.5px solid var(--trace);border-radius:52% 48% 55% 45%;background:var(--band)}
+.timeline li:first-child::before{background:var(--trace)}
+.timeline .when{font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
+.timeline .what{color:var(--ink-2);margin-top:.15rem;max-width:58ch}
+.timeline .what b{display:block;font-weight:500;color:var(--ink);font-size:1.15rem;line-height:1.35;margin-bottom:.15rem}
+.awards{list-style:none;margin:0;padding:0}
+.awards li + li{margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--rule-soft)}
+.awards .big{font-family:var(--display);font-size:1.3rem;font-weight:500;letter-spacing:-.02em;line-height:1.3}
+.awards p{color:var(--ink-2)}
+.awards p + p{margin-top:.5rem}
+.awards a{color:var(--ink);text-decoration-color:var(--trace);text-underline-offset:.2em;
+  display:inline-block;padding-block:.3rem .1rem}
+.awards a:hover,.awards a:focus-visible{color:var(--trace)}
+
+/* recent writing on Home stays a quiet single line beside the record */
+.home #writing .shelf-head{padding-block:0 .25rem;margin-bottom:.75rem}
+.home #writing .shelf-head h2{font-family:var(--data);font-size:var(--t-micro);font-weight:400;
+  letter-spacing:.06em;color:var(--mute);font-variation-settings:normal}
+.home #writing .shelf-head h2::after{content:none}
+.home #writing .picks{background:transparent;border:0}
+.home #writing .picks > li{border-top:1px solid var(--rule-soft);padding:1rem 0 0;background:transparent}
+.home #writing .picks h3{font-size:1.2rem;font-weight:500}
+.home #writing .picks h3 a{border-bottom-width:1px}
+.home #writing .picks p:not(.tag){display:none}
+.home #writing .more{margin-top:.5rem}
+
+/* contact: the deep end of the page */
+.contact{--band:var(--deep);color:var(--deep-ink);padding-block:clamp(4rem,9vw,7rem) clamp(3.5rem,7vw,5rem);overflow:hidden}
+.contact::after{content:"";position:absolute;right:0;bottom:0;width:min(70%,760px);height:300px;
+  background:var(--deep-trace);opacity:.1;transform:scaleY(-1);
+  mask:url('/images/coastline.svg') right top / cover no-repeat;pointer-events:none}
+.contact h2{font-family:var(--data);font-size:var(--t-micro);font-weight:400;letter-spacing:.06em;
+  color:var(--deep-mute);font-variation-settings:normal}
+.contact-mail{margin-top:1rem;font-family:var(--display);font-size:clamp(1.6rem,5.2vw,3.6rem);
+  letter-spacing:-.03em;line-height:1.15}
+.contact-mail a{color:var(--deep-ink);text-decoration:none;background:linear-gradient(var(--deep-trace),var(--deep-trace)) 0 100% / 100% 2px no-repeat;
+  padding-bottom:.08em;overflow-wrap:anywhere;transition:color .2s var(--ease)}
+.contact-mail a:hover,.contact-mail a:focus-visible{color:var(--deep-trace)}
+.contact-links{list-style:none;margin:1.75rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 2rem;
+  font-family:var(--data);font-size:var(--t-data)}
+.contact-links a{color:var(--deep-ink);display:inline-flex;align-items:center;gap:.35rem;min-height:var(--tap);
+  text-decoration:underline;text-decoration-color:var(--deep-mute);text-underline-offset:.3em}
+.contact-links a:hover,.contact-links a:focus-visible{color:var(--deep-trace);text-decoration-color:var(--deep-trace)}
+.elsewhere{margin-top:3rem;max-width:60ch;color:var(--deep-mute);font-size:1rem}
+.elsewhere a{color:var(--deep-ink);font-family:var(--data);font-size:var(--t-data);min-height:var(--tap);
+  display:inline-flex;margin-right:1.25rem;align-items:center;text-decoration-color:var(--deep-mute);text-underline-offset:.3em}
+.elsewhere a:hover,.elsewhere a:focus-visible{color:var(--deep-trace)}
+.contact :focus-visible{outline-color:var(--deep-trace)}
+.home + footer,main:has(.contact:last-child) + footer{background:var(--deep);color:var(--deep-mute)}
+main:has(.contact:last-child) + footer::before{background:#ffffff1f}
+
+/* ============================ work ======================================= */
+/* Professional and plain: the coast in the header is hatched like a printed
+   chart, and the roles hang off one drawn rail in date order. */
+.page-work .page-head::after{opacity:.85;
+  background:repeating-linear-gradient(172deg,var(--rule) 0 1px,transparent 1px 7px)}
+.page-work #leadership{--band:var(--shallow)}
+.page-work #moved{--band:var(--shallow-2)}
+.page-work .ledger{border-top:0;position:relative}
+@media (min-width:641px){
+  .page-work .ledger::before{content:"";position:absolute;left:6.6rem;top:1.9rem;bottom:1rem;width:1.5px;
+    background:linear-gradient(var(--trace),var(--rule) 25%,var(--rule) 80%,transparent)}
+  .page-work .row > .when{position:relative}
+  .page-work .row > .when::after{content:"";position:absolute;left:6.25rem;top:.45rem;width:.7rem;height:.7rem;
+    border:1.5px solid var(--trace);border-radius:52% 48% 55% 45%;background:var(--band,var(--paper))}
+  .page-work .row{grid-template-columns:8.5rem minmax(0,1fr)}
+}
+@media (min-width:1100px){.page-work .row{grid-template-columns:8.5rem minmax(0,1fr) 11rem}}
+.page-work .row{border-bottom:0;background:linear-gradient(90deg,var(--trace-wash),transparent) 0 0 / 0 100% no-repeat;
+  transition:background-size .5s var(--ease)}
+.page-work .ledger > li:hover .row{background-color:transparent;background-size:100% 100%}
+.page-work .row h3{font-weight:500;font-size:clamp(1.35rem,2vw,1.65rem)}
+.page-work #moved .more{display:inline-block;margin-right:2rem}
+
+/* ============================ projects & fun ============================= */
+/* The playful side: a grotesque face for headings, pebble-shaped panels,
+   bands that go in and out like a tide pool, and my public GitHub activity
+   drawn as a tide chart at the top. */
+.page-projects h1,.page-projects .shelf-head h2,.page-projects .strip h3,.page-projects .three .n,.page-projects .dir .n{
+  font-family:var(--grot);font-stretch:88%;letter-spacing:-.02em}
+.page-projects h1{font-weight:700;font-size:clamp(2.6rem,6vw,4.8rem);letter-spacing:-.045em}
+.page-projects .shelf-head h2{font-weight:600}
+.page-projects .page-head .said{font-size:var(--t-md)}
+.page-projects .wire{margin-top:2.25rem;border-top:0;padding-top:0}
+.page-projects .wire .pen{fill:var(--mark)}
+.page-projects .wire svg{height:132px}
+.page-projects #books{--band:var(--shallow)}
+.page-projects #friends{--band:var(--paper)}
+.page-projects #tools{--band:var(--shallow)}
+.page-projects #upstream{--band:var(--shallow-2)}
+.page-projects .strip{gap:1rem}
+.page-projects .strip article,.page-case .three > li,.page-projects .three > li{
+  background:var(--paper-lift);border:1px solid var(--rule-soft);border-radius:18px 6px 20px 8px;
+  padding:1.25rem 1.3rem;transition:transform .3s var(--ease),border-color .3s var(--ease)}
+.page-projects .strip > li:nth-child(even) article,.page-projects .three > li:nth-child(even){border-radius:6px 20px 8px 18px}
+.page-projects .strip li:hover article,.page-projects .three > li:hover{transform:translateY(-3px);border-color:var(--trace);
+  background:var(--paper-lift)}
+.page-projects .readout{border-radius:10px 3px 10px 3px;overflow:hidden}
+.page-projects .readout div{background:var(--paper-lift)}
+.page-projects .dir{border-top:0}
+.page-projects .dir a{border-bottom:0;border-radius:10px;background:linear-gradient(90deg,var(--mark),transparent) 0 0 / 0 100% no-repeat;
+  transition:background-size .45s var(--ease),padding-left .34s var(--ease)}
+.page-projects .dir li + li a{box-shadow:0 -1px 0 var(--rule-soft)}
+.page-projects .dir a:hover,.page-projects .dir a:focus-visible{background-size:100% 100%;background-color:transparent}
+.page-projects .dir .n{font-size:1.05rem;font-weight:600}
+.page-projects .screens figure{border-radius:18px 6px 20px 8px;border-color:var(--rule-soft)}
+
+/* ============================ project pages ============================== */
+/* Each project header carries a drawing of what the project works on. */
+.page-case .page-head::after{opacity:.16}
+.case-kestrel .page-head::after{mask-image:url('/images/waveform.svg');mask-size:contain;mask-position:right center;height:100%}
+.case-audio .page-head::after{mask-image:url('/images/text-to-wave.svg');mask-size:contain;mask-position:right center;height:100%}
+/* PHiLIP picks one image from a grid of nine guidance images */
+.case-philip .page-head::after{mask:none;opacity:1;width:min(30vw,250px);height:min(30vw,250px);top:50%;right:var(--gut);
+  translate:0 -50%;rotate:-4deg;--t:color-mix(in srgb,var(--trace) 16%,transparent);
+  background:
+    linear-gradient(var(--t),var(--t)) 0 0 / 31% 31%,
+    linear-gradient(color-mix(in srgb,var(--trace) 9%,transparent),color-mix(in srgb,var(--trace) 9%,transparent)) 50% 0 / 31% 31%,
+    linear-gradient(var(--t),var(--t)) 100% 0 / 31% 31%,
+    linear-gradient(color-mix(in srgb,var(--trace) 9%,transparent),color-mix(in srgb,var(--trace) 9%,transparent)) 0 50% / 31% 31%,
+    linear-gradient(color-mix(in srgb,var(--flag) 40%,transparent),color-mix(in srgb,var(--flag) 40%,transparent)) 50% 50% / 31% 31%,
+    linear-gradient(var(--t),var(--t)) 100% 50% / 31% 31%,
+    linear-gradient(var(--t),var(--t)) 0 100% / 31% 31%,
+    linear-gradient(color-mix(in srgb,var(--trace) 9%,transparent),color-mix(in srgb,var(--trace) 9%,transparent)) 50% 100% / 31% 31%,
+    linear-gradient(var(--t),var(--t)) 100% 100% / 31% 31%;
+  background-repeat:no-repeat;border-radius:6px}
+@media (max-width:640px){.case-philip .page-head::after{width:120px;height:120px;top:auto;bottom:1.5rem;translate:none;opacity:.7}}
+/* Kestrel is a measurement page, so it sits on faint graph paper */
+.case-kestrel .project{isolation:isolate}
+.case-kestrel .project::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55;
+  background-image:linear-gradient(var(--rule-soft) 1px,transparent 1px),linear-gradient(90deg,var(--rule-soft) 1px,transparent 1px);
+  background-size:28px 28px;mask-image:linear-gradient(180deg,#000,transparent 70%)}
+.page-case .readout{border-radius:10px 3px 10px 3px;overflow:hidden}
+.page-case .miss{border-radius:4px 18px 6px 16px;border-left-width:2px}
+.page-case .plot,.page-case .shot{border-radius:18px 6px 20px 8px}
+.case-audio .essay p:first-child{font-size:clamp(1.3rem,2vw,1.55rem);font-style:italic}
+.case-audio .three,.page-projects .three{background:transparent;border:0;gap:1rem;position:relative}
+.case-audio .three > li:nth-child(even),.page-projects #books .three > li:nth-child(even){border-radius:6px 20px 8px 18px}
+
+/* ============================ writing ==================================== */
+/* A reading list, set narrow and quiet, with a long horizon instead of a coast. */
+.page-writing .shell{max-width:56rem}
+.page-writing .page-head::after{top:auto;bottom:1.25rem;left:0;right:0;width:auto;height:22px;opacity:.5;
+  background:var(--rule);mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+.page-writing .page-head{padding-block:clamp(3rem,9vw,6.5rem) clamp(3rem,6vw,4.5rem)}
+.page-writing .page-head h1{font-style:italic;font-weight:400;font-size:clamp(3rem,8vw,6rem);letter-spacing:-.04em}
+.page-writing .page-head + .shelf::before{content:none}
+.page-writing .shelf-head{padding-top:0}
+.page-writing .shelf-head h2{font-family:var(--data);font-size:var(--t-micro);font-weight:400;letter-spacing:.06em;
+  color:var(--mute);font-variation-settings:normal}
+.page-writing .shelf-head h2::after{content:none}
+.page-writing .picks{background:transparent;border:0;gap:0}
+.page-writing .picks > li{background:transparent;padding:1.75rem 0 2rem;border-top:1px solid var(--rule-soft);display:grid;
+  grid-template-columns:minmax(0,1fr);gap:.2rem}
+.page-writing .picks h3{font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:400;line-height:1.15;letter-spacing:-.025em;order:2}
+.page-writing .picks h3 a{border-bottom:0;text-decoration:none;background:linear-gradient(var(--trace),var(--trace)) 0 100% / 0 1.5px no-repeat;
+  transition:background-size .5s var(--ease),color .2s var(--ease)}
+.page-writing .picks h3 a:hover,.page-writing .picks h3 a:focus-visible{background-size:100% 1.5px}
+.page-writing .picks .tag{order:1;margin:0 0 .5rem}
+.page-writing .picks p:not(.tag){order:3;font-style:italic;font-size:1.1rem!important;max-width:52ch;margin-top:.75rem}
+
+/* ============================ article ==================================== */
+/* The reading experience only: a calmer header, a wider line height, a
+   measured column, and a thin waterline that fills as you read. */
+main:has(> .shell > .article) .page-head::after{top:auto;bottom:1.25rem;left:0;right:0;width:auto;height:22px;opacity:.45;
+  background:var(--rule);mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+main:has(> .shell > .article) .shell{max-width:50rem}
+main:has(> .shell > .article) .page-head{padding-block:clamp(2rem,6vw,4rem) clamp(3rem,6vw,4.5rem)}
+main:has(> .shell > .article) .page-head h1{font-weight:400;font-size:clamp(2.3rem,5.4vw,4rem);line-height:1.08;max-width:18ch}
+main:has(> .shell > .article) .page-head + .shell::before{content:none}
+.article{max-width:36em;padding-block:1rem 4rem}
+.article .meta{padding-bottom:1.5rem}
+.article p,.article ul,.article ol,.article blockquote{font-size:1.2rem;line-height:1.75;margin-top:1.3rem}
+.article .meta + p{font-size:clamp(1.3rem,2.2vw,1.45rem);line-height:1.6;color:var(--ink)}
+.article h2{font-weight:500;font-size:clamp(1.55rem,2.8vw,2rem);margin-top:3.25rem;line-height:1.2}
+.article h2::before{content:"";display:block;width:2.75rem;height:10px;margin-bottom:1rem;background:var(--trace);
+  mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+@media (min-width:641px){.article p,.article ul,.article ol{font-size:1.25rem}}
+@supports (animation-timeline:scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    main:has(> .shell > .article)::before{content:"";position:fixed;z-index:41;left:0;right:0;top:var(--head);height:2px;
+      background:var(--trace);transform-origin:0 50%;animation:waterline linear both;animation-timeline:scroll(root)}
+  }
+}
+@keyframes waterline{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ============================ about ====================================== */
+/* Personal: a topographic map of the coast where I live sits behind the
+   introduction, and the details read as three columns divided by hand. */
+.page-about .page-head{padding-block:clamp(3rem,8vw,6rem) clamp(3rem,6vw,4.5rem)}
+.page-about .page-head::after{mask-image:url('/images/contours.svg');mask-size:cover;height:100%;width:min(60%,720px);opacity:.11;
+  background:var(--trace)}
+.page-about .about-line{font-weight:400;font-size:clamp(2rem,4.6vw,3.6rem);max-width:17ch;line-height:1.08}
+.page-about .tide{--band:var(--shallow)}
+.page-about .colophon{gap:2.5rem clamp(2rem,5vw,4.5rem)}
+@media (min-width:880px){
+  .page-about .colophon > div + div{position:relative}
+  .page-about .colophon > div + div::before{content:"";position:absolute;left:calc(-1 * clamp(1rem,2.5vw,2.25rem));top:.2rem;bottom:0;
+    width:1.5px;background:linear-gradient(var(--rule),transparent)}
+}
+.page-about .colophon .big{font-weight:500;font-size:1.4rem}
+
+/* ============================ 404 ======================================== */
+/* Low tide: the page went out with the water. A wide empty shore and a wave
+   line low on the screen, with the way back laid out in one row. */
+.page-lost .page-head{min-height:min(72vh,640px);display:flex;align-items:center;padding-block:4rem 7rem}
+.page-lost .page-head .shell{width:100%}
+.page-lost .page-head::after{top:auto;bottom:0;left:0;right:0;width:auto;height:56px;opacity:1;
+  background:var(--shallow-2);mask:url('/images/wave-fill.svg') center / 100% 100% no-repeat}
+.page-lost + footer{background:var(--shallow-2)}
+.page-lost + footer::before{content:none}
+.page-lost .page-head::before{background:linear-gradient(180deg,var(--paper),var(--shallow))}
+.page-lost h1{font-style:italic;font-weight:400;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.045em}
+.page-lost .said{font-size:var(--t-md)}
+.page-lost ul{display:flex;flex-wrap:wrap;gap:.25rem 1.75rem;margin-top:2rem}
+.page-lost li a{text-decoration-color:var(--trace);text-underline-offset:.3em}
+.page-lost li a:hover,.page-lost li a:focus-visible{color:var(--trace)}
+@media (min-width:561px){.page-projects #measured .strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.page-projects #books .three,.case-audio .three{background:transparent;border:0;gap:1rem}
+.case-audio .three{list-style:none;margin:2.5rem 0 0;padding:0;display:grid}
+@media (min-width:900px){.case-audio .three{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.case-audio .three > li{display:grid;grid-template-columns:1fr;gap:.4rem;align-content:start}
+.case-audio .three a{text-decoration:none;color:inherit}
+.case-audio .three h3 a{display:inline-block;padding-block:.6rem .4rem;transition:color .22s var(--ease)}
+.case-audio .three h3 a:hover,.case-audio .three h3 a:focus-visible{color:var(--trace)}
+.case-audio .three .n{font-family:var(--display);font-weight:600;font-size:1.05rem;margin:0;letter-spacing:-.015em}
+.case-audio .three .go{font-family:var(--data);font-size:var(--t-micro);color:var(--trace)}
+.case-audio .three .d{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);line-height:1.6}
+.case-audio .three .d a{text-decoration:underline;color:var(--ink-2)}
+
+/* page-head light fades out before the wave, so there is no hard band edge */
+.hero::before,.page-head::before{mask-image:linear-gradient(#000 55%,transparent)}
+/* drawings and their arrival drift never widen the page */
+.hero,.page-head,.shelf{overflow-x:clip}
+@media (max-width:640px){
+  .case-philip .page-head::after{width:60px;height:60px;top:1.6rem;bottom:auto;right:var(--gut);opacity:.8}
+  .contact::after{width:100%;height:180px;opacity:.08}
+}
+/* a long current-page crumb wraps as text, keeping its separator beside it */
+.crumbs li{display:flex;align-items:baseline}
+.crumbs li+li::before{flex:none}
+.crumbs [aria-current]{display:inline;min-height:0;padding-block:.75rem}
