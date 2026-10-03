@@ -1,9 +1,4 @@
-/* ============================================================================
-   INSTRUMENT — a measurement readout.
-   Palette is plotter paper, not cream. Accent encodes measurement state:
-   --trace marks a reading that held, --flag marks one that did not.
-   Nothing is colored for decoration.
-   ========================================================================= */
+/* Coastline: quiet sea tones, open spacing, and drawn accents. */
 
 @font-face{font-family:'Bricolage';src:url(fonts/bricolage.woff2) format('woff2');
   font-weight:400 800;font-stretch:75% 100%;font-display:swap;
@@ -16,39 +11,39 @@
   unicode-range:U+0000-00FF,U+2000-206F,U+2190-21FF}
 
 :root{
-  color-scheme:light dark;
+  color-scheme:light;
 
   /* --- surface ---------------------------------------------------------- */
-  --paper:#e8eae3;          /* cool plotter stock, deliberately not cream    */
-  --paper-lift:#f1f2ec;
-  --ink:#14181c;            /* blue-black, never #000                        */
-  --ink-2:#3b4348;
-  --mute:#5d6763;
-  --rule:#c6cbc0;
-  --rule-soft:#d6dacf;
+  --paper:#e6ebe7;
+  --paper-lift:#f2f4ee;
+  --ink:#1f322e;
+  --ink-2:#3d554d;
+  --mute:#4b6058;
+  --rule:#a0b4aa;
+  --rule-soft:#c8d3ca;
 
   /* --- measurement state ------------------------------------------------ */
-  --trace:#08636b;          /* a reading that held                           */
-  --flag:#a8102a;           /* a reading that missed its bar                 */
-  --trace-wash:#08636b1a;
-  --flag-wash:#a8102a14;
+  --trace:#21635b;
+  --flag:#9b3041;
+  --trace-wash:#21635b10;
+  --flag-wash:#9b304110;
 
   /* --- type ------------------------------------------------------------- */
-  --display:'Bricolage','Trebuchet MS',system-ui,sans-serif;
+  --display:'Newsreader',Georgia,'Times New Roman',serif;
   --body:'Newsreader',Georgia,'Times New Roman',serif;
   --data:'PlexMono',ui-monospace,SFMono-Regular,Menlo,monospace;
 
   /* fluid scale, 8pt-derived */
-  --t-mega:clamp(2.9rem,7.6vw,7rem);
+  --t-mega:clamp(2.8rem,6.5vw,5.7rem);
   --t-xl:clamp(2.1rem,4.6vw,4rem);
   --t-lg:clamp(1.6rem,2.6vw,2.4rem);
   --t-md:clamp(1.15rem,1.5vw,1.4rem);
-  --t-body:1.0625rem;
+  --t-body:1.125rem;
   --t-data:.8125rem;
-  --t-micro:.6875rem;
+  --t-micro:.75rem;
 
   /* --- rhythm (intentionally uneven per section, see each block) --------- */
-  --gut:clamp(1.25rem,4.2vw,3.5rem);
+  --gut:clamp(1.25rem,5vw,4rem);
   --measure:64ch;
   --tap:44px;          /* minimum comfortable touch target */
   --head:53px;         /* masthead height; JS re-syncs it after font load */
@@ -56,25 +51,27 @@
 }
 
 [data-theme="scope"]{
-  --paper:#101417;
-  --paper-lift:#171c20;
-  --ink:#e4e8e2;
-  --ink-2:#b3bcb7;
-  --mute:#8b958f;
-  --rule:#2a3237;
-  --rule-soft:#20272b;
-  --trace:#7fb8bc;
-  --flag:#e08494;
-  --trace-wash:#7fb8bc17;
-  --flag-wash:#e0849414;
+  color-scheme:dark;
+  --paper:#101f1e;
+  --paper-lift:#172c28;
+  --ink:#e0eae4;
+  --ink-2:#bacfc4;
+  --mute:#9cb8aa;
+  --rule:#607e71;
+  --rule-soft:#304b41;
+  --trace:#81cfc3;
+  --flag:#f0a4ae;
+  --trace-wash:#81cfc310;
+  --flag-wash:#f0a4ae10;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="bench"]){
-    --paper:#101417;--paper-lift:#171c20;
-    --ink:#e4e8e2;--ink-2:#b3bcb7;--mute:#8b958f;
-    --rule:#2a3237;--rule-soft:#20272b;
-    --trace:#7fb8bc;--flag:#e08494;
-    --trace-wash:#7fb8bc17;--flag-wash:#e0849414;
+    color-scheme:dark;
+    --paper:#101f1e;--paper-lift:#172c28;
+    --ink:#e0eae4;--ink-2:#bacfc4;--mute:#9cb8aa;
+    --rule:#607e71;--rule-soft:#304b41;
+    --trace:#81cfc3;--flag:#f0a4ae;
+    --trace-wash:#81cfc310;--flag-wash:#f0a4ae10;
   }
 }
 
@@ -85,7 +82,7 @@ body{
   font-family:var(--body);font-size:var(--t-body);line-height:1.6;
   font-variation-settings:'opsz' 16;
   -webkit-font-smoothing:antialiased;
-  overflow-x:clip;
+  overflow-wrap:break-word;
 }
 svg{display:block;max-width:100%}
 a{color:inherit}
@@ -95,7 +92,7 @@ p,figure,dl,dd{margin:0}
 :focus-visible{outline:2px solid var(--trace);outline-offset:3px;border-radius:2px}
 ::selection{background:var(--ink);color:var(--paper)}
 
-.shell{max-width:1400px;margin-inline:auto;padding-inline:var(--gut)}
+.shell{max-width:1200px;margin-inline:auto;padding-inline:var(--gut)}
 .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);
   padding:.75rem 1rem;font-family:var(--data);font-size:var(--t-data);z-index:99}
 .skip:focus{left:.5rem;top:.5rem}
@@ -126,7 +123,7 @@ p,figure,dl,dd{margin:0}
 .masthead nav a:hover,.masthead nav a:focus-visible{color:var(--ink);border-bottom-color:var(--trace)}
 .masthead nav a[aria-current]{color:var(--ink);border-bottom-color:var(--ink)}
 .masthead nav{margin-left:auto}
-.mark{font-family:var(--display);font-weight:700;letter-spacing:-.03em;font-size:1.02rem;white-space:nowrap;
+.mark{font-family:var(--display);font-weight:700;letter-spacing:-.03em;font-size:1.25rem;font-style:italic;white-space:nowrap;
   text-decoration:none;font-variation-settings:'wdth' 78;
   display:inline-flex;align-items:center;min-height:var(--tap);padding-right:.5rem}
 .themer{display:none;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
@@ -299,7 +296,7 @@ p,figure,dl,dd{margin:0}
 .plot figcaption{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
   line-height:1.5;margin-bottom:.9rem}
 .plot figcaption b{color:var(--ink);font-weight:400}
-.plot svg{width:100%;height:auto;overflow:visible;max-width:520px}
+.plot > svg{width:100%;height:auto;overflow:visible;max-width:520px}
 .src{margin-top:1.1rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute);
   line-height:1.9}
 .plot .src{margin-top:.85rem;line-height:2}
@@ -433,6 +430,43 @@ p,figure,dl,dd{margin:0}
 
 footer{padding-block:2rem 3rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
 footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
+
+/* Static coast drawing stays behind readable content. */
+.hero,.page-head{position:relative;isolation:isolate;background:var(--paper)}
+.hero::before,.page-head::before{content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(135deg,var(--paper-lift),transparent 65%);pointer-events:none}
+.hero::after,.page-head::after{content:"";position:absolute;right:0;top:0;
+  width:min(70%,780px);height:260px;z-index:-1;background:var(--trace);opacity:.12;
+  mask:url('/images/coastline.svg') right top / cover no-repeat;pointer-events:none}
+.hero{padding-block:clamp(3rem,8vw,6rem) 3rem}
+.hero h1{font-weight:400;line-height:1.04;letter-spacing:-.035em;max-width:17ch}
+.hero-role{font-weight:400;font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.3}
+.hero-role b{font-weight:500}
+.shelf{padding-block:clamp(3rem,7vw,5.5rem)}
+.shelf-head h2,.page-head h1,.index h2{font-weight:400;line-height:1.12}
+.shelf-head{margin-bottom:2rem}
+.shelf-head h2::after{content:"";display:block;width:3.5rem;height:.5rem;margin-top:.65rem;
+  border-top:2px solid var(--trace);border-radius:50%;transform:rotate(-3deg)}
+.said{line-height:1.7}
+.readings,.shot,.plot,.screens figure{border-radius:8px 3px 9px 4px}
+.readings{background:var(--paper-lift)}
+.picks,.index,.strip{background:transparent;border:0;gap:clamp(1.5rem,4vw,3rem)}
+.picks > li,.index > section,.strip article{background:transparent;border-top:1px solid var(--rule);
+  padding:1.5rem 0}
+.picks h3,.index h2{font-weight:400}
+.picks h3 a,.strip h3 a,.row h3 a{border-bottom-width:1px;text-decoration-thickness:1px}
+.row{padding-block:2rem}
+.miss{border-radius:0 8px 8px 0}
+.mark{font-weight:500}
+.themer{color:var(--ink-2)}
+.menu-toggle,.themer{border-radius:6px}
+footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
+@media (min-width:1120px){.hero-body{grid-template-columns:minmax(0,1fr) 18rem;gap:2rem 3rem}}
+@media (max-width:640px){
+  .hero::after,.page-head::after{width:100%;height:160px;opacity:.09}
+  .hero{padding-block:2.75rem 2rem}
+  .mark{font-size:1.2rem}
+}
 
 /* ============================ motion ===================================== */
 @media (prefers-reduced-motion:reduce){
