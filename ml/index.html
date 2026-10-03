@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ML &amp; Research · Michael Chen</title>
+<meta name="description" content="My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.">
+<meta name="author" content="Michael Chen">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://michaelluochen.com/ml/">
+<meta name="theme-color" content="#e6ebe7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101f1e" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Michael Chen">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://michaelluochen.com/ml/">
+<meta property="og:title" content="ML &amp; Research · Michael Chen">
+<meta property="og:description" content="My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.">
+<meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
+<meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ML &amp; Research · Michael Chen">
+<meta name="twitter:description" content="My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.">
+<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
+<meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+<script src="/site.js"></script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"publisher":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI engineer","url":"https://michaelluochen.com/about/"},{"@type":"CollectionPage","@id":"https://michaelluochen.com/ml/#page","url":"https://michaelluochen.com/ml/","name":"ML & Research","description":"My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","mainEntity":{"@id":"https://michaelluochen.com/ml/#list"},"breadcrumb":{"@id":"https://michaelluochen.com/ml/#breadcrumb"}},{"@type":"ItemList","@id":"https://michaelluochen.com/ml/#list","itemListElement":[{"@type":"ListItem","position":1,"name":"Kestrel","url":"https://michaelluochen.com/projects/kestrel-tts/"},{"@type":"ListItem","position":2,"name":"mlx-audio decoder fix","url":"https://michaelluochen.com/ml/#mlx-audio"},{"@type":"ListItem","position":3,"name":"Vireo TTS 3B for Apple Silicon","url":"https://michaelluochen.com/ml/#vireo"},{"@type":"ListItem","position":4,"name":"Ornith-1.5-35B-A3B REAP-192 mxfp4 build","url":"https://michaelluochen.com/ml/#ornith"},{"@type":"ListItem","position":5,"name":"Decision-head experiment","url":"https://michaelluochen.com/ml/#decision-heads"},{"@type":"ListItem","position":6,"name":"PHiLIP","url":"https://michaelluochen.com/projects/philip/"}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"ML & Research","item":"https://michaelluochen.com/ml/"}],"@id":"https://michaelluochen.com/ml/#breadcrumb"}]}
+</script>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="masthead" aria-label="Site header">
+  <div class="shell">
+    <a class="mark" href="/">Michael Chen</a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span>Menu</span>
+    </button>
+    <nav id="site-nav" aria-label="Site">
+      <ul role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/ml/" aria-current="page">ML &amp; Research</a></li>
+        <li><a href="/projects/">Projects &amp; Fun</a></li>
+        <li><a href="/writing/">Writing</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+    <button class="themer" id="themer" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
+      <span id="themer-label">theme</span>
+    </button>
+  </div>
+</header>
+
+<main id="top" tabindex="-1" class="page-ml">
+
+  <div class="page-head">
+    <svg class="bench" viewBox="0 0 420 220" aria-hidden="true" focusable="false">
+      <path class="axis" d="M34 18V186H410"/>
+      <path class="tick" d="M34 150h-6M34 114h-6M34 78h-6M34 42h-6M98 186v6M162 186v6M226 186v6M290 186v6M354 186v6"/>
+      <path class="grid" d="M34 150H410M34 114H410M34 78H410M34 42H410"/>
+      <path class="bar" d="M86 120v-36M80 120h12M80 84h12M150 98v-30M144 98h12M144 68h12M214 132v-24M208 132h12M208 108h12M278 70v-28M272 70h12M272 42h12M342 160v-22M336 160h12M336 138h12"/>
+      <circle class="pt" cx="86" cy="102" r="5"/><circle class="pt" cx="150" cy="83" r="5"/><circle class="pt" cx="214" cy="120" r="5"/>
+      <circle class="pt" cx="278" cy="56" r="5"/><circle class="pt miss" cx="342" cy="149" r="5"/>
+      <path class="bar-line" d="M40 170C110 150 150 120 214 112S320 70 404 52"/>
+    </svg>
+    <div class="shell">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">ML &amp; Research</span></li></ol></nav>
+      <h1>ML &amp; Research</h1>
+      <p class="said">Experiments I ran on my own Macs, mostly speech models and model compression. Each entry says what I measured, on which machine, under which licence, and where it fell short.</p>
+      <ul class="ml-index" role="list">
+        <li><a href="#kestrel">Kestrel</a></li>
+        <li><a href="#mlx-audio">mlx-audio fix</a></li>
+        <li><a href="#vireo">Vireo TTS</a></li>
+        <li><a href="#ornith">Ornith REAP-192</a></li>
+        <li><a href="#decision-heads">Decision heads</a></li>
+        <li><a href="#philip">PHiLIP</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="shelf" aria-labelledby="h-speech">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-speech">Speech</h2>
+        <p class="said">Text-to-speech on Apple Silicon. Kestrel and the mlx-audio fix came out of <a href="/projects/audiobook-stack/">my audiobook setup</a>.</p>
+      </div>
+      <ol class="log" role="list">
+        <li><article class="entry" id="kestrel" aria-labelledby="h-kestrel">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>closed after 113 cycles</dd></div>
+            <div><dt>machine</dt><dd>M2 MacBook, 16 GB</dd></div>
+            <div><dt>licence</dt><dd>Apache-2.0</dd></div>
+            <div><dt>base</dt><dd>Kokoro-82M, distilled</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-kestrel"><a href="/projects/kestrel-tts/">Kestrel</a></h3>
+            <p>I distilled Kokoro-82M into a single-voice audiobook engine for MLX with about 10M active parameters. It renders speech quickly and stays intelligible, but it sounds less clear than Kokoro and misses both of its quality gates.</p>
+            <dl class="readout">
+              <div><dt>times real time</dt><dd>×622</dd></div>
+              <div><dt>WER, teacher 5.65%</dt><dd>5.46<span class="u">%</span></dd></div>
+              <div class="off"><dt>MCD<small>pass bar 3.98 · target not met</small></dt><dd>13.89</dd></div>
+            </dl>
+            <p class="src"><a href="/projects/kestrel-tts/">Measurements, audit and limits</a> · <a href="https://huggingface.co/mchen04/kestrel-tts" rel="noopener">model card <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · <a href="https://github.com/mchen04/kestrel-tts" rel="noopener">code <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
+          </div>
+        </article></li>
+
+        <li><article class="entry" id="mlx-audio" aria-labelledby="h-mlx-audio">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>merged 5 August 2026</dd></div>
+            <div><dt>where</dt><dd>Blaizzy/mlx-audio</dd></div>
+            <div><dt>check</dt><dd>55 utterances, fp32 reference</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-mlx-audio"><a href="https://github.com/Blaizzy/mlx-audio/pull/859" rel="noopener">mlx-audio decoder fix <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></h3>
+            <p>I found five differences between the MLX iSTFTNet decoders (Kokoro, KittenTTS) and their PyTorch reference. I compared intermediate tensors layer by layer using identical phoneme and style inputs. The fixes merged upstream.</p>
+            <p>Two differences affected the audio. Every Kokoro render was
+              <span class="num">2.5 dB</span> quiet, because MLX's <span class="num">istft</span>
+              divides the overlap-add by <span class="num">Σw</span> and
+              <span class="num">torch.istft</span> divides by <span class="num">Σw²</span>. And the
+              upsample path in the pitch and energy predictor was misaligned by one frame against its
+              own shortcut: F0 relative RMSE <span class="num">0.134 → 0.0000</span>.</p>
+            <dl class="readout">
+              <div><dt>MCD</dt><dd>7.29 → 4.09<span class="u"> dB</span></dd></div>
+              <div><dt>F0 RMSE</dt><dd>11.5 → 5.1<span class="u"> Hz</span></dd></div>
+            </dl>
+            <p class="why">Checked against frozen fp32 reference audio over 55 utterances, with the
+              thresholds calibrated to the reference model's own render-to-render noise floor, since
+              the decoder is stochastic. I hit this while building Kestrel.</p>
+          </div>
+        </article></li>
+
+        <li><article class="entry" id="vireo" aria-labelledby="h-vireo">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>two public builds</dd></div>
+            <div><dt>machine</dt><dd>M2 MacBook Pro, 16 GB</dd></div>
+            <div><dt>licence</dt><dd>research and non-commercial only (weights), not open source</dd></div>
+            <div><dt>base</dt><dd>Breeze TTS 2 by BreezeBlue</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-vireo">Vireo TTS 3B for Apple Silicon</h3>
+            <p>Vireo is my unofficial MLX build of Breeze TTS 2, a 3B speech model by BreezeBlue. BreezeBlue has not reviewed or endorsed it. It comes in two builds. The bfloat16 build converts the released checkpoint to MLX at unchanged precision, as the quality reference. The mixed 4-bit build adds activation-calibrated pruning and per-stage low-bit quantization, and it is the one I optimised and measured end to end.</p>
+            <dl class="readout">
+              <div><dt>mixed 4-bit, real time</dt><dd>1.15×</dd></div>
+              <div><dt>bf16 reference, real time</dt><dd>0.41×</dd></div>
+              <div><dt>peak GPU memory</dt><dd>3.0 / 7.0<span class="u"> GB</span></dd></div>
+              <div><dt>warm first audio</dt><dd>285–322<span class="u"> ms</span></dd></div>
+            </dl>
+            <p class="limits"><b>Limits.</b> Speed is the best of three runs on one M2 and does not transfer to other machines. I picked the 4-bit build from more than sixty candidates against one probe set: its development word error rate is 0.0093, but 0.0368 on held-out text. Its worst speaker similarity, 0.856, is below the bf16 build's 0.903. The two builds are close on quality and far apart on cost; the compressed one is not uniformly better. The calibration clip is private, so nobody else can rebuild the 4-bit weights bit for bit.</p>
+            <p class="src">Weights: BreezeBlue Research and Non-Commercial License, gated, no commercial use. Runtime code: Apache-2.0.
+              <a href="https://huggingface.co/mchen04/Vireo-TTS-3B-MLX-mixed4bit" rel="noopener">mixed 4-bit card <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · <a href="https://huggingface.co/mchen04/Vireo-TTS-3B-MLX-bf16" rel="noopener">bf16 card <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · <a href="https://huggingface.co/BreezeBlue/Breeze-TTS-2" rel="noopener">upstream Breeze TTS 2 <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
+          </div>
+        </article></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="shelf" aria-labelledby="h-llm">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-llm">Language models</h2>
+        <p class="said">A compressed build of someone else's model, and an experiment whose main result is negative.</p>
+      </div>
+      <ol class="log" role="list">
+        <li><article class="entry" id="ornith" aria-labelledby="h-ornith">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>public build</dd></div>
+            <div><dt>machine</dt><dd>base M4 Mac mini, 24 GB</dd></div>
+            <div><dt>licence</dt><dd>MIT, inherited</dd></div>
+            <div><dt>base</dt><dd>Ornith-1.5-35B-A3B by the Ornith Team</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-ornith">Ornith-1.5-35B-A3B, REAP-192, mxfp4</h3>
+            <p>The base model is the Ornith Team's, not mine. My work was compressing it to run on a 24 GB Mac mini, where the plain 4-bit conversion does not fit. I pruned each layer from 256 to 192 experts with REAP, quantised to mxfp4 while keeping the shared expert and router at 8 bits, and lowered the active experts per token from 8 to 7. There was no fine-tuning.</p>
+            <dl class="readout">
+              <div><dt>decode</dt><dd>49.8<span class="u"> tok/s</span></dd></div>
+              <div><dt>weights</dt><dd>14.2<span class="u"> GB</span></dd></div>
+              <div><dt>42-task suite, unpruned 3-bit 0.954</dt><dd>0.981</dd></div>
+            </dl>
+            <p class="limits"><b>Limits.</b> The task suite is finite and English only: coding, math, tool calls, structured output and format checks. Expect some loss on knowledge-heavy tasks. I could not run the bf16 original on any hardware I had, so there is no direct comparison with it. The build is tuned for one user at a time.</p>
+            <p class="src"><a href="https://huggingface.co/mchen04/Ornith-1.5-35B-A3B-REAP192-mxfp4-MLX" rel="noopener">model card <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · <a href="https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B" rel="noopener">original model <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · <a href="https://arxiv.org/abs/2510.13999" rel="noopener">REAP paper <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
+          </div>
+        </article></li>
+
+        <li><article class="entry negative" id="decision-heads" aria-labelledby="h-heads">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>negative result, side project</dd></div>
+            <div><dt>machine</dt><dd>M4 Mac mini, 24 GB</dd></div>
+            <div><dt>licence</dt><dd>none chosen, all rights reserved</dd></div>
+            <div><dt>base</dt><dd>frozen Qwen2.5 Instruct, 4-bit</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-heads">Decision heads on a small local model</h3>
+            <p>Over four days in September 2026 I trained tiny classification heads on top of frozen, 4-bit Qwen2.5 models, to see how well a small local model could read decisions out of documents. Two public repositories hold phases one and two (depth and distillation sweeps) and phase three. On the task families they were trained on, the heads beat the backbone's own zero-shot read-out by 14.8 points. On the six unseen task families I tested, they lost.</p>
+            <dl class="readout">
+              <div class="off"><dt>six unseen task families, vs zero-shot</dt><dd>−3.25<span class="u"> pts</span></dd></div>
+              <div class="off"><dt>workflow suite, zero-shot 0.650</dt><dd>0.582</dd></div>
+              <div><dt>20 of 28 layers, latency saved</dt><dd>28<span class="u">%</span></dd></div>
+            </dl>
+            <p class="limits"><b>Limits.</b> These heads are not production-ready and do not reproduce or match the commercial system I compared against; its published numbers were never run on my hardware. In held-out-task probes, accuracy on the held-out families fell to 0.0063 when two large-label families (150 and 100 labels) were left out, and to 0.594 when two small-label families were. No safety, robustness or calibration testing was done.</p>
+            <p class="src"><a href="https://huggingface.co/mchen04/jev-local-lab-decision-heads" rel="noopener">phase 3 card <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a> · <a href="https://huggingface.co/mchen04/jevlite-decision-heads" rel="noopener">phases 1 and 2 card <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
+          </div>
+        </article></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="shelf" aria-labelledby="h-vision">
+    <div class="shell">
+      <div class="shelf-head wide">
+        <h2 id="h-vision">Image generation</h2>
+      </div>
+      <ol class="log" role="list">
+        <li><article class="entry" id="philip" aria-labelledby="h-philip">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>team prototype, 2024</dd></div>
+            <div><dt>hardware</dt><dd>AMD ROCm</dd></div>
+            <div><dt>award</dt><dd>AMD University Program Award</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-philip"><a href="/projects/philip/">PHiLIP</a></h3>
+            <p>Our PHiLIP prototype combines human feedback with image generation using AMD ROCm and PixArt-alpha. It won the AMD University Program Award in the AMD Pervasive AI Developer Contest. The current code has integration limits, which the project page describes.</p>
+            <p class="src"><a href="/projects/philip/">Prototype details and sources</a> · <a href="https://www.hackster.io/contests/amd2023#category-1092" rel="noopener">official results <span class="go" aria-hidden="true"><svg class="ext" viewBox="0 0 10 10" width="10" height="10" aria-hidden="true" focusable="false"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></span></a></p>
+          </div>
+        </article></li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer aria-label="Colophon">
+  <div class="shell">
+    <span>© 2026 Michael Chen</span>
+    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Project measurements include source links.</span>
+  </div>
+</footer>
+
+</body>
+</html>
