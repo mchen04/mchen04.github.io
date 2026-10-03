@@ -84,7 +84,7 @@ onReady(function(){
   });
 })();
 
-/* ---- hero wire: chart recorder over the public events API -------------- */
+/* ---- activity wire on Projects & Fun: chart recorder over the events API */
 /* The pen draws whatever the API returns right now. If the fetch fails or is
    rate-limited, it draws the cached reading below and says so on the label,
    because an instrument with no signal should still show its last plot. */

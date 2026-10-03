@@ -68,12 +68,46 @@
   </div>
 </header>
 
-<main id="top" tabindex="-1">
+<main id="top" tabindex="-1" class="page-projects">
 
   <div class="page-head">
     <div class="shell">
       <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Projects &amp; Fun</span></li></ol></nav>
       <h1>Projects &amp; Fun</h1>
+      <p class="said">Outside work, I build apps for friends, contribute to open-source projects and work on my audiobook setup.</p>
+      <figure class="wire" id="wire">
+        <figcaption>
+          <span><b>fig. 0</b> · Recent sample of up to 100 public GitHub events. Times are UTC.
+            A dated cached sample appears if GitHub is unavailable.</span>
+          <span class="wire-meta" id="wire-meta" aria-live="polite">Cached sample from August 14, 2026 · 100 events · 2026-08-12 03:00 to 2026-08-14 23:00 UTC</span>
+        </figcaption>
+        <svg id="wire-svg" role="img" aria-label="Public GitHub activity. Hourly readings appear in the table below." aria-describedby="wire-meta" hidden></svg>
+        <p class="wire-source"><a href="https://github.com/mchen04" rel="noopener">View public activity on GitHub</a></p>
+        <details class="wire-details">
+          <summary>View hourly activity</summary>
+          <div class="wire-table" tabindex="0" role="region" aria-label="Hourly activity table" aria-describedby="wire-meta">
+            <table>
+              <caption>Hours with events in this sample. Unlisted hours contain no sampled events.</caption>
+              <thead><tr><th scope="col">Hour (UTC)</th><th scope="col">Events</th><th scope="col">Most frequent repository</th></tr></thead>
+              <tbody id="wire-rows">
+              <tr><th scope="row">2026-08-12 03:00</th><td>19</td><td>cs170-eight-puzzle-search</td></tr>
+              <tr><th scope="row">2026-08-12 05:00</th><td>5</td><td>mchen04.github.io</td></tr>
+              <tr><th scope="row">2026-08-13 17:00</th><td>5</td><td>hark-audiobook</td></tr>
+              <tr><th scope="row">2026-08-13 19:00</th><td>5</td><td>hark-audiobook</td></tr>
+              <tr><th scope="row">2026-08-13 20:00</th><td>15</td><td>hark-audiobook</td></tr>
+              <tr><th scope="row">2026-08-13 23:00</th><td>5</td><td>hark-audiobook</td></tr>
+              <tr><th scope="row">2026-08-14 15:00</th><td>7</td><td>pancake</td></tr>
+              <tr><th scope="row">2026-08-14 16:00</th><td>3</td><td>pancake</td></tr>
+              <tr><th scope="row">2026-08-14 17:00</th><td>10</td><td>pancake</td></tr>
+              <tr><th scope="row">2026-08-14 18:00</th><td>5</td><td>pancake</td></tr>
+              <tr><th scope="row">2026-08-14 19:00</th><td>10</td><td>pancake</td></tr>
+              <tr><th scope="row">2026-08-14 22:00</th><td>5</td><td>pancake</td></tr>
+              <tr><th scope="row">2026-08-14 23:00</th><td>6</td><td>pancake</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </figure>
     </div>
   </div>
 
@@ -103,7 +137,7 @@
     </div>
   </section>
 
-  <section class="shelf" id="books" aria-labelledby="h-books">
+  <section class="shelf tide" id="books" aria-labelledby="h-books">
     <div class="shell">
       <div class="shelf-head wide">
         <h2 id="h-books">My audiobook setup</h2>
@@ -136,7 +170,7 @@
     </div>
   </section>
 
-  <section class="shelf" id="friends" aria-labelledby="h-friends">
+  <section class="shelf tide" id="friends" aria-labelledby="h-friends">
     <div class="shell">
       <div class="shelf-head wide">
         <h2 id="h-friends">Apps for friends</h2>
@@ -179,7 +213,7 @@
     </div>
   </section>
 
-  <section class="shelf" id="tools" aria-labelledby="h-tools">
+  <section class="shelf tide" id="tools" aria-labelledby="h-tools">
     <div class="shell">
       <div class="shelf-head">
         <h2 id="h-tools">Personal tools</h2>
@@ -221,7 +255,7 @@
     </div>
   </section>
 
-  <section class="shelf" id="upstream" aria-labelledby="h-upstream">
+  <section class="shelf tide" id="upstream" aria-labelledby="h-upstream">
     <div class="shell">
       <div class="shelf-head">
         <h2 id="h-upstream">Contributions</h2>
