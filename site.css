@@ -1178,3 +1178,257 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
    squeezing into spikes */
 .page-work .shelf.tide::before,.page-ml .shelf + .shelf::before,.page-projects .shelf.tide::before,
 .page-writing .page-head + .shelf::before,.page-about .shelf.tide::before{mask-size:max(100%,1440px) 100%}
+
+/* ============================ inner pages: one voice ===================== */
+/* Every inner page now speaks Home's type: a light, tight serif display for
+   titles, serif 500 for item titles, serif body for anything that reads as a
+   sentence, and mono only for labels, dates and figures. Each page keeps its
+   own composition below; none of these rules reach Home. */
+.page-work .page-head h1,.page-ml .page-head h1,.page-projects .page-head h1,.page-about .page-head h1,.page-case .page-head h1{
+  font-family:var(--display);font-weight:400;font-stretch:normal;font-variation-settings:normal;
+  font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:1.02;letter-spacing:-.04em;max-width:16ch}
+.page-work .page-head,.page-ml .page-head,.page-projects .page-head,.page-about .page-head,.page-case .page-head{
+  padding-block:clamp(2.5rem,6vw,4.75rem) clamp(3rem,6vw,4.75rem)}
+.page-work .page-head .said,.page-ml .page-head .said,.page-projects .page-head .said,.page-case .page-head .said{
+  margin-top:1.4rem;max-width:44ch;font-size:var(--t-md);line-height:1.5;color:var(--ink-2);font-variation-settings:'opsz' 24}
+.page-work .shelf-head h2,.page-ml .shelf-head h2,.page-projects .shelf-head h2{font-family:var(--display);font-stretch:normal;
+  font-weight:400;letter-spacing:-.03em}
+
+/* one soft instrument surface for readouts on measurement pages */
+.page-ml .entry-body .readout,.page-case .readout{background:var(--rule-soft);border:1px solid var(--rule-soft);
+  border-radius:12px;overflow:hidden;gap:1px}
+.page-ml .entry-body .readout div,.page-case .readout div{background:color-mix(in srgb,var(--paper-lift) 78%,var(--band,var(--paper)));
+  padding:.85rem 1rem .9rem}
+.page-ml .readout dd,.page-case .readout dd{font-weight:500;font-size:clamp(1.35rem,2vw,1.65rem);letter-spacing:-.025em}
+.page-ml .readout dt,.page-case .readout dt{letter-spacing:.03em}
+
+/* ---- Work: a career record. The section title holds still on the left
+   while the roles run down their rail on the right. ---------------------- */
+.page-work .page-head h1{font-size:clamp(3.2rem,8vw,6.25rem)}
+.page-work .row{padding-block:2.1rem}
+.page-work .row h3{font-size:clamp(1.45rem,2.2vw,1.8rem);line-height:1.2}
+.page-work .row > div > p{font-size:1.1rem;line-height:1.65}
+.page-work .row .built{line-height:1.6;max-width:var(--measure);color:var(--mute)}
+@media (min-width:641px){
+  .page-work .row{grid-template-columns:8.5rem minmax(0,1fr)}
+  .page-work .row .built{grid-column:2;grid-row:auto;margin-top:1rem;padding-top:.8rem;
+    border-top:1px dashed var(--rule-soft)}
+}
+@media (min-width:1100px){.page-work .row{grid-template-columns:8.5rem minmax(0,1fr)}}
+@media (min-width:980px){
+  .page-work #shipped > .shell,.page-work #leadership > .shell{display:grid;
+    grid-template-columns:minmax(0,16rem) minmax(0,1fr);gap:0 clamp(2.5rem,5vw,5rem);align-items:start}
+  .page-work #shipped .shelf-head,.page-work #leadership .shelf-head{position:sticky;top:calc(var(--head) + 2.5rem);
+    margin:0;padding-top:1.6rem}
+  .page-work #shipped .shelf-head h2,.page-work #leadership .shelf-head h2{font-size:clamp(2.4rem,3.4vw,2.9rem);overflow-wrap:normal}
+  .page-work #shipped .shelf-head .said{font-size:1rem;color:var(--mute)}
+}
+.page-work #shipped{padding-bottom:clamp(4rem,8vw,6.5rem)}
+.page-work #leadership{padding-block:clamp(3.5rem,7vw,5rem) clamp(4.5rem,8vw,6.5rem)}
+/* the closing band: an orderly index of where the rest of the work lives */
+.page-work #moved{padding-block:clamp(3.5rem,7vw,5rem) clamp(3.5rem,7vw,5rem)}
+.page-work #moved > .shell{display:grid;grid-template-columns:minmax(0,1fr);column-gap:3rem}
+@media (min-width:760px){.page-work #moved > .shell{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.page-work #moved .shelf-head{grid-column:1/-1;margin-bottom:1rem}
+.page-work #moved .shelf-head h2{font-size:clamp(1.9rem,3.4vw,2.8rem)}
+.page-work #moved .more{display:block;margin:0;border-top:1px solid color-mix(in srgb,var(--deep-ink) 16%,transparent)}
+.page-work #moved .more a{display:flex;width:100%;min-height:3.5rem;padding-block:.6rem;border-bottom:0;
+  font-family:var(--display);font-size:1.2rem;letter-spacing:-.01em;line-height:1.3;
+  background:linear-gradient(var(--deep-trace),var(--deep-trace)) 0 100% / 0 1px no-repeat;
+  transition:background-size .45s var(--ease),color .2s var(--ease)}
+.page-work #moved .more a:hover,.page-work #moved .more a:focus-visible{background-size:100% 1px}
+
+/* ---- ML & Research: a lab notebook. Each entry keeps a ruled spec sheet
+   beside its result; values read off soft instrument panels. ------------- */
+.page-ml .page-head .said{max-width:46ch}
+.page-ml .ml-index{gap:.5rem .5rem;margin-top:2rem}
+.page-ml .ml-index a{border:1px solid var(--rule-soft);border-radius:999px;padding:0 1rem;
+  background:color-mix(in srgb,var(--paper-lift) 60%,transparent);transition:border-color .2s var(--ease),color .2s var(--ease)}
+.page-ml .ml-index a:hover,.page-ml .ml-index a:focus-visible{border-color:var(--trace)}
+.page-ml .shelf{padding-block:clamp(3.5rem,7vw,5.5rem) clamp(4rem,8vw,6rem)}
+@media (min-width:980px){
+  .page-ml .shelf-head.wide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end;gap:1rem 4rem}
+  .page-ml .shelf-head.wide .said{margin:0 0 .9rem;font-size:1.1rem}
+}
+.page-ml .entry{padding-block:2.5rem 2.75rem}
+.page-ml .entry-body h3{font-family:var(--display);font-weight:500;font-size:clamp(1.55rem,2.4vw,2rem);
+  letter-spacing:-.025em;line-height:1.15}
+.page-ml .entry-body > p:not(.src):not(.why):not(.limits){font-size:1.1rem;line-height:1.65}
+.page-ml .entry-body .readout{max-width:44rem;margin-top:1.4rem}
+.page-ml .entry-body .limits{background:color-mix(in srgb,var(--flag) 6%,var(--paper-lift));border-left-width:2px;
+  border-radius:0 12px 12px 0;padding:.95rem 1.2rem;max-width:44rem;margin-top:1.25rem;font-size:1.02rem}
+.page-ml .entry-body .why{max-width:62ch}
+@media (min-width:900px){
+  .page-ml .entry-meta{position:sticky;top:calc(var(--head) + 1.75rem);gap:0;padding-top:.45rem}
+  .page-ml .entry-meta div{padding-block:.55rem;border-top:1px solid var(--rule-soft)}
+  .page-ml .entry-meta div:first-child{border-top:0;padding-top:0}
+}
+
+/* ---- Projects & Fun: a pinboard. Serif voice, a framed activity chart,
+   the audiobook trio as three linked stages, and a two-column directory. -- */
+.page-projects h1,.page-projects .shelf-head h2,.page-projects .strip h3,.page-projects .three .n,.page-projects .dir .n{
+  font-family:var(--display);font-stretch:normal;letter-spacing:-.02em}
+.page-projects .page-head .moved{margin-top:1.1rem}
+.page-projects .wire{margin-top:2.5rem;padding:1.1rem 1.3rem 1rem;border:1px solid var(--rule-soft);border-radius:14px;
+  background:color-mix(in srgb,var(--paper-lift) 82%,transparent)}
+.page-projects .shelf-head .said{font-family:var(--body);font-size:1.05rem;color:var(--ink-2);text-align:left;max-width:36ch}
+.page-projects .shelf-head h2{font-size:clamp(2.1rem,4.2vw,3.5rem)}
+/* three stages on one line: book to audio, the engine, the player */
+.page-projects #books .three{display:grid;gap:1.75rem 2.5rem;padding-top:1.9rem}
+.page-projects #books .three::before{content:"";position:absolute;left:5px;right:0;top:5px;height:1.5px;
+  background:linear-gradient(90deg,var(--trace),color-mix(in srgb,var(--trace) 25%,transparent))}
+.page-projects #books .three > li,.page-projects #books .three > li:nth-child(even){background:none;border:0;border-radius:0;
+  padding:0;position:relative;transform:none;align-content:start}
+.page-projects #books .three > li::before{content:"";position:absolute;left:0;top:calc(-1.9rem - 0px);width:12px;height:12px;
+  border-radius:50%;border:1.5px solid var(--trace);background:var(--band)}
+.page-projects #books .three > li:first-child::before{background:var(--trace)}
+.page-projects #books .three .n{font-size:1.35rem;font-weight:500}
+.page-projects #books .three .d{font-family:var(--body);font-size:1rem;line-height:1.6;color:var(--ink-2)}
+@media (max-width:899px){
+  .page-projects #books .three{padding:0 0 0 1.9rem}
+  .page-projects #books .three::before{left:5px;right:auto;top:6px;bottom:0;width:1.5px;height:auto;
+    background:linear-gradient(var(--trace),color-mix(in srgb,var(--trace) 25%,transparent))}
+  .page-projects #books .three > li::before{left:-1.9rem;top:.6rem}
+}
+/* apps for friends: a directory, read down the first column then the second */
+.page-projects .dir a{grid-template-columns:2rem minmax(0,1fr) auto;gap:.15rem .9rem;padding:1rem .5rem;
+  border-radius:10px;box-shadow:none}
+.page-projects .dir li + li a{box-shadow:none}
+.page-projects .dir li{border-bottom:1px solid var(--rule-soft)}
+.page-projects .dir .i{grid-column:1;grid-row:1;font-size:var(--t-micro);padding-top:.2rem}
+.page-projects .dir .n{grid-column:2;grid-row:1;font-size:1.2rem;font-weight:500}
+.page-projects .dir .h{grid-column:3;grid-row:1;font-size:var(--t-micro)}
+.page-projects .dir .d{grid-column:2/-1;grid-row:2;font-family:var(--body);font-size:1rem;line-height:1.5;color:var(--ink-2)}
+@media (min-width:1100px){
+  .page-projects .dir{display:grid;grid-auto-flow:column;grid-template-rows:repeat(6,auto);
+    grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3.5rem}
+  .page-projects .dir li:nth-child(6n+1){border-top:1px solid var(--rule-soft)}
+}
+@media (max-width:1099px){.page-projects .dir li:first-child{border-top:1px solid var(--rule-soft)}}
+.page-projects .screens{margin-top:2.75rem}
+.page-projects .screens figure{border-radius:14px;border:1px solid var(--rule-soft);
+  background:color-mix(in srgb,var(--paper-lift) 70%,transparent)}
+/* personal tools: three across, the last two sharing the second row */
+.page-projects #tools .strip{gap:1.1rem}
+@media (min-width:1100px){
+  .page-projects #tools .strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .page-projects #tools .strip li:last-child{grid-column:span 2}
+}
+.page-projects #tools .strip article,.page-projects #tools .strip > li:nth-child(n) article{
+  background:color-mix(in srgb,var(--paper-lift) 70%,transparent);border:1px solid var(--rule-soft);
+  border-radius:14px;padding:1.4rem 1.45rem 1.35rem;gap:.6rem}
+.page-projects #tools .strip li:hover article{transform:translateY(-2px);border-color:var(--trace);background:var(--paper-lift)}
+.page-projects .strip h3{font-size:1.3rem;font-weight:500}
+.page-projects .strip h3 a{display:inline-flex;align-items:center;gap:.25rem;min-height:var(--tap);padding-block:0}
+.page-projects .strip p{font-size:1rem;line-height:1.6}
+.page-projects #tools .strip .why{font-family:var(--body);font-style:italic;font-size:.95rem;line-height:1.55;
+  color:var(--mute);padding-top:.7rem;border-top:1px dashed var(--rule-soft)}
+/* contributions: a light row of four, no boxes */
+.page-projects #upstream .strip{gap:1.5rem 2rem}
+@media (min-width:1100px){.page-projects #upstream .strip{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.page-projects #upstream .strip article,.page-projects #upstream .strip > li:nth-child(n) article{background:none;border:0;
+  border-top:1.5px solid var(--trace);border-radius:0;padding:1.1rem 0 0;transform:none}
+.page-projects #upstream .strip li:hover article{transform:none;background:none}
+
+/* ---- Writing: a reading room. A left rail holds the label, topics and
+   status; the articles read as large teasers beside it. ----------------- */
+.page-writing .shell{max-width:1200px}
+.page-writing .page-head{text-align:left;padding-block:clamp(3rem,8vw,6rem) clamp(4rem,8vw,6rem)}
+.page-writing .page-head .crumbs ol{justify-content:flex-start}
+.page-writing .page-head h1{font-size:clamp(3.4rem,9vw,7rem);margin-inline:0;line-height:1}
+.page-writing .topics{margin:1.4rem 0 0;max-width:40ch;font-size:var(--t-md);line-height:1.5;text-wrap:pretty}
+.page-writing .page-head + .shelf{padding-block:clamp(3rem,6vw,4.5rem) clamp(4.5rem,9vw,7rem)}
+.page-writing .picks > li{padding:2.6rem 0 2.75rem}
+.page-writing .picks > li:first-child{padding-top:.4rem}
+.page-writing .picks > li::before{width:4.5rem;opacity:.7}
+.page-writing .picks > li:first-child::before{content:none}
+.page-writing .picks > li + li{border-top:1px solid var(--rule-soft)}
+.page-writing .picks > li + li::before{top:-5px}
+@media (min-width:760px){
+  .page-writing .picks > li:nth-child(even of :not([hidden])){padding-left:0}
+  .page-writing .picks > li:nth-child(even of :not([hidden]))::before{left:0;right:auto}
+}
+.page-writing .picks h3{font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.1;letter-spacing:-.03em;max-width:22ch}
+.page-writing .picks p:not(.tag){font-size:clamp(1.12rem,1.5vw,1.3rem)!important;line-height:1.55;max-width:46ch;margin-top:1rem}
+@media (min-width:900px){
+  .page-writing .page-head + .shelf > .shell{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);
+    column-gap:clamp(3rem,8vw,7rem);align-items:start;grid-template-rows:auto auto 1fr}
+  .page-writing .shelf-head{grid-column:1;grid-row:1;margin:0 0 .5rem;padding:.55rem 0 0}
+  .page-writing .topic-filter{grid-column:1;grid-row:2;flex-direction:column;align-items:stretch;gap:0;margin:0}
+  .page-writing .topic-filter button{justify-content:space-between;border-bottom:0;border-left:2px solid transparent;
+    padding:0 .25rem 0 .85rem;text-align:left}
+  .page-writing .topic-filter button + button{border-top:1px solid var(--rule-soft)}
+  .page-writing .topic-filter button:hover{border-left-color:var(--rule)}
+  .page-writing .topic-filter button[aria-pressed="true"]{border-left-color:var(--flag)}
+  .page-writing .topic-status{grid-column:1;grid-row:3;margin:1rem 0 0;padding-left:.85rem}
+  .page-writing .picks{grid-column:2;grid-row:1 / span 3}
+}
+
+/* ---- About: a profile. The details open into two columns, and Contact
+   sits in deep water as the page's one panel. -------------------------- */
+.page-about .page-head{padding-block:clamp(2.5rem,7vw,5.5rem) clamp(4rem,8vw,6rem)}
+.page-about .page-head h1{font-size:clamp(3.2rem,8vw,6.25rem)}
+.page-about .about-line{margin-top:1.25rem;font-size:clamp(1.65rem,3vw,2.4rem);line-height:1.18;max-width:20ch;color:var(--ink)}
+.page-about .page-head .hero-role{margin-top:1.25rem;max-width:34ch;font-size:clamp(1.15rem,1.7vw,1.4rem);line-height:1.45;color:var(--ink-2)}
+.page-about .page-head .hero-lead{max-width:44ch;font-size:1.1rem;line-height:1.6}
+.page-about .shelf.tide{padding-block:clamp(4rem,8vw,6rem) clamp(4rem,8vw,6rem)}
+.page-about .colophon{align-items:start}
+.page-about .colophon h3{margin-bottom:1rem}
+.page-about .colophon .big{font-size:clamp(1.45rem,2.2vw,1.8rem);line-height:1.2;margin-bottom:.4rem}
+.page-about .colophon p{font-size:1.08rem;line-height:1.6}
+.page-about .colophon > div:nth-child(3){background:var(--deep);color:var(--deep-ink);border-radius:16px;
+  padding:clamp(1.5rem,3vw,2.25rem)}
+.page-about .colophon > div:nth-child(3)::before{content:none}
+.page-about .colophon > div:nth-child(3) h3{color:var(--deep-mute)}
+.page-about .colophon > div:nth-child(3) .big{font-size:clamp(1rem,1.15vw,1.15rem);overflow-wrap:anywhere}
+.page-about .colophon > div:nth-child(3) a{color:var(--deep-ink);border-bottom-color:color-mix(in srgb,var(--deep-ink) 30%,transparent)}
+.page-about .colophon > div:nth-child(3) a:hover,.page-about .colophon > div:nth-child(3) a:focus-visible{color:var(--deep-trace);border-bottom-color:var(--deep-trace)}
+.page-about .colophon > div:nth-child(3) :focus-visible{outline-color:var(--deep-trace)}
+@media (min-width:980px){
+  .page-about .colophon{grid-template-columns:minmax(0,.95fr) minmax(0,1fr) minmax(0,1.05fr)}
+}
+
+/* ---- Kestrel: a measurement report. ---------------------------------- */
+.case-kestrel .project{padding-block:clamp(3rem,6vw,4.5rem) clamp(4rem,8vw,6rem)}
+.case-kestrel .project::after{opacity:.35}
+.page-case .case-what{font-size:1.1rem;line-height:1.7}
+.page-case .readout{margin-block:1.5rem 1.75rem}
+.page-case .miss{margin-top:2rem;padding:1.25rem 1.5rem 1.35rem;border:1px solid color-mix(in srgb,var(--flag) 26%,transparent);
+  border-left:3px solid var(--flag);border-radius:4px 14px 14px 4px;
+  background:color-mix(in srgb,var(--flag) 6%,var(--paper-lift))}
+.page-case .miss p:not(.tag){font-size:1.05rem;line-height:1.65}
+.page-case .plot,.page-case .shot{border-radius:14px;border-color:var(--rule-soft);background:color-mix(in srgb,var(--paper-lift) 90%,transparent)}
+
+/* ---- PHiLIP: a short brief, its three figures stacked large. --------- */
+.case-philip .project{padding-block:clamp(3rem,6vw,4.5rem) clamp(3.5rem,7vw,5rem)}
+.case-philip .case-what:first-child{font-size:var(--t-md);line-height:1.55;color:var(--ink)}
+.case-philip .readout{grid-template-columns:minmax(0,1fr)}
+.case-philip .readout div{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:1rem;padding:1.1rem 1.25rem}
+.case-philip .readout dt{min-height:0;font-size:var(--t-data)}
+.case-philip .readout dd{margin:0;font-size:clamp(1.8rem,3vw,2.4rem);text-align:right}
+.case-philip .aside .src{font-family:var(--body);font-size:1rem;line-height:1.65;color:var(--ink-2);margin-top:1.25rem}
+
+/* ---- My audiobook setup: a story, then the three parts as a list. ---- */
+.case-audio .shelf{padding-block:clamp(3rem,6vw,4.5rem) clamp(4rem,8vw,6rem)}
+.case-audio .three{gap:0;margin-top:clamp(3rem,6vw,4.5rem);border-top:1px solid var(--rule)}
+@media (min-width:900px){.case-audio .three{grid-template-columns:minmax(0,1fr)}}
+.case-audio .three > li,.case-audio .three > li:nth-child(even){background:none;border:0;border-bottom:1px solid var(--rule-soft);
+  border-radius:0;padding:1.4rem 0 1.5rem;transform:none}
+.case-audio .three > li:hover{transform:none;background:none}
+@media (min-width:760px){
+  .case-audio .three > li{grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:.4rem 2.5rem}
+  .case-audio .three > li .d{padding-top:.55rem}
+}
+.case-audio .three .n{font-size:1.35rem;font-weight:500}
+.case-audio .three h3 a{display:inline-flex;align-items:center;flex-wrap:wrap;gap:0 .2rem;min-height:var(--tap);padding-block:0}
+.case-audio .three .d{font-family:var(--body);font-size:1.05rem;line-height:1.65;color:var(--ink-2);max-width:62ch}
+.case-audio .three .d a{color:var(--ink);text-decoration-color:var(--trace);text-underline-offset:.2em}
+
+/* ---- Article: the published HTML stays as written; only the meta line
+   gets a quiet rule under it. ------------------------------------------ */
+.article .meta{border-bottom:1px solid var(--rule-soft);margin-bottom:.5rem}
+
+/* ---- 404: the page always reaches the bottom of the window. ---------- */
+body:has(> main.page-lost){min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+body:has(> main.page-lost) > main.page-lost{flex:1;display:flex;flex-direction:column}
+.page-lost .page-head{flex:1}
