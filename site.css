@@ -14,18 +14,18 @@
   color-scheme:light;
 
   /* --- surface ---------------------------------------------------------- */
-  --paper:#e6ebe7;
-  --paper-lift:#f2f4ee;
+  --paper:#dfeae7;
+  --paper-lift:#edf4f1;
   --ink:#1f322e;
   --ink-2:#3d554d;
   --mute:#4b6058;
-  --rule:#a0b4aa;
-  --rule-soft:#c8d3ca;
+  --rule:#9db5b0;
+  --rule-soft:#c3d6d2;
 
   /* --- measurement state ------------------------------------------------ */
-  --trace:#21635b;
+  --trace:#1d6064;
   --flag:#9b3041;
-  --trace-wash:#21635b10;
+  --trace-wash:#1d606410;
   --flag-wash:#9b304110;
 
   /* --- type ------------------------------------------------------------- */
@@ -52,8 +52,8 @@
 
 [data-theme="scope"]{
   color-scheme:dark;
-  --paper:#101f1e;
-  --paper-lift:#172c28;
+  --paper:#0f1e20;
+  --paper-lift:#172b2d;
   --ink:#e0eae4;
   --ink-2:#bacfc4;
   --mute:#9cb8aa;
@@ -67,7 +67,7 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="bench"]){
     color-scheme:dark;
-    --paper:#101f1e;--paper-lift:#172c28;
+    --paper:#0f1e20;--paper-lift:#172b2d;
     --ink:#e0eae4;--ink-2:#bacfc4;--mute:#9cb8aa;
     --rule:#607e71;--rule-soft:#304b41;
     --trace:#81cfc3;--flag:#f0a4ae;
@@ -104,7 +104,7 @@ p,figure,dl,dd{margin:0}
 .num{font-family:var(--data);font-variant-numeric:tabular-nums}
 
 /* ============================ masthead =================================== */
-.masthead{position:sticky;top:0;z-index:40;background:var(--paper);
+.masthead{position:sticky;top:0;z-index:40;background:var(--sand);
   border-bottom:1px solid var(--rule-soft)}
 .masthead .shell{display:flex;align-items:center;justify-content:space-between;
   gap:1rem;height:52px;font-family:var(--data);font-size:var(--t-data)}
@@ -411,10 +411,12 @@ p,figure,dl,dd{margin:0}
 footer{padding-block:2rem 3rem;font-family:var(--data);font-size:var(--t-micro);color:var(--mute)}
 footer .shell{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between}
 
-/* Static coast drawing stays behind readable content. */
-.hero,.page-head{position:relative;isolation:isolate;background:var(--paper)}
-.hero::before,.page-head::before{content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(135deg,var(--paper-lift),transparent 65%);pointer-events:none}
+/* Every page starts on the beach: dry sand with the sun on it, damp sand
+   toward the water, and the coast drawing behind readable content. */
+.hero,.page-head{position:relative;isolation:isolate;background:var(--sand)}
+.hero::before,.page-head::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 75% 85% at 0 0,var(--sand-lift),transparent 70%),
+    linear-gradient(transparent 55%,var(--sand-wet))}
 .hero::after,.page-head::after{content:"";position:absolute;right:0;top:0;
   width:min(70%,780px);height:260px;z-index:-1;background:var(--trace);opacity:.12;
   mask:url('/images/coastline.svg') right top / cover no-repeat;pointer-events:none}
@@ -505,6 +507,7 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
     --paper:#fff;--paper-lift:#fff;--ink:#000;--ink-2:#222;--mute:#444;
     --rule:#999;--rule-soft:#ccc;--trace:#000;--flag:#000;
     --trace-wash:transparent;--flag-wash:transparent;
+    --sand:#fff;--sand-lift:#fff;--sand-wet:#fff;--deep:#fff;--deep-ink:#000;--deep-mute:#444;
   }
   .masthead{display:none}
   .row,.case,.strip li,.dir li{break-inside:avoid}
@@ -605,35 +608,43 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
 .article .sources ul{font-size:var(--t-data);line-height:1.6;padding-left:1.1rem;margin-top:.6rem}
 
 /* ============================ tides ====================================== */
-/* The site reads like walking from the shore out to sea: light shallows at the
-   top of a page, deeper water toward the end. Section edges are drawn waves,
-   not ruled lines. Each page then gets one motif shaped by its subject. */
+/* The site reads like walking from the beach out to sea. Every page starts on
+   sand under the same coast drawing, meets the water at a line of surf, gets
+   deeper toward the end and finishes in deep water. Section edges are drawn
+   waves, not ruled lines. */
 :root{
   --grot:'Bricolage','Helvetica Neue',Arial,sans-serif;
-  --shallow:#dce6e0;
-  --shallow-2:#d1ddd7;
-  --deep:#1d3833;
+  --shallow:#d3e5e2;
+  --shallow-2:#c6dcd9;
+  --deep:#173a3d;
   --deep-ink:#e6efe9;
   --deep-mute:#b2cabf;
   --deep-trace:#94d8cc;
-  --mark:#21635b26;
+  --mark:#1d606426;
+  /* the shore every page starts on: dry sand, damp sand, and the foam line */
+  --sand:#ece5d5;
+  --sand-lift:#f5f0e5;
+  --sand-wet:#e0d8c5;
+  --foam:#fbfaf4;
 }
 [data-theme="scope"]{
-  --shallow:#132624;--shallow-2:#17302c;
-  --deep:#0a1716;--deep-ink:#e0eae4;--deep-mute:#a6c0b4;--deep-trace:#81cfc3;
+  --shallow:#12272a;--shallow-2:#152f32;
+  --deep:#08171a;--deep-ink:#e0eae4;--deep-mute:#a6c0b4;--deep-trace:#81cfc3;
   --mark:#81cfc32e;
+  --sand:#1c2320;--sand-lift:#252c28;--sand-wet:#171d1b;--foam:#cfe6de5c;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="bench"]){
-    --shallow:#132624;--shallow-2:#17302c;
-    --deep:#0a1716;--deep-ink:#e0eae4;--deep-mute:#a6c0b4;--deep-trace:#81cfc3;
+    --shallow:#12272a;--shallow-2:#152f32;
+    --deep:#08171a;--deep-ink:#e0eae4;--deep-mute:#a6c0b4;--deep-trace:#81cfc3;
     --mark:#81cfc32e;
+    --sand:#1c2320;--sand-lift:#252c28;--sand-wet:#171d1b;--foam:#cfe6de5c;
   }
 }
 
 /* waves replace the ruled section edges */
 .shelf,.hero,.page-head{border-bottom:0;position:relative}
-.shelf + .shelf::before,.page-head + .shelf::before,.page-head + .shell::before{
+.shelf + .shelf::before{
   content:"";position:absolute;left:0;right:0;top:0;height:16px;background:var(--rule);
   mask:url('/images/wave-line.svg') center / 100% 100% no-repeat;pointer-events:none}
 .page-head + .shell{position:relative;display:block}
@@ -644,10 +655,21 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
   background:var(--band,var(--paper));mask:url('/images/wave-fill.svg') center / 100% 100% no-repeat;
   transform:none}
 
-/* footer sits on the floor of whatever band ends the page */
-footer{border-top:0;position:relative}
-footer::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;background:var(--rule-soft);
-  mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+/* the surf: the first band of water washes up over the bottom of the sand,
+   with a line of foam on its edge and the last wave's reach above it. The
+   drawing tiles at its own width, so a phone sees gentle water, not chop. */
+.hero + .shelf::before,.page-head + .shelf::before,.page-head + .shell::before,
+.hero + .shelf::after,.page-head + .shelf::after,.page-head + .shell::after{content:"";position:absolute;
+  left:0;right:0;top:-55px;height:56px;transform:none;opacity:1;pointer-events:none}
+.hero + .shelf::before,.page-head + .shelf::before,.page-head + .shell::before{background:var(--band,var(--paper));
+  mask:url('/images/surf.svg') 0 0 / 1440px 100% repeat-x}
+.hero + .shelf::after,.page-head + .shelf::after,.page-head + .shell::after{z-index:1;background:var(--foam);
+  mask:url('/images/surf-foam.svg') 0 0 / 1440px 100% repeat-x}
+
+/* every page ends in the same deep water as Home */
+footer{border-top:0;position:relative;background:var(--deep);color:var(--deep-mute)}
+footer::before{content:"";position:absolute;left:0;right:0;top:-27px;height:28px;background:var(--deep);
+  mask:url('/images/wave-fill.svg') center / 100% 100% no-repeat}
 
 /* the drawn underline under section headings, kept from the last design */
 .shelf-head h2::after{border-top-color:var(--trace)}
@@ -773,30 +795,22 @@ footer::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;bac
   display:inline-flex;margin-right:1.25rem;align-items:center;text-decoration-color:var(--deep-mute);text-underline-offset:.3em}
 .elsewhere a:hover,.elsewhere a:focus-visible{color:var(--deep-trace)}
 .contact :focus-visible{outline-color:var(--deep-trace)}
-.home + footer,main:has(.contact:last-child) + footer{background:var(--deep);color:var(--deep-mute)}
-main:has(.contact:last-child) + footer::before{background:#ffffff1f}
+.home + footer::before,.page-work + footer::before{top:0;height:16px;background:#ffffff1f;
+  mask-image:url('/images/wave-line.svg')}
 
 /* ============================ work ======================================= */
-/* Professional and plain: depth soundings in the header, and the roles hang
-   off one wavering rail in date order. The page goes from shore to open
-   water as the record goes back in time, rising in long slow swells. */
-.page-work .page-head::after{opacity:.2;mask-image:url('/images/soundings.svg');mask-size:contain;
-  mask-position:right center;height:100%;width:min(62%,720px)}
+/* Professional and plain: the roles hang off one wavering rail in date
+   order, and the page goes from shore to open water as the record goes back
+   in time. */
 .page-work #shipped{background:linear-gradient(var(--paper),var(--shallow))}
 .page-work #leadership{--band:var(--shallow-2)}
 .page-work #moved{--band:var(--deep);color:var(--deep-ink)}
-.page-work .shelf.tide::before{top:-47px;height:48px;mask-image:url('/images/swell.svg')}
 .page-work #moved::before{transform:scaleX(-1)}
-.page-work #moved::after{content:"";position:absolute;right:0;bottom:0;width:min(60%,640px);height:100%;
-  background:var(--deep-trace);opacity:.09;pointer-events:none;
-  mask:url('/images/soundings.svg') right bottom / contain no-repeat}
 .page-work #moved .shelf-head h2{color:var(--deep-ink)}
 .page-work #moved .shelf-head h2::after{border-top-color:var(--deep-trace)}
 .page-work #moved .more a{color:var(--deep-ink);border-bottom-color:var(--deep-mute)}
 .page-work #moved .more a:hover,.page-work #moved .more a:focus-visible{color:var(--deep-trace);border-bottom-color:var(--deep-trace)}
 .page-work #moved :focus-visible{outline-color:var(--deep-trace)}
-.page-work + footer{background:var(--deep);color:var(--deep-mute)}
-.page-work + footer::before{background:#ffffff1f}
 .page-work .ledger{border-top:0;position:relative}
 @media (min-width:641px){
   .page-work .ledger::before{content:"";position:absolute;left:calc(6.6rem - 4px);top:1.9rem;bottom:1rem;width:10px;
@@ -830,20 +844,7 @@ main:has(.contact:last-child) + footer::before{background:#ffffff1f}
 .page-projects #friends{--band:var(--paper)}
 .page-projects #tools{--band:var(--shallow)}
 .page-projects #upstream{--band:var(--shallow-2)}
-/* bands meet on short, uneven chop, and rings spread where something dropped in */
-.page-projects .shelf.tide::before{top:-29px;height:30px;mask-image:url('/images/chop.svg')}
 .page-projects #friends::before,.page-projects #upstream::before{transform:scaleX(-1)}
-.page-projects .shelf.tide::after{content:"";position:absolute;z-index:0;pointer-events:none;
-  width:clamp(220px,30vw,420px);aspect-ratio:1;opacity:.5;
-  background:repeating-radial-gradient(circle,transparent 0 22px,color-mix(in srgb,var(--trace) 22%,transparent) 22px 23.5px,transparent 23.5px 34px);
-  mask-image:radial-gradient(circle,#000 20%,transparent 70%)}
-.page-projects #books::after{right:2%;top:8%}
-.page-projects #friends::after{left:1%;bottom:6%}
-.page-projects #tools::after{right:6%;bottom:4%;width:clamp(160px,22vw,300px)}
-.page-projects #upstream::after{left:30%;top:4%;width:clamp(180px,24vw,340px)}
-.page-projects .shelf.tide > .shell{position:relative;z-index:1}
-.page-projects + footer{background:var(--shallow-2)}
-.page-projects + footer::before{content:none}
 .page-projects .strip{gap:1rem}
 .page-projects .strip article,.page-case .three > li,.page-projects .three > li{
   background:var(--paper-lift);border:1px solid var(--rule-soft);border-radius:18px 6px 20px 8px;
@@ -867,30 +868,6 @@ main:has(.contact:last-child) + footer::before{background:#ffffff1f}
 .page-projects .screens figure{border-radius:18px 6px 20px 8px;border-color:var(--rule-soft)}
 
 /* ============================ project pages ============================== */
-/* Each project header carries a drawing of what the project works on. */
-.page-case .page-head::after{opacity:.16}
-.case-kestrel .page-head::after{mask-image:url('/images/waveform.svg');mask-size:contain;mask-position:right center;height:100%}
-.case-audio .page-head::after{mask-image:url('/images/text-to-wave.svg');mask-size:contain;mask-position:right center;height:100%}
-/* PHiLIP picks one image from a grid of nine guidance images */
-.case-philip .page-head::after{mask:none;opacity:1;width:min(30vw,250px);height:min(30vw,250px);top:50%;right:var(--gut);
-  translate:0 -50%;rotate:-4deg;--t:color-mix(in srgb,var(--trace) 16%,transparent);
-  background:
-    linear-gradient(var(--t),var(--t)) 0 0 / 31% 31%,
-    linear-gradient(color-mix(in srgb,var(--trace) 9%,transparent),color-mix(in srgb,var(--trace) 9%,transparent)) 50% 0 / 31% 31%,
-    linear-gradient(var(--t),var(--t)) 100% 0 / 31% 31%,
-    linear-gradient(color-mix(in srgb,var(--trace) 9%,transparent),color-mix(in srgb,var(--trace) 9%,transparent)) 0 50% / 31% 31%,
-    linear-gradient(color-mix(in srgb,var(--flag) 40%,transparent),color-mix(in srgb,var(--flag) 40%,transparent)) 50% 50% / 31% 31%,
-    linear-gradient(var(--t),var(--t)) 100% 50% / 31% 31%,
-    linear-gradient(var(--t),var(--t)) 0 100% / 31% 31%,
-    linear-gradient(color-mix(in srgb,var(--trace) 9%,transparent),color-mix(in srgb,var(--trace) 9%,transparent)) 50% 100% / 31% 31%,
-    linear-gradient(var(--t),var(--t)) 100% 100% / 31% 31%;
-  background-repeat:no-repeat;border-radius:6px}
-@media (max-width:640px){.case-philip .page-head::after{width:120px;height:120px;top:auto;bottom:1.5rem;translate:none;opacity:.7}}
-/* Kestrel is a measurement page, so it sits on faint graph paper */
-.case-kestrel .project{isolation:isolate}
-.case-kestrel .project::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.55;
-  background-image:linear-gradient(var(--rule-soft) 1px,transparent 1px),linear-gradient(90deg,var(--rule-soft) 1px,transparent 1px);
-  background-size:28px 28px;mask-image:linear-gradient(180deg,#000,transparent 70%)}
 .page-case .readout{border-radius:10px 3px 10px 3px;overflow:hidden}
 .page-case .miss{border-radius:4px 18px 6px 16px;border-left-width:2px}
 .page-case .plot,.page-case .shot{border-radius:18px 6px 20px 8px}
@@ -899,9 +876,8 @@ main:has(.contact:last-child) + footer::before{background:#ffffff1f}
 .case-audio .three > li:nth-child(even),.page-projects #books .three > li:nth-child(even){border-radius:6px 20px 8px 18px}
 
 /* ============================ writing ==================================== */
-/* A reading list, set narrow and quiet, with a long horizon instead of a coast. */
+/* A reading list, set narrow and quiet. */
 .page-writing .shell{max-width:56rem}
-.page-writing .page-head + .shelf::before{content:none}
 .page-writing .shelf-head{padding-top:0}
 .page-writing .shelf-head h2{font-family:var(--data);font-size:var(--t-micro);font-weight:400;letter-spacing:.06em;
   color:var(--mute);font-variation-settings:normal}
@@ -919,12 +895,13 @@ main:has(.contact:last-child) + footer::before{background:#ffffff1f}
 /* ============================ article ==================================== */
 /* The reading experience only: a calmer header, a wider line height, a
    measured column, and a thin waterline that fills as you read. */
-main:has(> .shell > .article) .page-head::after{top:auto;bottom:1.25rem;left:0;right:0;width:auto;height:22px;opacity:.45;
-  background:var(--rule);mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
 main:has(> .shell > .article) .shell{max-width:50rem}
+/* the article column is narrow, but its surf still runs the full width */
+main:has(> .shell > .article){overflow-x:clip}
+main:has(> .shell > .article) .page-head + .shell::before,main:has(> .shell > .article) .page-head + .shell::after{
+  left:calc(50% - 50vw);right:calc(50% - 50vw)}
 main:has(> .shell > .article) .page-head{padding-block:clamp(2rem,6vw,4rem) clamp(3rem,6vw,4.5rem)}
 main:has(> .shell > .article) .page-head h1{font-weight:400;font-size:clamp(2.3rem,5.4vw,4rem);line-height:1.08;max-width:18ch}
-main:has(> .shell > .article) .page-head + .shell::before{content:none}
 .article{max-width:36em;padding-block:1rem 4rem}
 .article .meta{padding-bottom:1.5rem}
 .article p,.article ul,.article ol,.article blockquote{font-size:1.2rem;line-height:1.75;margin-top:1.3rem}
@@ -942,19 +919,9 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 @keyframes waterline{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 /* ============================ about ====================================== */
-/* Personal: a topographic map of the coast where I live sits behind the
-   introduction, and the details read as three columns divided by hand. */
+/* Personal: the details read as three columns divided by hand. */
 .page-about .page-head{padding-block:clamp(3rem,8vw,6rem) clamp(3rem,6vw,4.5rem)}
 .page-about .tide{--band:var(--shallow);background:linear-gradient(var(--shallow) 40%,var(--shallow-2))}
-/* the details band laps in on two layers of water, and the map's rings carry
-   on faintly underneath the columns, the way contours keep going offshore */
-.page-about .shelf.tide::before{top:-43px;height:44px;mask-image:url('/images/lap.svg')}
-.page-about .shelf.tide::after{content:"";position:absolute;z-index:0;pointer-events:none;left:max(var(--gut),calc((100vw - 1200px) / 2 + var(--gut)));
-  bottom:clamp(1rem,3vw,2rem);width:min(46vw,520px);aspect-ratio:1;opacity:.1;background:var(--trace);
-  mask:url('/images/about-contours.svg') center / contain no-repeat}
-.page-about .shelf.tide > .shell{position:relative;z-index:1}
-.page-about + footer{background:var(--shallow-2)}
-.page-about + footer::before{content:none}
 .page-about .colophon{gap:2.5rem clamp(2rem,5vw,4.5rem)}
 @media (min-width:880px){
   .page-about .colophon > div + div{position:relative}
@@ -964,15 +931,10 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 .page-about .colophon .big{font-weight:500;font-size:1.4rem}
 
 /* ============================ 404 ======================================== */
-/* Low tide: the page went out with the water. A wide empty shore and a wave
-   line low on the screen, with the way back laid out in one row. */
+/* Low tide: the page went out with the water. A wide empty beach, the deep
+   water far down the screen, and the way back laid out in one row. */
 .page-lost .page-head{min-height:min(72vh,640px);display:flex;align-items:center;padding-block:4rem 7rem}
 .page-lost .page-head .shell{width:100%}
-.page-lost .page-head::after{top:auto;bottom:0;left:0;right:0;width:auto;height:56px;opacity:1;
-  background:var(--shallow-2);mask:url('/images/wave-fill.svg') center / 100% 100% no-repeat}
-.page-lost + footer{background:var(--shallow-2)}
-.page-lost + footer::before{content:none}
-.page-lost .page-head::before{background:linear-gradient(180deg,var(--paper),var(--shallow))}
 .page-lost h1{font-style:italic;font-weight:400;font-size:clamp(3rem,9vw,7rem);letter-spacing:-.045em}
 .page-lost .said{font-size:var(--t-md)}
 .page-lost ul{display:flex;flex-wrap:wrap;gap:.25rem 1.75rem;margin-top:2rem}
@@ -991,12 +953,9 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 .case-audio .three .d{font-family:var(--data);font-size:var(--t-micro);color:var(--mute);line-height:1.6}
 .case-audio .three .d a{text-decoration:underline;color:var(--ink-2)}
 
-/* page-head light fades out before the wave, so there is no hard band edge */
-.hero::before,.page-head::before{mask-image:linear-gradient(#000 55%,transparent)}
 /* drawings and their arrival drift never widen the page */
 .hero,.page-head,.shelf{overflow-x:clip}
 @media (max-width:640px){
-  .case-philip .page-head::after{width:60px;height:60px;top:1.6rem;bottom:auto;right:var(--gut);opacity:.8}
   .contact::after{width:100%;height:180px;opacity:.08}
 }
 /* a long current-page crumb wraps as text, keeping its separator beside it */
@@ -1005,26 +964,12 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 .crumbs [aria-current]{display:inline;min-height:0;padding-block:.75rem}
 
 /* ============================ follow-up: about, projects, writing ======== */
-/* About: a small, whole contour map with a dot for where I am. It sits inside
-   the column grid, so no ring is ever cut by the page edge or the header. */
-.page-about .page-head::after{mask:url('/images/about-contours.svg') center / contain no-repeat;
-  background:var(--trace);opacity:.32;top:50%;translate:0 -50%;width:min(32vw,380px);height:min(32vw,380px);
-  right:max(var(--gut),calc((100vw - 1200px) / 2 + var(--gut)))}
 .page-about .page-head .shell > *{max-width:min(100%,40rem)}
 .page-about .about-line{font-weight:400;font-size:clamp(2rem,4.2vw,3.4rem);max-width:15ch;line-height:1.1;text-wrap:balance}
-@media (max-width:899px){
-  .page-about .page-head::after{top:calc(1.5rem + 44px);translate:none;width:116px;height:116px;opacity:.38}
-}
-@media (max-width:899px) and (min-width:641px){.page-about .page-head::after{width:180px;height:180px}}
 
 /* Projects & Fun: found things on a beach. Sea glass in the site's own
-   colours, a speckled sand ground, and a hand-set ampersand. */
+   colours lies on the sand in place of the coast, beside a hand-set ampersand. */
 .page-projects .page-head::after{content:none}
-.page-projects .page-head{background-color:var(--paper);
-  background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--rule) 55%,transparent) 1px,transparent 1.6px);
-  background-size:14px 14px}
-.page-projects .page-head::before{background:linear-gradient(180deg,var(--paper) 0,transparent 70%),
-  linear-gradient(90deg,var(--paper) 30%,transparent 75%)}
 .seaglass{position:absolute;z-index:-1;right:max(var(--gut),calc((100vw - 1200px) / 2 + var(--gut)));top:clamp(1.5rem,4vw,3rem);
   width:min(36vw,420px);height:auto;pointer-events:none;overflow:visible}
 .seaglass path{stroke:var(--ink);stroke-opacity:.18;stroke-width:1.2;transform-box:fill-box;transform-origin:center}
@@ -1049,20 +994,13 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
   .page-projects .page-head .said{max-width:30ch}
 }
 
-/* Writing: a shoreline. Dry sand under the title, a horizon drawn under it,
-   then the list sits where the water comes in, each entry set off by its own
-   thin wash line and the entries stepping in and out like the tide. */
-.page-writing{background:linear-gradient(180deg,var(--paper) 0,var(--paper-lift) 18rem,var(--shallow) 30rem,var(--shallow-2))}
-.page-writing .page-head{background:transparent;padding-block:clamp(3.5rem,9vw,6.5rem) clamp(3.5rem,7vw,5rem);text-align:center}
-.page-writing .page-head::before{content:none}
-.page-writing .page-head::after{top:auto;bottom:clamp(.75rem,2vw,1.5rem);left:0;right:0;width:auto;height:18px;opacity:.55;
-  background:var(--trace);mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
+/* Writing: the list sits where the water comes in, each entry set off by its
+   own thin wash line. */
+.page-writing .page-head{padding-block:clamp(3.5rem,9vw,6.5rem) clamp(3.5rem,7vw,5rem);text-align:center}
 .page-writing .page-head .crumbs ol{justify-content:center}
 .page-writing .page-head h1{font-style:italic;font-weight:400;font-size:clamp(3rem,8vw,6rem);letter-spacing:-.04em;
   margin-inline:auto;max-width:none}
-.page-writing .page-head + .shelf{padding-top:clamp(2.5rem,5vw,3.5rem);background:linear-gradient(var(--shallow),var(--shallow-2))}
-.page-writing .page-head + .shelf::before{content:"";position:absolute;left:0;right:0;top:-33px;height:34px;
-  background:var(--shallow);mask:url('/images/foam.svg') center / 100% 100% no-repeat}
+.page-writing .page-head + .shelf{--band:var(--shallow);padding-top:clamp(2.5rem,5vw,3.5rem);background:linear-gradient(var(--shallow),var(--shallow-2))}
 .page-writing .picks > li{border-top:0;position:relative}
 .page-writing .picks > li::before{content:"";position:absolute;left:0;top:0;width:min(100%,24rem);height:10px;
   background:var(--trace);opacity:.5;mask:url('/images/wave-line.svg') center / 100% 100% no-repeat}
@@ -1070,59 +1008,24 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
   .page-writing .picks > li:nth-child(even of :not([hidden])){padding-left:clamp(2rem,8vw,6rem)}
   .page-writing .picks > li:nth-child(even of :not([hidden]))::before{left:auto;right:0}
 }
-.page-writing + footer{background:var(--shallow-2)}
-.page-writing + footer::before{content:none}
 
 /* ============================ ML & Research ============================== */
-/* A lab notebook set in water: a tide gauge, ticked like a ruler, down the
-   margin, a plotted bench chart and three recorded traces in the header,
-   monospace titles, tick-mark rulers under headings, and each section rising
-   over the last on a regular, measured sine. Each experiment is a log entry
-   whose left column records machine, licence and status before the result. */
-.page-ml .page-head::after{opacity:.12;top:auto;bottom:0;left:0;width:100%;height:clamp(70px,11vw,140px);
-  mask:url('/images/signal.svg') center bottom / 100% 100% no-repeat}
-.page-ml{position:relative;--gauge:max(4px,calc(max(var(--gut),(100vw - 1200px) / 2 + var(--gut)) - 1.6rem))}
-.page-ml::before{content:"";position:absolute;z-index:1;top:0;bottom:0;left:var(--gauge);width:9px;pointer-events:none;
-  background:linear-gradient(90deg,var(--trace) 1px,transparent 1px) 0 0 / 1px 100% no-repeat,
-    repeating-linear-gradient(180deg,var(--trace) 0 1px,transparent 1px 24px) 0 0 / 5px 100% no-repeat,
-    repeating-linear-gradient(180deg,var(--trace) 0 1px,transparent 1px 120px) 0 0 / 9px 100% no-repeat;
-  opacity:.5}
-.page-ml .page-head{background:var(--paper)}
+/* A lab notebook set in water: each section rises over the last, and each
+   experiment is a log entry whose left column records machine, licence and
+   status before the result. */
 .page-ml .shelf{--band:var(--paper);background:var(--band)}
 .page-ml .shelf:nth-of-type(2){--band:var(--shallow)}
 .page-ml .shelf:nth-of-type(3){--band:var(--shallow-2)}
-.page-ml .shelf + .shelf::before{content:"";position:absolute;left:0;right:0;top:-23px;height:24px;
-  background:var(--band);mask:url('/images/sine.svg') center / 100% 100% no-repeat}
-.page-ml + footer{background:var(--shallow-2)}
-.page-ml + footer::before{content:none}
+.page-ml .shelf + .shelf::before{content:"";position:absolute;left:0;right:0;top:-27px;height:28px;
+  background:var(--band);mask:url('/images/wave-fill.svg') center / 100% 100% no-repeat}
 .page-ml .page-head h1{font-family:var(--data);font-weight:400;font-variation-settings:normal;
   font-size:clamp(2.2rem,5.6vw,4.4rem);letter-spacing:-.04em}
 .page-ml .page-head .said{max-width:52ch}
-.bench{position:absolute;z-index:-1;right:max(var(--gut),calc((100vw - 1200px) / 2 + var(--gut)));top:clamp(1.5rem,4vw,3rem);
-  width:min(34vw,400px);height:auto;pointer-events:none}
-.bench .axis{fill:none;stroke:var(--ink-2);stroke-width:1.5;stroke-linecap:round}
-.bench .tick{fill:none;stroke:var(--ink-2);stroke-width:1.2}
-.bench .grid{fill:none;stroke:var(--rule-soft);stroke-width:1;stroke-dasharray:2 5}
-.bench .bar{fill:none;stroke:var(--trace);stroke-width:1.5;stroke-linecap:round}
-.bench .bar-line{fill:none;stroke:var(--rule);stroke-width:1.2;stroke-dasharray:5 4}
-.bench .pt{fill:var(--paper);stroke:var(--trace);stroke-width:2}
-.bench .pt.miss{stroke:var(--flag)}
-@media (prefers-reduced-motion:no-preference){
-  .bench .bar-line{stroke-dashoffset:400;animation:plot 1.6s .3s var(--ease) forwards}
-  .bench .pt{animation:wash .7s var(--ease) both}
-  .bench .pt:nth-of-type(2){animation-delay:.1s}.bench .pt:nth-of-type(3){animation-delay:.2s}
-  .bench .pt:nth-of-type(4){animation-delay:.3s}.bench .pt:nth-of-type(5){animation-delay:.4s}
-}
-@keyframes plot{from{stroke-dasharray:400;stroke-dashoffset:400}to{stroke-dasharray:400;stroke-dashoffset:0}}
 .ml-index{list-style:none;margin:1.75rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.1rem 1.4rem;
   font-family:var(--data);font-size:var(--t-data)}
 .ml-index a{display:inline-flex;align-items:center;min-height:var(--tap);color:var(--ink);text-decoration:none;
   border-bottom:1px dashed var(--rule)}
 .ml-index a:hover,.ml-index a:focus-visible{color:var(--trace);border-bottom-color:var(--trace)}
-.page-ml .page-head + .shelf::before{background:var(--rule);mask:none;height:1px}
-.page-ml .shelf-head h2::after{width:7rem;height:.45rem;border:0;border-radius:0;transform:none;margin-top:.7rem;
-  background:repeating-linear-gradient(90deg,var(--trace) 0 1px,transparent 1px 8px) bottom / 100% .45rem no-repeat,
-    linear-gradient(var(--trace),var(--trace)) bottom / 100% 1px no-repeat}
 .page-ml .shelf-head .said a{color:var(--ink)}
 .log{list-style:none;margin:0;padding:0}
 .entry{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem 3rem;padding-block:2rem 2.25rem;border-top:1px solid var(--rule-soft)}
@@ -1390,7 +1293,6 @@ main:has(> .shell > .article) .page-head + .shell::before{content:none}
 
 /* ---- Kestrel: a measurement report. ---------------------------------- */
 .case-kestrel .project{padding-block:clamp(3rem,6vw,4.5rem) clamp(4rem,8vw,6rem)}
-.case-kestrel .project::after{opacity:.35}
 .page-case .case-what{font-size:1.1rem;line-height:1.7}
 .page-case .readout{margin-block:1.5rem 1.75rem}
 .page-case .miss{margin-top:2rem;padding:1.25rem 1.5rem 1.35rem;border:1px solid color-mix(in srgb,var(--flag) 26%,transparent);
