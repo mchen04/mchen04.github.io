@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ML &amp; Research · Michael Chen</title>
-<meta name="description" content="My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.">
+<meta name="description" content="My ML experiments on Apple Silicon: speech-model delegation, distilled and compressed speech models, an expert-pruned LLM and decision-head experiments.">
 <meta name="author" content="Michael Chen">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://michaelluochen.com/ml/">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://michaelluochen.com/ml/">
 <meta property="og:title" content="ML &amp; Research · Michael Chen">
-<meta property="og:description" content="My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.">
+<meta property="og:description" content="My ML experiments on Apple Silicon: speech-model delegation, distilled and compressed speech models, an expert-pruned LLM and decision-head experiments.">
 <meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
 <meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <meta property="og:image:type" content="image/png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ML &amp; Research · Michael Chen">
-<meta name="twitter:description" content="My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.">
+<meta name="twitter:description" content="My ML experiments on Apple Silicon: speech-model delegation, distilled and compressed speech models, an expert-pruned LLM and decision-head experiments.">
 <meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
 <meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
 
@@ -39,7 +39,7 @@
 <script src="/site.js"></script>
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"publisher":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI engineer","url":"https://michaelluochen.com/about/"},{"@type":"CollectionPage","@id":"https://michaelluochen.com/ml/#page","url":"https://michaelluochen.com/ml/","name":"ML & Research","description":"My ML experiments on Apple Silicon: distilled and compressed speech models, an expert-pruned LLM build, decision-head experiments and an mlx-audio fix.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","mainEntity":{"@id":"https://michaelluochen.com/ml/#list"},"breadcrumb":{"@id":"https://michaelluochen.com/ml/#breadcrumb"}},{"@type":"ItemList","@id":"https://michaelluochen.com/ml/#list","itemListElement":[{"@type":"ListItem","position":1,"name":"Kestrel","url":"https://michaelluochen.com/projects/kestrel-tts/"},{"@type":"ListItem","position":2,"name":"mlx-audio decoder fix","url":"https://michaelluochen.com/ml/#mlx-audio"},{"@type":"ListItem","position":3,"name":"Vireo TTS 3B for Apple Silicon","url":"https://michaelluochen.com/ml/#vireo"},{"@type":"ListItem","position":4,"name":"Ornith-1.5-35B-A3B REAP-192 mxfp4 build","url":"https://michaelluochen.com/ml/#ornith"},{"@type":"ListItem","position":5,"name":"Decision-head experiment","url":"https://michaelluochen.com/ml/#decision-heads"},{"@type":"ListItem","position":6,"name":"PHiLIP","url":"https://michaelluochen.com/projects/philip/"}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"ML & Research","item":"https://michaelluochen.com/ml/"}],"@id":"https://michaelluochen.com/ml/#breadcrumb"}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"publisher":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI engineer","url":"https://michaelluochen.com/about/"},{"@type":"CollectionPage","@id":"https://michaelluochen.com/ml/#page","url":"https://michaelluochen.com/ml/","name":"ML & Research","description":"My ML experiments on Apple Silicon: speech-model delegation, distilled and compressed speech models, an expert-pruned LLM and decision-head experiments.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","mainEntity":{"@id":"https://michaelluochen.com/ml/#list"},"breadcrumb":{"@id":"https://michaelluochen.com/ml/#breadcrumb"}},{"@type":"ItemList","@id":"https://michaelluochen.com/ml/#list","itemListElement":[{"@type":"ListItem","name":"LFM2.5-Audio Delegate","url":"https://michaelluochen.com/ml/#lfm25-delegate","position":1},{"@type":"ListItem","position":2,"name":"Kestrel","url":"https://michaelluochen.com/projects/kestrel-tts/"},{"@type":"ListItem","position":3,"name":"mlx-audio decoder fix","url":"https://michaelluochen.com/ml/#mlx-audio"},{"@type":"ListItem","position":4,"name":"Vireo TTS 3B for Apple Silicon","url":"https://michaelluochen.com/ml/#vireo"},{"@type":"ListItem","position":5,"name":"Ornith-1.5-35B-A3B REAP-192 mxfp4 build","url":"https://michaelluochen.com/ml/#ornith"},{"@type":"ListItem","position":6,"name":"Decision-head experiment","url":"https://michaelluochen.com/ml/#decision-heads"},{"@type":"ListItem","position":7,"name":"PHiLIP","url":"https://michaelluochen.com/projects/philip/"}]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"ML & Research","item":"https://michaelluochen.com/ml/"}],"@id":"https://michaelluochen.com/ml/#breadcrumb"}]}
 </script>
 </head>
 <body>
@@ -77,6 +77,7 @@
       <h1>ML &amp; Research</h1>
       <p class="said">Experiments I ran on my own Macs, mostly speech models and model compression. Each entry says what I measured, on which machine, under which licence, and where it fell short.</p>
       <ul class="ml-index" role="list">
+        <li><a href="#lfm25-delegate">LFM2.5-Audio Delegate</a></li>
         <li><a href="#kestrel">Kestrel</a></li>
         <li><a href="#mlx-audio">mlx-audio fix</a></li>
         <li><a href="#vireo">Vireo TTS</a></li>
@@ -91,9 +92,25 @@
     <div class="shell">
       <div class="shelf-head wide">
         <h2 id="h-speech">Speech</h2>
-        <p class="said">Text-to-speech on Apple Silicon. Kestrel and the mlx-audio fix came out of <a href="/projects/audiobook-stack/">my audiobook setup</a>.</p>
+        <p class="said">Speech models on Apple Silicon. Kestrel and the mlx-audio fix came out of <a href="/projects/audiobook-stack/">my audiobook setup</a>.</p>
       </div>
       <ol class="log" role="list">
+        <li><article class="entry" id="lfm25-delegate" aria-labelledby="h-lfm25-delegate">
+          <dl class="entry-meta">
+            <div><dt>status</dt><dd>experimental, half-duplex</dd></div>
+            <div><dt>machine</dt><dd>M4 Mac mini, 24 GB</dd></div>
+            <div><dt>base</dt><dd>Liquid AI LFM2.5-Audio-1.5B</dd></div>
+            <div><dt>license</dt><dd>LFM Open License v1.0; commercial-use restrictions apply</dd></div>
+          </dl>
+          <div class="entry-body">
+            <h3 id="h-lfm25-delegate"><a href="/writing/local-speech-model-delegation/">LFM2.5-Audio Delegate</a></h3>
+            <p>My project adds learned delegation to Liquid AI's pretrained speech model on a 24 GB M4 Mac mini. A small adapter trained in the shared core teaches it to answer locally or request a stronger text model. Its existing audio head speaks both kinds of replies, including delegated answers that are still arriving. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/LiquidAI/LFM2.5-Audio-1.5B">Liquid AI&#x27;s pretrained base model</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json">Retained E1 training configuration</a>)</p>
+            <p>The release includes the adapter, runtime, configuration and recorded evaluations. A four-turn check used prerecorded input, real external-model responses and device playback. It doesn't establish live-human reliability. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json">R3 four-turn playback report</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned runnable release v0.9.1</a>)</p>
+            <p>This is experimental half-duplex software with typed cancellation. Factual answers and room-microphone routing remain weak. Recent-answer context estimates what was spoken, and there is no live-human or human voice-quality validation. Audio processing is local, but delegation sends query and context text externally. It isn't production-ready. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
+            <p>Built on pretrained weights, not trained from scratch. License restrictions and reproduction limits apply. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LICENSE-LFM">LFM Open License v1.0</a>; Unpublished reproduction evidence: October 5, 2026 reproduction check; installed dependencies and missing per-item judged results. Not independently rerun by Editor or Dot.)</p>
+            <p class="src"><a href="/writing/local-speech-model-delegation/">What worked, what failed and how it was tested</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate">Model card</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned release files</a></p>
+          </div>
+        </article></li>
         <li><article class="entry" id="kestrel" aria-labelledby="h-kestrel">
           <dl class="entry-meta">
             <div><dt>status</dt><dd>closed after 113 cycles</dd></div>
