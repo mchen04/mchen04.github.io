@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teaching a local speech model when to ask for help · Michael Chen</title>
+<meta name="description" content="My LFM2.5-Audio project adds learned delegation and streamed speech on a Mac mini, with experimental controls, measured results and remaining failures.">
+<meta name="author" content="Michael Chen">
+<link rel="canonical" href="https://michaelluochen.com/writing/local-speech-model-delegation/">
+<meta name="theme-color" content="#e6ebe7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101f1e" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Michael Chen">
+<meta property="og:url" content="https://michaelluochen.com/writing/local-speech-model-delegation/">
+<meta property="og:title" content="Teaching a local speech model when to ask for help · Michael Chen">
+<meta property="og:description" content="My LFM2.5-Audio project adds learned delegation and streamed speech on a Mac mini, with experimental controls, measured results and remaining failures.">
+<meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
+<meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Teaching a local speech model when to ask for help · Michael Chen">
+<meta name="twitter:description" content="My LFM2.5-Audio project adds learned delegation and streamed speech on a Mac mini, with experimental controls, measured results and remaining failures.">
+<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
+<meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+
+<script src="/site.js"></script>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "headline": "Teaching a local speech model when to ask for help", "description": "My LFM2.5-Audio project adds learned delegation and streamed speech on a Mac mini, with experimental controls, measured results and remaining failures.", "url": "https://michaelluochen.com/writing/local-speech-model-delegation/", "mainEntityOfPage": "https://michaelluochen.com/writing/local-speech-model-delegation/", "datePublished": "2026-10-05", "author": {"@type": "Person", "@id": "https://michaelluochen.com/#person", "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}, "dateModified": "2026-10-05", "@id": "https://michaelluochen.com/writing/local-speech-model-delegation/#article", "articleSection": "Tech & Building", "inLanguage": "en", "isPartOf": {"@id": "https://michaelluochen.com/#website"}, "publisher": {"@id": "https://michaelluochen.com/#person"}, "image": "https://michaelluochen.com/og.png?v=4"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://michaelluochen.com/"}, {"@type": "ListItem", "position": 2, "name": "Writing", "item": "https://michaelluochen.com/writing/"}, {"@type": "ListItem", "position": 3, "name": "Teaching a local speech model when to ask for help", "item": "https://michaelluochen.com/writing/local-speech-model-delegation/"}]}]}
+</script>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="masthead" aria-label="Site header">
+  <div class="shell">
+    <a class="mark" href="/">Michael Chen</a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span>Menu</span>
+    </button>
+    <nav id="site-nav" aria-label="Site">
+      <ul role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/ml/">ML &amp; Research</a></li>
+        <li><a href="/projects/">Projects &amp; Fun</a></li>
+        <li><a href="/writing/" aria-current="page">Writing</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+    <button class="themer" id="themer" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
+      <span id="themer-label">theme</span>
+    </button>
+  </div>
+</header>
+
+<main id="top" tabindex="-1">
+  <div class="page-head">
+    <div class="shell">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li><li><span aria-current="page">Teaching a local speech model when to ask for help</span></li></ol></nav>
+      <p class="tag"><b>Tech &amp; Building</b></p>
+      <h1 id="article-title">Teaching a local speech model when to ask for help</h1>
+    </div>
+  </div>
+  <div class="shell">
+    <article class="article" aria-labelledby="article-title">
+      <p class="meta"><span>By <a href="/about/">Michael Chen</a></span><span>Published <time datetime="2026-10-05">2026-10-05</time></span></p>
+<p class="meta scope-note">Release discussed: v0.9.1, October 2026.</p>
+      <p>My LFM2.5-Audio Delegate project takes a spoken request, answers locally when it chooses that route, or asks a stronger text model for help. The local model then speaks the answer, including answers that are still arriving from the other model.</p>
+      <p>It runs on a 24 GB M4 Mac mini. It's experimental and half-duplex: it listens or speaks, rather than doing both at once. Cancellation is typed. Factual answers and routing from a room microphone are still weak, and it hasn't been validated in live-human conversation. Those limits matter as much as the working demo. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>)</p>
+      <h2>What was already there</h2>
+      <p>The base is Liquid AI's pretrained LFM2.5-Audio-1.5B. It already has connected components for understanding audio, processing it through a shared core and generating speech. My project adds training for delegation and the software that handles the handoff. It wasn't trained from scratch. (<a href="https://huggingface.co/LiquidAI/LFM2.5-Audio-1.5B">Liquid AI&#x27;s pretrained base model</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json">Retained E1 training configuration</a>)</p>
+      <p>Incoming audio passes through a FastConformer encoder and an adapter into the shared LFM2 core. A depthformer audio head and a causal detokenizer turn its output into speech. The base already has a path from hearing to speaking. This isn't a separate transcription model feeding a chat model that calls an unrelated voice generator. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/LiquidAI/LFM2.5-Audio-1.5B">Liquid AI&#x27;s pretrained base model</a>)</p>
+      <p>Only small additions to the shared core were trained. These are LoRA adapters, which adjust selected parts of a pretrained model while leaving its original weights fixed. The audio encoder, its adapter, the speech-generation head and the detokenizer stayed frozen.</p>
+      <p>The retained adapter, E1, trained on 2,000 synthetic conversations covering local answers and delegation, including some two-turn exchanges. Prompts combined generated examples with math and programming tasks. Kokoro supplied synthetic speech; local-answer targets came from the base model itself. Real-speech VoiceBench recordings were used for development and testing of E1, not its training. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json">Retained E1 training configuration</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/DATA.md">Data provenance and split rules</a>)</p>
+      <h2>What asking for help looks like</h2>
+      <p>The shared core can produce a structured delegate call containing a query. The runtime sends it to a stronger text model, then feeds the returned text back into the local core. The same audio head speaks both local and delegated answers. Choosing to answer locally isn't proof that the answer will be right. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
+      <p>The surrounding software groups incoming text into roughly sentence-aligned segments, handles formatting problems, manages cancellation and supplies recent-answer context. Those are runtime features, not abilities learned by the adapter.</p>
+      <p>The public demo starts with a local capital question, then a local answer about Lisbon's history that contains factual errors and is cancelled. A delegated family-trip plan corrects those errors, and a follow-up refers to the plan's third day. Text from the stronger model is still arriving after playback starts. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json">R3 four-turn playback report</a>)</p>
+      <p>That run uses prerecorded synthetic input, a real external-model connection and actual device playback. Its recording captures output callbacks, not sound travelling through a room. It isn't a human conversation. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/resolve/v0.9.1/demo/r3_file1/played.wav">Public synthetic-input R3 demo, output-callback recording</a>)</p>
+      <h2>Keeping track of what was actually spoken</h2>
+      <p>Cancellation makes context more complicated. The model can generate text ahead of the audio someone has heard. Passing the entire answer into the next request can include material that never played.</p>
+      <p>The runtime supplies the last three spoken-answer entries and estimates how much of a cancelled answer was spoken. That estimate isn't an exact transcript. The model's own context can still contain text ahead of the audio. The successful follow-up in the demo doesn't establish that training improved its conversational memory. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json">R3 four-turn playback report</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
+      <p>Listening is disabled during replies. After speaking, the runtime waits through a guard period and quiet check, with a timeout fallback. Anything started while listening is off is discarded and has to be repeated. To cancel, type c and press Enter. Spoken interruption isn't supported in the accepted mode. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
+      <h2>The numbers, with their limits</h2>
+      <p>Training updated about 11.1 million adapter parameters over 500 steps. It took 3,648 seconds, with a 23.5 GB memory high-water mark and 5.2 GB peak swap. Those are training figures, not the memory needed to run the finished adapter. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json">Retained E1 training configuration</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LEDGER.md">Experiment ledger, including retained and rejected work</a>)</p>
+      <p>On a historical 812-item held-out suite, handoff success was 93.84%, versus 53.7% for the untrained baseline. Success required the right route and, for delegation, a valid call with query word error rate no higher than 0.3 against a reference. Route choice alone was 98.5%. Neither is factual-answer accuracy. The recorded 95% interval for E1 handoff success was 92.1% to 95.4%. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/eval/FINAL_test_route/summary.json">Historical held-out routing summary</a>)</p>
+      <p>On 200 real-speech questions, historical factual QA reference containment was 20.5%, versus 19.5% for the base, with no demonstrated gain. This checks whether the answer contains a reference answer, not comprehensive correctness. Context follow-ups on 101 items also showed no improvement. The voice-quality checks were automated proxies, not human listening ratings. These held-out results weren't rerun on the latest runtime. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RESULTS.md">Recorded evaluation results</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/eval/FINAL_test_local/summary.json">Historical held-out local-answer summary</a>)</p>
+      <p>The latest recorded R3 check used four file inputs and real device playback. All seven checks passed with no recorded output gaps or underflows. The two local replies took 0.553 and 0.590 seconds from the end-of-turn decision to the first reply output callback. The two delegated replies took 8.596 and 3.010 seconds. These timings exclude endpoint silence and reported output latency; they aren't measured from the last human syllable to audible sound. MLX peak allocation was 3.637 GB and process peak RSS was 3.945 GB. Neither is total-system memory. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json">R3 four-turn playback report</a>)</p>
+      <p>R3 is a small functional check, not a general reliability result. An older sustained-playback run wasn't repeated after the current context and half-duplex changes. A separate cancellation test stopped playback and the provider stream but still failed its full protocol. Those failures remain in the record. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LEDGER.md">Experiment ledger, including retained and rejected work</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>)</p>
+      <h2>Where it still falls short</h2>
+      <p>The physical-microphone tests played synthetic speech through a loudspeaker into a real microphone. They weren't live-human tests. Across four sessions, the trip request was incorrectly answered locally in three. That's a substantial gap between the controlled file-input results and the room setup. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>)</p>
+      <p>Adding real-human training clips in a separate experiment produced no measurable routing gain, so that adapter wasn't retained. Full-duplex approaches failed their acceptance rules, and later acoustic augmentation wasn't retained either. The ledger records changes to evaluation rules and an intermittent numerical-tolerance test failure. It isn't a record of everything passing. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LEDGER.md">Experiment ledger, including retained and rejected work</a>)</p>
+      <p>Audio understanding and generation run locally, but delegated queries and recent-answer text go to an external provider. The release is English-only and adds no safety training or content filter. It isn't production-ready. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
+      <h2>Trying the release</h2>
+      <p>The pinned v0.9.1 files include the adapter, configuration, runtime and recorded results. The model card links the setup instructions; base weights are downloaded separately. Most evaluation audio needs regeneration. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/DATA.md">Data provenance and split rules</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned runnable release v0.9.1</a>)</p>
+      <p>A separate reproduction check ran the quickstart using already-installed dependencies, not a clean dependency installation. Some paired confidence intervals also couldn't be recomputed from the public snapshot because per-item judged results were missing. That isn't a full end-to-end evaluation rebuild. (Unpublished reproduction evidence: October 5, 2026 reproduction check; installed dependencies and missing per-item judged results. Not independently rerun by Editor or Dot.)</p>
+      <p>The LFM Open License v1.0 has a commercial-use restriction tied to a US$10 million annual-revenue threshold. Component and provider terms also apply. This isn't an unrestricted MIT release. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LICENSE-LFM">LFM Open License v1.0</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/ATTRIBUTION.md">Component and dataset attribution</a>)</p>
+      <p>The public demo shows the handoff, streamed speech and estimated context working in that recorded run, alongside a wrong local answer. That's what it demonstrates, not a reliable general-purpose assistant. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/resolve/v0.9.1/demo/r3_file1/played.wav">Public synthetic-input R3 demo, output-callback recording</a>)</p>
+      <h2>File-input delegation demo</h2>
+      <p><a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/resolve/v0.9.1/demo/r3_file1/played.wav">Listen to the file-input delegation demo (WAV, 3 min 0.2 s)</a></p>
+      <p>Contains factual errors. Prerecorded synthetic requests, a real external-model connection and device playback, captured at the output callback. The sequence is a local capital answer; an incorrect Lisbon-history answer stopped by scripted cancellation; a delegated family plan that corrects the history; and a follow-up about its relaxing day. Silence is retained. This is a summary of the published report, not a verbatim transcript, live-human conversation or room-acoustics recording. No listening study was performed for this article.</p>
+      <p><a href="/ml/#lfm25-delegate">LFM2.5-Audio Delegate on ML &amp; Research</a></p>
+
+
+    </article>
+  </div>
+</main>
+
+<footer aria-label="Colophon">
+  <div class="shell">
+    <span>© 2026 Michael Chen</span>
+    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Project measurements include source links.</span>
+  </div>
+</footer>
+
+</body>
+</html>
