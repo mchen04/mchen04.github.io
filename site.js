@@ -265,7 +265,9 @@ onReady(function(){
    entry's primary topic is its bold label, and the JSON map under the list
    adds secondary topics by slug. Only topics with at least one article get a
    button, so there are never empty views. Without JavaScript the whole list
-   shows and no buttons appear. */
+   shows and no buttons appear. "pinned" in the same JSON names one slug that
+   All shows first, labelled Pinned; topic views keep the helper's newest-first
+   order. Without JavaScript the list stays newest first. */
 (function(){
   var box=document.getElementById('topic-filter'), data=document.getElementById('writing-topics'),
       status=document.getElementById('topic-status');
@@ -273,6 +275,24 @@ onReady(function(){
   var conf; try{conf=JSON.parse(data.textContent);}catch(e){return;}
   var schema=conf.topics||[], also=conf.also||{};
   var items=Array.prototype.slice.call(document.querySelectorAll('li[data-slug]'));
+  var pinned=items.filter(function(li){return li.getAttribute('data-slug')===conf.pinned;})[0],
+      after=pinned&&pinned.nextSibling, pinTag=pinned&&pinned.querySelector('.tag b'), pin, pinSep;
+  if(pinTag){
+    pin=document.createElement('span'); pin.className='pin'; pin.textContent='Pinned';
+    pinSep=document.createTextNode(' · ');
+  }
+  /* move the pinned entry first for All, and back to its dated place for a topic */
+  function arrange(all){
+    if(!pinned) return;
+    var list=pinned.parentNode;
+    if(all){
+      list.insertBefore(pinned,list.firstElementChild);
+      if(pin){ pinTag.parentNode.insertBefore(pin,pinTag); pinTag.parentNode.insertBefore(pinSep,pinTag); }
+    }else{
+      list.insertBefore(pinned,after);
+      if(pin&&pin.parentNode){ pin.parentNode.removeChild(pin); pinSep.parentNode.removeChild(pinSep); }
+    }
+  }
   items.forEach(function(li){
     var b=li.querySelector('.tag b'), primary=b?b.textContent.trim():'';
     var extra=(also[li.getAttribute('data-slug')]||[]).filter(function(t){
@@ -292,6 +312,7 @@ onReady(function(){
     return t===null?items.length:items.filter(function(li){return li._topics.indexOf(t)>=0;}).length;}
   function show(t){
     var n=0;
+    arrange(t===null);
     items.forEach(function(li){
       var on=t===null||li._topics.indexOf(t)>=0; li.hidden=!on; if(on) n++;});
     buttons.forEach(function(btn){btn.setAttribute('aria-pressed',String(btn._topic===t));});
@@ -310,6 +331,7 @@ onReady(function(){
   if(sh){ sh.parentNode.insertBefore(box,sh.nextSibling); sh.parentNode.insertBefore(status,box.nextSibling); }
   box.hidden=false;
   buttons[0].setAttribute('aria-pressed','true');
+  arrange(true);
 })();
 
 /* ---- in-page links: move focus with the scroll ---------------------------
