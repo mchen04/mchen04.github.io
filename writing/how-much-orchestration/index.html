@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How much orchestration do I actually need? · Michael Chen</title>
+<meta name="description" content="I just think the useful interface and the size of the system are separate questions.">
+<meta name="author" content="Michael Chen">
+<link rel="canonical" href="https://michaelluochen.com/writing/how-much-orchestration/">
+<meta name="theme-color" content="#e6ebe7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101f1e" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Michael Chen">
+<meta property="og:url" content="https://michaelluochen.com/writing/how-much-orchestration/">
+<meta property="og:title" content="How much orchestration do I actually need?">
+<meta property="og:description" content="I just think the useful interface and the size of the system are separate questions.">
+<meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
+<meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How much orchestration do I actually need?">
+<meta name="twitter:description" content="I just think the useful interface and the size of the system are separate questions.">
+<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
+<meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site.css">
+
+<script src="/site.js"></script>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How much orchestration do I actually need?", "description": "I just think the useful interface and the size of the system are separate questions.", "url": "https://michaelluochen.com/writing/how-much-orchestration/", "mainEntityOfPage": "https://michaelluochen.com/writing/how-much-orchestration/", "datePublished": "2026-10-09", "author": {"@type": "Person", "@id": "https://michaelluochen.com/#person", "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}}
+</script>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="masthead" aria-label="Site header">
+  <div class="shell">
+    <a class="mark" href="/">Michael Chen</a>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span>Menu</span>
+    </button>
+    <nav id="site-nav" aria-label="Site">
+      <ul role="list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/work/">Work</a></li>
+        <li><a href="/ml/">ML &amp; Research</a></li>
+        <li><a href="/projects/">Projects &amp; Fun</a></li>
+        <li><a href="/writing/" aria-current="page">Writing</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+    <button class="themer" id="themer" type="button" aria-pressed="false">
+      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
+      <span id="themer-label">theme</span>
+    </button>
+  </div>
+</header>
+
+<main id="top" tabindex="-1">
+  <div class="page-head">
+    <div class="shell">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li><li><span aria-current="page">How much orchestration do I actually need?</span></li></ol></nav>
+      <p class="tag"><b>Tech &amp; Building</b></p>
+      <h1 id="article-title">How much orchestration do I actually need?</h1>
+    </div>
+  </div>
+  <div class="shell">
+    <article class="article" aria-labelledby="article-title">
+      <p class="meta"><span>By <a href="/about/">Michael Chen</a></span><span>Published <time datetime="2026-10-09">2026-10-09</time></span></p>
+<p>I think orchestration makes sense. I don't want to manage twenty conversations just to get a few things done. If the agents can work on their own, I shouldn't need to keep switching between threads to find out what happened and tell each one what to do next.</p>
+<p>The useful part is having one place to talk. I give it something to work on, it delegates, and the results come back there. If something needs a decision, it asks me. I can change direction without having to repeat myself in every session.</p>
+<p>That's different from saying everything needs five layers of managers.</p>
+<h2>One conversation, a few different choices</h2>
+<p>There are a few things getting grouped together under orchestration. One is the interface I use. Another is how many agents do the work. Another is how many other agents a result passes through before it reaches me. Those aren't the same choice. A hundred workers could report to one coordinator. A smaller system could still have a long chain of handoffs.</p>
+<p>The conversational part is showing up in consumer products too. Meta's Muse design write-up describes a main conversation, with side chats for people who want separate context. OpenAI describes dots as handling several projects without making you juggle separate threads. [<a href="https://introducing.muse.ai/">S2</a>, <a href="https://openai.com/index/introducing-dots/">S3</a>]</p>
+<p>That makes sense to me. It also doesn't tell us how complicated the system underneath needs to be.</p>
+<h2>What gets lost on the way back?</h2>
+<p>My concern with deeper orchestration is what makes it through all those handoffs. A worker finds something, another agent summarizes it, and another decides what I need to see. By the time I get the answer, can I still get back to the original result? Can the agent I'm talking to check it, or is it relying on someone else's summary?</p>
+<p>I don't think every summary is a problem. Summarizing is part of why this is useful. I don't want every intermediate step dumped into the main conversation either. But there's a difference between not having to read the details and not being able to inspect them.</p>
+<p>The product designs acknowledge some of that distinction. Muse has an activity log, and OpenAI says you can open your dot's computer to inspect its work. [<a href="https://introducing.muse.ai/">S2</a>, <a href="https://openai.com/index/introducing-dots/">S3</a>] Those features don't prove the systems always get things right. They do show that a simple conversation doesn't have to be the only view of what happened.</p>
+<h2>More agents can still make sense</h2>
+<p>I can see the argument for a large swarm when the job is to try a lot of possibilities. If the work can be split into independent attempts, doing more of them at once could be useful. That's a different situation from passing the same task through another manager.</p>
+<p>There's also a reasonable argument for another layer if it has a specific job, like checking results or coordinating a genuinely separate part of a project. I don't think fewer layers should become a rule that gets in the way of work that actually needs them.</p>
+<p>What I'm less convinced about is needing that scale for most ordinary tasks. Having more agents involved isn't, by itself, a reason to expect a better result. I'd want to know what they're adding and whether I can still follow how the answer was reached.</p>
+<h2>Where I'm at now</h2>
+<p>I already use orchestration. I have a supervise skill adapted for my own remote setup. This isn't me arguing that we should go back to manually steering every session.</p>
+<p>I just think the useful interface and the size of the system are separate questions. I want one place to delegate, see what came back and make the decisions that need me. I'm not convinced that requires a long chain of agents managing other agents.</p>
+<p>Maybe much larger systems become practical as the tools improve. I'm open to that. For now, I don't have a number of agents that I think is always right. I want to understand why the next one needs to be there.</p>
+
+      <section class="sources" aria-label="Sources">
+        <h2 id="sources">Sources</h2>
+        <ul><li><a href="https://introducing.muse.ai/">https://introducing.muse.ai/</a></li><li><a href="https://openai.com/index/introducing-dots/">https://openai.com/index/introducing-dots/</a></li></ul>
+      </section>
+    </article>
+  </div>
+</main>
+
+<footer aria-label="Colophon">
+  <div class="shell">
+    <span>© 2026 Michael Chen</span>
+    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Project measurements include source links.</span>
+  </div>
+</footer>
+
+</body>
+</html>
