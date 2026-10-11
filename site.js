@@ -169,7 +169,6 @@ onReady(function(){
     var ro=el('text',{'class':'scrubtext',x:0,y:top-6});
     scrub.appendChild(needle);scrub.appendChild(ro);
     svg.appendChild(scrub);
-    var MO2=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
     /* the needle only rests on readings: it snaps to the nearest strike, and
        parks on the busiest hour when the pointer is elsewhere */
     var active=[], peak=-1;
@@ -180,7 +179,7 @@ onReady(function(){
       needle.style.transform='translateX('+x.toFixed(1)+'px)';
       var h=c?Math.max(6,(c.c/max)*span):0;
       dot.setAttribute('cy',y0-h);
-      var when=MO2[dt.getUTCMonth()]+' '+dt.getUTCDate()+' · '
+      var when=MO[dt.getUTCMonth()]+' '+dt.getUTCDate()+' · '
         +('0'+dt.getUTCHours()).slice(-2)+':00 utc · ';
       var what=c?c.c+(c.c>1?' events':' event'):'quiet';
       ro.textContent=when+what+(c&&c.repo?' · '+c.repo:'');
