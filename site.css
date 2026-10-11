@@ -1,4 +1,4 @@
-/* Coastline: quiet sea tones, open spacing, and drawn accents. */
+/* Coastline. Later layers refine earlier defaults; check the full cascade and states. */
 
 @font-face{font-family:'Bricolage';src:url(fonts/bricolage.woff2) format('woff2');
   font-weight:400 800;font-stretch:75% 100%;font-display:swap;
@@ -110,7 +110,7 @@ p,figure,dl,dd{margin:0}
   gap:1rem;height:52px;font-family:var(--data);font-size:var(--t-data)}
 .masthead nav{min-width:0}
 .masthead nav ul{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;list-style:none;margin:0;padding:0}
-/* With JavaScript a phone gets one header row and a Menu button (640px block).
+/* With JavaScript a phone gets one header row and a Menu button (860px block).
    Without it the nav takes its own row under the name; if a narrow screen
    still clips it, scroll the nav instead of the page. */
 @media (max-width:560px){
@@ -514,8 +514,7 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
 }
 
 /* ============================ multi-page shell =========================== */
-/* Everything below serves the split from one long page into Home, Work &
-   Projects, project pages, Writing and About. Same tokens, same type. */
+/* Shared defaults for Home, Work, ML, Projects, detail pages, Writing and About. */
 
 /* page header: a breadcrumb, the page title and its deck */
 .page-head{padding-block:clamp(2rem,6vh,4rem) 2rem;border-bottom:1px solid var(--rule)}
@@ -559,7 +558,7 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
 /* project pages: the case runs at full width, with the figure beside it */
 .project .case{border-top:0;padding-top:2rem}
 
-/* work: real screenshots beside the friends directory */
+/* Projects & Fun: screenshots beside the friends directory */
 .screens{display:grid;gap:1.5rem;margin-top:2rem;grid-template-columns:minmax(0,1fr)}
 @media (min-width:860px){.screens{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .screens figure{border:1px solid var(--rule);background:var(--paper-lift);padding:1rem 1.1rem 1.1rem}
@@ -568,7 +567,7 @@ footer{border-top:1px solid var(--rule-soft);padding-block:2.5rem 3rem}
   line-height:1.6;margin-top:.8rem}
 .screens figcaption b{color:var(--ink);font-weight:400}
 
-/* writing: the honest empty state, and the article layout the editor uses */
+/* Writing defaults: empty state, archive entries and article layout */
 .empty{padding-block:2.5rem 1rem;color:var(--ink-2);font-size:var(--t-md)}
 .posts{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
 .posts li{padding-block:1.2rem;border-bottom:1px solid var(--rule-soft)}
@@ -829,9 +828,8 @@ footer::before{content:"";position:absolute;left:0;right:0;top:-27px;height:28px
 .page-work #moved .more{display:inline-block;margin-right:2rem}
 
 /* ============================ projects & fun ============================= */
-/* The playful side: a grotesque face for headings, pebble-shaped panels,
-   bands that go in and out like a tide pool, and my public GitHub activity
-   drawn as a tide chart at the top. */
+/* Earlier Projects defaults. The inner-page layer below supplies the final
+   serif headings and panel treatment. */
 .page-projects h1,.page-projects .shelf-head h2,.page-projects .strip h3,.page-projects .three .n,.page-projects .dir .n{
   font-family:var(--grot);font-stretch:88%;letter-spacing:-.02em}
 .page-projects h1{font-weight:700;font-size:clamp(2.6rem,6vw,4.8rem);letter-spacing:-.045em}
