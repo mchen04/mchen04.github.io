@@ -64,10 +64,20 @@ ready(function(){
     var items=Array.from(document.querySelectorAll('li[data-slug]'));
     var original=items.slice();
     var pinned=items.find(function(item){return item.dataset.slug===settings.pinned;});
+    var pin=document.createElement('span');
+    pin.className='pin';
+    pin.textContent='Pinned · ';
     var buttons=[];
     items.forEach(function(item){
       var primary=item.querySelector('.tag b').textContent.trim();
-      item.topics=[primary].concat((settings.also||{})[item.dataset.slug]||[]);
+      var extra=((settings.also||{})[item.dataset.slug]||[]).filter(function(topic){return topic!==primary;});
+      item.topics=[primary].concat(extra);
+      if(extra.length){
+        var secondary=document.createElement('span');
+        secondary.className='also';
+        secondary.textContent=' · also '+extra.join(', ');
+        item.querySelector('.tag').appendChild(secondary);
+      }
     });
     var topics=[null].concat(settings.topics.filter(function(topic){
       return items.some(function(item){return item.topics.includes(topic);});
@@ -78,6 +88,8 @@ ready(function(){
         item.parentNode.appendChild(item);
         item.hidden=topic!==null&&!item.topics.includes(topic);
       });
+      if(pinned&&topic===null) pinned.querySelector('.tag').prepend(pin);
+      else pin.remove();
       buttons.forEach(function(button){button.setAttribute('aria-pressed',String(button.topic===topic));});
       var count=items.filter(function(item){return !item.hidden;}).length;
       document.getElementById('topic-status').textContent='Showing '+count+(count===1?' article':' articles')+(topic?' in '+topic:'')+'.';
@@ -86,7 +98,11 @@ ready(function(){
       var button=document.createElement('button');
       button.type='button';
       button.topic=topic;
-      button.textContent=topic||'All';
+      var label=document.createElement('span');
+      label.textContent=topic||'All';
+      var count=document.createElement('small');
+      count.textContent=items.filter(function(item){return topic===null||item.topics.includes(topic);}).length;
+      button.append(label,count);
       button.addEventListener('click',function(){show(topic);});
       filter.appendChild(button);
       buttons.push(button);
@@ -101,9 +117,11 @@ ready(function(){
   if(wire){
     var rows=Array.from(document.querySelectorAll('#wire-rows tr'));
     var maximum=Math.max.apply(null,rows.map(function(row){return Number(row.cells[1].textContent);}));
+    var times=rows.map(function(row){return Date.parse(row.cells[0].textContent.trim().replace(' ','T')+'Z');});
+    var duration=Math.max(1,times[times.length-1]-times[0]);
     var path='M8 106';
     rows.forEach(function(row,index){
-      var x=8+index*584/Math.max(1,rows.length-1);
+      var x=8+(times[index]-times[0])*584/duration;
       var y=106-Number(row.cells[1].textContent)/maximum*80;
       path+=' L'+(x-3)+' 106 L'+x+' '+y+' L'+(x+3)+' 106';
     });
