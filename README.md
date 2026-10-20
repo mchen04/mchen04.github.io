@@ -56,3 +56,5 @@ There is no package manifest or build script in this checkout.
 Run `python3 -m http.server 4317 --bind 0.0.0.0` from this directory. This is a static site with no build step. Before publishing, check desktop and mobile navigation, all project pages, article filters, PDF download, reduced motion, scroll and tab visibility behavior, layout stability, console errors, and local links and assets. Save screenshots and receipts outside product source.
 
 The home orbit pauses permanently after the first scroll, and pauses while the tab is hidden or reduced motion is enabled. Pages and sections display immediately, with ordinary document navigation and no entry or exit transitions. The Projects activity chart uses its clearly dated cached sample with a link to current GitHub activity.
+
+The summary PDF uses the resume page’s print layout. Its source links use public canonical URLs, so the download works away from the local preview.
