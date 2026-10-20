@@ -21,7 +21,7 @@ About, Resume. Up to 860px wide it collapses behind a Menu button so the header 
 - [writing/](writing/index.html): Writing. Articles go in `writing/<slug>/index.html`
   and use the `.article` layout in `portfolio.css`.
 - [about/](about/index.html): About.
-- [resume/](resume/index.html): Michael's resume as a web page, with a PDF download (`resume/michael-chen-resume.pdf`). The PDF is built from his LaTeX resume; the public copy leaves out his phone number.
+- [resume/](resume/index.html): Michael's resume as a web page, with a PDF download (`resume/michael-chen-resume.pdf`) and a tappable picture of the PDF's page (`michael-chen-resume-800.webp`, `-1600.webp`, rendered from that PDF). The PDF is built from his LaTeX resume; the public copy leaves out his phone number.
 - Every listed project opens its own HTML page under `projects/`; source and live links remain on those pages.
 - [404.html](404.html): served by GitHub Pages for missing addresses.
 
@@ -57,4 +57,4 @@ Run `python3 -m http.server 4317 --bind 0.0.0.0` from this directory. This is a 
 
 The home orbit pauses permanently after the first scroll, and pauses while the tab is hidden or reduced motion is enabled. Pages and sections display immediately, with ordinary document navigation and no entry or exit transitions. The Projects activity chart uses its clearly dated cached sample with a link to current GitHub activity.
 
-The resume PDF comes from Michael's LaTeX source, not from the page's print layout. When the resume changes, update the page and the PDF together.
+The resume PDF comes from Michael's LaTeX source, not from the page's print layout. When the resume changes, update the page, the PDF and both preview images together.
