@@ -64,6 +64,7 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 .featured-list{display:grid;gap:0}
 .feature{position:relative;display:grid;grid-template-columns:1.12fr 1fr;gap:64px;padding:34px 0;border-top:1px solid var(--line);align-items:center;color:var(--body);text-decoration:none}
 .feature:last-child{border-bottom:1px solid var(--line)}
+.feature-text>div{grid-column:1/-1;max-width:72ch}
 .feature h3{font-size:32px;margin:9px 0 16px}
 .feature p{font-size:17px;line-height:1.65}
 .feature .feature-meta{font-size:14px;color:var(--quiet)}
