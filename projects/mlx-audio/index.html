@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mlx-audio decoder fix · Michael Chen</title><meta name="description" content="mlx-audio decoder fix — Michael Chen’s portfolio."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://michaelluochen.com/projects/mlx-audio/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/portfolio.css"><script src="/portfolio.js"></script></head>
+<body><a class="skip" href="#top">Skip to content</a><header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/" aria-current="page">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header><main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ml/">ML &amp; Research</a></li><li><span aria-current="page">mlx-audio decoder fix</span></li></ol></nav><h1>mlx-audio decoder fix</h1></div></div><section class="shelf"><div class="shell"><div class="essay">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>merged 5 August 2026</dd></div>
+<div><dt>where</dt><dd>Blaizzy/mlx-audio</dd></div>
+<div><dt>check</dt><dd>55 utterances, fp32 reference</dd></div>
+</dl>
+<div class="entry-body">
+
+<p>I found five differences between the MLX iSTFTNet decoders (Kokoro, KittenTTS) and their PyTorch reference. I compared intermediate tensors layer by layer using identical phoneme and style inputs. The fixes merged upstream.</p>
+<p>Two differences affected the audio. Every Kokoro render was
+              <span class="num">2.5 dB</span> quiet, because MLX's <span class="num">istft</span>
+              divides the overlap-add by <span class="num">Σw</span> and
+              <span class="num">torch.istft</span> divides by <span class="num">Σw²</span>. And the
+              upsample path in the pitch and energy predictor was misaligned by one frame against its
+              own shortcut: F0 relative RMSE <span class="num">0.134 → 0.0000</span>.</p>
+<dl class="readout">
+<div><dt>MCD</dt><dd>7.29 → 4.09<span class="u"> dB</span></dd></div>
+<div><dt>F0 RMSE</dt><dd>11.5 → 5.1<span class="u"> Hz</span></dd></div>
+</dl>
+<p class="why">Checked against frozen fp32 reference audio over 55 utterances, with the
+              thresholds calibrated to the reference model's own render-to-render noise floor, since
+              the decoder is stochastic. I hit this while building Kestrel.</p>
+</div>
+<p><a href="https://github.com/Blaizzy/mlx-audio/pull/859" rel="noopener">Project source</a></p></div><p class="more"><a href="/ml/">Back to ML &amp; Research</a></p></div></section></main><footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer></body></html>

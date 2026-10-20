@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decision heads on a small local model · Michael Chen</title><meta name="description" content="Decision heads on a small local model — Michael Chen’s portfolio."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://michaelluochen.com/projects/decision-heads/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/portfolio.css"><script src="/portfolio.js"></script></head>
+<body><a class="skip" href="#top">Skip to content</a><header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/" aria-current="page">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header><main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ml/">ML &amp; Research</a></li><li><span aria-current="page">Decision heads on a small local model</span></li></ol></nav><h1>Decision heads on a small local model</h1></div></div><section class="shelf"><div class="shell"><div class="essay">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>negative result, side project</dd></div>
+<div><dt>machine</dt><dd>M4 Mac mini, 24 GB</dd></div>
+<div><dt>licence</dt><dd>none chosen, all rights reserved</dd></div>
+<div><dt>base</dt><dd>frozen Qwen2.5 Instruct, 4-bit</dd></div>
+</dl>
+<div class="entry-body">
+
+<p>Over four days in September 2026 I trained tiny classification heads on top of frozen, 4-bit Qwen2.5 models, to see how well a small local model could read decisions out of documents. Two public repositories hold phases one and two (depth and distillation sweeps) and phase three. On the task families they were trained on, the heads beat the backbone's own zero-shot read-out by 14.8 points. On the six unseen task families I tested, they lost.</p>
+<dl class="readout">
+<div class="off"><dt>six unseen task families, vs zero-shot</dt><dd>−3.25<span class="u"> pts</span></dd></div>
+<div class="off"><dt>workflow suite, zero-shot 0.650</dt><dd>0.582</dd></div>
+<div><dt>20 of 28 layers, latency saved</dt><dd>28<span class="u">%</span></dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> These heads are not production-ready and do not reproduce or match the commercial system I compared against; its published numbers were never run on my hardware. In held-out-task probes, accuracy on the held-out families fell to 0.0063 when two large-label families (150 and 100 labels) were left out, and to 0.594 when two small-label families were. No safety, robustness or calibration testing was done.</p>
+<p class="src"><a href="https://huggingface.co/mchen04/jev-local-lab-decision-heads" rel="noopener">phase 3 card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/mchen04/jevlite-decision-heads" rel="noopener">phases 1 and 2 card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</div><p class="more"><a href="/ml/">Back to ML &amp; Research</a></p></div></section></main><footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer></body></html>

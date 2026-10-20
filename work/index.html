@@ -1,140 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#ffffff" name="theme-color"/>
 <title>Engineering work · Michael Chen</title>
-<meta name="description" content="My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR.">
-<meta name="author" content="Michael Chen">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://michaelluochen.com/work/">
-<meta name="theme-color" content="#ece5d5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1c2320" media="(prefers-color-scheme: dark)">
-
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Michael Chen">
-<meta property="og:locale" content="en_US">
-<meta property="og:url" content="https://michaelluochen.com/work/">
-<meta property="og:title" content="Engineering work · Michael Chen">
-<meta property="og:description" content="My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR.">
-<meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
-<meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Engineering work · Michael Chen">
-<meta name="twitter:description" content="My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR.">
-<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
-<meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
-
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/site.css">
-<script src="/site.js"></script>
-
+<meta content="My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR." name="description"/>
+<meta content="Michael Chen" name="author"/>
+<meta content="index,follow" name="robots"/>
+<link href="https://michaelluochen.com/work/" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="Michael Chen" property="og:site_name"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="https://michaelluochen.com/work/" property="og:url"/>
+<meta content="Engineering work · Michael Chen" property="og:title"/>
+<meta content="My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR." property="og:description"/>
+<meta content="https://michaelluochen.com/og.png?v=4" property="og:image"/>
+<meta content="Michael Chen, AI engineer in the Bay Area." property="og:image:alt"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="image/png" property="og:image:type"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Engineering work · Michael Chen" name="twitter:title"/>
+<meta content="My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR." name="twitter:description"/>
+<meta content="https://michaelluochen.com/og.png?v=4" name="twitter:image"/>
+<meta content="Michael Chen, AI engineer in the Bay Area." name="twitter:image:alt"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon.ico" rel="icon" sizes="32x32"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link as="font" crossorigin="" href="/fonts/bricolage.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/newsreader.woff2" rel="preload" type="font/woff2"/>
+<link href="/portfolio.css" rel="stylesheet"/>
+<script src="/portfolio.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"publisher":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI engineer","url":"https://michaelluochen.com/about/"},{"@type":"CollectionPage","@id":"https://michaelluochen.com/work/#page","url":"https://michaelluochen.com/work/","name":"Work","description":"My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","breadcrumb":{"@id":"https://michaelluochen.com/work/#breadcrumb"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"Work","item":"https://michaelluochen.com/work/"}],"@id":"https://michaelluochen.com/work/#breadcrumb"}]}
 </script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
-
-<header class="masthead" aria-label="Site header">
-  <div class="shell">
-    <a class="mark" href="/">Michael Chen</a>
-    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-      <span>Menu</span>
-    </button>
-    <nav id="site-nav" aria-label="Site">
-      <ul role="list">
-        <li><a href="/">Home</a></li>
-        <li><a href="/work/" aria-current="page">Work</a></li>
-        <li><a href="/ml/">ML &amp; Research</a></li>
-        <li><a href="/projects/">Projects &amp; Fun</a></li>
-        <li><a href="/writing/">Writing</a></li>
-        <li><a href="/about/">About</a></li>
-      </ul>
-    </nav>
-    <button class="themer" id="themer" type="button" aria-pressed="false">
-      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
-      <span id="themer-label">theme</span>
-    </button>
-  </div>
-</header>
-
-<main id="top" tabindex="-1" class="page-work">
-
-  <div class="page-head">
-    <div class="shell">
-      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Work</span></li></ol></nav>
-      <h1>Work</h1>
-      <p class="said">My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR.</p>
-    </div>
-  </div>
-
-  <section class="shelf" id="shipped" aria-labelledby="h-shipped">
-    <div class="shell">
-      <div class="shelf-head wide">
-        <h2 id="h-shipped">Shipped</h2>
-        <p class="said">My work at Epoch AI / Zerg AI and MOBIVOLT. Some customer details are private.</p>
-      </div>
-
-      <ul class="ledger" role="list">
-        <li><article class="row">
-          <p class="when">2025 to now</p>
-          <div>
-            <h3><a href="https://zergai.com" rel="noopener">Zerg and ZTC</a></h3>
-            <p>Zerg is a spec-driven framework for autonomous coding agents, and ZTC is its terminal client.
+<header aria-label="Site header" class="masthead"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" id="menu-toggle" type="button"><svg aria-hidden="true" class="icon" height="16" viewbox="0 0 16 16" width="16"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"></path><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg><span>Menu</span></button>
+<nav aria-label="Site" id="site-nav"><ul role="list"><li><a href="/">Home</a></li>
+<li><a aria-current="page" href="/work/">Work</a></li>
+<li><a href="/ml/">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header>
+<main class="page-work" id="top" tabindex="-1">
+<div class="page-head">
+<div class="shell">
+<nav aria-label="Breadcrumb" class="crumbs"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Work</span></li></ol></nav>
+<h1>Work</h1>
+<p class="said">My engineering work at Epoch AI / Zerg AI and MOBIVOLT, plus my experience founding and leading AI at UCR.</p>
+</div>
+</div>
+<section aria-labelledby="h-shipped" class="shelf" id="shipped">
+<div class="shell">
+<div class="shelf-head wide">
+<h2 id="h-shipped">Shipped</h2>
+<p class="said">My work at Epoch AI / Zerg AI and MOBIVOLT. Some customer details are private.</p>
+</div>
+<ul class="ledger" role="list">
+<li><article class="work">
+<p class="when">2025 to now</p>
+<div>
+<h3><a href="/projects/zerg-ztc/" rel="noopener">Zerg and ZTC</a></h3>
+<p>Zerg is a spec-driven framework for autonomous coding agents, and ZTC is its terminal client.
               My work includes parallel tool dispatch so agents stop queueing behind each other, background
               sub-agents for work that outlives a single turn, worktree-isolated batch execution so
               concurrent writers do not collide, a sandboxed multi-agent workflow runtime, MCP and
               provider routing, and the live web interface. People can watch a run as it happens.</p>
-          </div>
-          <p class="built">Epoch AI / Zerg AI · ZTC: TypeScript on Node, Rust native packages, React browser mirror · Zerg: Python core, Vue web IDE</p>
-        </article></li>
-
-        <li><article class="row">
-          <p class="when">2025 to now</p>
-          <div>
-            <h3><a href="https://zergchat.com" rel="noopener">ZergChat</a></h3>
-            <p>A chat product built on the agent platform. An agent joins the channel and responds to messages.</p>
-          </div>
-          <p class="built">Epoch AI / Zerg AI</p>
-        </article></li>
-
-        <li><article class="row">
-          <p class="when">2025 to now</p>
-          <div>
-            <h3><a href="https://zergboard.com" rel="noopener">Zergboard</a></h3>
-            <p>A board for managing work in cards, built on the same agent platform.</p>
-          </div>
-          <p class="built">Epoch AI / Zerg AI</p>
-        </article></li>
-
-        <li><article class="row">
-          <p class="when">2025 to now</p>
-          <div>
-            <h3>Forward-deployed engineering</h3>
-            <p>I work with two customers whose names are private. For an organization-management and resource-planning platform, I built continual-validation harnesses that score agent output against
+</div>
+<p class="built">Epoch AI / Zerg AI · ZTC: TypeScript on Node, Rust native packages, React browser mirror · Zerg: Python core, Vue web IDE</p>
+</article></li>
+<li><article class="work">
+<p class="when">2025 to now</p>
+<div>
+<h3><a href="/projects/zergchat/" rel="noopener">ZergChat</a></h3>
+<p>A chat product built on the agent platform. An agent joins the channel and responds to messages.</p>
+</div>
+<p class="built">Epoch AI / Zerg AI</p>
+</article></li>
+<li><article class="work">
+<p class="when">2025 to now</p>
+<div>
+<h3><a href="/projects/zergboard/" rel="noopener">Zergboard</a></h3>
+<p>A board for managing work in cards, built on the same agent platform.</p>
+</div>
+<p class="built">Epoch AI / Zerg AI</p>
+</article></li>
+<li><article class="work">
+<p class="when">2025 to now</p>
+<div>
+<h3><a href="/projects/forward-deployed-engineering/">Forward-deployed engineering</a></h3>
+<p>I work with two customers whose names are private. For an organization-management and resource-planning platform, I built continual-validation harnesses that score agent output against
               deterministic checks of state, tools, artifacts, browser behavior and visual output. These checks catch regressions before changes are accepted. The other is an AI procurement intake
               and approval portal with grounded vendor research, approvals that stay owned by a
               human, and RBAC with separation-of-duties controls.</p>
-          </div>
-          <p class="built">Epoch AI / Zerg AI · customer names withheld, no public artifact</p>
-        </article></li>
-
-        <li><article class="row">
-          <p class="when">2023 to 2025</p>
-          <div>
-            <h3>MOBIVOLT</h3>
-            <p>For this $5M+ DOD-funded fuel-cell program, I built the desktop apps that run the automated
+</div>
+<p class="built">Epoch AI / Zerg AI · customer names withheld, no public artifact</p>
+</article></li>
+<li><article class="work">
+<p class="when">2023 to 2025</p>
+<div>
+<h3><a href="/projects/mobivolt/">MOBIVOLT</a></h3>
+<p>For this $5M+ DOD-funded fuel-cell program, I built the desktop apps that run the automated
               test stands, in C# on .NET with Avalonia. I wrote a Python and PyQt hardware-in-the-loop
               simulator with a serial firmware bridge, injecting sensor values every 100ms and
               polling at 200ms against plant models. Firmware could then be
@@ -142,54 +115,43 @@
               driver modules with 2,500+ lines of C tests, and kept 5 automated test stands
               processing 100+ concurrent data streams with zero downtime across 18 months. I also handled
               migrations and did circuit work in KiCad and ngspice.</p>
-          </div>
-          <p class="built">C#, .NET, Avalonia, Python, PyQt, C, PIC32MZ, Harmony v3, KiCad, ngspice · defense program, no public artifact</p>
-        </article></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="shelf tide" id="leadership" aria-labelledby="h-leadership">
-    <div class="shell">
-      <div class="shelf-head wide">
-        <h2 id="h-leadership">Leadership</h2>
-      </div>
-
-      <ul class="ledger" role="list">
-        <li><article class="row">
-          <p class="when">2023 to 2025</p>
-          <div>
-            <h3>AI at UCR</h3>
-            <p>I founded and led UC Riverside's first official AI organization. It reached 50+ members,
+</div>
+<p class="built">C#, .NET, Avalonia, Python, PyQt, C, PIC32MZ, Harmony v3, KiCad, ngspice · defense program, no public artifact</p>
+</article></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="h-leadership" class="shelf tide" id="leadership">
+<div class="shell">
+<div class="shelf-head wide">
+<h2 id="h-leadership">Leadership</h2>
+</div>
+<ul class="ledger" role="list">
+<li><article class="work">
+<p class="when">2023 to 2025</p>
+<div>
+<h3><a href="/projects/ai-at-ucr/">AI at UCR</a></h3>
+<p>I founded and led UC Riverside's first official AI organization. It reached 50+ members,
               10+ technical workshops, and 45% growth in attendance. I booked rooms and wrote the curriculum.</p>
-          </div>
-          <p class="built">founder and president</p>
-        </article></li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="shelf tide" id="moved" aria-labelledby="h-moved">
-    <div class="shell">
-      <div class="shelf-head">
-        <h2 id="h-moved">Elsewhere on the site</h2>
-      </div>
-      <p class="more"><span id="measured"></span><a href="/ml/">Kestrel, PHiLIP and other ML work, now in ML &amp; Research</a></p>
-      <p class="more"><span id="books"></span><a href="/projects/#books">My audiobook setup</a></p>
-      <p class="more"><span id="friends"></span><a href="/projects/#friends">Apps for friends</a></p>
-      <p class="more"><span id="tools"></span><a href="/projects/#tools">Personal tools</a></p>
-      <p class="more"><span id="upstream"></span><a href="/projects/#upstream">Contributions to friends' projects</a></p>
-    </div>
-  </section>
-
+</div>
+<p class="built">founder and president</p>
+</article></li>
+</ul>
+</div>
+</section>
+<section aria-labelledby="h-moved" class="shelf tide" id="moved">
+<div class="shell">
+<div class="shelf-head">
+<h2 id="h-moved">Elsewhere on the site</h2>
+</div>
+<p class="more"><span id="measured"></span><a href="/ml/">Kestrel, PHiLIP and other ML work, now in ML &amp; Research</a></p>
+<p class="more"><span id="books"></span><a href="/projects/#books">My audiobook setup</a></p>
+<p class="more"><span id="friends"></span><a href="/projects/#friends">Apps for friends</a></p>
+<p class="more"><span id="tools"></span><a href="/projects/#tools">Personal tools</a></p>
+<p class="more"><span id="upstream"></span><a href="/projects/#upstream">Contributions to friends' projects</a></p>
+</div>
+</section>
 </main>
-
-<footer aria-label="Colophon">
-  <div class="shell">
-    <span>© 2026 Michael Chen</span>
-    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Project measurements include source links.</span>
-  </div>
-</footer>
-
+<footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer>
 </body>
 </html>

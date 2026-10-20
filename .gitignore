@@ -69,3 +69,5 @@ logs/
 .claude/
 *.pdf
 docs/
+
+!resume/michael-chen-portfolio-summary.pdf

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LFM2.5-Audio Delegate · Michael Chen</title><meta name="description" content="LFM2.5-Audio Delegate — Michael Chen’s portfolio."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://michaelluochen.com/projects/lfm25-delegate/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/portfolio.css"><script src="/portfolio.js"></script></head>
+<body><a class="skip" href="#top">Skip to content</a><header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/" aria-current="page">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header><main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ml/">ML &amp; Research</a></li><li><span aria-current="page">LFM2.5-Audio Delegate</span></li></ol></nav><h1>LFM2.5-Audio Delegate</h1></div></div><section class="shelf"><div class="shell"><div class="essay">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>experimental, half-duplex</dd></div>
+<div><dt>machine</dt><dd>M4 Mac mini, 24 GB</dd></div>
+<div><dt>base</dt><dd>Liquid AI LFM2.5-Audio-1.5B</dd></div>
+<div><dt>license</dt><dd>LFM Open License v1.0; commercial-use restrictions apply</dd></div>
+</dl>
+<div class="entry-body">
+
+<p>My project adds learned delegation to Liquid AI's pretrained speech model on a 24 GB M4 Mac mini. A small adapter trained in the shared core teaches it to answer locally or request a stronger text model. Its existing audio head speaks both kinds of replies, including delegated answers that are still arriving. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/LiquidAI/LFM2.5-Audio-1.5B">Liquid AI's pretrained base model</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json">Retained E1 training configuration</a>)</p>
+<p>The release includes the adapter, runtime, configuration and recorded evaluations. A four-turn check used prerecorded input, real external-model responses and device playback. It doesn't establish live-human reliability. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json">R3 four-turn playback report</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned runnable release v0.9.1</a>)</p>
+<p>This is experimental half-duplex software with typed cancellation. Factual answers and room-microphone routing remain weak. Recent-answer context estimates what was spoken, and there is no live-human or human voice-quality validation. Audio processing is local, but delegation sends query and context text externally. It isn't production-ready. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
+<p>Built on pretrained weights, not trained from scratch. License restrictions and reproduction limits apply. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LICENSE-LFM">LFM Open License v1.0</a>; Unpublished reproduction evidence: October 5, 2026 reproduction check; installed dependencies and missing per-item judged results. Not independently rerun by Editor or Dot.)</p>
+<p class="src"><a href="/writing/local-speech-model-delegation/">What worked, what failed and how it was tested</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate">Model card</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned release files</a></p>
+</div>
+<p><a href="/writing/local-speech-model-delegation/" rel="noopener">Read the article</a></p></div><p class="more"><a href="/ml/">Back to ML &amp; Research</a></p></div></section></main><footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer></body></html>

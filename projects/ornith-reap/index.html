@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ornith-1.5-35B-A3B, REAP-192, mxfp4 · Michael Chen</title><meta name="description" content="Ornith-1.5-35B-A3B, REAP-192, mxfp4 — Michael Chen’s portfolio."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://michaelluochen.com/projects/ornith-reap/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/portfolio.css"><script src="/portfolio.js"></script></head>
+<body><a class="skip" href="#top">Skip to content</a><header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/" aria-current="page">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header><main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ml/">ML &amp; Research</a></li><li><span aria-current="page">Ornith-1.5-35B-A3B, REAP-192, mxfp4</span></li></ol></nav><h1>Ornith-1.5-35B-A3B, REAP-192, mxfp4</h1></div></div><section class="shelf"><div class="shell"><div class="essay">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>public build</dd></div>
+<div><dt>machine</dt><dd>base M4 Mac mini, 24 GB</dd></div>
+<div><dt>licence</dt><dd>MIT, inherited</dd></div>
+<div><dt>base</dt><dd>Ornith-1.5-35B-A3B by the Ornith Team</dd></div>
+</dl>
+<div class="entry-body">
+
+<p>The base model is the Ornith Team's, not mine. My work was compressing it to run on a 24 GB Mac mini, where the plain 4-bit conversion does not fit. I pruned each layer from 256 to 192 experts with REAP, quantised to mxfp4 while keeping the shared expert and router at 8 bits, and lowered the active experts per token from 8 to 7. There was no fine-tuning.</p>
+<dl class="readout">
+<div><dt>decode</dt><dd>49.8<span class="u"> tok/s</span></dd></div>
+<div><dt>weights</dt><dd>14.2<span class="u"> GB</span></dd></div>
+<div><dt>42-task suite, unpruned 3-bit 0.954</dt><dd>0.981</dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> The task suite is finite and English only: coding, math, tool calls, structured output and format checks. Expect some loss on knowledge-heavy tasks. I could not run the bf16 original on any hardware I had, so there is no direct comparison with it. The build is tuned for one user at a time.</p>
+<p class="src"><a href="https://huggingface.co/mchen04/Ornith-1.5-35B-A3B-REAP192-mxfp4-MLX" rel="noopener">model card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B" rel="noopener">original model <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://arxiv.org/abs/2510.13999" rel="noopener">REAP paper <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</div><p class="more"><a href="/ml/">Back to ML &amp; Research</a></p></div></section></main><footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer></body></html>
