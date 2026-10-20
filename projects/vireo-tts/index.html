@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vireo TTS 3B for Apple Silicon · Michael Chen</title><meta name="description" content="Vireo TTS 3B for Apple Silicon — Michael Chen’s portfolio."><meta name="theme-color" content="#ffffff"><link rel="canonical" href="https://michaelluochen.com/projects/vireo-tts/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/portfolio.css"><script src="/portfolio.js"></script></head>
+<body><a class="skip" href="#top">Skip to content</a><header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/" aria-current="page">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header><main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/ml/">ML &amp; Research</a></li><li><span aria-current="page">Vireo TTS 3B for Apple Silicon</span></li></ol></nav><h1>Vireo TTS 3B for Apple Silicon</h1></div></div><section class="shelf"><div class="shell"><div class="essay">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>two public builds</dd></div>
+<div><dt>machine</dt><dd>M2 MacBook Pro, 16 GB</dd></div>
+<div><dt>licence</dt><dd>research and non-commercial only (weights), not open source</dd></div>
+<div><dt>base</dt><dd>Breeze TTS 2 by BreezeBlue</dd></div>
+</dl>
+<div class="entry-body">
+
+<p>Vireo is my unofficial MLX build of Breeze TTS 2, a 3B speech model by BreezeBlue. BreezeBlue has not reviewed or endorsed it. It comes in two builds. The bfloat16 build converts the released checkpoint to MLX at unchanged precision, as the quality reference. The mixed 4-bit build adds activation-calibrated pruning and per-stage low-bit quantization, and it is the one I optimised and measured end to end.</p>
+<dl class="readout">
+<div><dt>mixed 4-bit, real time</dt><dd>1.15×</dd></div>
+<div><dt>bf16 reference, real time</dt><dd>0.41×</dd></div>
+<div><dt>peak GPU memory</dt><dd>3.0 / 7.0<span class="u"> GB</span></dd></div>
+<div><dt>warm first audio</dt><dd>285–322<span class="u"> ms</span></dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> Speed is the best of three runs on one M2 and does not transfer to other machines. I picked the 4-bit build from more than sixty candidates against one probe set: its development word error rate is 0.0093, but 0.0368 on held-out text. Its worst speaker similarity, 0.856, is below the bf16 build's 0.903. The two builds are close on quality and far apart on cost; the compressed one is not uniformly better. The calibration clip is private, so nobody else can rebuild the 4-bit weights bit for bit.</p>
+<p class="src">Weights: BreezeBlue Research and Non-Commercial License, gated, no commercial use. Runtime code: Apache-2.0.
+              <a href="https://huggingface.co/mchen04/Vireo-TTS-3B-MLX-mixed4bit" rel="noopener">mixed 4-bit card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/mchen04/Vireo-TTS-3B-MLX-bf16" rel="noopener">bf16 card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/BreezeBlue/Breeze-TTS-2" rel="noopener">upstream Breeze TTS 2 <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</div><p class="more"><a href="/ml/">Back to ML &amp; Research</a></p></div></section></main><footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer></body></html>

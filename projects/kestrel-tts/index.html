@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
 <title>Kestrel: speech synthesis for Apple Silicon · Michael Chen</title>
 <meta name="description" content="Kestrel is my distilled Kokoro-82M speech engine for Apple Silicon. I describe its measurements, independent audit and quality limits.">
 <meta name="author" content="Michael Chen">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://michaelluochen.com/projects/kestrel-tts/">
-<meta name="theme-color" content="#ece5d5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1c2320" media="(prefers-color-scheme: dark)">
+
+
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Michael Chen">
@@ -34,9 +35,8 @@
 
 <link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/plexmono.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/site.css">
-<script src="/site.js"></script>
+<link rel="stylesheet" href="/portfolio.css">
+<script src="/portfolio.js"></script>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://michaelluochen.com/#website","url":"https://michaelluochen.com/","name":"Michael Chen","author":{"@id":"https://michaelluochen.com/#person"},"publisher":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en"},{"@type":"Person","@id":"https://michaelluochen.com/#person","name":"Michael Chen","jobTitle":"AI engineer","url":"https://michaelluochen.com/about/"},{"@type":"WebPage","@id":"https://michaelluochen.com/projects/kestrel-tts/#page","url":"https://michaelluochen.com/projects/kestrel-tts/","name":"Kestrel","description":"Kestrel is my distilled Kokoro-82M speech engine for Apple Silicon. I describe its measurements, independent audit and quality limits.","isPartOf":{"@id":"https://michaelluochen.com/#website"},"author":{"@id":"https://michaelluochen.com/#person"},"inLanguage":"en","breadcrumb":{"@id":"https://michaelluochen.com/projects/kestrel-tts/#breadcrumb"},"citation":["https://github.com/mchen04/kestrel-tts","https://huggingface.co/mchen04/kestrel-tts","https://github.com/mchen04/kestrel-tts/blob/e78371008341fba2b723f6bedc18afaa92bebc7e/docs/MODEL_CARD.md","https://github.com/mchen04/kestrel-tts/blob/main/experiments/23-final/AUDIT.md","https://github.com/mchen04/kestrel-tts/blob/main/docs/MODEL_CARD.md"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://michaelluochen.com/"},{"@type":"ListItem","position":2,"name":"ML & Research","item":"https://michaelluochen.com/ml/"},{"@type":"ListItem","position":3,"name":"Kestrel","item":"https://michaelluochen.com/projects/kestrel-tts/"}],"@id":"https://michaelluochen.com/projects/kestrel-tts/#breadcrumb"}]}
@@ -45,29 +45,16 @@
 <body>
 <a class="skip" href="#top">Skip to content</a>
 
-<header class="masthead" aria-label="Site header">
-  <div class="shell">
-    <a class="mark" href="/">Michael Chen</a>
-    <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-      <span>Menu</span>
-    </button>
-    <nav id="site-nav" aria-label="Site">
-      <ul role="list">
-        <li><a href="/">Home</a></li>
-        <li><a href="/work/">Work</a></li>
-        <li><a href="/ml/" aria-current="true">ML &amp; Research</a></li>
-        <li><a href="/projects/">Projects &amp; Fun</a></li>
-        <li><a href="/writing/">Writing</a></li>
-        <li><a href="/about/">About</a></li>
-      </ul>
-    </nav>
-    <button class="themer" id="themer" type="button" aria-pressed="false">
-      <svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"/></svg>
-      <span id="themer-label">theme</span>
-    </button>
-  </div>
-</header>
+<header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/">ML &amp; Research</a></li>
+<li><a href="/projects/" aria-current="page">Projects &amp; Fun</a></li>
+<li><a href="/writing/">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header>
 
 <main id="top" tabindex="-1" class="page-case case-kestrel">
 
@@ -164,12 +151,7 @@
 
 </main>
 
-<footer aria-label="Colophon">
-  <div class="shell">
-    <span>© 2026 Michael Chen</span>
-    <span>Bricolage Grotesque, Newsreader, IBM Plex Mono. Project measurements include source links.</span>
-  </div>
-</footer>
+<footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer>
 
 </body>
 </html>
