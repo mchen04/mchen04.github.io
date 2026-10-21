@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Scripts, Orchestrators, and Worker Sessions · Michael Chen</title>
+<meta name="description" content="Scripts, orchestrators, and worker sessions: a practical way to keep a personal AI setup useful, predictable, and cheaper to run.">
+<meta name="author" content="Michael Chen">
+<link rel="canonical" href="https://michaelluochen.com/writing/three-types-agent-work/">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Michael Chen">
+<meta property="og:url" content="https://michaelluochen.com/writing/three-types-agent-work/">
+<meta property="og:title" content="Scripts, Orchestrators, and Worker Sessions">
+<meta property="og:description" content="Scripts, orchestrators, and worker sessions: a practical way to keep a personal AI setup useful, predictable, and cheaper to run.">
+<meta property="og:image" content="https://michaelluochen.com/og.png?v=4">
+<meta property="og:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scripts, Orchestrators, and Worker Sessions">
+<meta name="twitter:description" content="Scripts, orchestrators, and worker sessions: a practical way to keep a personal AI setup useful, predictable, and cheaper to run.">
+<meta name="twitter:image" content="https://michaelluochen.com/og.png?v=4">
+<meta name="twitter:image:alt" content="Michael Chen, AI engineer in the Bay Area.">
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" href="/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/portfolio.css">
+
+<script src="/portfolio.js"></script>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Scripts, Orchestrators, and Worker Sessions", "description": "Scripts, orchestrators, and worker sessions: a practical way to keep a personal AI setup useful, predictable, and cheaper to run.", "url": "https://michaelluochen.com/writing/three-types-agent-work/", "mainEntityOfPage": "https://michaelluochen.com/writing/three-types-agent-work/", "datePublished": "2026-10-20", "author": {"@type": "Person", "@id": "https://michaelluochen.com/#person", "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}}
+</script>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="masthead" aria-label="Site header"><div class="shell">
+<a class="mark" href="/">Michael Chen</a>
+<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path class="bars" d="M2 4h12M2 8h12M2 12h12" fill="none" stroke="currentColor" stroke-width="1.5"/><path class="x" d="M3.5 3.5l9 9M12.5 3.5l-9 9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>Menu</span></button>
+<nav id="site-nav" aria-label="Site"><ul role="list"><li><a href="/">Home</a></li>
+<li><a href="/work/">Work</a></li>
+<li><a href="/ml/">ML &amp; Research</a></li>
+<li><a href="/projects/">Projects &amp; Fun</a></li>
+<li><a href="/writing/" aria-current="page">Writing</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/resume/">Resume</a></li></ul></nav></div></header>
+
+<main id="top" tabindex="-1">
+  <div class="page-head">
+    <div class="shell">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/writing/">Writing</a></li><li><span aria-current="page">Scripts, Orchestrators, and Worker Sessions</span></li></ol></nav>
+      <p class="tag"><b>Tech &amp; Building</b></p>
+      <h1 id="article-title">Scripts, Orchestrators, and Worker Sessions</h1>
+    </div>
+  </div>
+  <div class="shell">
+    <article class="article" aria-labelledby="article-title">
+      <p class="meta"><span>By <a href="/about/">Michael Chen</a></span><span>Published <time datetime="2026-10-20">2026-10-20</time></span></p>
+<p>I’ve made an oath to myself to try to get out there more and write my own articles to help me flesh out my own voice, be more coherent with my thoughts, and hopefully learn to love it as a hobby. I will preface that I have never been good at writing and that I have not gotten better. In fact, after ChatGPT was released my freshman year of college in 2022, I have (allegedly) not written a single paper straight from the dome.</p>
+
+<p>I’ve been using my own Hermes agent for a couple of months now (w/ a solid amount of local patches) and in that time of experimenting w/ my setup and configurations I’ve come up with my view on what I call the three types of agent work (scripts, orchestrators, and worker sessions) for what people call “Life OS” agent systems or Personal AI Agents. In my experience, everything falls into one of these three categories and if it can’t be built from these three, alone or chained together, you will probably watch your bank account explode from all the tokens that are wasted.</p>
+
+<h2>1. Scripts</h2>
+
+<p>This one is the most basic piece of an agent system but also the most powerful and important in my opinion. Scripts are lightweight programs written to automate tasks, orchestrate workflows, or control other software applications and more importantly in the AI era, no tokens used.</p>
+
+<p>When starting and improving your AI system, the most important question you have to ask is does this need AI in the first place? Many things that you think may need AI have probably been solved by some fellow lazy engineer in the pre-AI era. The best part about this (that every AI engineer can appreciate) is that it's deterministic. If it works once, as long as things don’t change it will work forever. Things do change though (logins expire, APIs update), so make sure every script alerts you when it breaks.</p>
+
+<p>These are the backbone of a “Life OS” system and helps keep things useful on a daily basis and acts as the main datastream coming into your system. Some examples of these that I have are AI token/plan usage updates and weather updates. One thing you should actively be thinking about is making as many scripts as possible because the amount of tokens and time you save will pay exponentially the more complex your system gets.</p>
+
+<h3>Scripts with AI Calls</h3>
+
+<p>This also brings me to a sub category of Scripts that I call (not very creatively) Scripts with AI calls. This is where you have a script but it has a very constrained step with a few (in my case usually one) AI call. This way you can harness the deterministic nature and consistency of a direct script and be able to latch on intelligence to it. Most of these tend to be summary based in nature for example using a script to pull all my emails and messages, then using one AI call to summarize and display to me filtering out spam and classifying into urgency categories. These are usually for things that you do everyday but the goal isn’t to just see it and know it but filter or understand it.</p>
+
+<p>This can also be decision based like deciding what to add to your todo list from your messages/emails so these can be chained together into a useful workflow with minimal room for error and spend. Make sure when you have these chains of actions that there's a verified specific output that gets attached to an action and if you aren’t comfortable with setting these up, have a worker session build the script for you. Either way, I would recommend trying to make the AI pick from a fixed set of answers, then let code act on its picks (TypeSafe’s new Jev model is built for exactly this and would be extremely useful here also). This also protects you from prompt injection (hidden instructions in an email telling your AI what to do) since the worst it can do is pick one of your options.</p>
+
+<p>You also have to think about agentic systems and the ability to use scripts. An area of optimization many people miss out on is in your skills. Most people who are reading this know that skills help save tokens and speed because it gives working instructions but you should take it a step further. Find and give them scripts to run this way every time a skill is used so it does not have to spend tokens and time reasoning, creating a script, and executing it. Every step of the way you should be trying to reduce the amount of AI that is being used and constraining it to only what is absolutely necessary in order to make robust, constantly working, low cost systems.</p>
+
+<h2>2. Orchestrator/Profile</h2>
+
+<p>This has kind of been all the rage recently for the past few months. There are many good examples of this online and basically every single Personal AI Agent has one of these as the main interface for you to talk and chat with. The main reason for this is that it is an abstraction layer and a streamlined user experience. All these agentic systems have so many sessions, decisions needed to be run, and just a bunch of crap (good crap hopefully) going on.</p>
+
+<p>For a non-technical user they don’t want to see everything going on since they just want their Muse (Meta’s agent) or other system to be able to do whatever they need it to do. They don’t need to know or want to know how it works and the familiarity of the chat interface, which has become a standard and UI of comfort for most AI users, eases them into this new application by making it feel like nothing has changed.</p>
+
+<p>On the flip side, technical people (AI-native/psychosis) ALSO don’t want to see everything that's happening. With the recent autonomous and long running nature of AI sessions and the trend towards parallelism, the context switching needed to actually maintain these and work is too taxing on a normal human mind. However, with an orchestrator you can talk to one session, get summaries on other sessions, and have it send the messages and keep track of everything for you.</p>
+
+<p>To be honest, there aren’t as many cost shortcuts here. To get proper realtime summaries and updates you need to read existing sessions to see what's happening or have them relay progress up to you. The script rule still applies though: have workers write their status to a file, have a script collect it into a short digest, and let a cheap model summarize so your orchestrator isn’t reading every session in full.</p>
+
+<p>However, the main goal of an orchestrator should be to keep the session clean and have it delegate tasks. If your orchestrator is performing actions like coding or anything of that nature you have failed and you just have a normal coding session. When you are also orchestrating many different things at once it can make sense to layer them where you have one orchestrator for you to talk to which controls multiple orchestrators each in their own area of expertise and set of sessions like coding, sales, research etc in order to not explode your main session with the amount of content it's receiving.</p>
+
+<h3>Profiles</h3>
+
+<p>This brings us to the idea of profiles. Hermes calls them profiles, but Grok Bot made the idea mainstream with role-based Bots that hand work to each other. The idea is to have many high level orchestrators in their own roles, with their own memories and specializations who can communicate and work together. I don’t have many thoughts or advice since I don't use Grok Bot often. The idea of having separate orchestrators/profiles is not a novel one but the consistency from which I’ve seen (in my limited use) in the output and communication is impressive. The main thing from my experience with multi-orchestration/profile is you MUST have clear separate roles this includes for certain topics and actions. The worst thing that can happen is multiple profiles working on the same thing and colliding with each other.</p>
+
+<h2>3. Worker Sessions</h2>
+
+<p>These are the bread and butter of an agentic system and where all the magic happens and work gets done. These are quite simple to be honest and I’m not going to give much advice on these. Everyone has their own setup of skills and tools that work for them.</p>
+
+<p>Personally, I have my hermes session spin up claude or codex sessions (recently it's been claude orchestrating codex) and I have my own custom skills you can find here: <a href="https://github.com/mchen04/my-public-ai-skills">https://github.com/mchen04/my-public-ai-skills</a>. These are the public versions of my personal Hermes AI skills (which are self healing/learning and have a lot of personal info/custom workflows that can’t be disclosed). You can use whatever works for you here like Pi or Hermes coding agent, as long as it's a decent coding harness and it can be controlled, directed, and read by an orchestrator. Give your orchestrators/profiles the ability to start and control coding harnesses and you should be good to go on this part.</p>
+
+<h2>Creativity in the Three Categories</h2>
+
+<p>Okay so somehow there's still some things I want to cover here, some of the more “meta” topics. The main two that come to mind to me are self healing and proactive agents. While these categories are strict in their classification, you need to think architecturally about how to fit what you want into these categories to make them robust.</p>
+
+<h3>Self Healing</h3>
+
+<p>I’m going to start with self healing systems. What classifies a self healing/learning system? In my eyes it’s when an error has occurred in the system or the system has found a better way to do things. Hermes handles this quite well and fits into these three categories. Every 15 tool calls (and every 10 messages for memory) it kicks off a background AI review that reads recent work, finds improvements/errors, and saves them into its skills and memory. This is a deterministic counter with an AI step to make a decision. The one thing I’d add is having fixes verified in a coding session before they get integrated, since stock Hermes writes them in directly.</p>
+
+<h3>Proactive Agents</h3>
+
+<p>The idea of proactive agents is the same. What classifies a proactive agent? An agent which can do things autonomously on its own without needing to be asked. Although personally I am not a fan of proactive agents currently and do not use agents like that, I know they are the future.</p>
+
+<p>A proactive agent will make decisions but first it needs data or a trigger for it to make a decision. This could be a deterministic script that checks every 15 minutes if there's stuff to do and wakes it up, or a system that starts a coding session when a github PR appears to auto review, etc. A lot of proactive agents today (like OpenClaw’s heartbeat) just wake the AI every 30 minutes, which burns tokens even when there’s nothing to do. Proactive agents should have a deterministic script to check and only wake up and start a coding session when there’s something there, or have some type of deterministic trigger where it can choose to act.</p>
+
+<h2>Wrapping Up</h2>
+
+<p>If you take one thing from this, it's that the best agent system uses the least AI possible. Before you do anything, walk down the list. Can a script do it? Write a script. Does it need one judgment call? Add one AI call and make it pick from a fixed set of answers. Does it need real work done? Hand it to a worker session. Too many of those to keep track of? Now you need an orchestrator. Many more meta capabilities like self-healing and proactive agents aren't new categories but are a mix and chain of categories.</p>
+
+<p>As much as I enjoyed sharing my learnings and my passion, this was a tough write. If your setup breaks my three categories, let me know. I'd love to be wrong.</p>
+
+
+    </article>
+  </div>
+</main>
+
+<footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer>
+
+</body>
+</html>
