@@ -1,60 +1,59 @@
 # Michael Chen's personal site
 
-A static personal site for Michael Chen, served by GitHub Pages at
-[michaelluochen.com](https://michaelluochen.com/).
+The static site at [michaelluochen.com](https://michaelluochen.com/), served by GitHub Pages from `main`.
+Every page is plain HTML that works without JavaScript and shares one stylesheet and one script.
 
-Every page is plain HTML that works without JavaScript. The navigation is the same
-on every page, in this order: Home, Work, ML & Research, Projects & Fun, Writing,
-About, Resume. Up to 860px wide it collapses behind a Menu button so the header stays one row.
+## Pages
 
-- [index.html](index.html): Home. It features Zerg and ZTC, Kestrel, and the audiobook stack with source-based visuals before experience and awards (`#about`), recent writing, and contact (`#contact`). The old `#upstream` anchor remains available. The old anchors `#measured`, `#books`, `#friends` and `#tools`
-  sit beside the Projects & Fun link in Contact.
-- [work/](work/index.html): Work: Shipped and Leadership. Shipped lists Zerg and ZTC, Zergstack, the multi-agent simulation engine, ZergChat, Zergboard, forward-deployed engineering and MOBIVOLT. Its old anchors link on to
-  ML & Research and Projects & Fun.
-- [ml/](ml/index.html): ML & Research. Kestrel, the mlx-audio fix, Vireo TTS, the
-  Ornith REAP-192 build, the decision-head experiment and PHiLIP, each with machine,
-  licence, limits and source links. Kestrel and PHiLIP keep their detail pages at
-  `projects/kestrel-tts/` and `projects/philip/`, with breadcrumbs under ML & Research.
-- [projects/](projects/index.html): Projects & Fun: the public GitHub activity chart,
-  the audiobook setup, apps for friends, personal tools and contributions to friends'
-  projects, plus `projects/audiobook-stack/`. `#measured` points to ML & Research.
-- [writing/](writing/index.html): Writing. Articles go in `writing/<slug>/index.html`
-  and use the `.article` layout in `portfolio.css`.
-- [about/](about/index.html): About.
-- [resume/](resume/index.html): Michael's resume as a web page, with a PDF download (`resume/michael-chen-resume.pdf`) and a tappable picture of the PDF's page (`michael-chen-resume-800.webp`, `-1600.webp`, rendered from that PDF). The PDF is built from his LaTeX resume; the public copy leaves out his phone number.
-- Every listed project opens its own HTML page under `projects/`; source and live links remain on those pages.
-- [404.html](404.html): served by GitHub Pages for missing addresses.
+- [index.html](index.html): home. An illustrated city at golden hour, selected work, the site's sections, experience and awards (`#about`), recent writing and contact (`#contact`).
+- [work/](work/index.html), [ml/](ml/index.html), [projects/](projects/index.html), [writing/](writing/index.html), [about/](about/index.html), [resume/](resume/index.html): the sections. Each project has its own page under `projects/`; Kestrel and PHiLIP sit under ML & Research by breadcrumb.
+- [404.html](404.html): served for missing addresses.
 
-## Writing and the publishing helper
-
-The publishing helper rewrites two marked blocks and nothing else around them:
-`<!-- pwe:archive -->` in `writing/index.html` (the full archive, newest first) and
-`<!-- pwe:recent-writing -->` in `index.html` (the three newest articles across all
-topics). Keep both markers and their markup as the helper writes them.
-
-Topics come from a fixed set: Books & Web Fiction, Tech & Building, Fantasy Sports
-and Miscellaneous. An article's primary topic is the bold label in its archive entry.
-Secondary topics go in the `writing-topics` JSON under the archive block, keyed by
-slug. `portfolio.js` builds the topic filter from both, showing only topics that have
-articles. Without JavaScript the whole list shows.
-
-New articles need the shared seven-link header, including ML & Research and Resume, plus `/portfolio.css` and `/portfolio.js`.
+Old anchors (`#upstream`, `#measured`, `#books`, `#friends`, `#tools`, `#moved`) still resolve.
 
 ## Shared files
 
-[portfolio.css](portfolio.css) and [portfolio.js](portfolio.js) are shared by every page. The prior `site.css` and `site.js` remain available as reference during preview review; pages no longer load them. Each page's
-`<main>` carries a class (`home`, `page-work`, `page-ml`, `page-projects`,
-`page-case`, `page-writing`, `page-about`, `page-lost`) for its own treatment;
-articles are styled through `.article` so their HTML stays as published.
-Local fonts are in [fonts/](fonts/), and page images are in [images/](images/).
-[sitemap.xml](sitemap.xml) lists the public pages.
+- [portfolio.css](portfolio.css): all styles. Colours are tokens on `:root`; `.night` on `<html>` swaps them for the dark theme. Each page's `<main>` class (`home`, `page-work`, `page-case`, …) picks its section banner; project and article pages pick theirs from the breadcrumb.
+- [portfolio.js](portfolio.js): day and night (the header switch, remembered across pages; otherwise the device's dark mode, then the clock; `?time=day|night` forces either), the home scene's clock, parallax and Blueprint view, the writing topic filter, readable dates, essay drop caps and read-on links, and the activity chart.
+- [fonts/](fonts/): Cormorant for headings, Newsreader for reading text. [images/](images/) holds photos and app captures.
 
-There is no package manifest or build script in this checkout.
+## Writing
 
-## Local preview
+The publishing helper owns two marked blocks: `<!-- pwe:archive -->` in `writing/index.html` and
+`<!-- pwe:recent-writing -->` in `index.html`. Keep the markers and their markup as it writes them.
+Topics: Books & Web Fiction, Tech & Building, Fantasy Sports, Miscellaneous. The bold label in an
+archive entry is the primary topic; extra topics go in the `writing-topics` JSON under the archive.
 
-Run `python3 -m http.server 4317 --bind 0.0.0.0` from this directory. This is a static site with no build step. Before publishing, check desktop and mobile navigation, all project pages, article filters, PDF download, reduced motion, scroll and tab visibility behavior, layout stability, console errors, and local links and assets. Save screenshots and receipts outside product source.
+## The illustrated world
 
-The home orbit pauses permanently after the first scroll, and pauses while the tab is hidden or reduced motion is enabled. Pages and sections display immediately, with ordinary document navigation and no entry or exit transitions. The Projects activity chart uses its clearly dated cached sample with a link to current GitHub activity.
+Every illustration is generated by [tools/world/](tools/world/). Run `node tools/world/build.mjs` after
+changing it; output is seeded, so a rebuild is byte-identical.
 
-The resume PDF comes from Michael's LaTeX source, not from the page's print layout. When the resume changes, update the page, the PDF and both preview images together.
+- `kit.mjs`: palettes and building blocks (buildings, skylines, clouds, the clock tower, ornaments).
+- `hero.mjs`: the home scene, written into the `<!-- world:hero -->` block of `index.html`.
+- `plates.mjs`: one animated banner per section, written to [world/](world/).
+- `night.mjs`: the night palette. The build writes night banners and the hero's night colours (`/* world:night */` in `portfolio.css`).
+
+The build also writes a `-still.svg` copy of every banner and swaps them in under reduced motion
+(`/* world:still */`), because browsers do not pass that setting into background images. Motion follows
+one wind (left to right) and one light source per scene. Hero animations pause off screen.
+
+## Helpers
+
+- `python3 tools/site/new_case.py <spec.json>` writes short project pages from `{slug, title, description, body_html, action?}`; add each to `projects/index.html` and `sitemap.xml`.
+- `python3 tools/site/emblems.py` adds a medallion beside each Work entry; give new entries an icon there.
+- `python3 tools/site/refresh_activity.py` refreshes the Projects activity chart from public GitHub events (needs `gh`).
+- `python3 tools/site/prune_css.py` removes styles no page uses; `--check` fails if any remain.
+
+## Checks
+
+Serve with `python3 tools/check/serve.py 4173` (caching off), then:
+
+- `node tools/check/pages.mjs`: every page at desktop and phone width; fails on script errors, failed loads, sideways overflow, images without alt text, or a page without exactly one `h1`.
+- `node tools/check/a11y.mjs`: axe-core (WCAG 2.1 AA) on the main pages, day and night, at both widths.
+- `node tools/check/frames.mjs <out-dir>`: screenshots of every page's top and bottom at both widths for review.
+
+## Resume
+
+The PDF comes from Michael's LaTeX source with the phone number removed, not from the page's print
+layout. When it changes, update the page text, the PDF and both preview images together.

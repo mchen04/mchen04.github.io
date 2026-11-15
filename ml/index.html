@@ -16,20 +16,20 @@
 <meta content="https://michaelluochen.com/ml/" property="og:url"/>
 <meta content="ML &amp; Research · Michael Chen" property="og:title"/>
 <meta content="My ML experiments on Apple Silicon: speech-model delegation, distilled and compressed speech models, an expert-pruned LLM and decision-head experiments." property="og:description"/>
-<meta content="https://michaelluochen.com/og.png?v=4" property="og:image"/>
-<meta content="Michael Chen, AI engineer in the Bay Area." property="og:image:alt"/>
+<meta content="https://michaelluochen.com/og.png?v=7" property="og:image"/>
+<meta content="Michael Chen, AI engineer in the Bay Area, beside an illustrated clock tower and city at golden hour." property="og:image:alt"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
 <meta content="image/png" property="og:image:type"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="ML &amp; Research · Michael Chen" name="twitter:title"/>
 <meta content="My ML experiments on Apple Silicon: speech-model delegation, distilled and compressed speech models, an expert-pruned LLM and decision-head experiments." name="twitter:description"/>
-<meta content="https://michaelluochen.com/og.png?v=4" name="twitter:image"/>
-<meta content="Michael Chen, AI engineer in the Bay Area." name="twitter:image:alt"/>
+<meta content="https://michaelluochen.com/og.png?v=7" name="twitter:image"/>
+<meta content="Michael Chen, AI engineer in the Bay Area, beside an illustrated clock tower and city at golden hour." name="twitter:image:alt"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="/favicon.ico" rel="icon" sizes="32x32"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link as="font" crossorigin="" href="/fonts/bricolage.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="" href="/fonts/cormorant.woff2" rel="preload" type="font/woff2"/>
 <link href="/portfolio.css" rel="stylesheet"/>
 <script src="/portfolio.js"></script>
 <script type="application/ld+json">
@@ -58,8 +58,12 @@
 <li><a href="#lfm25-delegate">LFM2.5-Audio Delegate</a></li>
 <li><a href="#kestrel">Kestrel</a></li>
 <li><a href="#mlx-audio">mlx-audio fix</a></li>
+<li><a href="#nemotron">Nemotron Transcribe</a></li>
 <li><a href="#vireo">Vireo TTS</a></li>
+<li><a href="#lfm3">LFM3 Heretic</a></li>
+<li><a href="#lfm3-uncensored">LFM3 Uncensored</a></li>
 <li><a href="#ornith">Ornith REAP-192</a></li>
+<li><a href="#ripple">Ripple-65B</a></li>
 <li><a href="#decision-heads">Decision heads</a></li>
 <li><a href="#philip">PHiLIP</a></li>
 </ul>
@@ -77,15 +81,15 @@
 <div><dt>status</dt><dd>experimental, half-duplex</dd></div>
 <div><dt>machine</dt><dd>M4 Mac mini, 24 GB</dd></div>
 <div><dt>base</dt><dd>Liquid AI LFM2.5-Audio-1.5B</dd></div>
-<div><dt>license</dt><dd>LFM Open License v1.0; commercial-use restrictions apply</dd></div>
+<div><dt>licence</dt><dd>LFM Open License v1.0; commercial-use restrictions apply</dd></div>
 </dl>
 <div class="entry-body">
 <h3 id="h-lfm25-delegate"><a href="/projects/lfm25-delegate/">LFM2.5-Audio Delegate</a></h3>
-<p>My project adds learned delegation to Liquid AI's pretrained speech model on a 24 GB M4 Mac mini. A small adapter trained in the shared core teaches it to answer locally or request a stronger text model. Its existing audio head speaks both kinds of replies, including delegated answers that are still arriving. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/LiquidAI/LFM2.5-Audio-1.5B">Liquid AI's pretrained base model</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json">Retained E1 training configuration</a>)</p>
-<p>The release includes the adapter, runtime, configuration and recorded evaluations. A four-turn check used prerecorded input, real external-model responses and device playback. It doesn't establish live-human reliability. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json">R3 four-turn playback report</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned runnable release v0.9.1</a>)</p>
-<p>This is experimental half-duplex software with typed cancellation. Factual answers and room-microphone routing remain weak. Recent-answer context estimates what was spoken, and there is no live-human or human voice-quality validation. Audio processing is local, but delegation sends query and context text externally. It isn't production-ready. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md">Corrected model card (documentation commit 59c0adf)</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md">Acceptance criteria and retained failures</a>; <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md">Runtime documentation</a>)</p>
-<p>Built on pretrained weights, not trained from scratch. License restrictions and reproduction limits apply. (<a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LICENSE-LFM">LFM Open License v1.0</a>; Unpublished reproduction evidence: October 5, 2026 reproduction check; installed dependencies and missing per-item judged results. Not independently rerun by Editor or Dot.)</p>
-<p class="src"><a href="/writing/local-speech-model-delegation/">What worked, what failed and how it was tested</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate">Model card</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned release files</a></p>
+<p>My project adds learned delegation to Liquid AI's pretrained speech model on a 24 GB M4 Mac mini. A small adapter trained in the shared core teaches it to answer locally or request a stronger text model. Its existing audio head speaks both kinds of replies, including delegated answers that are still arriving.</p>
+<p>The release includes the adapter, runtime, configuration and recorded evaluations. A four-turn check used prerecorded input, real external-model responses and device playback. It doesn't establish live-human reliability.</p>
+<p>This is experimental half-duplex software with typed cancellation. Factual answers and room-microphone routing remain weak. Recent-answer context estimates what was spoken, and there is no live-human or human voice-quality validation. Audio processing is local, but delegation sends query and context text externally. It isn't production-ready.</p>
+<p>Built on pretrained weights, not trained from scratch. License restrictions and reproduction limits apply.</p>
+<p class="src"><a href="/writing/local-speech-model-delegation/">What worked, what failed and how it was tested</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate">Model card</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1">Pinned release files</a><br>Sources: <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/raw/59c0adf14b0a448d69c8905a9f1df5fa7af14bfb/README.md" rel="noopener">model card (commit 59c0adf)</a> · <a href="https://huggingface.co/LiquidAI/LFM2.5-Audio-1.5B" rel="noopener">base model</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/configs/E1.json" rel="noopener">E1 training config</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/benchmarks/r3_report.json" rel="noopener">four-turn playback report</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/tree/v0.9.1" rel="noopener">release v0.9.1</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/ACCEPTANCE.md" rel="noopener">acceptance criteria and failures</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/docs/RUNTIME.md" rel="noopener">runtime docs</a> · <a href="https://huggingface.co/mchen04/lfm2.5-audio-1.5b-mlx-delegate/blob/v0.9.1/LICENSE-LFM" rel="noopener">licence</a></p>
 </div>
 </article></li>
 <li><article aria-labelledby="h-kestrel" class="entry" id="kestrel">
@@ -130,6 +134,20 @@
               the decoder is stochastic. I hit this while building Kestrel.</p>
 </div>
 </article></li>
+<li><article aria-labelledby="h-nemotron" class="entry" id="nemotron">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>public build</dd></div><div><dt>machine</dt><dd>base M4 Mac mini, 24 GB</dd></div><div><dt>licence</dt><dd>OpenMDW 1.1, inherited</dd></div><div><dt>base</dt><dd>NVIDIA Nemotron 3.5 Transcribe 30B-A4B</dd></div>
+</dl>
+<div class="entry-body">
+<h3 id="h-nemotron"><a href="https://huggingface.co/mchen04/Nemotron-3.5-Transcribe-30B-A4B-REAP64-mixed4bit-MLX" rel="noopener">Nemotron 3.5 Transcribe, REAP-64, mixed 4-bit</a></h3>
+<p>The model is NVIDIA’s, not mine. At 67.5 GB, the original speech-recognition model does not fit in a 24 GB Mac. I rewrote it in MLX, pruned each mixture-of-experts layer from 128 to 64 experts with REAP, and quantized the experts to 4 bits with most other weights at 8 bits, so it runs fully in memory.</p>
+<dl class="readout">
+<div><dt>weights, from 67.5 GB</dt><dd>12.07<span class="u"> GB</span></dd></div><div><dt>real-time factor</dt><dd>5.6–5.9×</dd></div><div><dt>held-out WER, original 6.74%</dt><dd>7.95<span class="u"> %</span></dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> Accuracy drops: macro word error rate over five held-out English test sets rose by 1.21 points. I measured English only, on one machine.</p>
+<p class="src"><a href="https://huggingface.co/mchen04/Nemotron-3.5-Transcribe-30B-A4B-REAP64-mixed4bit-MLX" rel="noopener">model card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Transcribe-30B-A4B" rel="noopener">original model <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</article></li>
 <li><article aria-labelledby="h-vireo" class="entry" id="vireo">
 <dl class="entry-meta">
 <div><dt>status</dt><dd>two public builds</dd></div>
@@ -158,9 +176,42 @@
 <div class="shell">
 <div class="shelf-head wide">
 <h2 id="h-llm">Language models</h2>
-<p class="said">A compressed build of someone else's model, and an experiment whose main result is negative.</p>
+<p class="said">Ports and compressed builds of other people's models, and an experiment whose main result is negative.</p>
 </div>
 <ol class="log" role="list">
+<li><article aria-labelledby="h-lfm3" class="entry" id="lfm3">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>public build</dd></div><div><dt>machine</dt><dd>base M4 Mac mini, 24 GB</dd></div><div><dt>licence</dt><dd>LFM Open License v1.0, inherited</dd></div><div><dt>base</dt><dd>LFM3-1.7B Heretic Abliterated by Vortecks, from Liquid AI’s LFM3-1.7B</dd></div>
+</dl>
+<div class="entry-body">
+<h3 id="h-lfm3"><a href="https://huggingface.co/mchen04/LFM3-1.7B-Heretic-Abliterated-MLX-bf16" rel="noopener">LFM3 1.7B Heretic for MLX</a></h3>
+<p>The weights are not mine. mlx-lm had no LFM3 architecture, so I implemented its convolution-and-attention layers in MLX and ported the upstream Heretic-abliterated 1.7B model for local chat and tool use on Apple Silicon. The bfloat16 weights are unchanged: all 286 tensors match the source exactly. It is my most downloaded model, at about 1.4k downloads.</p>
+<dl class="readout">
+<div><dt>generation</dt><dd>29<span class="u"> tok/s</span></dd></div><div><dt>peak memory, 128 to 16K prompt</dt><dd>3.7–4.6<span class="u"> GB</span></dd></div><div><dt>warm first token</dt><dd>0.11<span class="u"> s</span></dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> This is the unquantized bfloat16 model, so a quantized build would be faster. Speed is the mean of five runs on one M4 Mac mini. The upstream model has its refusals removed, so it answers requests that other models decline.</p>
+<p class="src"><a href="https://huggingface.co/mchen04/LFM3-1.7B-Heretic-Abliterated-MLX-bf16" rel="noopener">model card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/Vortecks/LFM3-1.7B-Heretic-Abliterated" rel="noopener">upstream model <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</article></li>
+<li><article aria-labelledby="h-lfm3-uncensored" class="entry" id="lfm3-uncensored">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>public build, adult content</dd></div>
+<div><dt>machine</dt><dd>base M4 Mac mini, 24 GB</dd></div>
+<div><dt>licence</dt><dd>LFM Open License v1.0, inherited</dd></div>
+<div><dt>base</dt><dd>LFM3-1.7B Uncensored by AtomicChat, from Liquid AI’s LFM3-1.7B</dd></div>
+</dl>
+<div class="entry-body">
+<h3 id="h-lfm3-uncensored"><a href="https://huggingface.co/mchen04/LFM3-1.7B-Uncensored-MLX" rel="noopener">LFM3 1.7B Uncensored for MLX</a></h3>
+<p>AtomicChat publishes this model only as quantized GGUF files. I dequantized its Q6_K file to float32 and ran it on the same MLX port of the LFM3 architecture, so the model now works in MLX. All 286 tensors are bit-identical to ggml’s own dequantization. Greedy output matched llama.cpp on every prompt I tested, up to the full 262,144-token context.</p>
+<dl class="readout">
+<div><dt>decode, 128-token prompt</dt><dd>14.5<span class="u"> tok/s</span></dd></div>
+<div><dt>weights, GGUF is 1.59 GB</dt><dd>6.92<span class="u"> GB</span></dd></div>
+<div><dt>downloads</dt><dd>560+</dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> Dequantizing adds no precision: these are the quantized values stored as float32. The port is 4.4 times the size of the GGUF and decodes 4 to 5 times slower than llama.cpp, so use it only when you need MLX. AtomicChat removed the model’s safety refusals and adds no filtering, so it is not for all audiences.</p>
+<p class="src"><a href="https://huggingface.co/mchen04/LFM3-1.7B-Uncensored-MLX" rel="noopener">model card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/AtomicChat/LFM3-1.7B-Uncensored-GGUF" rel="noopener">upstream GGUF <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</article></li>
 <li><article aria-labelledby="h-ornith" class="entry" id="ornith">
 <dl class="entry-meta">
 <div><dt>status</dt><dd>public build</dd></div>
@@ -178,6 +229,20 @@
 </dl>
 <p class="limits"><b>Limits.</b> The task suite is finite and English only: coding, math, tool calls, structured output and format checks. Expect some loss on knowledge-heavy tasks. I could not run the bf16 original on any hardware I had, so there is no direct comparison with it. The build is tuned for one user at a time.</p>
 <p class="src"><a href="https://huggingface.co/mchen04/Ornith-1.5-35B-A3B-REAP192-mxfp4-MLX" rel="noopener">model card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/ornith-ai/Ornith-1.5-35B-A3B" rel="noopener">original model <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://arxiv.org/abs/2510.13999" rel="noopener">REAP paper <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
+</div>
+</article></li>
+<li><article aria-labelledby="h-ripple" class="entry" id="ripple">
+<dl class="entry-meta">
+<div><dt>status</dt><dd>public build, experimental</dd></div><div><dt>machine</dt><dd>base M4 Mac mini, 24 GB</dd></div><div><dt>licence</dt><dd>Apache-2.0, inherited</dd></div><div><dt>base</dt><dd>Ripple-65B Preview by Ricursive Intelligence</dd></div>
+</dl>
+<div class="entry-body">
+<h3 id="h-ripple"><a href="https://huggingface.co/mchen04/Ripple-65B-Preview-4bit-MLX" rel="noopener">Ripple-65B Preview, 4-bit, streamed from disk</a></h3>
+<p>The model is Ricursive Intelligence’s. I wrote the MLX port, the 4-bit conversion and a runtime that streams layers from disk, so a 65B model runs inside a 3 GiB memory budget on a 24 GB Mac.</p>
+<dl class="readout">
+<div><dt>decode</dt><dd>0.057<span class="u"> tok/s</span></dd></div><div><dt>prefill</dt><dd>13.2<span class="u"> tok/s</span></dd></div><div><dt>resident memory</dt><dd>3<span class="u"> GiB</span></dd></div>
+</dl>
+<p class="limits"><b>Limits.</b> It is very slow: a short answer can take many minutes. On a Mac shared with other memory-heavy work, long prompts can reach the memory guard. It suits only experiments that accept slow generation.</p>
+<p class="src"><a href="https://huggingface.co/mchen04/Ripple-65B-Preview-4bit-MLX" rel="noopener">model card <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a> · <a href="https://huggingface.co/ricursiveAI/Ripple-65B-Preview" rel="noopener">original model <span aria-hidden="true" class="go"><svg aria-hidden="true" class="ext" focusable="false" height="10" viewbox="0 0 10 10" width="10"><path d="M2.5 7.5 7.5 2.5M3.5 2.5h4v4" fill="none" stroke="currentColor" stroke-width="1.3"></path></svg></span></a></p>
 </div>
 </article></li>
 <li><article aria-labelledby="h-heads" class="entry negative" id="decision-heads">
@@ -224,6 +289,6 @@
 </div>
 </section>
 </main>
-<footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span>Built with care. Project measurements include source links.</span></div></footer>
+<footer aria-label="Colophon"><div class="shell"><span>© 2026 Michael Chen</span><span class="foot-links"><a href="mailto:michaelluochen1@gmail.com">Email</a><a href="https://github.com/mchen04" rel="me noopener">GitHub</a><a href="https://www.linkedin.com/in/michael-luo-chen/" rel="me noopener">LinkedIn</a><a href="https://huggingface.co/mchen04" rel="me noopener">Hugging Face</a></span><span>Every illustration here is drawn in code.</span></div></footer>
 </body>
 </html>
