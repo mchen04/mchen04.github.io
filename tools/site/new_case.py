@@ -1,5 +1,7 @@
 import html, json, os, re, sys
 
+import social
+
 ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 TEMPLATE = 'projects/selfie-a-day/index.html'
 ALT = 'Michael Chen, AI engineer in the Bay Area, beside an illustrated clock tower and city at golden hour.'
@@ -55,6 +57,7 @@ def make(slug, title, description, body_html, action=None):
     path = os.path.join(ROOT, 'projects', slug)
     os.makedirs(path, exist_ok=True)
     open(os.path.join(path, 'index.html'), 'w').write(out)
+    social.render_page(os.path.join(path, 'index.html'))
 
 
 if __name__ == '__main__':
