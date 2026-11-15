@@ -532,6 +532,20 @@ div.miss p+p{margin-top:14px}
 figcaption{font:14px/1.6 var(--ui);color:var(--quiet);margin:14px 0}
 .shot img{width:100%;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 34px -22px #4b351c88}
 .shot .src{margin-top:16px}
+.case-shot{margin:0;max-width:360px;width:100%;justify-self:center}
+.case-shot .app-frame{margin:6px}
+.case-shot-phone{max-width:300px}
+.case-shot-phone img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 34px -22px #4b351c88}
+.cta-quiet{color:var(--quiet);text-decoration-color:var(--gilt-soft)}
+.cta-quiet:hover{color:var(--accent)}
+@media(max-width:860px){
+.essay-wrap:has(.case-shot){display:flex;flex-direction:column;gap:30px}
+.essay-wrap:has(.case-shot) .essay{display:contents}
+.essay-wrap:has(.case-shot) .essay>p:not(.cta-row){order:1}
+.essay-wrap:has(.case-shot) .case-shot{order:2;max-width:320px;margin-inline:auto}
+.essay-wrap:has(.case-shot) .essay>.cta-row{order:3;margin-top:0!important}
+.essay-wrap:has(.case-shot) .case-shot-phone img{max-height:55vh;width:auto;margin-inline:auto}
+}
 .three,.strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 44px}
 .three>li,.strip>li{position:relative;padding:28px 0;border-top:1px solid var(--line)}
 .three h3,.strip h3{margin-bottom:14px;transition:color .2s}
