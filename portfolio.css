@@ -443,6 +443,7 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 .elsewhere a{margin:0 10px}
 
 footer{position:relative;background:var(--night) url('/world/dusk.svg') center top/max(100%,1100px) auto no-repeat;color:var(--night-ink);font:14px/1.6 var(--ui);padding:calc(max(100vw,1100px) / 4 - 8px) 0 34px}
+.night footer{background-image:url('/world/dusk-night.svg')}
 footer::before{content:'';position:absolute;inset:0;background:var(--grain);opacity:.18;pointer-events:none}
 footer .shell{position:relative;display:flex;justify-content:space-between;gap:30px;padding-top:22px;border-top:1px solid #ffffff1f}
 footer a{color:#fff;text-decoration-color:#ffffff55}
@@ -789,6 +790,7 @@ main:not([class]) .article{margin-top:0}
 .night .chapter-list a[href="/writing/"] .plate{background-image:url(/world/library-night-still.svg)!important}
 .night .chapter-list a[href="/about/"] .plate{background-image:url(/world/tower-night-still.svg)!important}
 footer{position:relative;background:var(--night) url('/world/dusk-still.svg') center top/max(100%,1100px) auto no-repeat;color:var(--night-ink);font:14px/1.6 var(--ui);padding:calc(max(100vw,1100px) / 4 - 8px) 0 34px}
+.night footer{background-image:url('/world/dusk-night-still.svg')}
 .page-head::before{content:'';display:block;height:clamp(200px,25vw,360px);margin-bottom:34px;background:var(--plate,url('/world/tower-still.svg')) center bottom/cover no-repeat;box-shadow:0 1px 0 var(--gilt-soft),0 5px 0 -3px var(--paper),0 6px 0 -3px var(--gilt-soft)}
 .page-work,.page-case:has(.crumbs a[href="/work/"]){--plate:url('/world/works-still.svg')}
 .page-ml,.page-case:has(.crumbs a[href="/ml/"]){--plate:url('/world/observatory-still.svg')}

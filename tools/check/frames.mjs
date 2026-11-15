@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { waitReady } from './ready.mjs';
 
 const opts = { base: 'http://127.0.0.1:4173', theme: 'day', motion: 'on', width: 0, paths: null };
 const positional = [];
@@ -22,6 +23,7 @@ mkdirSync(out, { recursive: true });
 const root = new URL('../..', import.meta.url).pathname;
 const reduced = opts.motion === 'reduce';
 const suffix = `${opts.theme === 'night' ? '-night' : ''}${reduced ? '-reduced' : ''}`;
+const late = [];
 
 function ab(...args) {
   for (let attempt = 1; ; attempt += 1) {
@@ -52,11 +54,14 @@ for (const [w, h] of sizes) {
   for (const path of list) {
     const name = (path.replace(/\//g, '_').replace(/^_|_$/g, '') || 'home') + `-${w}${suffix}`;
     ab('open', opts.base + path + (path.includes('?') ? '&' : '?') + `time=${opts.theme}`);
-    ab('wait', '500');
+    const top = waitReady();
+    if (!top.ready) late.push(`${name} top (${top.pending} pending)`);
     ab('screenshot', join(out, `${name}-top.png`));
     ab('eval', 'scrollTo(0,document.documentElement.scrollHeight);1');
-    ab('wait', '350');
+    const bottom = waitReady();
+    if (!bottom.ready) late.push(`${name} bottom (${bottom.pending} pending)`);
     ab('screenshot', join(out, `${name}-bottom.png`));
   }
 }
 console.log(`${list.length} pages captured at top and bottom, ${sizes.length} width(s), ${opts.theme}${reduced ? ', reduced motion' : ''}`);
+if (late.length) console.log(`timed out: ${late.join(', ')}`);

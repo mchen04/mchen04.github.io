@@ -35,6 +35,9 @@ if (preview > 0) {
   for (const [name, draw] of Object.entries(PLATES)) writeFileSync(join(root, 'world', `${name}.svg`), draw());
   for (const name of ['works', 'market', 'library']) writeFileSync(join(root, 'world', `${name}-night.svg`), nightPlate(PLATES[name]()));
   writeFileSync(join(root, 'world', 'unwritten-night.svg'), nightPlate(PLATES.unwritten(), 24));
+  const duskNightSky = '<stop offset="0" stop-color="#1b1720"/><stop offset=".1" stop-color="#241f36"/><stop offset=".24" stop-color="#5a3f5c"/><stop offset=".4" stop-color="#8a5e78"/><stop offset=".62" stop-color="#3d3358"/><stop offset="1" stop-color="#16131f"/>';
+  const duskNight = nightPlate(PLATES.dusk(), 0).replace(/(<linearGradient id="dusk-sky"[^>]*>).*?(<\/linearGradient>)/, `$1${duskNightSky}$2`);
+  writeFileSync(join(root, 'world', 'dusk-night.svg'), duskNight);
   const still = (svg) => svg.replace(/<style>.*?<\/style>/s, '').replace(/ class="(?:pl-[a-z-]+|flick)"/g, '').replace(/ style="[^"]*animation-[^"]*"/g, '');
   for (const file of readdirSync(join(root, 'world')).filter((f) => f.endsWith('.svg') && !f.endsWith('-still.svg'))) {
     writeFileSync(join(root, 'world', file.replace(/\.svg$/, '-still.svg')), still(readFileSync(join(root, 'world', file), 'utf8')));

@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { waitReady } from './ready.mjs';
 
 const opts = { base: 'http://127.0.0.1:4173', width: 1440, frames: 8, gap: 400, theme: 'day', paths: null };
 const positional = [];
@@ -21,6 +22,7 @@ if (!['day', 'night'].includes(opts.theme)) throw new Error('--theme must be day
 mkdirSync(out, { recursive: true });
 const paths = opts.paths || ['/', '/work/', '/ml/', '/projects/', '/writing/', '/about/', '/resume/', '/404.html'];
 const height = opts.width > 900 ? 900 : 844;
+const late = [];
 
 function ab(...args) {
   for (let attempt = 1; ; attempt += 1) {
@@ -35,6 +37,8 @@ function ab(...args) {
 
 function sequence(name, area) {
   for (let i = 1; i <= opts.frames; i += 1) {
+    const state = waitReady();
+    if (!state.ready) late.push(`${name} ${area} ${String(i).padStart(2, '0')} (${state.pending} pending)`);
     ab('screenshot', join(out, `${name}-${area}-${String(i).padStart(2, '0')}.png`));
     if (i < opts.frames) ab('wait', String(opts.gap));
   }
@@ -45,12 +49,10 @@ ab('set', 'viewport', String(opts.width), String(height));
 for (const path of paths) {
   const name = (path.replace(/\//g, '_').replace(/^_|_$/g, '') || 'home') + `-${opts.width}-${opts.theme}`;
   ab('open', opts.base + path + (path.includes('?') ? '&' : '?') + `time=${opts.theme}`);
-  ab('wait', '900');
   ab('eval', 'scrollTo(0,0);1');
-  ab('wait', '200');
   sequence(name, 'banner');
   ab('eval', "document.querySelector('footer').scrollIntoView({block:'start'});1");
-  ab('wait', '700');
   sequence(name, 'footer');
 }
 console.log(`${paths.length} pages × ${opts.frames} frames at ${opts.width}px, ${opts.theme}`);
+if (late.length) console.log(`timed out: ${late.join(', ')}`);
