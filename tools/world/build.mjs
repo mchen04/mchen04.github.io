@@ -34,7 +34,7 @@ if (preview > 0) {
   mkdirSync(join(root, 'world'), { recursive: true });
   for (const [name, draw] of Object.entries(PLATES)) writeFileSync(join(root, 'world', `${name}.svg`), draw());
   for (const name of ['works', 'market', 'library']) writeFileSync(join(root, 'world', `${name}-night.svg`), nightPlate(PLATES[name]()));
-  const still = (svg) => svg.replace(/<style>.*?<\/style>/s, '');
+  const still = (svg) => svg.replace(/<style>.*?<\/style>/s, '').replace(/ class="(?:pl-[a-z-]+|flick)"/g, '').replace(/ style="[^"]*animation-[^"]*"/g, '');
   for (const file of readdirSync(join(root, 'world')).filter((f) => f.endsWith('.svg') && !f.endsWith('-still.svg'))) {
     writeFileSync(join(root, 'world', file.replace(/\.svg$/, '-still.svg')), still(readFileSync(join(root, 'world', file), 'utf8')));
   }

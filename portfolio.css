@@ -71,6 +71,7 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 .bird:nth-child(2n){animation-delay:-.4s}.bird:nth-child(3n){animation-delay:-.7s}
 .smoke{filter:blur(1.2px)}
 .puff{transform-box:fill-box;transform-origin:center;animation:puff 9.6s linear infinite;opacity:0}
+.world .pl-pennant{transform-box:fill-box;transform-origin:0 50%;animation:pennant .9s ease-in-out infinite alternate}
 .walkers{overflow:hidden}
 .party{animation:party 30s linear infinite}
 .stride{transform-box:fill-box;transform-origin:50% 0;animation:stride .7s ease-in-out infinite alternate}
@@ -103,6 +104,7 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 @keyframes flock{0%{translate:calc(-500 * var(--u)) calc(40 * var(--u))}70%{translate:calc(1500 * var(--u)) calc(-80 * var(--u))}100%{translate:calc(1500 * var(--u)) calc(-80 * var(--u))}}
 @keyframes flap{to{scale:1 .35}}
 @keyframes puff{0%{opacity:0;transform:translate(0,0) scale(.5)}10%{opacity:.7}100%{opacity:0;transform:translate(26px,-110px) scale(2.8)}}
+@keyframes pennant{from{transform:skewY(-20deg) scaleX(.82)}to{transform:skewY(22deg) scaleX(1.12)}}
 @keyframes party{0%{transform:translateX(0);opacity:0}5%{opacity:1}72%{transform:translateX(122px);opacity:1}100%{transform:translateX(122px);opacity:0}}
 @keyframes stride{from{transform:scaleY(1)}to{transform:scaleY(.82)}}
 @keyframes ferry{0%{translate:0 0;opacity:0}4%{opacity:1}88%{opacity:1}100%{translate:calc(330 * var(--u)) 0;opacity:0}}

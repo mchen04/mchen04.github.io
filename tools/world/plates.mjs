@@ -1,7 +1,7 @@
-import { rng, n, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, star8, gear, clockTowerShape } from './kit.mjs';
+import { rng, n, hash, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, star8, gear, clockTowerShape } from './kit.mjs';
 
 const W = 2400;
-const STYLE = '<style>@media (prefers-reduced-motion:no-preference){.pl-drift,.pl-plume,.pl-spin,.pl-rev,.pl-train,.pl-twinkle,.pl-flutter,.pl-sway,.pl-bulbs,.pl-fog,.flick{transform-box:fill-box;transform-origin:center}.pl-drift{animation:pc 140s linear infinite}.pl-drift:nth-of-type(2n){animation-duration:180s;animation-delay:-70s}.pl-plume{transform-origin:0 100%;animation:pp 7s ease-in-out infinite alternate}.pl-spin{animation:ps 60s linear infinite}.pl-rev{animation:ps 30s linear infinite reverse}.pl-mill{transform-box:view-box;animation:ps 24s linear infinite}.pl-train{animation:pt 46s linear infinite}.pl-twinkle{animation:pw 3.8s ease-in-out infinite alternate}.pl-twinkle:nth-of-type(2n){animation-delay:-1.4s}.pl-twinkle:nth-of-type(3n){animation-duration:5.2s}.pl-flutter{animation:pf 12s ease-in-out infinite alternate}.pl-flutter:nth-of-type(2n){animation-duration:9s;animation-delay:-3s}.pl-sway{transform-origin:50% 100%;animation:pk 6s ease-in-out infinite alternate}.pl-sway.b{animation-duration:7.5s;animation-delay:-2s}.pl-bulbs{animation:pb 3.4s ease-in-out infinite alternate}.pl-draw{animation:pr 3s linear infinite}.pl-fog{animation:pd 40s ease-in-out infinite alternate}.flick{animation:pl 24s step-end infinite}@keyframes pd{to{transform:translateX(70px)}}@keyframes pc{0%{transform:translateX(-90px);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(90px);opacity:0}}@keyframes pp{from{opacity:.6;transform:scale(.97)}to{opacity:1;transform:scale(1.05)}}@keyframes ps{to{transform:rotate(360deg)}}@keyframes pt{from{transform:translateX(1300px)}to{transform:translateX(-1700px)}}@keyframes pw{from{opacity:.35}to{opacity:1}}@keyframes pf{from{transform:translate(0,0) rotate(0)}to{transform:translate(-18px,-26px) rotate(14deg)}}@keyframes pk{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}@keyframes pb{from{opacity:.7}to{opacity:1}}@keyframes pr{to{stroke-dashoffset:-24}}@keyframes pl{0%{opacity:1}46%{opacity:.1}71%{opacity:1}}}</style>';
+const STYLE = '<style>@media (prefers-reduced-motion:no-preference){.pl-drift,.pl-puff,.pl-spin,.pl-rev,.pl-train,.pl-twinkle,.pl-flutter,.pl-bulbs,.pl-fog,.pl-pennant,.pl-wisp,.pl-on,.flick{transform-box:fill-box;transform-origin:center}.pl-drift{animation:pc 140s linear infinite}.pl-drift:nth-of-type(2n){animation-duration:180s;animation-delay:-70s}.pl-puff{animation:psmoke 7s linear infinite}.pl-spin{animation:ps 60s linear infinite}.pl-rev{animation:ps 30s linear infinite reverse}.pl-mill{transform-box:view-box;animation:ps 24s linear infinite}.pl-train{animation:pt 46s linear infinite}.pl-twinkle{animation:pw 3.8s ease-in-out infinite alternate}.pl-twinkle:nth-of-type(2n){animation-delay:-1.4s}.pl-twinkle:nth-of-type(3n){animation-duration:5.2s}.pl-flutter{animation:pf 15s linear infinite}.pl-kite{transform-box:view-box;animation:pk 6.4s ease-in-out infinite alternate}.pl-tail{transform-box:view-box;animation:ptail 3s ease-in-out infinite alternate}.pl-bulbs{animation:pb 3.4s ease-in-out infinite alternate}.pl-draw{animation:pr 3s linear infinite}.pl-fog{animation:pd 40s ease-in-out infinite alternate}.pl-pennant{transform-origin:0 50%;animation:penn .9s ease-in-out infinite alternate}.pl-wisp{transform-origin:0 100%;animation:pwisp 8s ease-out infinite}.pl-on{animation:pn 1.6s ease-out both}.pl-lamp{animation:pn 2.6s ease-out 1.1s both}.flick{animation:pl 24s step-end infinite}@keyframes pd{to{transform:translateX(70px)}}@keyframes pc{0%{transform:translateX(-90px);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(90px);opacity:0}}@keyframes psmoke{0%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.5)}12%{opacity:.7}100%{opacity:0;transform:translate(38px,-70px) scale(2.1)}}@keyframes ps{to{transform:rotate(360deg)}}@keyframes pt{from{transform:translateX(1300px)}to{transform:translateX(-1700px)}}@keyframes pw{from{opacity:.35}to{opacity:1}}@keyframes pf{0%{opacity:0;transform:translate(0,0) rotate(0)}10%{opacity:1}78%{opacity:1}100%{opacity:0;transform:translate(120px,-34px) rotate(230deg)}}@keyframes pk{from{transform:rotate(-.7deg)}to{transform:rotate(.9deg)}}@keyframes ptail{from{transform:rotate(-3.5deg)}to{transform:rotate(4.5deg)}}@keyframes pb{from{opacity:.7}to{opacity:1}}@keyframes pr{to{stroke-dashoffset:-24}}@keyframes pl{0%{opacity:1}46%{opacity:.1}71%{opacity:1}}@keyframes penn{from{transform:skewY(-20deg) scaleX(.82)}to{transform:skewY(22deg) scaleX(1.12)}}@keyframes pwisp{0%{opacity:0;transform:translate(0,0)}25%{opacity:.4}100%{opacity:0;transform:translate(30px,-30px)}}@keyframes pn{from{opacity:0}}}</style>';
 const H = 600;
 
 function frame(id, stops, body) {
@@ -40,16 +40,18 @@ function water(id, y, stops, glintX, glint, r) {
 
 function smokePlume(x, y, color, r) {
   const puffs = [`<defs><filter id="soft${n(x)}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>`];
+  const dur = 6.2 + hash(x, y) * 3.2;
   let px = x;
   let py = y;
   let pr = 9;
   for (let i = 0; i < 7; i += 1) {
-    puffs.push(circle(px, py, pr, ` opacity="${n(0.75 - i * 0.09)}"`));
+    const motion = i === 0 ? '' : ` class="pl-puff" style="--dx:${n(x - px)}px;--dy:${n(y - py)}px;animation-duration:${n(dur)}s;animation-delay:${n(-(i / 7) * dur)}s"`;
+    puffs.push(circle(px, py, pr, `${motion} opacity="${n(0.75 - i * 0.09)}"`));
     px += r.range(10, 22);
     py -= r.range(12, 20);
     pr *= 1.22;
   }
-  return `${puffs.shift()}<g class="pl-plume"><g fill="${color}" filter="url(#soft${n(x)})">${puffs.join('')}</g></g>`;
+  return `${puffs.shift()}<g fill="${color}" filter="url(#soft${n(x)})">${puffs.join('')}</g>`;
 }
 
 function works() {
@@ -64,7 +66,8 @@ function works() {
   out.push(`<g class="pl-drift">${cloud(r, { x: 200, y: 120, w: 360, h: 70, c: L.cloud, lx: 1 })}</g>`);
   out.push(ridge(r, { x0: 0, x1: W, base: 420, top: 360, rough: 14, step: 24, color: '#e6b998' }));
   out.push(skyline(r, { x0: 0, x1: W, base: 422, hMin: 10, hMax: 50, wMin: 12, wMax: 30, s: far, sunX: 760 }));
-  for (const [x, top] of [[880, 230], [960, 270], [1460, 210], [1540, 250], [1660, 280]]) out.push(smokePlume(x + 10, top - 6, '#f4dfc6', r));
+  const chimneys = [[870, 230, 26], [950, 270, 22], [1450, 210, 28], [1530, 250, 22], [1650, 280, 20]];
+  for (const [x, top, w] of chimneys) out.push(smokePlume(x + w / 2, top, '#c2a09a', r));
   out.push(circle(1200, 380, 150, fill(mid.shade)));
   out.push(`<g class="pl-spin">${gear(1200, 380, 176, 24, fill(mid.shade))}</g>`);
   out.push(`<g class="pl-rev">${gear(1200, 380, 60, 10, fill(mid.body))}</g>`);
@@ -73,7 +76,7 @@ function works() {
     const a = (i / 6) * Math.PI * 2;
     out.push(line(1200 + 60 * Math.cos(a), 380 + 60 * Math.sin(a), 1200 + 140 * Math.cos(a), 380 + 140 * Math.sin(a), ` stroke="${mid.body}" stroke-width="14"`));
   }
-  for (const [x, top, w] of [[870, 230, 26], [950, 270, 22], [1450, 210, 28], [1530, 250, 22], [1650, 280, 20]]) {
+  for (const [x, top, w] of chimneys) {
     out.push(rect(x, top, w, 420 - top, fill(mid.body)), rect(x - 4, top, w + 8, 10, fill(mid.body)), rect(x + w - 2, top + 10, 2, 300 - top, fill(mid.rim, ' opacity=".7"')));
   }
   let d = 'M0 470V420';
@@ -94,7 +97,7 @@ function works() {
   out.push(line(0, 452, W, 452, ` stroke="${near.rim}" stroke-width="2"`));
   const train = [`<path d="M1010 452v-34h70v-14h16v14h20l14 34z" fill="${near.shade}"/>`, rect(1032, 392, 14, 26, fill(near.shade))];
   for (let i = 0; i < 4; i += 1) train.push(rect(1140 + i * 92, 414, 84, 38, fill(near.shade, ' rx="4"')), `<path d="M${1150 + i * 92} 424h64v10h-64z" fill="${near.win}"/>`);
-  out.push(`<g class="pl-train">${train.join('')}${smokePlume(1040, 382, '#f6e7d3', r)}</g>`);
+  out.push(`<g class="pl-train">${train.join('')}${smokePlume(1039, 392, '#c9aaa4', r)}</g>`);
   out.push(rect(1500, 120, 10, 332, fill(mid.shade)), rect(1500, 120, 260, 10, fill(mid.shade)), line(1740, 130, 1740, 300, ` stroke="${mid.shade}" stroke-width="2"`), rect(1726, 300, 28, 22, fill(mid.shade)));
   return frame('works', [[0, '#f6ecd8'], [0.5, '#f3d7aa'], [0.7, '#eebd8d'], [1, '#e5a07d']], out.join(''));
 }
@@ -130,8 +133,17 @@ function observatory() {
   return frame('obs', [[0, '#141a33'], [0.45, '#2b2e52'], [0.75, '#57476b'], [1, '#8f6474']], out.join(''));
 }
 
-function kite(x, y, s, color, tail) {
-  return `<path d="M${x} ${y - 30}L${x + 20} ${y}L${x} ${y + 34}L${x - 20} ${y}Z" fill="${color}"/>${line(x, y - 30, x, y + 34, ' stroke="#00000022"')}${line(x - 20, y, x + 20, y, ' stroke="#00000022"')}<path d="M${x} ${y + 34}${tail}" fill="none" stroke="${s}" stroke-width="1.4"/>`;
+function kite(x, y, color, [ax, ay], dur, delay) {
+  const tail = `M${n(x)} ${n(y + 34)}Q${n(x + 18)} ${n(y + 58)} ${n(x + 40)} ${n(y + 74)}T${n(x + 78)} ${n(y + 122)}`;
+  const bows = [[x + 26, y + 57], [x + 52, y + 88], [x + 70, y + 110]]
+    .map(([bx, by]) => `M${n(bx - 4)} ${n(by - 3)}l8 6`).join('');
+  return `<g class="pl-kite" style="transform-origin:${n(ax)}px ${n(ay)}px;animation-duration:${n(dur)}s;animation-delay:${n(-delay)}s">`
+    + line(x, y + 34, ax, ay, ' stroke="#6b5363" stroke-width=".9" opacity=".5"')
+    + `<path d="M${x} ${y - 30}L${x + 20} ${y}L${x} ${y + 34}L${x - 20} ${y}Z" fill="${color}"/>`
+    + line(x, y - 30, x, y + 34, ' stroke="#00000022"') + line(x - 20, y, x + 20, y, ' stroke="#00000022"')
+    + `<g class="pl-tail" style="transform-origin:${n(x)}px ${n(y + 34)}px;animation-duration:${n(2.6 + hash(x, y) * 1.6)}s;animation-delay:${n(-hash(y, x) * 3)}s">`
+    + `<path d="${tail}" fill="none" stroke="#6b5363" stroke-width="1.3" opacity=".8"/>`
+    + `<path d="${bows}" fill="none" stroke="#6b5363" stroke-width="1.1" opacity=".7"/></g></g>`;
 }
 
 function market() {
@@ -141,9 +153,9 @@ function market() {
   out.push(sun('m', 1700, 300, 90, L.sun.core, '#fbd99a', '#ffd7a0', 0.8));
   out.push(`<g class="pl-drift">${cloud(r, { x: 300, y: 170, w: 460, h: 90, c: L.cloud, lx: 1 })}</g>`);
   out.push(`<g class="pl-drift">${cloud(r, { x: 1900, y: 120, w: 360, h: 70, c: L.cloud, lx: -1 })}</g>`);
-  out.push(`<g class="pl-sway">${kite(980, 150, '#8a6a5a', '#c4553d', 'q-18 24 -6 44t-16 46t-12 60t-22 80')}</g>`);
-  out.push(`<g class="pl-sway b">${kite(1420, 110, '#8a6a5a', '#3f6f8a', 'q-8 22 -14 40t-12 44t-18 70t-20 100')}</g>`);
-  out.push(`<g class="pl-sway">${kite(780, 196, '#8a6a5a', '#d9a441', 'q-14 20 -6 38t-14 40t-12 60')}</g>`);
+  out.push(kite(980, 150, '#c4553d', [930, 512], 5.8, 0.4));
+  out.push(kite(1420, 110, '#3f6f8a', [1368, 508], 7.4, 1.9));
+  out.push(kite(780, 196, '#d9a441', [728, 515], 8.6, 3.1));
   out.push(ridge(r, { x0: 0, x1: W, base: 420, top: 370, rough: 12, step: 22, color: '#e9b693' }));
   out.push(skyline(r, { x0: 0, x1: W, base: 422, hMin: 10, hMax: 50, wMin: 12, wMax: 28, s: L.layers.far, sunX: 1700 }));
   out.push(skyline(r, { x0: 0, x1: W, base: 520, hMin: 60, hMax: 170, wMin: 40, wMax: 80, s: L.layers.mid, sunX: 1700, detail: 3.4, roofs: ['gable', 'gable', 'gable', 'mansard', 'spire', 'cone'] }));
@@ -188,7 +200,7 @@ function library() {
     const x = r.range(1500, 2200);
     const y = r.range(60, 300);
     const a = r.range(-30, 30);
-    pages.push(`<g class="pl-flutter"><g transform="rotate(${n(a)} ${n(x)} ${n(y)})"><path d="M${n(x - 12)} ${n(y - 8)}q12 -6 24 0v16q-12 -6 -24 0z" fill="#fbf4e8"/><path d="M${n(x)} ${n(y - 11)}v16" stroke="#c9b49c" stroke-width="1"/></g></g>`);
+    pages.push(`<g class="pl-flutter" style="animation-duration:${n(12 + hash(x, y) * 7)}s;animation-delay:${n(-hash(y, x) * 16)}s"><g transform="rotate(${n(a)} ${n(x)} ${n(y)})"><path d="M${n(x - 12)} ${n(y - 8)}q12 -6 24 0v16q-12 -6 -24 0z" fill="#fbf4e8"/><path d="M${n(x)} ${n(y - 11)}v16" stroke="#c9b49c" stroke-width="1"/></g></g>`);
   }
   out.push(pages.join(''));
   out.push(ridge(r, { x0: 0, x1: W, base: 430, top: 380, rough: 12, step: 24, color: '#e3cfc0' }));
@@ -288,15 +300,17 @@ function unwritten() {
 function dusk() {
   const r = rng(707);
   const L = LIGHTS.dusk;
+  const near = { ...L.layers.near, late: 0.2 };
   const out = [];
   out.push(stars(r, 70, 330, '#f1e6cf', '#e2bf7c', 220));
   out.push(`<path d="M1730 160A40 40 0 1 0 1730 236A32 32 0 1 1 1730 160Z" fill="#f4e7c8"/>`);
   out.push(ridge(r, { x0: 0, x1: W, base: 470, top: 410, rough: 14, step: 24, color: '#5d4b6d' }));
   out.push(skyline(r, { x0: 0, x1: W, base: 472, hMin: 14, hMax: 60, wMin: 14, wMax: 30, s: { ...L.layers.far, body: '#4f4064', shade: '#47395b' }, sunX: 1200, detail: 2.2 }));
-  out.push(skyline(r, { x0: 0, x1: W, base: 540, hMin: 50, hMax: 170, wMin: 30, wMax: 70, s: L.layers.mid, sunX: 1200, detail: 3.2 }));
+  out.push(skyline(r, { x0: 0, x1: W, base: 540, hMin: 50, hMax: 170, wMin: 30, wMax: 70, s: L.layers.mid, sunX: 1200, detail: 3.2, flag: 0.1 }));
   const cx = 1500;
   out.push(clockTowerShape({ cx, base: 560, k: 0.66, body: L.layers.mid.body, face: '#ffd78f', gilt: '#b8935a', rim: '#7d5d73', windows: '#ffcf7e' }));
-  out.push(skyline(r, { x0: -20, x1: W + 20, base: 600, hMin: 40, hMax: 90, wMin: 50, wMax: 110, s: L.layers.near, sunX: 1200, detail: 4.5, dark: true, roofs: ['gable', 'gable', 'mansard', 'flat'] }));
+  out.push(`<defs><radialGradient id="clock-lamp"><stop offset="0" stop-color="#ffd78f" stop-opacity=".55"/><stop offset="1" stop-color="#ffd78f" stop-opacity="0"/></radialGradient></defs><circle class="pl-lamp" cx="1500" cy="287" r="76" fill="url(#clock-lamp)"/>`);
+  out.push(skyline(r, { x0: -20, x1: W + 20, base: 600, hMin: 40, hMax: 90, wMin: 50, wMax: 110, s: near, sunX: 1200, detail: 4.5, dark: true, roofs: ['gable', 'gable', 'mansard', 'flat'], flag: 0.12, wisp: true }));
   out.push(rect(0, 586, W, 14, fill('#16131f')));
   return frame('dusk', [[0, '#f6efe2'], [0.08, '#f1d7b6'], [0.2, '#d99a7a'], [0.38, '#8a5e78'], [0.6, '#3d3358'], [1, '#16131f']], out.join(''));
 }

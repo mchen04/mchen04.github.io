@@ -19,6 +19,13 @@ export const n = (v) => {
   return Object.is(r, -0) ? '0' : String(r);
 };
 
+export const hash = (a, b = 0) => {
+  let h = (Math.imul(Math.round(a * 8) | 0, 0x9e3779b1) ^ (Math.round(b * 8) | 0)) >>> 0;
+  h = Math.imul(h ^ (h >>> 16), 0x21f0aaad) >>> 0;
+  h = Math.imul(h ^ (h >>> 15), 0x735a2d97) >>> 0;
+  return ((h ^ (h >>> 15)) >>> 0) / 4294967296;
+};
+
 export const pts = (list) => list.map(([x, y]) => `${n(x)} ${n(y)}`).join(' ');
 
 export const poly = (list, attrs = '') => `<path d="M${pts(list)}Z"${attrs}/>`;
@@ -80,6 +87,7 @@ function windows(r, x, y, w, h, s, size, dark) {
   const lit = [];
   const unlit = [];
   const flick = [];
+  const late = [];
   const cw = size * 2.2;
   const ch = size * 3;
   const cols = Math.max(1, Math.floor((w - size) / cw));
@@ -99,22 +107,25 @@ function windows(r, x, y, w, h, s, size, dark) {
         ? `M${n(wx)} ${n(wy + size * 1.5)}V${n(wy + hw)}a${n(hw)} ${n(hw)} 0 0 1 ${n(size)} 0V${n(wy + size * 1.5)}z`
         : `M${n(wx)} ${n(wy)}h${n(size)}v${n(size * 1.45)}h${n(-size)}z`;
       if (dark && r.chance(0.07)) flick.push(`<path class="flick" style="animation-delay:${n(-r.range(0, 40))}s;animation-duration:${n(r.range(14, 34))}s" d="${d}"/>`);
+      else if (on && dark && s.late && hash(wx, wy) < s.late) late.push(`<path class="pl-on" style="animation-delay:${n(0.4 + hash(wy, wx) * 6.6)}s" d="${d}"/>`);
       else (on ? lit : unlit).push(d);
     }
   }
   return (unlit.length ? `<path d="${unlit.join('')}" fill="${s.shade}"/>` : '') + (lit.length ? `<path d="${lit.join('')}" fill="${s.win}"/>` : '')
-    + (flick.length ? `<g fill="${s.win}">${flick.join('')}</g>` : '');
+    + (flick.length ? `<g fill="${s.win}">${flick.join('')}</g>` : '')
+    + (late.length ? `<g fill="${s.win}">${late.join('')}</g>` : '');
 }
 
 const ROOFS = ['flat', 'gable', 'gable', 'mansard', 'spire', 'dome', 'cone', 'stepped', 'gable', 'onion', 'gable'];
 
-export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, roof = r.pick(ROOFS) }) {
+export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, flag, wisp = false, roof = r.pick(ROOFS) }) {
   const top = base - h;
   const lit = x + w / 2 < sunX ? 'right' : 'left';
   const parts = [rect(x, top, w, h, fill(s.body))];
   let crown = top;
   const rim = [];
   const cx = x + w / 2;
+  const pennant = (px, py, fw) => `<path class="pl-pennant" style="animation-duration:${n(0.62 + ((Math.abs(px) * 0.37) % 0.7))}s;animation-delay:${n(-((Math.abs(px) * 0.11) % 1.2))}s" d="M${n(px)} ${n(py)}L${n(px + fw)} ${n(py + fw * 0.22)}L${n(px)} ${n(py + fw * 0.44)}Z" fill="${s.flag || '#a8574a'}"/>`;
   if (roof === 'gable') {
     const rh = w * r.range(0.35, 0.6);
     parts.push(poly([[x - 2, top], [cx, top - rh], [x + w + 2, top]], fill(s.body)));
@@ -159,16 +170,22 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
     parts.push(rect(x - 1.5, top - 3, w + 3, 3, fill(s.shade)));
     if (r.chance(0.5)) parts.push(rect(x + w * r.range(0.15, 0.7), top - w * 0.3, w * 0.1, w * 0.3, fill(s.body)));
   }
-  if ((roof === 'spire' || roof === 'onion' || roof === 'cone') && r.chance(0.35)) {
-    const mast = Math.max(6, w * 0.45);
+  const pointy = roof === 'spire' || roof === 'onion' || roof === 'cone';
+  if (pointy ? r.chance(0.35) : flag > 0 && hash(x, w) < flag) {
+    const mast = Math.max(6, w * (pointy ? 0.45 : 0.4));
     const fw = Math.max(5, w * 0.32);
     parts.push(line(cx, crown, cx, crown - mast, ` stroke="${s.body}" stroke-width="1.2"`));
-    parts.push(poly([[cx, crown - mast], [cx + fw, crown - mast + fw * 0.22], [cx, crown - mast + fw * 0.44]], fill(s.flag || '#a8574a')));
+    parts.push(pennant(cx, crown - mast, fw));
   }
   if ((roof === 'gable' || roof === 'mansard' || roof === 'flat') && r.chance(0.45)) {
     const cw = Math.max(3, w * 0.09);
     const chx = x + w * r.range(0.15, 0.75);
-    parts.push(rect(chx, crown + (top - crown) * 0.4 - cw * 1.6, cw, cw * 2.2 + (top - crown) * 0.6, fill(s.body)));
+    const cy0 = crown + (top - crown) * 0.4 - cw * 1.6;
+    parts.push(rect(chx, cy0, cw, cw * 2.2 + (top - crown) * 0.6, fill(s.body)));
+    if (wisp && hash(chx, cy0) < 0.1) {
+      const wx = chx + cw / 2;
+      parts.push(`<path class="pl-wisp" style="animation-duration:${n(7 + hash(cy0, chx) * 3)}s;animation-delay:${n(-hash(chx, cy0 + 1) * 9)}s" d="M${n(wx)} ${n(cy0)}c${n(cw * 1.6)} ${n(-cw * 3)} ${n(cw * 3.4)} ${n(-cw * 2.4)} ${n(cw * 5.2)} ${n(-cw * 4.6)}s${n(cw * 3.4)} ${n(-cw * 2.2)} ${n(cw * 5.4)} ${n(-cw * 3.4)}" fill="none" stroke="${s.rim}" stroke-width="1.2" stroke-linecap="round" opacity=".45"/>`);
+    }
   }
   if (detail > 0 && r.chance(0.8)) parts.push(windows(r, x, top, w, h - detail * 2.5, s, detail, dark));
   const edgeX = lit === 'right' ? x + w - 1 : x;
@@ -177,7 +194,7 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
   return { svg: parts.join(''), crown };
 }
 
-export function skyline(r, { x0, x1, base, hMin, hMax, wMin, wMax, s, sunX, detail = 0, dark = false, roofs, gap = [-4, 2], cap }) {
+export function skyline(r, { x0, x1, base, hMin, hMax, wMin, wMax, s, sunX, detail = 0, dark = false, roofs, gap = [-4, 2], cap, flag, wisp = false }) {
   const out = [];
   let x = x0;
   while (x < x1) {
@@ -185,7 +202,7 @@ export function skyline(r, { x0, x1, base, hMin, hMax, wMin, wMax, s, sunX, deta
     let h = r.range(hMin, hMax);
     if (cap) h = Math.min(h, cap(x + w / 2));
     const roof = roofs ? r.pick(roofs) : undefined;
-    out.push(building(r, { x, w, h, base, s, sunX, detail, dark, ...(roof ? { roof } : {}) }).svg);
+    out.push(building(r, { x, w, h, base, s, sunX, detail, dark, flag, wisp, ...(roof ? { roof } : {}) }).svg);
     x += w + r.range(gap[0], gap[1]);
   }
   return out.join('');
