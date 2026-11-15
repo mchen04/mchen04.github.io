@@ -124,13 +124,13 @@ function observatory() {
   out.push(`<g transform="rotate(-34 1200 236)">${rect(1186, 100, 28, 150, fill('#2a2440'))}${rect(1180, 94, 40, 18, fill(s.body))}${line(1211, 116, 1211, 200, ` stroke="${L.brass.light}" stroke-width="1.6" opacity=".7"`)}${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
   out.push(rect(1110, 300, 180, 90, fill(s.body)));
   out.push(`<path d="M1100 302A100 100 0 0 1 1300 302Z" fill="${s.body}"/>`);
-  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -1.918)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
-  out.push(`<path d="${arc(1200, 302, 100, -1.512, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
-  out.push(`<defs><linearGradient id="slit-warm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.win}" stop-opacity="0"/><stop offset=".55" stop-color="${s.win}" stop-opacity="0"/><stop offset="1" stop-color="${s.win}" stop-opacity=".45"/></linearGradient><clipPath id="slit-clip"><path d="M1166 208A100 100 0 0 1 1206 202.2L1206 269L1166 269Z"/></clipPath></defs>`);
-  out.push(`<path d="M1166 208A100 100 0 0 1 1206 202.2L1206 269L1166 269Z" fill="#231e33"/>`);
+  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -1.945)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<path d="${arc(1200, 302, 100, -1.44, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<defs><linearGradient id="slit-warm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.win}" stop-opacity="0"/><stop offset=".55" stop-color="${s.win}" stop-opacity="0"/><stop offset="1" stop-color="${s.win}" stop-opacity=".45"/></linearGradient><clipPath id="slit-clip"><path d="M1161 209.9A100 100 0 0 1 1213 202.8L1213 269L1161 269Z"/></clipPath></defs>`);
+  out.push(`<path d="M1161 209.9A100 100 0 0 1 1213 202.8L1213 269L1161 269Z" fill="#231e33"/>`);
   out.push(`<path d="M1166 208A100 100 0 0 1 1206 202.2L1206 269L1166 269Z" fill="url(#slit-warm)"/>`);
-  out.push(`<g clip-path="url(#slit-clip)"><g transform="rotate(-34 1200 236)">${rect(1186, 209, 28, 60, fill('#2a2440'))}</g></g>`);
-  out.push(`<g clip-path="url(#slit-clip)"><rect x="1166" y="202" width="3" height="67" fill="${s.body}"/><rect x="1203" y="202" width="3" height="67" fill="${s.body}"/></g>`);
+  out.push(`<g clip-path="url(#slit-clip)"><g transform="rotate(-34 1200 236)">${rect(1186, 209, 28, 30, fill('#2a2440'))}</g></g>`);
+  out.push(`<g clip-path="url(#slit-clip)"><rect x="1161" y="202" width="3" height="67" fill="${s.body}"/><rect x="1210" y="202" width="3" height="67" fill="${s.body}"/></g>`);
   out.push(`<g transform="rotate(-34 1200 236)">${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
   out.push(`<g fill="${s.win}">${[0, 1, 2, 3].map((i) => `<path d="M${1130 + i * 40} 370V338a8 8 0 0 1 16 0V370z"/>`).join('')}</g>`);
   out.push(`<g fill="none" stroke="${L.brass.light}" stroke-width="2.4" opacity=".85">${circle(1420, 400, 34)}<ellipse cx="1420" cy="400" rx="34" ry="12"/><ellipse cx="1420" cy="400" rx="12" ry="34" transform="rotate(28 1420 400)"/></g>${rect(1416, 432, 8, 40, fill(s.body))}`);
@@ -294,6 +294,9 @@ function unwritten() {
   out.push(`<defs><linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2ebe1" stop-opacity="0"/><stop offset=".6" stop-color="#f2ebe1" stop-opacity=".5"/><stop offset="1" stop-color="#f2ebe1" stop-opacity=".85"/></linearGradient><radialGradient id="sign-lamp"><stop offset="0" stop-color="#ffd78f" stop-opacity=".7"/><stop offset="1" stop-color="#ffd78f" stop-opacity="0"/></radialGradient></defs><g class="pl-fog">${rect(-100, 350, W + 200, 250, ' fill="url(#fog)"')}</g>`);
   out.push(rect(960, 470, 520, 16, fill('#d9cbbd')));
   out.push(rect(1080, 370, 240, 100, fill('#a8939a')));
+  out.push(rect(1156, 416, 48, 54, fill('#8d7a74')));
+  out.push(rect(1162, 422, 36, 48, fill('#2a2440')));
+  out.push(line(1162, 422, 1198, 422, ' stroke="#6d5c5c" stroke-width="2"'));
   out.push(line(1080, 410, 1320, 410, ' stroke="#8d7a74" stroke-width="2" opacity=".55"'));
   const win = [];
   for (const wx of [1100, 1136, 1172, 1220, 1256, 1292]) win.push(`M${wx} 386h14v18h-14z`);
@@ -309,6 +312,8 @@ function unwritten() {
   for (let sy = 250; sy + 100 <= 470; sy += 100) scaf.push(`M1040 ${sy}L1160 ${sy + 100}`);
   out.push(`<path d="${scaf.join('')}" fill="none" stroke="#8d7a74" stroke-width="2.5"/>`);
   out.push(rect(1474, 170, 12, 300, fill('#8d7a74')));
+  out.push(rect(1456, 456, 48, 16, fill('#8d7a74')));
+  out.push(rect(1452, 470, 56, 6, fill('#6d5c5c')));
   for (let sy = 190; sy < 470; sy += 40) out.push(line(1474, sy + 20, 1486, sy, ' stroke="#a8939a" stroke-width="1.4" opacity=".7"'));
   out.push(line(1160, 176, 1480, 176, ' stroke="#8d7a74" stroke-width="3"'), line(1160, 188, 1480, 188, ' stroke="#8d7a74" stroke-width="2"'));
   for (let jx = 1180; jx < 1480; jx += 40) out.push(line(jx, 176, jx + 20, 188, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'));
