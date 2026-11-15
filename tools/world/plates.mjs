@@ -265,7 +265,7 @@ function tower(night = false) {
 
 function unwritten() {
   const r = rng(606);
-  const out = [];
+  const out = ['<style>@media (prefers-reduced-motion:no-preference){.pl-load{transform-box:view-box;transform-origin:1200px 188px;animation:plsway 5.5s ease-in-out infinite alternate}@keyframes plsway{from{transform:rotate(-2.6deg)}to{transform:rotate(2.6deg)}}}</style>'];
   const g = '#b4893f';
   out.push(ridge(r, { x0: 0, x1: W, base: 440, top: 380, rough: 14, step: 26, color: '#e6ddd0' }));
   const ghost = [];
@@ -282,19 +282,45 @@ function unwritten() {
     else d += `H${n(x + w)}`;
     d += 'V470';
     ghost.push(d);
-    if (r.chance(0.5)) for (let yy = top + 20; yy < 470; yy += 30) ghost.push(`M${n(x)} ${n(yy)}H${n(x + w)}`);
+    if (r.chance(0.6)) for (let yy = top + 20; yy < 470; yy += 30) ghost.push(`M${n(x)} ${n(yy)}H${n(x + w)}`);
     x += w + r.range(10, 50);
   }
-  out.push(`<path d="${ghost.join('')}" fill="none" stroke="${g}" stroke-width="1.6" stroke-dasharray="6 6" opacity=".6" class="pl-draw"/>`);
+  out.push(`<path d="${ghost.join('')}" fill="none" stroke="${g}" stroke-width="2.4" stroke-dasharray="7 5" opacity=".8" class="pl-draw"/>`);
+  out.push(`<defs><linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2ebe1" stop-opacity="0"/><stop offset=".6" stop-color="#f2ebe1" stop-opacity=".5"/><stop offset="1" stop-color="#f2ebe1" stop-opacity=".85"/></linearGradient><radialGradient id="sign-lamp"><stop offset="0" stop-color="#ffd78f" stop-opacity=".7"/><stop offset="1" stop-color="#ffd78f" stop-opacity="0"/></radialGradient></defs><g class="pl-fog">${rect(-100, 350, W + 200, 250, ' fill="url(#fog)"')}</g>`);
+  out.push(rect(960, 470, 520, 16, fill('#d9cbbd')));
+  out.push(rect(1080, 370, 240, 100, fill('#a8939a')));
+  out.push(line(1080, 410, 1320, 410, ' stroke="#8d7a74" stroke-width="2" opacity=".55"'));
+  const win = [];
+  for (const wx of [1100, 1136, 1172, 1220, 1256, 1292]) win.push(`M${wx} 386h14v18h-14z`);
+  out.push(`<path d="${win.join('')}" fill="#6d5c5c"/>`);
+  out.push(rect(1080, 345, 58, 25, fill('#a8939a')), rect(1242, 345, 78, 25, fill('#a8939a')));
+  for (const cx of [1084, 1124, 1164, 1204, 1244, 1284]) out.push(rect(cx, 318, 9, 52, fill('#8d7a74')));
+  out.push(rect(1078, 310, 252, 10, fill('#8d7a74')));
+  out.push(line(1080, 370, 1140, 320, ' stroke="#8d7a74" stroke-width="3"'));
+  out.push(rect(1030, 446, 34, 12, fill('#8d7a74')), rect(1040, 434, 26, 12, fill('#8d7a74')));
   const scaf = [];
-  for (let sx = 1050; sx <= 1350; sx += 50) scaf.push(`M${sx} 470V170`);
-  for (let sy = 190; sy <= 470; sy += 46) scaf.push(`M1050 ${sy}H1350`);
-  for (let sy = 190; sy + 92 <= 470; sy += 92) scaf.push(`M1050 ${sy}L1350 ${sy + 92}`);
-  out.push(`<path d="${scaf.join('')}" fill="none" stroke="#8d7a74" stroke-width="3"/>`);
-  out.push(rect(1080, 330, 240, 140, fill('#a8939a')), poly([[1080, 330], [1200, 260], [1320, 330]], fill('#a8939a')));
-  out.push(`<defs><linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2ebe1" stop-opacity="0"/><stop offset=".55" stop-color="#f2ebe1" stop-opacity=".92"/><stop offset="1" stop-color="#f2ebe1"/></linearGradient></defs><g class="pl-fog">${rect(-100, 330, W + 200, 270, ' fill="url(#fog)"')}</g>`);
-  out.push(`<path d="M1160 600Q1190 520 1200 470L1206 470Q1214 520 1250 600Z" fill="#d9cbbd"/>`);
-  out.push(rect(1290, 520, 6, 60, fill('#6d5c5c')), `<path d="M1268 524h56l10 10-10 10h-56z" fill="#8a6f60"/>`);
+  for (const sx of [1040, 1080, 1120, 1160]) scaf.push(`M${sx} 470V250`);
+  for (const sy of [250, 300, 350, 400, 450, 470]) scaf.push(`M1040 ${sy}H1160`);
+  for (let sy = 250; sy + 100 <= 470; sy += 100) scaf.push(`M1040 ${sy}L1160 ${sy + 100}`);
+  out.push(`<path d="${scaf.join('')}" fill="none" stroke="#8d7a74" stroke-width="2.5"/>`);
+  out.push(rect(1474, 170, 12, 300, fill('#8d7a74')));
+  for (let sy = 190; sy < 470; sy += 40) out.push(line(1474, sy + 20, 1486, sy, ' stroke="#a8939a" stroke-width="1.4" opacity=".7"'));
+  out.push(line(1160, 176, 1480, 176, ' stroke="#8d7a74" stroke-width="3"'), line(1160, 188, 1480, 188, ' stroke="#8d7a74" stroke-width="2"'));
+  for (let jx = 1180; jx < 1480; jx += 40) out.push(line(jx, 176, jx + 20, 188, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'));
+  out.push(rect(1480, 176, 78, 8, fill('#8d7a74')), rect(1536, 176, 22, 20, fill('#a8939a')));
+  out.push(poly([[1474, 170], [1480, 148], [1486, 170]], fill('#8d7a74')));
+  out.push(line(1480, 152, 1180, 176, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'), line(1480, 152, 1550, 176, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'));
+  out.push(rect(1486, 188, 22, 20, fill('#a8939a')));
+  out.push(`<g class="pl-load">${line(1200, 188, 1200, 270, ' stroke="#6d5c5c" stroke-width="1.5"')}${circle(1200, 270, 2.5, fill('#6d5c5c'))}${rect(1186, 272, 28, 20, fill('#a8939a'))}${line(1186, 272, 1214, 272, ' stroke="#8d7a74" stroke-width="2"')}</g>`);
+  out.push(`<path d="M1135 470C1120 510 1000 548 830 600L1250 600C1180 558 1218 515 1225 470Z" fill="#d9cbbd"/>`);
+  out.push(`<path d="M1135 470C1120 510 1000 548 830 600M1225 470C1218 515 1180 558 1250 600" fill="none" stroke="#8d7a74" stroke-width="3" opacity=".8"/>`);
+  out.push(`<path d="M1105 500H1216M1041 530H1209M947 563H1216M879 585H1232" fill="none" stroke="#c2ad9c" stroke-width="2.5" opacity=".7"/>`);
+  out.push(rect(1360, 470, 10, 115, fill('#6d5c5c')));
+  out.push(`<path d="M1296 486h64v26h-64l-14-13z" fill="#8a6f60"/>`);
+  out.push(`<path d="M1370 524h64l14 13-14 13h-64z" fill="#8a6f60"/>`);
+  out.push(`<circle cx="1365" cy="466" r="30" fill="url(#sign-lamp)"/>`);
+  out.push(circle(1365, 466, 6, fill('#ffd78f')));
+  out.push('<ellipse cx="1365" cy="585" rx="32" ry="6" fill="#c2ad9c" opacity=".45"/>');
   return frame('unw', [[0, '#efe8dd'], [0.6, '#ece2d6'], [1, '#f2ebe1']], out.join(''));
 }
 

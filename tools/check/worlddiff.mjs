@@ -21,6 +21,12 @@ const ALLOW = [
   /^<path d="M 1211 116 L 1211 192"/,
 ];
 const allowed = (shape) => [...ALLOW, ...extra].some((re) => re.test(shape));
+const PLATE_ALLOW = {
+  'world/unwritten-still.svg': [
+    /stroke="#b4893f"/, /stroke="#8d7a74"/, /fill="#a8939a"/, /stop-color="#f2ebe1"/,
+    /fill="url\(#fog\)"/, /fill="#d9cbbd"/, /fill="#6d5c5c"/, /fill="#8a6f60"/,
+  ],
+};
 
 const CONTAINERS = new Set(['svg', 'g', 'defs', 'linearGradient', 'radialGradient', 'filter', 'clipPath', 'mask', 'symbol', 'marker', 'pattern']);
 const SHAPES = new Set(['path', 'rect', 'circle', 'ellipse', 'line', 'polygon', 'polyline', 'stop', 'feGaussianBlur', 'use', 'text', 'image']);
@@ -129,7 +135,7 @@ targets.push(['index.html world:hero', hero(show('index.html')), hero(readFileSy
 let bad = 0;
 for (const [name, before, after, fresh] of targets) {
   const { removed, added } = diff(shapes(before), shapes(after));
-  const blocked = removed.filter((s) => !allowed(s));
+  const blocked = removed.filter((s) => !allowed(s) && !(PLATE_ALLOW[name] || []).some((re) => re.test(s)));
   bad += blocked.length;
   const note = removed.length ? ` (${removed.length - blocked.length} allowed)` : '';
   console.log(`${name}  ${fresh ? 'new  ' : ''}removed ${removed.length}${note}  added ${added.length}`);
