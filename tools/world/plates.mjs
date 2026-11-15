@@ -69,13 +69,13 @@ function works() {
   const chimneys = [[870, 230, 26], [950, 270, 22], [1450, 210, 28], [1530, 250, 22], [1650, 280, 20]];
   for (const [x, top, w] of chimneys) out.push(smokePlume(x + w / 2, top, '#c2a09a', r));
   out.push(circle(1200, 380, 150, fill(mid.shade)));
-  out.push(`<g class="pl-spin">${gear(1200, 380, 176, 24, fill(mid.shade))}</g>`);
-  out.push(`<g class="pl-rev">${gear(1200, 380, 60, 10, fill(mid.body))}</g>`);
-  out.push(circle(1200, 380, 18, fill(mid.shade)));
+  const spokes = [];
   for (let i = 0; i < 6; i += 1) {
     const a = (i / 6) * Math.PI * 2;
-    out.push(line(1200 + 60 * Math.cos(a), 380 + 60 * Math.sin(a), 1200 + 140 * Math.cos(a), 380 + 140 * Math.sin(a), ` stroke="${mid.body}" stroke-width="14"`));
+    spokes.push(line(1200 + 60 * Math.cos(a), 380 + 60 * Math.sin(a), 1200 + 140 * Math.cos(a), 380 + 140 * Math.sin(a), ` stroke="${mid.body}" stroke-width="14"`));
   }
+  out.push(`<g class="pl-spin">${gear(1200, 380, 176, 24, fill(mid.shade))}${gear(1200, 380, 60, 10, fill(mid.body))}${spokes.join('')}</g>`);
+  out.push(circle(1200, 380, 18, fill(mid.shade)));
   for (const [x, top, w] of chimneys) {
     out.push(rect(x, top, w, 420 - top, fill(mid.body)), rect(x - 4, top, w + 8, 10, fill(mid.body)), rect(x + w - 2, top + 10, 2, 300 - top, fill(mid.rim, ' opacity=".7"')));
   }

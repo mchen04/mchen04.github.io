@@ -401,7 +401,7 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 .shelf-head.wide{display:grid;grid-template-columns:1fr 1.35fr;gap:40px;align-items:start}
 .said,.topics,.context{font-size:19px;line-height:1.7;max-width:56ch;text-wrap:pretty}
 .tag,.when,.built,.meta,.src,.scope-note,.moved,.hero-strip,.readout dt,.entry-meta,.crumbs,.why{font:14.5px/1.6 var(--ui);color:var(--quiet)}
-.why,.page-about p,.page-about li,.resume-content p,.resume-content li,figcaption{text-wrap:pretty}
+.page-about p,.page-about li,.resume-content p,.resume-content li,figcaption{text-wrap:pretty}
 .tag b{font-weight:600}
 .hero-strip{display:flex;gap:24px;flex-wrap:wrap;margin-top:28px}
 .hero-strip span{display:flex;gap:12px}
@@ -504,7 +504,8 @@ footer a:hover{color:#ffd28f}
 .work .built{grid-column:2}
 .work h3{margin-bottom:14px;font-size:30px;transition:color .2s}
 .work h3 a{text-decoration:none}
-.work p{max-width:56ch;text-wrap:pretty}
+.work p{max-width:56ch}
+.work p:not(.built):not(.when){text-wrap:pretty}
 .work p+p{margin-top:15px}
 .ledger>li{border-top:1px solid var(--line)}
 .work h3>a:after,.strip h3>a:after,.three h3>a:after{position:absolute;inset:0;content:''}
@@ -532,7 +533,8 @@ div.miss p+p{margin-top:14px}
 .case.solo{grid-template-columns:1.45fr 1fr}
 .essay-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:65px;align-items:start}
 .essay{max-width:56ch}
-.essay p,.built,.src,.when,.entry-meta dd{text-wrap:pretty}
+.essay p:not(.built):not(.src):not(.when){text-wrap:pretty}
+.built,.src,.when,.meta,.tag,.scope-note,.moved,.readout dt,.entry-meta,.entry-meta dd,.why{text-wrap:balance}
 .shot{max-width:320px;margin-inline:auto}
 figcaption{font:14px/1.6 var(--ui);color:var(--quiet);margin:14px 0}
 .shot img{width:100%;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 34px -22px #4b351c88}
