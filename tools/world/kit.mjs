@@ -118,7 +118,7 @@ function windows(r, x, y, w, h, s, size, dark) {
 
 const ROOFS = ['flat', 'gable', 'gable', 'mansard', 'spire', 'dome', 'cone', 'stepped', 'gable', 'onion', 'gable'];
 
-export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, flag, wisp = false, roof = r.pick(ROOFS) }) {
+export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, roof = r.pick(ROOFS) }) {
   const top = base - h;
   const lit = x + w / 2 < sunX ? 'right' : 'left';
   const parts = [rect(x, top, w, h, fill(s.body))];
@@ -171,7 +171,7 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
     if (r.chance(0.5)) parts.push(rect(x + w * r.range(0.15, 0.7), top - w * 0.3, w * 0.1, w * 0.3, fill(s.body)));
   }
   const pointy = roof === 'spire' || roof === 'onion' || roof === 'cone';
-  if (pointy ? r.chance(0.35) : flag > 0 && hash(x, w) < flag) {
+  if (pointy && r.chance(0.35)) {
     const mast = Math.max(6, w * (pointy ? 0.45 : 0.4));
     const fw = Math.max(5, w * 0.32);
     parts.push(line(cx, crown, cx, crown - mast, ` stroke="${s.body}" stroke-width="1.2"`));
@@ -180,12 +180,7 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
   if ((roof === 'gable' || roof === 'mansard' || roof === 'flat') && r.chance(0.45)) {
     const cw = Math.max(3, w * 0.09);
     const chx = x + w * r.range(0.15, 0.75);
-    const cy0 = crown + (top - crown) * 0.4 - cw * 1.6;
-    parts.push(rect(chx, cy0, cw, cw * 2.2 + (top - crown) * 0.6, fill(s.body)));
-    if (wisp && hash(chx, cy0) < 0.1) {
-      const wx = chx + cw / 2;
-      parts.push(`<path class="pl-wisp" style="animation-duration:${n(7 + hash(cy0, chx) * 3)}s;animation-delay:${n(-hash(chx, cy0 + 1) * 9)}s" d="M${n(wx)} ${n(cy0)}c${n(cw * 1.6)} ${n(-cw * 3)} ${n(cw * 3.4)} ${n(-cw * 2.4)} ${n(cw * 5.2)} ${n(-cw * 4.6)}s${n(cw * 3.4)} ${n(-cw * 2.2)} ${n(cw * 5.4)} ${n(-cw * 3.4)}" fill="none" stroke="${s.rim}" stroke-width="1.2" stroke-linecap="round" opacity=".45"/>`);
-    }
+    parts.push(rect(chx, crown + (top - crown) * 0.4 - cw * 1.6, cw, cw * 2.2 + (top - crown) * 0.6, fill(s.body)));
   }
   if (detail > 0 && r.chance(0.8)) parts.push(windows(r, x, top, w, h - detail * 2.5, s, detail, dark));
   const edgeX = lit === 'right' ? x + w - 1 : x;
@@ -194,7 +189,7 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
   return { svg: parts.join(''), crown };
 }
 
-export function skyline(r, { x0, x1, base, hMin, hMax, wMin, wMax, s, sunX, detail = 0, dark = false, roofs, gap = [-4, 2], cap, flag, wisp = false }) {
+export function skyline(r, { x0, x1, base, hMin, hMax, wMin, wMax, s, sunX, detail = 0, dark = false, roofs, gap = [-4, 2], cap }) {
   const out = [];
   let x = x0;
   while (x < x1) {
@@ -202,7 +197,7 @@ export function skyline(r, { x0, x1, base, hMin, hMax, wMin, wMax, s, sunX, deta
     let h = r.range(hMin, hMax);
     if (cap) h = Math.min(h, cap(x + w / 2));
     const roof = roofs ? r.pick(roofs) : undefined;
-    out.push(building(r, { x, w, h, base, s, sunX, detail, dark, flag, wisp, ...(roof ? { roof } : {}) }).svg);
+    out.push(building(r, { x, w, h, base, s, sunX, detail, dark, ...(roof ? { roof } : {}) }).svg);
     x += w + r.range(gap[0], gap[1]);
   }
   return out.join('');
