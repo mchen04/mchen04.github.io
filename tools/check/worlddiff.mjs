@@ -16,6 +16,9 @@ const ALLOW = [
   /^<path d="M [\d.]+ [\d.]+ L [\d.]+ [\d.]+ L [\d.]+ [\d.]+ Z" fill="#a8574a"\/>$/,
   /fill="#(?:f4dfc6|f6e7d3)"/,
   /^<circle [^/]*fill="#6a6080"/,
+  /^<path d="M 1100\.3 294 A 100 100 0 0 1 1299\.7 294"/,
+  /^<rect [^/]*width="44" x="1178" y="192"/,
+  /^<path d="M 1211 116 L 1211 192"/,
 ];
 const allowed = (shape) => [...ALLOW, ...extra].some((re) => re.test(shape));
 
@@ -116,18 +119,20 @@ function hero(html) {
   return a < 0 || b < 0 ? '' : html.slice(a, b);
 }
 
+execFileSync('git', ['rev-parse', '--verify', rev]);
+const exists = (path) => { try { execFileSync('git', ['cat-file', '-e', `${rev}:${path}`], { stdio: 'ignore' }); return true; } catch { return false; } };
 const show = (path) => execFileSync('git', ['show', `${rev}:${path}`], { encoding: 'utf8', maxBuffer: 64 << 20 });
 const files = readdirSync(join(root, 'world')).filter((f) => f.endsWith('-still.svg')).sort();
-const targets = files.map((f) => [`world/${f}`, show(`world/${f}`), readFileSync(join(root, 'world', f), 'utf8')]);
-targets.push(['index.html world:hero', hero(show('index.html')), hero(readFileSync(join(root, 'index.html'), 'utf8'))]);
+const targets = files.map((f) => { const fresh = !exists(`world/${f}`); return [`world/${f}`, fresh ? '' : show(`world/${f}`), readFileSync(join(root, 'world', f), 'utf8'), fresh]; });
+targets.push(['index.html world:hero', hero(show('index.html')), hero(readFileSync(join(root, 'index.html'), 'utf8')), false]);
 
 let bad = 0;
-for (const [name, before, after] of targets) {
+for (const [name, before, after, fresh] of targets) {
   const { removed, added } = diff(shapes(before), shapes(after));
   const blocked = removed.filter((s) => !allowed(s));
   bad += blocked.length;
   const note = removed.length ? ` (${removed.length - blocked.length} allowed)` : '';
-  console.log(`${name}  removed ${removed.length}${note}  added ${added.length}`);
+  console.log(`${name}  ${fresh ? 'new  ' : ''}removed ${removed.length}${note}  added ${added.length}`);
   for (const s of blocked.slice(0, 3)) console.log(`  ! ${s.slice(0, 180)}`);
 }
 console.log(`${rev} -> working tree: ${bad} unallowed removed or changed shape(s)`);

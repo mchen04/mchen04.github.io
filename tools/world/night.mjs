@@ -28,16 +28,17 @@ const PLATE_EXTRA = {
   '#d9c0b4': '#4b3f62', '#d0b6ab': '#45395b', '#9c8796': '#352d4b', '#8d7888': '#2f2843', '#f6dcaa': '#5d5384',
   '#6a5868': '#231e33', '#5c4b5b': '#1e1a2c', '#e4cdb7': '#3a3352', '#c9a69a': '#262541', '#fff6e6': '#e8dcc0',
   '#fbf4e8': '#4c4466', '#efd9c3': '#3a3453', '#fff': '#625a84', '#f4dfc6': '#6a6080', '#f6e7d3': '#6a6080', '#c2a09a': '#6a6080', '#c9aaa4': '#6a6080',
-  '#8a6a5a': '#8d7a9c', '#6b5363': '#a596b8',
+  '#8a6a5a': '#8d7a9c', '#6b5363': '#a596b8', '#b4893f': '#8d7a9c', '#e6ddd0': '#3d3456', '#8d7a74': '#6a6080',
+  '#a8939a': '#4b3f62', '#d9cbbd': '#3a3352', '#6d5c5c': '#2a2440', '#8a6f60': '#4b3f62', '#f2ebe1': '#231e33',
 };
 
-export function nightPlate(svg) {
+export function nightPlate(svg, count = 110) {
   const map = { ...NIGHT, ...PLATE_EXTRA };
   let out = svg.replace(/(<linearGradient id="[^"]*-sky"[^>]*>).*?(<\/linearGradient>)/, `$1${SKY_NIGHT}$2`);
   out = out.replace(/"(#[0-9a-fA-F]{3,6})"/g, (match, hex) => (map[hex.toLowerCase()] ? `"${map[hex.toLowerCase()]}"` : match));
   const stars = [];
   let seed = 9;
   const rand = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-  for (let i = 0; i < 110; i += 1) stars.push(`M${(rand() * 2400).toFixed(1)} ${(rand() * 260).toFixed(1)}h1.8v1.8h-1.8z`);
+  for (let i = 0; i < count; i += 1) stars.push(`M${(rand() * 2400).toFixed(1)} ${(rand() * 260).toFixed(1)}h1.8v1.8h-1.8z`);
   return out.replace(/(<rect[^>]*url\(#[^)]*-sky\)"\/>)/, `$1<path d="${stars.join('')}" fill="#f1e6cf" opacity=".8"/>`);
 }

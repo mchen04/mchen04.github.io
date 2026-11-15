@@ -121,11 +121,12 @@ function observatory() {
   out.push(skyline(r, { x0: 1500, x1: W, base: 470, hMin: 20, hMax: 70, wMin: 16, wMax: 34, s: L.layers.far, sunX: 1200, detail: 2.4 }));
   const s = L.layers.mid;
   out.push(poly([[860, 600], [940, 470], [1060, 400], [1200, 380], [1340, 398], [1460, 460], [1560, 600]], fill(s.body)));
-  out.push(`<g transform="rotate(-34 1200 236)">${rect(1186, 100, 28, 150, fill('#2a2440'))}${rect(1180, 94, 40, 18, fill(s.body))}${line(1211, 116, 1211, 192, ` stroke="${L.brass.light}" stroke-width="1.6" opacity=".7"`)}${rect(1178, 192, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 192, 44, 2, fill(L.brass.light))}</g>`);
+  out.push(`<g transform="rotate(-34 1200 236)">${rect(1186, 100, 28, 150, fill('#2a2440'))}${rect(1180, 94, 40, 18, fill(s.body))}${line(1211, 116, 1211, 200, ` stroke="${L.brass.light}" stroke-width="1.6" opacity=".7"`)}${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
   out.push(rect(1110, 300, 180, 90, fill(s.body)));
   out.push(`<path d="M1100 302A100 100 0 0 1 1300 302Z" fill="${s.body}"/>`);
-  out.push(`<g transform="rotate(-34 1200 236)">${rect(1178, 192, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 192, 44, 2, fill(L.brass.light))}</g>`);
-  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -1.98)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<path d="${arc(1200, 302, 100, -1.6, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<g transform="rotate(-34 1200 236)">${rect(1182, 204.5, 36, 61.5, fill('#1a1626', ' rx="3"'))}${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
   out.push(`<g fill="${s.win}">${[0, 1, 2, 3].map((i) => `<path d="M${1130 + i * 40} 370V338a8 8 0 0 1 16 0V370z"/>`).join('')}</g>`);
   out.push(`<g fill="none" stroke="${L.brass.light}" stroke-width="2.4" opacity=".85">${circle(1420, 400, 34)}<ellipse cx="1420" cy="400" rx="34" ry="12"/><ellipse cx="1420" cy="400" rx="12" ry="34" transform="rotate(28 1420 400)"/></g>${rect(1416, 432, 8, 40, fill(s.body))}`);
   out.push(skyline(r, { x0: -20, x1: 880, base: 600, hMin: 50, hMax: 140, wMin: 40, wMax: 90, s: L.layers.near, sunX: 1200, detail: 4, dark: true }));
