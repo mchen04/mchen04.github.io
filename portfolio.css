@@ -515,6 +515,7 @@ footer a:hover{color:#ffd28f}
 .readout dd{margin-top:auto;font:600 clamp(32px,4.4vw,50px)/1.2 var(--display);color:var(--ink);font-variant-numeric:lining-nums}
 .readout .u{font:16px/1.4 var(--ui);margin-left:5px}
 .limits{border-left:2px solid var(--gilt-soft);background:linear-gradient(90deg,var(--tint),transparent);padding:12px 0 12px 22px;margin:25px 0}
+.limits p,.miss p{max-width:56ch}
 .limits p+p{margin-top:15px}
 span.miss,b.miss,.limits .miss{display:block;color:var(--ink);font-weight:600;margin-bottom:8px}
 div.miss{margin:30px 0;padding:18px 22px 20px;border-left:2px solid var(--accent);background:linear-gradient(90deg,var(--tint-accent),transparent)}
@@ -522,6 +523,7 @@ div.miss .tag{margin-bottom:10px;font-size:12px;letter-spacing:.12em;text-transf
 div.miss .tag b{color:var(--accent);margin-right:8px}
 div.miss p+p{margin-top:14px}
 .case{display:grid;grid-template-columns:1.45fr 1fr;gap:60px;align-items:start}
+.case-what{max-width:56ch}
 .case-what+.case-what,.case p+p,.essay p+p{margin-top:22px}
 .case .aside{min-width:0}
 @media(min-width:861px){.case>:last-child:not(:first-child){position:sticky;top:calc(var(--head) + 28px)}}
@@ -548,6 +550,7 @@ figcaption{font:14px/1.6 var(--ui);color:var(--quiet);margin:14px 0}
 .essay-wrap:has(.case-shot) .case-shot{order:2;max-width:320px;margin-inline:auto}
 .essay-wrap:has(.case-shot) .essay>.cta-row{order:3;margin-top:0!important}
 .essay-wrap:has(.case-shot) .case-shot-phone img{max-height:calc(55vh - 20px);width:auto;margin-inline:auto}
+.essay-wrap:has(.case-shot) .case-shot-phone .phone-frame{width:fit-content;margin-inline:auto}
 .essay-wrap:has(.case-shot) .more{order:4;margin-top:0}
 }
 .three,.strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 44px}
@@ -598,6 +601,7 @@ figcaption{font:14px/1.6 var(--ui);color:var(--quiet);margin:14px 0}
 .entry-body p+p{margin-top:18px}
 .entry-body h3 a{text-decoration:none}
 .entry-body h3 a:after{content:'';position:absolute;inset:0}
+.entry-body p{max-width:56ch}
 .entry-body p a,.entry-body .limits a{position:relative;z-index:1}
 .entry p{font-size:18px}
 .topic-filter{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
