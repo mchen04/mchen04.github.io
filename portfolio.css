@@ -534,6 +534,7 @@ div.miss p+p{margin-top:14px}
 .essay-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:65px;align-items:start}
 .essay{max-width:56ch}
 .essay p:not(.built):not(.src):not(.when){text-wrap:pretty}
+.article p,.article li,.article .sources li,.page-writing .picks li p{text-wrap:pretty}
 .built,.src,.when,.meta,.tag,.scope-note,.moved,.readout dt,.entry-meta,.entry-meta dd,.why{text-wrap:balance}
 .shot{max-width:320px;margin-inline:auto}
 figcaption{font:14px/1.6 var(--ui);color:var(--quiet);margin:14px 0}
