@@ -1,3 +1,4 @@
+import glob
 import re
 
 ICONS = {
@@ -36,3 +37,22 @@ for title, path in ICONS.items():
     count += 1
 open('work/index.html', 'w').write(html)
 print(count, 'emblems added')
+
+
+count = 0
+for path in sorted(glob.glob('projects/*/index.html')):
+    src = open(path).read()
+    if '<a href="/work/">' not in src or '<p class="when">' not in src:
+        continue
+    match = re.search(r'<h1>([^<]+)</h1>', src)
+    if not match:
+        continue
+    title = match.group(1)
+    if title not in ICONS:
+        raise SystemExit(f'no icon for {path}')
+    if 'class="emblem"' in src:
+        continue
+    src = src.replace(match.group(0), match.group(0) + medallion(ICONS[title]), 1)
+    open(path, 'w').write(src)
+    count += 1
+print(count, 'detail emblems added')

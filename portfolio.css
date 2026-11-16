@@ -835,3 +835,11 @@ footer{position:relative;background:var(--night) url('/world/dusk-still.svg') ce
 .chapter-list .plate[style*="/world/library.svg"]{background-image:url(/world/library-still.svg)!important}
 .chapter-list .plate[style*="/world/tower.svg"]{background-image:url(/world/tower-still.svg)!important}
 }/* /world:still */
+.page-case .page-head:has(.emblem) .shell{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;column-gap:24px}
+.page-case .page-head:has(.emblem) .crumbs{grid-column:1/-1}
+.page-case .page-head:has(.emblem) h1{grid-column:1;grid-row:2;max-width:none}
+.page-case .page-head:has(.emblem) .emblem{position:static;display:block;grid-column:2;grid-row:2;width:88px;height:88px;margin-top:calc((clamp(46px,6vw,80px)*1.08 - 88px)/2)}
+.page-case .essay .when{margin-bottom:14px}
+.page-case .essay .built{margin-top:34px}
+@media(max-width:860px){.page-case .page-head:has(.emblem) .shell{column-gap:16px}.page-case .page-head:has(.emblem) .emblem{width:56px;height:56px;margin-top:calc((clamp(46px,6vw,80px)*1.08 - 56px)/2)}}
+@media(max-width:600px){.page-case .page-head:has(.emblem) .shell{column-gap:16px}.page-case .page-head:has(.emblem) .crumbs{grid-column:1}.page-case .page-head:has(.emblem) .emblem{grid-column:2;grid-row:1;width:56px;height:56px;margin-top:0}.page-case .page-head:has(.emblem) h1{grid-column:1/-1;grid-row:2}}
