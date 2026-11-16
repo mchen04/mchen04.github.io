@@ -1,4 +1,5 @@
 import { rng, n, hash, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, star8, gear, clockTowerShape } from './kit.mjs';
+import { observatory as drawObservatory } from './observatory.mjs';
 
 const W = 2400;
 const STYLE = '<style>@media (prefers-reduced-motion:no-preference){.pl-drift,.pl-puff,.pl-spin,.pl-rev,.pl-train,.pl-twinkle,.pl-flutter,.pl-bulbs,.pl-fog,.pl-pennant,.pl-on,.flick{transform-box:fill-box;transform-origin:center}.pl-drift{animation:pc 140s linear infinite}.pl-drift:nth-of-type(2n){animation-duration:180s;animation-delay:-70s}.pl-puff{animation:psmoke 7s linear infinite}.pl-spin{animation:ps 60s linear infinite}.pl-rev{animation:ps 30s linear infinite reverse}.pl-mill{transform-box:view-box;animation:ps 24s linear infinite}.pl-train{animation:pt 46s linear infinite}.pl-twinkle{animation:pw 3.8s ease-in-out infinite alternate}.pl-twinkle:nth-of-type(2n){animation-delay:-1.4s}.pl-twinkle:nth-of-type(3n){animation-duration:5.2s}.pl-flutter{animation:pf 15s linear infinite}.pl-kite{transform-box:view-box;animation:pk 6.4s ease-in-out infinite alternate}.pl-tail{transform-box:view-box;animation:ptail 3s ease-in-out infinite alternate}.pl-bulbs{animation:pb 3.4s ease-in-out infinite alternate}.pl-draw{animation:pr 3s linear infinite}.pl-fog{animation:pd 40s ease-in-out infinite alternate}.pl-pennant{transform-origin:0 50%;animation:penn .9s ease-in-out infinite alternate}.pl-on{animation:pn 1.6s ease-out both}.pl-lamp{animation:pn 2.6s ease-out 1.1s both}.flick{animation:pl 24s step-end infinite}@keyframes pd{to{transform:translateX(70px)}}@keyframes pc{0%{transform:translateX(-90px);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(90px);opacity:0}}@keyframes psmoke{0%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.5)}12%{opacity:.7}100%{opacity:0;transform:translate(38px,-70px) scale(2.1)}}@keyframes ps{to{transform:rotate(360deg)}}@keyframes pt{from{transform:translateX(1300px)}to{transform:translateX(-1700px)}}@keyframes pw{from{opacity:.35}to{opacity:1}}@keyframes pf{0%{opacity:0;transform:translate(0,0) rotate(0)}10%{opacity:1}78%{opacity:1}100%{opacity:0;transform:translate(120px,-34px) rotate(230deg)}}@keyframes pk{from{transform:rotate(-.7deg)}to{transform:rotate(.9deg)}}@keyframes ptail{from{transform:rotate(-3.5deg)}to{transform:rotate(4.5deg)}}@keyframes pb{from{opacity:.7}to{opacity:1}}@keyframes pr{to{stroke-dashoffset:-24}}@keyframes pl{0%{opacity:1}46%{opacity:.1}71%{opacity:1}}@keyframes penn{from{transform:skewY(-20deg) scaleX(.82)}to{transform:skewY(22deg) scaleX(1.12)}}@keyframes pn{from{opacity:0}}}</style>';
@@ -23,8 +24,8 @@ function stars(r, count, y1, color, gold, y0 = 10) {
     dots.push(`M${n(x)} ${n(y)}h${n(r.range(1.4, 3))}v${n(r.range(1.4, 3))}h${n(-r.range(1.4, 3))}z`);
   }
   const bright = [];
-  for (let i = 0; i < 9; i += 1) bright.push(star8(r.range(60, W - 60), r.range(Math.max(30, y0 + 20), y1 * 0.8), r.range(5, 9), fill(gold, ' class="pl-twinkle"')));
-  return `<path d="${dots.join('')}" fill="${color}" opacity=".85"/>${bright.join('')}`;
+  for (let i = 0; i < 9; i += 1) bright.push(circle(r.range(60, W - 60), r.range(Math.max(30, y0 + 20), y1 * 0.8), r.range(1.8, 2.6), ' class="pl-twinkle"'));
+  return `<path d="${dots.join('')}" fill="${color}" opacity=".85"/><g fill="${gold}">${bright.join('')}</g>`;
 }
 
 function water(id, y, stops, glintX, glint, r) {
@@ -103,40 +104,7 @@ function works() {
 }
 
 function observatory() {
-  const r = rng(202);
-  const L = LIGHTS.dusk;
-  const out = [];
-  out.push(stars(r, 160, 360, '#f1e6cf', '#e2bf7c'));
-  const pts = [[620, 120], [700, 170], [790, 140], [860, 210], [960, 190]];
-  out.push(`<path d="M${pts.map(([x, y]) => `${x} ${y}`).join('L')}" fill="none" stroke="#c9a161" stroke-width="1.2" opacity=".55"/>`);
-  out.push(`<g fill="#e2bf7c">${pts.map(([x, y]) => circle(x, y, 3.5)).join('')}</g>`);
-  const pts2 = [[1600, 90], [1680, 140], [1760, 110], [1820, 170]];
-  out.push(`<path d="M${pts2.map(([x, y]) => `${x} ${y}`).join('L')}" fill="none" stroke="#c9a161" stroke-width="1.2" opacity=".55"/>`);
-  out.push(`<g fill="#e2bf7c">${pts2.map(([x, y]) => circle(x, y, 3)).join('')}</g>`);
-  out.push(`<defs><radialGradient id="moon-glow"><stop offset="0" stop-color="#f4e7c8" stop-opacity=".35"/><stop offset="1" stop-color="#f4e7c8" stop-opacity="0"/></radialGradient></defs>${circle(1880, 150, 220, ' fill="url(#moon-glow)"')}`);
-  out.push(`<path d="M1910 92A62 62 0 1 0 1910 208A50 50 0 1 1 1910 92Z" fill="#f4e7c8"/>`);
-  out.push(`<g fill="none" stroke="#c9a161" opacity=".5">${circle(1200, 300, 230, ' stroke-width="1" stroke-dasharray="2 8"')}<ellipse cx="1200" cy="300" rx="420" ry="120" transform="rotate(-10 1200 300)" stroke-width=".8" stroke-dasharray="1 7"/></g>`);
-  out.push(ridge(r, { x0: 0, x1: W, base: 470, top: 380, rough: 22, step: 30, color: '#3d3456' }));
-  out.push(skyline(r, { x0: 0, x1: 900, base: 470, hMin: 20, hMax: 70, wMin: 16, wMax: 34, s: L.layers.far, sunX: 1200, detail: 2.4 }));
-  out.push(skyline(r, { x0: 1500, x1: W, base: 470, hMin: 20, hMax: 70, wMin: 16, wMax: 34, s: L.layers.far, sunX: 1200, detail: 2.4 }));
-  const s = L.layers.mid;
-  out.push(poly([[860, 600], [940, 470], [1060, 400], [1200, 380], [1340, 398], [1460, 460], [1560, 600]], fill(s.body)));
-  out.push(`<g transform="rotate(-34 1200 236)">${rect(1186, 100, 28, 150, fill('#2a2440'))}${rect(1180, 94, 40, 18, fill(s.body))}${line(1211, 116, 1211, 200, ` stroke="${L.brass.light}" stroke-width="1.6" opacity=".7"`)}${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
-  out.push(rect(1110, 300, 180, 90, fill(s.body)));
-  out.push(`<path d="M1100 302A100 100 0 0 1 1300 302Z" fill="${s.body}"/>`);
-  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -1.945)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
-  out.push(`<path d="${arc(1200, 302, 100, -1.44, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
-  out.push(`<defs><linearGradient id="slit-warm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.win}" stop-opacity="0"/><stop offset=".55" stop-color="${s.win}" stop-opacity="0"/><stop offset="1" stop-color="${s.win}" stop-opacity=".45"/></linearGradient><clipPath id="slit-clip"><path d="M1161 209.9A100 100 0 0 1 1213 202.8L1213 269L1161 269Z"/></clipPath></defs>`);
-  out.push(`<path d="M1161 209.9A100 100 0 0 1 1213 202.8L1213 269L1161 269Z" fill="#231e33"/>`);
-  out.push(`<path d="M1166 208A100 100 0 0 1 1206 202.2L1206 269L1166 269Z" fill="url(#slit-warm)"/>`);
-  out.push(`<g clip-path="url(#slit-clip)"><g transform="rotate(-34 1200 236)">${rect(1186, 209, 28, 30, fill('#2a2440'))}</g></g>`);
-  out.push(`<g clip-path="url(#slit-clip)"><rect x="1161" y="202" width="3" height="67" fill="${s.body}"/><rect x="1210" y="202" width="3" height="67" fill="${s.body}"/></g>`);
-  out.push(`<g transform="rotate(-34 1200 236)">${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
-  out.push(`<g fill="${s.win}">${[0, 1, 2, 3].map((i) => `<path d="M${1130 + i * 40} 370V338a8 8 0 0 1 16 0V370z"/>`).join('')}</g>`);
-  out.push(`<g fill="none" stroke="${L.brass.light}" stroke-width="2.4" opacity=".85">${circle(1420, 400, 34)}<ellipse cx="1420" cy="400" rx="34" ry="12"/><ellipse cx="1420" cy="400" rx="12" ry="34" transform="rotate(28 1420 400)"/></g>${rect(1416, 432, 8, 40, fill(s.body))}`);
-  out.push(skyline(r, { x0: -20, x1: 880, base: 600, hMin: 50, hMax: 140, wMin: 40, wMax: 90, s: L.layers.near, sunX: 1200, detail: 4, dark: true }));
-  out.push(skyline(r, { x0: 1540, x1: W + 20, base: 600, hMin: 50, hMax: 140, wMin: 40, wMax: 90, s: L.layers.near, sunX: 1200, detail: 4, dark: true }));
-  return frame('obs', [[0, '#141a33'], [0.45, '#2b2e52'], [0.75, '#57476b'], [1, '#8f6474']], out.join(''));
+  return frame('obs', [[0, '#121830'], [0.4, '#232849'], [0.7, '#3f3760'], [0.88, '#6a4d6c'], [1, '#8f6474']], drawObservatory());
 }
 
 function kite(x, y, color, [ax, ay], dur, delay) {
