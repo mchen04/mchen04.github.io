@@ -24,7 +24,6 @@ DISTRICTS = {
 }
 SECTIONS = {'work': 'works', 'ml': 'observatory', 'projects': 'market', 'writing': 'library', 'about': 'tower', 'resume': 'tower'}
 LABELS = {'work': 'Work', 'ml': 'ML & Research', 'projects': 'Projects & Fun', 'writing': 'Writing', 'about': 'About', 'resume': 'Resume', '404': '404'}
-META_KEYS = ('og:image', 'og:image:alt', 'twitter:image', 'twitter:image:alt', 'og:image:type', 'og:image:width', 'og:image:height')
 
 
 def shell():
@@ -71,12 +70,6 @@ def page_info(rel, src):
     if not district:
         return None, None
     return district, LABELS[key]
-
-
-def title_size(title, panel):
-    n = len(title)
-    base = 200 if n <= 10 else 160 if n <= 20 else 120 if n <= 35 else 90 if n <= 50 else 70
-    return max(48, base)
 
 
 def nb_title(t):

@@ -170,9 +170,8 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
     parts.push(rect(x - 1.5, top - 3, w + 3, 3, fill(s.shade)));
     if (r.chance(0.5)) parts.push(rect(x + w * r.range(0.15, 0.7), top - w * 0.3, w * 0.1, w * 0.3, fill(s.body)));
   }
-  const pointy = roof === 'spire' || roof === 'onion' || roof === 'cone';
-  if (pointy && r.chance(0.35)) {
-    const mast = Math.max(6, w * (pointy ? 0.45 : 0.4));
+  if ((roof === 'spire' || roof === 'onion' || roof === 'cone') && r.chance(0.35)) {
+    const mast = Math.max(6, w * 0.45);
     const fw = Math.max(5, w * 0.32);
     parts.push(line(cx, crown, cx, crown - mast, ` stroke="${s.body}" stroke-width="1.2"`));
     parts.push(pennant(cx, crown - mast, fw));

@@ -40,8 +40,10 @@ one wind (left to right) and one light source per scene. Hero animations pause o
 
 ## Helpers
 
-- `python3 tools/site/new_case.py <spec.json>` writes short project pages from `{slug, title, description, body_html, action?}`; add each to `projects/index.html` and `sitemap.xml`.
-- `python3 tools/site/emblems.py` adds a medallion beside each Work entry; give new entries an icon there.
+- `python3 tools/site/new_case.py <spec.json>` writes short project pages from `{slug, title, description, body_html, action?}` and their share picture; add each to `projects/index.html` and `sitemap.xml`.
+- `python3 tools/site/emblems.py` adds a medallion beside each Work entry and Work detail page; give new entries an icon there.
+- `python3 tools/site/social.py` redraws every page's share picture from its banner and the current title.
+- `python3 tools/site/icons.py` redraws `favicon.ico` and `apple-touch-icon.png` from `favicon.svg`.
 - `python3 tools/site/refresh_activity.py` refreshes the Projects activity chart from public GitHub events (needs `gh`).
 - `python3 tools/site/prune_css.py` removes styles no page uses; `--check` fails if any remain.
 
@@ -51,7 +53,9 @@ Serve with `python3 tools/check/serve.py 4173` (caching off), then:
 
 - `node tools/check/pages.mjs`: every page at desktop and phone width; fails on script errors, failed loads, sideways overflow, images without alt text, or a page without exactly one `h1`.
 - `node tools/check/a11y.mjs`: axe-core (WCAG 2.1 AA) on the main pages, day and night, at both widths.
-- `node tools/check/frames.mjs <out-dir>`: screenshots of every page's top and bottom at both widths for review.
+- `node tools/check/frames.mjs <out-dir> [base] [--theme day|night] [--reduced] [--width 1440] [--paths /a,/b]`: screenshots of every page's top and bottom, waiting for fonts and finite animations to settle.
+- `node tools/check/motion.mjs <out-dir> [base] [--paths …] [--width 1440] [--theme day|night] [--frames 8] [--gap 400]`: numbered banner and footer frames per page.
+- `node tools/check/worlddiff.mjs <baseline-rev>`: fails when a still plate loses or changes a shape except the reviewed allowances in the script.
 
 ## Resume
 
