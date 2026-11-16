@@ -1,5 +1,16 @@
 document.documentElement.classList.add('js');
 (function(){
+  var entry=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];
+  var reload=!!entry&&entry.type==='reload';
+  if('scrollRestoration' in history) history.scrollRestoration=reload?'manual':'auto';
+  if(!reload) return;
+  if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+  var top=function(){scrollTo(0,0);};
+  top();
+  addEventListener('DOMContentLoaded',top);
+  addEventListener('load',top);
+})();
+(function(){
   var forced=/[?&]time=(day|night)\b/.exec(location.search);
   var stored=null;
   try{stored=localStorage.getItem('time');}catch(error){}
