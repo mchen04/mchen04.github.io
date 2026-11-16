@@ -1,6 +1,6 @@
 import {
-  rng, n, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud,
-  star8, gear, sunGlyph, crescent, diamond, baluster,
+  rng, n, hash, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud,
+  baluster,
 } from './kit.mjs';
 
 export const SCENE = { w: 3200, h: 1000, horizon: 640, shore: 760 };
@@ -51,11 +51,7 @@ function far(r) {
 <linearGradient id="bay" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.water[0]}"/><stop offset=".55" stop-color="${L.water[1]}"/><stop offset="1" stop-color="${L.water[2]}"/></linearGradient>
 <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.sky[3]}" stop-opacity="0"/><stop offset="1" stop-color="${L.sky[3]}" stop-opacity=".55"/></linearGradient>
 </defs>`);
-  const g = L.gilt;
-  out.push(`<g fill="none" stroke="${g}" opacity=".55">${circle(SUN.x, SUN.y, 188, ' stroke-width="1.4"')}${circle(SUN.x, SUN.y, 236, ' stroke-width="1" stroke-dasharray="2 7"')}<ellipse cx="${SUN.x}" cy="${SUN.y}" rx="560" ry="150" transform="rotate(-13 ${SUN.x} ${SUN.y})" stroke-width="1" stroke-dasharray="1 6"/><ellipse cx="${SUN.x}" cy="${SUN.y}" rx="820" ry="240" transform="rotate(-13 ${SUN.x} ${SUN.y})" stroke-width=".8" stroke-dasharray="1 9" opacity=".7"/></g>`);
-  out.push(`<g fill="${g}" opacity=".8">${circle(SUN.x - 545, SUN.y + 95, 5)}${circle(SUN.x + 420, SUN.y - 152, 7)}${circle(SUN.x + 760, SUN.y - 85, 3.5)}${circle(SUN.x - 700, SUN.y + 236, 4)}</g>`);
   out.push(circle(SUN.x, SUN.y, SUN.r, ' fill="url(#sun-disc)"'));
-  out.push(circle(SUN.x, SUN.y, SUN.r + 6, ` fill="none" stroke="${L.sun.halo}" stroke-width="3" opacity=".6"`));
   out.push(`<g class="craters">${[[-52, -40, 26], [38, -62, 14], [60, 18, 30], [-30, 52, 18], [8, 10, 10], [-78, 20, 9]].map(([dx, dy, rr]) => circle(SUN.x + dx, SUN.y + dy, rr)).join('')}</g>`);
   out.push(floatingIsle(r, 1585, 318, 60, s));
   out.push(ridge(r, { x0: 0, x1: 3200, base: SCENE.horizon + 2, top: 585, rough: 16, step: 22, color: '#e8bb9a' }));
@@ -100,16 +96,18 @@ function clockTower(s) {
     poly([[cx + 32, base - 518], [cx + 36, base - 556], [cx + 40, base - 518]]),
   ];
   const out = [`<g fill="${TOWER.color}">${shape.join('')}</g>`];
-  out.push(star8(cx, base - 692, 11, fill(L.gilt)));
+  out.push(circle(cx, base - 662, 5, fill(L.gilt)), rect(cx - 0.8, base - 700, 1.6, 34, fill(L.gilt)), circle(cx, base - 682, 2.6, fill(L.gilt)));
   const g = L.gilt;
   out.push(`<g fill="none" stroke="${g}" stroke-width="1.4">${line(cx - 42, base - 200, cx + 42, base - 200)}${line(cx - 37, base - 300, cx + 37, base - 300)}${line(cx - 50, base - 52, cx + 50, base - 52)}</g>`);
-  out.push(crescent(cx - 3, base - 236, 8, g));
-  out.push(`<g fill="${g}">${diamond(cx, base - 26, 6, 10, '')}${diamond(cx - 28, base - 26, 4, 7, '')}${diamond(cx + 28, base - 26, 4, 7, '')}</g>`);
-  out.push(`<g fill="${L.sun.disc}">`
+  out.push(`<g fill="#4a3c4f" opacity=".55">${rect(cx - 50, base - 52, 34, 52)}${rect(cx - 42, base - 200, 26, 148)}${rect(cx - 37, base - 300, 22, 100)}${rect(cx - 34, base - 382, 20, 82)}${rect(cx - 44, base - 446, 26, 64)}${rect(cx - 32, base - 512, 18, 60)}${poly([[cx - 30, base - 518], [cx, base - 640], [cx - 8, base - 518]])}</g>`);
+  out.push(`<g fill="${s.shade}" opacity=".35">${[0, 1, 2, 3, 4, 5].map((i) => rect(cx - 30 + i * 12, base - 446 + 6, 1.4, 52)).join('')}</g>`);
+  out.push(`<g fill="#4a3c4f">`
     + `<path d="M${cx - 21} ${base - 456}V${base - 488}A9 9 0 0 1 ${cx - 3} ${base - 488}V${base - 456}Z"/>`
     + `<path d="M${cx + 3} ${base - 456}V${base - 488}A9 9 0 0 1 ${cx + 21} ${base - 488}V${base - 456}Z"/></g>`);
-  out.push(`<g fill="${s.shade}">${rect(cx - 12, base - 480, 24, 3)}</g>`);
-  out.push(`<path d="M${cx - 47} ${base - 14}V${base - 30}a7 7 0 0 1 14 0V${base - 14}Z" fill="${L.layers.mid.win}"/><path d="M${cx - 47} ${base - 14}V${base - 30}a7 7 0 0 1 14 0V${base - 14}" fill="none" stroke="${L.gilt}" stroke-width="1.2"/>`);
+  const bell = (bx) => `<path d="M${bx - 6} ${base - 462}Q${bx - 5} ${base - 476} ${bx} ${base - 478}Q${bx + 5} ${base - 476} ${bx + 6} ${base - 462}H${bx + 7.5}V${base - 460}H${bx - 7.5}V${base - 462}Z"/>${circle(bx, base - 457.5, 1.8)}`;
+  out.push(`<g fill="${L.gilt}">${bell(cx - 12)}${bell(cx + 12)}${rect(cx - 21, base - 482, 42, 1.6)}</g>`);
+  out.push(`<path d="M${cx - 10} ${base}V${base - 30}a10 10 0 0 1 20 0V${base}Z" fill="${L.layers.mid.win}"/><path d="M${cx - 10} ${base}V${base - 30}a10 10 0 0 1 20 0V${base}" fill="none" stroke="${L.gilt}" stroke-width="1.4"/>`);
+  out.push(`<g fill="${L.layers.mid.win}" opacity=".85">${rect(cx - 36, base - 36, 8, 14)}${rect(cx + 28, base - 36, 8, 14)}</g>`);
   out.push(`<g fill="none" stroke="${L.gilt}" stroke-width="1.2"><path d="M${cx - 24} ${base - 453}V${base - 488}A12 12 0 0 1 ${cx} ${base - 488}A12 12 0 0 1 ${cx + 24} ${base - 488}V${base - 453}"/></g>`);
   out.push(`<g fill="${L.gilt}">${Array.from({ length: 9 }, (_, i) => circle(cx - 32 + i * 8, base - 376, 1.6)).join('')}${Array.from({ length: 7 }, (_, i) => circle(cx - 24 + i * 8, base - 296, 1.4)).join('')}</g>`);
   const cy = base - 413;
@@ -153,9 +151,8 @@ function foundry(r, s) {
   const out = [];
   const x0 = 1540;
   const base = SCENE.shore;
-  out.push(circle(1600, 694, 52, fill(s.shade)));
-  out.push(gear(1600, 694, 64, 18, fill(s.shade)));
-  out.push(circle(1600, 694, 16, fill(s.body)));
+  out.push(rect(1586, 650, 76, base - 650, fill(s.shade)), `<ellipse cx="1624" cy="650" rx="38" ry="7" fill="${s.shade}"/>`);
+  out.push(`<g stroke="${s.body}" stroke-width="2">${[0, 1, 2, 3, 4].map((i) => line(1588 + i * 18, 646, 1588 + i * 18, base)).join('')}${line(1582, 676, 1666, 676)}${line(1582, 708, 1666, 708)}</g>`);
   for (const [cx, top, w] of [[1566, 560, 16], [1612, 586, 14], [1660, 600, 12]]) {
     out.push(rect(cx - w / 2, top, w, base - top, fill(s.body)));
     out.push(rect(cx - w / 2 - 3, top, w + 6, 6, fill(s.body)));
@@ -204,47 +201,41 @@ function library(s) {
 }
 
 function skyObservatory(r, s) {
-  const x = 1900;
+  const x = 1892;
   const y = 236;
-  const w = 130;
-  const rock = [[x, y]];
-  for (let i = 1; i < 8; i += 1) {
-    const t = i / 8;
-    rock.push([x + w * t, y + Math.sin(t * Math.PI) * w * r.range(0.5, 0.75)]);
-  }
-  rock.push([x + w, y]);
+  const w = 146;
   const cx = x + w * 0.5;
-  const out = [poly(rock, fill(s.shade))];
-  out.push(rect(cx - 30, y - 34, 60, 34, fill(s.body)));
-  out.push(`<path d="M${cx - 34} ${y - 32}A34 34 0 0 1 ${cx + 34} ${y - 32}Z" fill="${s.body}"/>`);
-  out.push(`<g transform="rotate(-40 ${cx} ${y - 32})">${rect(cx - 6, y - 110, 12, 46, fill('#3b2f45'))}${rect(cx - 8, y - 114, 16, 9, fill(s.body))}${rect(cx + 2.6, y - 104, 1.6, 36, fill(s.rim, ' opacity=".7"'))}${rect(cx - 9, y - 70, 18, 6, fill(L.brass.base, ' rx="1.5"'))}${rect(cx - 9, y - 70, 18, 1.4, fill(L.brass.light))}</g>`);
-  out.push(`<path d="${arc(cx, y - 32, 34, -Math.PI + 0.1, -0.1)}" fill="none" stroke="${s.rim}" stroke-width="1.4"/>`);
-  out.push(`<g fill="${s.win}">${rect(cx - 18, y - 24, 7, 11)}${rect(cx + 10, y - 24, 7, 11)}</g>`);
-  out.push(rect(x + 16, y - 16, 16, 16, fill(s.body)), poly([[x + 14, y - 16], [x + 24, y - 34], [x + 34, y - 16]], fill(s.body)));
-  out.push(`<g fill="none" stroke="${s.body}" stroke-width="2.4">${circle(x + w - 18, y - 22, 14)}<ellipse cx="${x + w - 18}" cy="${y - 22}" rx="14" ry="5"/></g>${rect(x + w - 20, y - 8, 4, 8, fill(s.body))}`);
-  out.push(line(x + 2, y, x + w - 2, y, ` stroke="${s.rim}" stroke-width="1.3" opacity=".85"`));
+  const under = [[x + w, y + 4]];
+  for (let i = 1; i < 8; i += 1) {
+    const t = 1 - i / 8;
+    const drop = Math.sin(t * Math.PI) ** 0.8 * w * r.range(0.42, 0.62);
+    under.push([x + w * t + (hash(i, w) - 0.5) * 8, y + drop]);
+  }
+  under.push([x, y + 4]);
+  const top = [[x - 4, y + 4], [x + 6, y - 2], [x + w * 0.5, y - 5], [x + w - 6, y - 2], [x + w + 4, y + 4]];
+  const out = [poly([...top, ...under], fill(s.shade))];
+  const tip = under.reduce((a, b) => (b[1] > a[1] ? b : a));
+  out.push(poly([[x + w * 0.2, y + 10], [x + w * 0.62, y + 10], [tip[0] + 4, tip[1] - 2], [tip[0] - 10, tip[1] - 22]], fill(TOWER.color, ' opacity=".35"')));
+  out.push(`<g fill="none" stroke="${s.body}" stroke-width="1.4" opacity=".8"><path d="M${x + 10} ${y + 16}Q${cx} ${y + 26} ${x + w - 12} ${y + 14}M${x + 24} ${y + 34}Q${cx + 8} ${y + 46} ${x + w - 30} ${y + 30}"/></g>`);
+  out.push(poly(top.concat([[x + w + 4, y + 9], [x - 4, y + 9]]), fill(s.body)));
+  out.push(`<path d="M${x - 4} ${y + 4}L${x + 6} ${y - 2}L${x + w * 0.5} ${y - 5}L${x + w - 6} ${y - 2}L${x + w + 4} ${y + 4}" fill="none" stroke="${s.rim}" stroke-width="1.4" opacity=".9"/>`);
+  out.push(`<path d="M${x + w + 4} ${y + 4}${under.map(([px, py]) => `L${n(px)} ${n(py)}`).slice(0, 4).join('')}" fill="none" stroke="${s.rim}" stroke-width="1.2" opacity=".55"/>`);
+  out.push(rect(x + 18, y - 22, 22, 22, fill(s.body)), poly([[x + 15, y - 22], [x + 29, y - 38], [x + 43, y - 22]], fill(s.body)));
+  out.push(rect(x + 26, y - 14, 6, 9, fill(s.win)));
+  const dy = y - 44;
+  out.push(rect(cx - 30, dy, 60, y - dy, fill(s.body)));
+  out.push(rect(cx - 33, dy - 4, 66, 5, fill(s.shade)));
+  out.push(`<g fill="${s.win}"><path d="M${cx - 20} ${y - 6}V${y - 24}a5 5 0 0 1 10 0V${y - 6}Z"/><path d="M${cx + 10} ${y - 6}V${y - 24}a5 5 0 0 1 10 0V${y - 6}Z"/></g>`);
+  const R = 32;
+  const dome = `M${cx - R} ${dy - 4}A${R} ${R} 0 0 1 ${cx + R} ${dy - 4}Z`;
+  out.push(`<path d="${dome}" fill="${s.body}"/>`);
+  out.push(`<path d="M${cx - 9} ${dy - 4}L${cx - 6} ${dy - 4 - R + 1}H${cx + 6}L${cx + 9} ${dy - 4}Z" fill="${s.win}"/>`);
+  out.push(`<g transform="rotate(-24 ${cx} ${dy - 12})">${rect(cx - 7, dy - 66, 14, 56, fill('#3b2f45', ' rx="1.5"'))}${rect(cx - 9, dy - 70, 18, 12, fill('#3b2f45', ' rx="1.5"'))}${rect(cx + 3.6, dy - 64, 1.6, 50, fill(s.rim, ' opacity=".7"'))}${rect(cx - 8, dy - 40, 16, 5, fill(L.brass.base))}</g>`);
+  out.push(`<path d="${arc(cx, dy - 4, R, -1.2, -0.12)}" fill="none" stroke="${s.rim}" stroke-width="1.6"/>`);
+  out.push(`<path d="${arc(cx, dy - 4, R, -Math.PI + 0.12, -1.95)}" fill="none" stroke="${s.rim}" stroke-width="1" opacity=".5"/>`);
+  out.push(rect(cx + 28, dy, 1.4, y - dy, fill(s.rim, ' opacity=".7"')));
   return out.join('');
 }
-
-function spotLabel({ section, at }) {
-  const lw = section.length * 11 + 64;
-  const [lx, ly] = at;
-  return `<g class="spot-label">${rect(lx, ly + 10, lw, 44, ' rx="3" class="spot-card"')}`
-    + `<text x="${n(lx + 18)}" y="${n(ly + 39)}" class="spot-place">${section} →</text></g>`;
-}
-
-function spotWrap(href, body) {
-  const spot = SPOTS.find((item) => item.href === href);
-  return `<a class="spot" href="${href}" tabindex="-1" aria-hidden="true"><g class="spot-body">${body}</g>${spotLabel(spot)}</a>`;
-}
-
-export const SPOTS = [
-  { href: '/work/', section: 'Work', at: [1480, 460] },
-  { href: '/ml/', section: 'ML & Research', at: [1876, 28] },
-  { href: '/projects/', section: 'Projects & Fun', at: [1100, 712] },
-  { href: '/writing/', section: 'Writing', at: [1940, 420] },
-  { href: '/about/', section: 'About', at: [1856, 300] },
-];
 
 function mid(r) {
   const s = L.layers.mid;
@@ -268,12 +259,12 @@ function mid(r) {
   out.push(skyline(r, { x0: 880, x1: 1540, base: SCENE.shore, hMin: 34, hMax: 104, wMin: 26, wMax: 58, s, sunX: SUN.x, detail: 3.2, roofs: ['gable', 'gable', 'mansard', 'flat', 'cone', 'dome'] }));
   out.push(`<defs><linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.sky[3]}" stop-opacity="0"/><stop offset="1" stop-color="${L.sky[3]}" stop-opacity=".55"/></linearGradient></defs>`);
   out.push(rect(0, 650, 1540, 112, ' fill="url(#mist)"'));
-  out.push(spotWrap('/work/', foundry(r, s)));
+  out.push(foundry(r, s));
   out.push(causeway(s));
-  out.push(spotWrap('/about/', clockTower(s)));
-  out.push(spotWrap('/writing/', library(LANDMARK)));
+  out.push(clockTower(s));
+  out.push(library(LANDMARK));
   out.push(skyline(r, { x0: 2272, x1: 2300, base: SCENE.shore, hMin: 50, hMax: 80, wMin: 26, wMax: 30, s, sunX: SUN.x, detail: 3.2 }));
-  out.push(spotWrap('/ml/', skyObservatory(r, LANDMARK)));
+  out.push(skyObservatory(r, LANDMARK));
   out.push(skyline(r, { x0: 2640, x1: 3210, base: SCENE.shore, hMin: 50, hMax: 210, wMin: 24, wMax: 60, s, sunX: SUN.x, detail: 3.2 }));
   out.push(rect(2290, 650, 910, 112, ' fill="url(#mist)"'));
   out.push(`<g class="code-notes"><text class="code-note" x="1752" y="170" text-anchor="end">clockTower(s)</text><text class="code-note" x="1965" y="356" text-anchor="middle">skyObservatory(r, s)</text><text class="code-note" x="2170" y="462" text-anchor="middle">library(s)</text><text class="code-note" x="1532" y="694" text-anchor="end">foundry(r, s)</text><text class="code-note" x="1440" y="792" text-anchor="middle">skyline(r, { x0: 880, x1: 1540 })</text><text class="code-note" x="1930" y="616" text-anchor="start">SUN.r = 150</text><g class="code-note dim"><path d="M1866 52V742M1860 52h12M1860 742h12"/></g><text class="code-note" x="1880" y="400" text-anchor="middle" transform="rotate(-90 1880 400)">h = 690</text></g>`);
@@ -288,7 +279,6 @@ function lampPost(x, top) {
 function lanterns(r, x0, x1, y, sag, count, posts = [true, true]) {
   const out = [];
   const d = `M${x0} ${y}Q${(x0 + x1) / 2} ${y + sag * 2} ${x1} ${y}`;
-  out.push(`<path d="${d}" fill="none" stroke="transparent" stroke-width="28" pointer-events="stroke"/>`);
   if (posts[0]) out.push(lampPost(x0, y));
   if (posts[1]) out.push(lampPost(x1, y));
   out.push(`<path d="${d}" fill="none" stroke="#3b3242" stroke-width="1.4"/>`);
@@ -325,7 +315,7 @@ function near(r) {
   out.push(`<g class="bob">${boat(1720, 884, s, 0.9)}</g>`);
   out.push(`<g class="bob b2">${boat(1880, 890, s, 0.7)}</g>`);
   out.push(skyline(r, { x0: 2120, x1: 3220, base: 1000, hMin: 110, hMax: 200, wMin: 60, wMax: 120, s, sunX: SUN.x, detail: 6, dark: true, roofs: ['gable', 'gable', 'mansard', 'flat', 'gable', 'spire'], gap: [-8, 0], cap: (mx) => (mx < 2330 ? 70 : 200) }));
-  out.push(spotWrap('/projects/', lanterns(r, 1040, 1190, 836, 16, 8, [true, false]) + lanterns(r, 1190, 1380, 836, 20, 10)));
+  out.push(lanterns(r, 1040, 1190, 836, 16, 8, [true, false]) + lanterns(r, 1190, 1380, 836, 20, 10));
   out.push(lanterns(r, 2220, 2400, 840, 18, 9));
   return svg('flat near', '0 0 3200 1000', `<g class="shift">${out.join('')}</g>`);
 }
@@ -335,7 +325,7 @@ function rail() {
   const out = [rect(0, 0, 3200, 16, fill(s.body)), rect(0, 0, 3200, 2.2, fill('#efbf78')), rect(0, 16, 3200, 3, fill(s.shade))];
   for (let i = 0, x = 4; x < 3200; i += 1, x += 38) {
     if (i % 13 === 6) {
-      out.push(rect(x - 6, 16, 38, 72, fill(s.body)), rect(x - 2, 24, 30, 56, ` fill="none" stroke="${L.gilt}" stroke-width="1.2"`), diamond(x + 13, 52, 7, 13, fill(L.gilt)));
+      out.push(rect(x - 6, 16, 38, 72, fill(s.body)), rect(x - 2, 24, 30, 56, ` fill="none" stroke="${L.gilt}" stroke-width="1.2" opacity=".7"`));
     } else out.push(baluster(x, 19, 88, 26, s.body));
   }
   out.push(rect(0, 86, 3200, 14, fill(s.body)), rect(0, 86, 3200, 1.6, fill('#d9a35e', ' opacity=".7"')));
@@ -354,12 +344,8 @@ function pillar() {
   out.push(rect(232, 70, 188, 18, fill(s.body)), rect(240, 88, 180, 10, fill(s.shade)), rect(232, 70, 188, 2, fill('#f2c27c')));
   out.push(rect(240, 40, 180, 30, fill(s.body)), rect(240, 40, 180, 1.6, fill('#f2c27c', ' opacity=".8"')));
   out.push(`<g fill="none" stroke="${g}" stroke-width="1.6">${rect(276, 124, 118, 760)}${rect(284, 132, 102, 744, ' stroke-width=".8" opacity=".7"')}</g>`);
-  out.push(sunGlyph(335, 214, 40, g));
-  out.push(crescent(335, 336, 30, g));
-  out.push(star8(335, 456, 36, fill(g)));
-  out.push(`<g fill="none" stroke="${g}" stroke-width="1.6">${gear(335, 580, 36, 12, '')}${circle(335, 580, 12)}</g>`);
-  out.push(`<g fill="${g}">${diamond(335, 690, 10, 18, '')}${diamond(335, 742, 7, 12, '')}${diamond(335, 782, 5, 8, '')}</g>`);
-  out.push(`<g stroke="${g}" stroke-width="1" opacity=".75">${[0, 1, 2, 3].map((i) => line(300 + i * 23.3, 812, 300 + i * 23.3, 866)).join('')}</g>`);
+  out.push(`<g fill="${s.shade}">${[0, 1, 2, 3, 4].map((i) => rect(296 + i * 17.5, 150, 9, 712, ' rx="4.5"')).join('')}</g>`);
+  out.push(`<g fill="#3a3242" opacity=".9">${[0, 1, 2, 3, 4].map((i) => rect(296 + i * 17.5, 150, 2, 712)).join('')}</g>`);
   out.push(`<path d="M252 150C204 150 172 156 156 168C146 176 144 188 150 194" fill="none" stroke="${s.body}" stroke-width="9" stroke-linecap="round"/>`);
   out.push(`<path d="M252 150C204 150 172 156 156 168" fill="none" stroke="#e9b066" stroke-width="1.2" opacity=".7"/>`);
   out.push(circle(150, 196, 4, ` fill="none" stroke="${s.body}" stroke-width="2.4"`));
@@ -402,7 +388,7 @@ function orrery() {
     + `<circle class="planet p1" r="6" fill="${b.light}" style="offset-path:path('${orbit(46, 12)}')"/>`
     + `<circle class="planet p2" r="9" fill="#9fb3c9" style="offset-path:path('${orbit(78, 20)}')"/>`
     + `<circle class="planet p3" r="7" fill="#d98b6a" style="offset-path:path('${orbit(112, 30)}')"/></g>`);
-  out.push(star8(cx, cy - 136, 10, fill(b.light)));
+  out.push(circle(cx, cy - 130, 6, fill(b.light)));
   out.push(`<text class="code-note" x="150" y="296" text-anchor="middle">orrery()</text>`);
   return `<svg class="orrery" viewBox="0 0 300 300" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">${out.join('')}</svg>`;
 }
@@ -465,19 +451,6 @@ function ferry() {
     + `<path d="M4 33h52" stroke="${L.glint}" stroke-width="1.2" opacity=".7"/></g>`);
 }
 
-function motes() {
-  const r = rng(321);
-  return Array.from({ length: 16 }, (_, i) => {
-    const x = SUN.x + r.range(-520, 420);
-    const y = SUN.y + r.range(-180, 200);
-    return `<div class="mote" style="--x:${n(x)};--y:${n(y)};--d:${n(r.range(14, 26))}s;--t:${n(-r.range(0, 26))}s;--s:${n(r.range(2.2, 4.6))}"></div>`;
-  }).join('');
-}
-
-function shootingStar() {
-  return actor('shooting', 940, 14, 220, 58, '<path d="M0 0L220 58" stroke="url(#meteor)" stroke-width="2.6" stroke-linecap="round"/><defs><linearGradient id="meteor" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff6dc" stop-opacity="0"/><stop offset="1" stop-color="#fff6dc"/></linearGradient></defs>');
-}
-
 export function heroMarkup(seed = 7) {
   const r = rng(seed);
   const farSvg = far(r);
@@ -487,8 +460,8 @@ export function heroMarkup(seed = 7) {
   return [
     `<div class="world" aria-hidden="true">`,
     `<div class="layer sky" data-depth="1"><div class="rays"></div><div class="glow"></div></div>`,
-    `<div class="layer far" data-depth=".8">${farSvg}${shootingStar()}${cloudSet}${glints()}<div class="ring"></div></div>`,
-    `<div class="layer mid" data-depth=".55"><div class="bloom"></div>${motes()}${airship()}${birds()}${midSvg}${smoke()}${walkers()}${ferry()}</div>`,
+    `<div class="layer far" data-depth=".8">${farSvg}${cloudSet}${glints()}</div>`,
+    `<div class="layer mid" data-depth=".55"><div class="bloom"></div>${airship()}${birds()}${midSvg}${smoke()}${walkers()}${ferry()}</div>`,
     `<div class="layer near" data-depth=".3">${nearSvg}</div>`,
     `<div class="layer front" data-depth="0">${rail()}${pillar()}${orrery()}</div>`,
     `<div class="grain"></div>`,
