@@ -34,7 +34,14 @@ if (preview > 0) {
   mkdirSync(join(root, 'world'), { recursive: true });
   for (const [name, draw] of Object.entries(PLATES)) writeFileSync(join(root, 'world', `${name}.svg`), draw());
   for (const name of ['works', 'market', 'library']) writeFileSync(join(root, 'world', `${name}-night.svg`), nightPlate(PLATES[name]()));
-  const still = (svg) => svg.replace(/<style>.*?<\/style>/s, '');
+  const winD = 'M1100 386h14v18h-14zM1136 386h14v18h-14zM1172 386h14v18h-14zM1220 386h14v18h-14zM1256 386h14v18h-14zM1292 386h14v18h-14z';
+  const litWin = '<path d="M1172 386h14v18h-14zM1256 386h14v18h-14z" fill="#ffd78f"/>';
+  const unwrittenNight = nightPlate(PLATES.unwritten(), 24).replace(`<path d="${winD}" fill="#8d7a9c"/>`, `<path d="${winD}" fill="#2a2440"/>${litWin}`);
+  writeFileSync(join(root, 'world', 'unwritten-night.svg'), unwrittenNight);
+  const duskNightSky = '<stop offset="0" stop-color="#1b1720"/><stop offset=".1" stop-color="#241f36"/><stop offset=".24" stop-color="#5a3f5c"/><stop offset=".4" stop-color="#8a5e78"/><stop offset=".62" stop-color="#3d3358"/><stop offset="1" stop-color="#16131f"/>';
+  const duskNight = nightPlate(PLATES.dusk(), 0).replace(/(<linearGradient id="dusk-sky"[^>]*>).*?(<\/linearGradient>)/, `$1${duskNightSky}$2`).replace(/(<path class="pl-pennant"[^>]*fill=")[^"]*(")/g, '$1#a8574a$2');
+  writeFileSync(join(root, 'world', 'dusk-night.svg'), duskNight);
+  const still = (svg) => svg.replace(/<style>.*?<\/style>/gs, '').replace(/ class="(?:pl-[a-z-]+|flick)"/g, '').replace(/ style="[^"]*animation-[^"]*"/g, '');
   for (const file of readdirSync(join(root, 'world')).filter((f) => f.endsWith('.svg') && !f.endsWith('-still.svg'))) {
     writeFileSync(join(root, 'world', file.replace(/\.svg$/, '-still.svg')), still(readFileSync(join(root, 'world', file), 'utf8')));
   }

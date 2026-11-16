@@ -19,6 +19,13 @@ export const n = (v) => {
   return Object.is(r, -0) ? '0' : String(r);
 };
 
+export const hash = (a, b = 0) => {
+  let h = (Math.imul(Math.round(a * 8) | 0, 0x9e3779b1) ^ (Math.round(b * 8) | 0)) >>> 0;
+  h = Math.imul(h ^ (h >>> 16), 0x21f0aaad) >>> 0;
+  h = Math.imul(h ^ (h >>> 15), 0x735a2d97) >>> 0;
+  return ((h ^ (h >>> 15)) >>> 0) / 4294967296;
+};
+
 export const pts = (list) => list.map(([x, y]) => `${n(x)} ${n(y)}`).join(' ');
 
 export const poly = (list, attrs = '') => `<path d="M${pts(list)}Z"${attrs}/>`;
@@ -80,6 +87,7 @@ function windows(r, x, y, w, h, s, size, dark) {
   const lit = [];
   const unlit = [];
   const flick = [];
+  const late = [];
   const cw = size * 2.2;
   const ch = size * 3;
   const cols = Math.max(1, Math.floor((w - size) / cw));
@@ -99,11 +107,13 @@ function windows(r, x, y, w, h, s, size, dark) {
         ? `M${n(wx)} ${n(wy + size * 1.5)}V${n(wy + hw)}a${n(hw)} ${n(hw)} 0 0 1 ${n(size)} 0V${n(wy + size * 1.5)}z`
         : `M${n(wx)} ${n(wy)}h${n(size)}v${n(size * 1.45)}h${n(-size)}z`;
       if (dark && r.chance(0.07)) flick.push(`<path class="flick" style="animation-delay:${n(-r.range(0, 40))}s;animation-duration:${n(r.range(14, 34))}s" d="${d}"/>`);
+      else if (on && dark && s.late && hash(wx, wy) < s.late) late.push(`<path class="pl-on" style="animation-delay:${n(0.4 + hash(wy, wx) * 6.6)}s" d="${d}"/>`);
       else (on ? lit : unlit).push(d);
     }
   }
   return (unlit.length ? `<path d="${unlit.join('')}" fill="${s.shade}"/>` : '') + (lit.length ? `<path d="${lit.join('')}" fill="${s.win}"/>` : '')
-    + (flick.length ? `<g fill="${s.win}">${flick.join('')}</g>` : '');
+    + (flick.length ? `<g fill="${s.win}">${flick.join('')}</g>` : '')
+    + (late.length ? `<g fill="${s.win}">${late.join('')}</g>` : '');
 }
 
 const ROOFS = ['flat', 'gable', 'gable', 'mansard', 'spire', 'dome', 'cone', 'stepped', 'gable', 'onion', 'gable'];
@@ -115,6 +125,7 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
   let crown = top;
   const rim = [];
   const cx = x + w / 2;
+  const pennant = (px, py, fw) => `<path class="pl-pennant" style="animation-duration:${n(0.62 + ((Math.abs(px) * 0.37) % 0.7))}s;animation-delay:${n(-((Math.abs(px) * 0.11) % 1.2))}s" d="M${n(px)} ${n(py)}L${n(px + fw)} ${n(py + fw * 0.22)}L${n(px)} ${n(py + fw * 0.44)}Z" fill="${s.flag || '#a8574a'}"/>`;
   if (roof === 'gable') {
     const rh = w * r.range(0.35, 0.6);
     parts.push(poly([[x - 2, top], [cx, top - rh], [x + w + 2, top]], fill(s.body)));
@@ -163,7 +174,7 @@ export function building(r, { x, w, h, base, s, sunX, detail = 1, dark = false, 
     const mast = Math.max(6, w * 0.45);
     const fw = Math.max(5, w * 0.32);
     parts.push(line(cx, crown, cx, crown - mast, ` stroke="${s.body}" stroke-width="1.2"`));
-    parts.push(poly([[cx, crown - mast], [cx + fw, crown - mast + fw * 0.22], [cx, crown - mast + fw * 0.44]], fill(s.flag || '#a8574a')));
+    parts.push(pennant(cx, crown - mast, fw));
   }
   if ((roof === 'gable' || roof === 'mansard' || roof === 'flat') && r.chance(0.45)) {
     const cw = Math.max(3, w * 0.09);

@@ -1,7 +1,7 @@
-import { rng, n, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, star8, gear, clockTowerShape } from './kit.mjs';
+import { rng, n, hash, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, star8, gear, clockTowerShape } from './kit.mjs';
 
 const W = 2400;
-const STYLE = '<style>@media (prefers-reduced-motion:no-preference){.pl-drift,.pl-plume,.pl-spin,.pl-rev,.pl-train,.pl-twinkle,.pl-flutter,.pl-sway,.pl-bulbs,.pl-fog,.flick{transform-box:fill-box;transform-origin:center}.pl-drift{animation:pc 140s linear infinite}.pl-drift:nth-of-type(2n){animation-duration:180s;animation-delay:-70s}.pl-plume{transform-origin:0 100%;animation:pp 7s ease-in-out infinite alternate}.pl-spin{animation:ps 60s linear infinite}.pl-rev{animation:ps 30s linear infinite reverse}.pl-mill{transform-box:view-box;animation:ps 24s linear infinite}.pl-train{animation:pt 46s linear infinite}.pl-twinkle{animation:pw 3.8s ease-in-out infinite alternate}.pl-twinkle:nth-of-type(2n){animation-delay:-1.4s}.pl-twinkle:nth-of-type(3n){animation-duration:5.2s}.pl-flutter{animation:pf 12s ease-in-out infinite alternate}.pl-flutter:nth-of-type(2n){animation-duration:9s;animation-delay:-3s}.pl-sway{transform-origin:50% 100%;animation:pk 6s ease-in-out infinite alternate}.pl-sway.b{animation-duration:7.5s;animation-delay:-2s}.pl-bulbs{animation:pb 3.4s ease-in-out infinite alternate}.pl-draw{animation:pr 3s linear infinite}.pl-fog{animation:pd 40s ease-in-out infinite alternate}.flick{animation:pl 24s step-end infinite}@keyframes pd{to{transform:translateX(70px)}}@keyframes pc{0%{transform:translateX(-90px);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(90px);opacity:0}}@keyframes pp{from{opacity:.6;transform:scale(.97)}to{opacity:1;transform:scale(1.05)}}@keyframes ps{to{transform:rotate(360deg)}}@keyframes pt{from{transform:translateX(1300px)}to{transform:translateX(-1700px)}}@keyframes pw{from{opacity:.35}to{opacity:1}}@keyframes pf{from{transform:translate(0,0) rotate(0)}to{transform:translate(-18px,-26px) rotate(14deg)}}@keyframes pk{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}@keyframes pb{from{opacity:.7}to{opacity:1}}@keyframes pr{to{stroke-dashoffset:-24}}@keyframes pl{0%{opacity:1}46%{opacity:.1}71%{opacity:1}}}</style>';
+const STYLE = '<style>@media (prefers-reduced-motion:no-preference){.pl-drift,.pl-puff,.pl-spin,.pl-rev,.pl-train,.pl-twinkle,.pl-flutter,.pl-bulbs,.pl-fog,.pl-pennant,.pl-on,.flick{transform-box:fill-box;transform-origin:center}.pl-drift{animation:pc 140s linear infinite}.pl-drift:nth-of-type(2n){animation-duration:180s;animation-delay:-70s}.pl-puff{animation:psmoke 7s linear infinite}.pl-spin{animation:ps 60s linear infinite}.pl-rev{animation:ps 30s linear infinite reverse}.pl-mill{transform-box:view-box;animation:ps 24s linear infinite}.pl-train{animation:pt 46s linear infinite}.pl-twinkle{animation:pw 3.8s ease-in-out infinite alternate}.pl-twinkle:nth-of-type(2n){animation-delay:-1.4s}.pl-twinkle:nth-of-type(3n){animation-duration:5.2s}.pl-flutter{animation:pf 15s linear infinite}.pl-kite{transform-box:view-box;animation:pk 6.4s ease-in-out infinite alternate}.pl-tail{transform-box:view-box;animation:ptail 3s ease-in-out infinite alternate}.pl-bulbs{animation:pb 3.4s ease-in-out infinite alternate}.pl-draw{animation:pr 3s linear infinite}.pl-fog{animation:pd 40s ease-in-out infinite alternate}.pl-pennant{transform-origin:0 50%;animation:penn .9s ease-in-out infinite alternate}.pl-on{animation:pn 1.6s ease-out both}.pl-lamp{animation:pn 2.6s ease-out 1.1s both}.flick{animation:pl 24s step-end infinite}@keyframes pd{to{transform:translateX(70px)}}@keyframes pc{0%{transform:translateX(-90px);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(90px);opacity:0}}@keyframes psmoke{0%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.5)}12%{opacity:.7}100%{opacity:0;transform:translate(38px,-70px) scale(2.1)}}@keyframes ps{to{transform:rotate(360deg)}}@keyframes pt{from{transform:translateX(1300px)}to{transform:translateX(-1700px)}}@keyframes pw{from{opacity:.35}to{opacity:1}}@keyframes pf{0%{opacity:0;transform:translate(0,0) rotate(0)}10%{opacity:1}78%{opacity:1}100%{opacity:0;transform:translate(120px,-34px) rotate(230deg)}}@keyframes pk{from{transform:rotate(-.7deg)}to{transform:rotate(.9deg)}}@keyframes ptail{from{transform:rotate(-3.5deg)}to{transform:rotate(4.5deg)}}@keyframes pb{from{opacity:.7}to{opacity:1}}@keyframes pr{to{stroke-dashoffset:-24}}@keyframes pl{0%{opacity:1}46%{opacity:.1}71%{opacity:1}}@keyframes penn{from{transform:skewY(-20deg) scaleX(.82)}to{transform:skewY(22deg) scaleX(1.12)}}@keyframes pn{from{opacity:0}}}</style>';
 const H = 600;
 
 function frame(id, stops, body) {
@@ -40,16 +40,18 @@ function water(id, y, stops, glintX, glint, r) {
 
 function smokePlume(x, y, color, r) {
   const puffs = [`<defs><filter id="soft${n(x)}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>`];
+  const dur = 6.2 + hash(x, y) * 3.2;
   let px = x;
   let py = y;
   let pr = 9;
   for (let i = 0; i < 7; i += 1) {
-    puffs.push(circle(px, py, pr, ` opacity="${n(0.75 - i * 0.09)}"`));
+    const motion = i === 0 ? '' : ` class="pl-puff" style="--dx:${n(x - px)}px;--dy:${n(y - py)}px;animation-duration:${n(dur)}s;animation-delay:${n(-(i / 7) * dur)}s"`;
+    puffs.push(circle(px, py, pr, `${motion} opacity="${n(0.75 - i * 0.09)}"`));
     px += r.range(10, 22);
     py -= r.range(12, 20);
     pr *= 1.22;
   }
-  return `${puffs.shift()}<g class="pl-plume"><g fill="${color}" filter="url(#soft${n(x)})">${puffs.join('')}</g></g>`;
+  return `${puffs.shift()}<g fill="${color}" filter="url(#soft${n(x)})">${puffs.join('')}</g>`;
 }
 
 function works() {
@@ -64,16 +66,17 @@ function works() {
   out.push(`<g class="pl-drift">${cloud(r, { x: 200, y: 120, w: 360, h: 70, c: L.cloud, lx: 1 })}</g>`);
   out.push(ridge(r, { x0: 0, x1: W, base: 420, top: 360, rough: 14, step: 24, color: '#e6b998' }));
   out.push(skyline(r, { x0: 0, x1: W, base: 422, hMin: 10, hMax: 50, wMin: 12, wMax: 30, s: far, sunX: 760 }));
-  for (const [x, top] of [[880, 230], [960, 270], [1460, 210], [1540, 250], [1660, 280]]) out.push(smokePlume(x + 10, top - 6, '#f4dfc6', r));
+  const chimneys = [[870, 230, 26], [950, 270, 22], [1450, 210, 28], [1530, 250, 22], [1650, 280, 20]];
+  for (const [x, top, w] of chimneys) out.push(smokePlume(x + w / 2, top, '#c2a09a', r));
   out.push(circle(1200, 380, 150, fill(mid.shade)));
-  out.push(`<g class="pl-spin">${gear(1200, 380, 176, 24, fill(mid.shade))}</g>`);
-  out.push(`<g class="pl-rev">${gear(1200, 380, 60, 10, fill(mid.body))}</g>`);
-  out.push(circle(1200, 380, 18, fill(mid.shade)));
+  const spokes = [];
   for (let i = 0; i < 6; i += 1) {
     const a = (i / 6) * Math.PI * 2;
-    out.push(line(1200 + 60 * Math.cos(a), 380 + 60 * Math.sin(a), 1200 + 140 * Math.cos(a), 380 + 140 * Math.sin(a), ` stroke="${mid.body}" stroke-width="14"`));
+    spokes.push(line(1200 + 60 * Math.cos(a), 380 + 60 * Math.sin(a), 1200 + 140 * Math.cos(a), 380 + 140 * Math.sin(a), ` stroke="${mid.body}" stroke-width="14"`));
   }
-  for (const [x, top, w] of [[870, 230, 26], [950, 270, 22], [1450, 210, 28], [1530, 250, 22], [1650, 280, 20]]) {
+  out.push(`<g class="pl-spin">${gear(1200, 380, 176, 24, fill(mid.shade))}${gear(1200, 380, 60, 10, fill(mid.body))}${spokes.join('')}</g>`);
+  out.push(circle(1200, 380, 18, fill(mid.shade)));
+  for (const [x, top, w] of chimneys) {
     out.push(rect(x, top, w, 420 - top, fill(mid.body)), rect(x - 4, top, w + 8, 10, fill(mid.body)), rect(x + w - 2, top + 10, 2, 300 - top, fill(mid.rim, ' opacity=".7"')));
   }
   let d = 'M0 470V420';
@@ -94,7 +97,7 @@ function works() {
   out.push(line(0, 452, W, 452, ` stroke="${near.rim}" stroke-width="2"`));
   const train = [`<path d="M1010 452v-34h70v-14h16v14h20l14 34z" fill="${near.shade}"/>`, rect(1032, 392, 14, 26, fill(near.shade))];
   for (let i = 0; i < 4; i += 1) train.push(rect(1140 + i * 92, 414, 84, 38, fill(near.shade, ' rx="4"')), `<path d="M${1150 + i * 92} 424h64v10h-64z" fill="${near.win}"/>`);
-  out.push(`<g class="pl-train">${train.join('')}${smokePlume(1040, 382, '#f6e7d3', r)}</g>`);
+  out.push(`<g class="pl-train">${train.join('')}${smokePlume(1039, 392, '#c9aaa4', r)}</g>`);
   out.push(rect(1500, 120, 10, 332, fill(mid.shade)), rect(1500, 120, 260, 10, fill(mid.shade)), line(1740, 130, 1740, 300, ` stroke="${mid.shade}" stroke-width="2"`), rect(1726, 300, 28, 22, fill(mid.shade)));
   return frame('works', [[0, '#f6ecd8'], [0.5, '#f3d7aa'], [0.7, '#eebd8d'], [1, '#e5a07d']], out.join(''));
 }
@@ -118,11 +121,17 @@ function observatory() {
   out.push(skyline(r, { x0: 1500, x1: W, base: 470, hMin: 20, hMax: 70, wMin: 16, wMax: 34, s: L.layers.far, sunX: 1200, detail: 2.4 }));
   const s = L.layers.mid;
   out.push(poly([[860, 600], [940, 470], [1060, 400], [1200, 380], [1340, 398], [1460, 460], [1560, 600]], fill(s.body)));
-  out.push(`<g transform="rotate(-34 1200 236)">${rect(1186, 100, 28, 150, fill('#2a2440'))}${rect(1180, 94, 40, 18, fill(s.body))}${line(1211, 116, 1211, 192, ` stroke="${L.brass.light}" stroke-width="1.6" opacity=".7"`)}${rect(1178, 192, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 192, 44, 2, fill(L.brass.light))}</g>`);
+  out.push(`<g transform="rotate(-34 1200 236)">${rect(1186, 100, 28, 150, fill('#2a2440'))}${rect(1180, 94, 40, 18, fill(s.body))}${line(1211, 116, 1211, 200, ` stroke="${L.brass.light}" stroke-width="1.6" opacity=".7"`)}${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
   out.push(rect(1110, 300, 180, 90, fill(s.body)));
   out.push(`<path d="M1100 302A100 100 0 0 1 1300 302Z" fill="${s.body}"/>`);
-  out.push(`<g transform="rotate(-34 1200 236)">${rect(1178, 192, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 192, 44, 2, fill(L.brass.light))}</g>`);
-  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<path d="${arc(1200, 302, 100, -Math.PI + 0.08, -1.945)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<path d="${arc(1200, 302, 100, -1.44, -0.08)}" fill="none" stroke="${L.brass.light}" stroke-width="1.6" opacity=".6"/>`);
+  out.push(`<defs><linearGradient id="slit-warm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${s.win}" stop-opacity="0"/><stop offset=".55" stop-color="${s.win}" stop-opacity="0"/><stop offset="1" stop-color="${s.win}" stop-opacity=".45"/></linearGradient><clipPath id="slit-clip"><path d="M1161 209.9A100 100 0 0 1 1213 202.8L1213 269L1161 269Z"/></clipPath></defs>`);
+  out.push(`<path d="M1161 209.9A100 100 0 0 1 1213 202.8L1213 269L1161 269Z" fill="#231e33"/>`);
+  out.push(`<path d="M1166 208A100 100 0 0 1 1206 202.2L1206 269L1166 269Z" fill="url(#slit-warm)"/>`);
+  out.push(`<g clip-path="url(#slit-clip)"><g transform="rotate(-34 1200 236)">${rect(1186, 209, 28, 30, fill('#2a2440'))}</g></g>`);
+  out.push(`<g clip-path="url(#slit-clip)"><rect x="1161" y="202" width="3" height="67" fill="${s.body}"/><rect x="1210" y="202" width="3" height="67" fill="${s.body}"/></g>`);
+  out.push(`<g transform="rotate(-34 1200 236)">${rect(1178, 200, 44, 9, fill(L.brass.base, ' rx="2"'))}${rect(1178, 200, 44, 2, fill(L.brass.light))}</g>`);
   out.push(`<g fill="${s.win}">${[0, 1, 2, 3].map((i) => `<path d="M${1130 + i * 40} 370V338a8 8 0 0 1 16 0V370z"/>`).join('')}</g>`);
   out.push(`<g fill="none" stroke="${L.brass.light}" stroke-width="2.4" opacity=".85">${circle(1420, 400, 34)}<ellipse cx="1420" cy="400" rx="34" ry="12"/><ellipse cx="1420" cy="400" rx="12" ry="34" transform="rotate(28 1420 400)"/></g>${rect(1416, 432, 8, 40, fill(s.body))}`);
   out.push(skyline(r, { x0: -20, x1: 880, base: 600, hMin: 50, hMax: 140, wMin: 40, wMax: 90, s: L.layers.near, sunX: 1200, detail: 4, dark: true }));
@@ -130,8 +139,17 @@ function observatory() {
   return frame('obs', [[0, '#141a33'], [0.45, '#2b2e52'], [0.75, '#57476b'], [1, '#8f6474']], out.join(''));
 }
 
-function kite(x, y, s, color, tail) {
-  return `<path d="M${x} ${y - 30}L${x + 20} ${y}L${x} ${y + 34}L${x - 20} ${y}Z" fill="${color}"/>${line(x, y - 30, x, y + 34, ' stroke="#00000022"')}${line(x - 20, y, x + 20, y, ' stroke="#00000022"')}<path d="M${x} ${y + 34}${tail}" fill="none" stroke="${s}" stroke-width="1.4"/>`;
+function kite(x, y, color, [ax, ay], dur, delay) {
+  const tail = `M${n(x)} ${n(y + 34)}Q${n(x + 18)} ${n(y + 58)} ${n(x + 40)} ${n(y + 74)}T${n(x + 78)} ${n(y + 122)}`;
+  const bows = [[x + 26, y + 57], [x + 52, y + 88], [x + 70, y + 110]]
+    .map(([bx, by]) => `M${n(bx - 4)} ${n(by - 3)}l8 6`).join('');
+  return `<g class="pl-kite" style="transform-origin:${n(ax)}px ${n(ay)}px;animation-duration:${n(dur)}s;animation-delay:${n(-delay)}s">`
+    + line(x, y + 34, ax, ay, ' stroke="#6b5363" stroke-width=".9" opacity=".5"')
+    + `<path d="M${x} ${y - 30}L${x + 20} ${y}L${x} ${y + 34}L${x - 20} ${y}Z" fill="${color}"/>`
+    + line(x, y - 30, x, y + 34, ' stroke="#00000022"') + line(x - 20, y, x + 20, y, ' stroke="#00000022"')
+    + `<g class="pl-tail" style="transform-origin:${n(x)}px ${n(y + 34)}px;animation-duration:${n(2.6 + hash(x, y) * 1.6)}s;animation-delay:${n(-hash(y, x) * 3)}s">`
+    + `<path d="${tail}" fill="none" stroke="#6b5363" stroke-width="1.3" opacity=".8"/>`
+    + `<path d="${bows}" fill="none" stroke="#6b5363" stroke-width="1.1" opacity=".7"/></g></g>`;
 }
 
 function market() {
@@ -141,9 +159,9 @@ function market() {
   out.push(sun('m', 1700, 300, 90, L.sun.core, '#fbd99a', '#ffd7a0', 0.8));
   out.push(`<g class="pl-drift">${cloud(r, { x: 300, y: 170, w: 460, h: 90, c: L.cloud, lx: 1 })}</g>`);
   out.push(`<g class="pl-drift">${cloud(r, { x: 1900, y: 120, w: 360, h: 70, c: L.cloud, lx: -1 })}</g>`);
-  out.push(`<g class="pl-sway">${kite(980, 150, '#8a6a5a', '#c4553d', 'q-18 24 -6 44t-16 46t-12 60t-22 80')}</g>`);
-  out.push(`<g class="pl-sway b">${kite(1420, 110, '#8a6a5a', '#3f6f8a', 'q-8 22 -14 40t-12 44t-18 70t-20 100')}</g>`);
-  out.push(`<g class="pl-sway">${kite(780, 196, '#8a6a5a', '#d9a441', 'q-14 20 -6 38t-14 40t-12 60')}</g>`);
+  out.push(kite(980, 150, '#c4553d', [930, 512], 5.8, 0.4));
+  out.push(kite(1420, 110, '#3f6f8a', [1368, 508], 7.4, 1.9));
+  out.push(kite(780, 196, '#d9a441', [728, 515], 8.6, 3.1));
   out.push(ridge(r, { x0: 0, x1: W, base: 420, top: 370, rough: 12, step: 22, color: '#e9b693' }));
   out.push(skyline(r, { x0: 0, x1: W, base: 422, hMin: 10, hMax: 50, wMin: 12, wMax: 28, s: L.layers.far, sunX: 1700 }));
   out.push(skyline(r, { x0: 0, x1: W, base: 520, hMin: 60, hMax: 170, wMin: 40, wMax: 80, s: L.layers.mid, sunX: 1700, detail: 3.4, roofs: ['gable', 'gable', 'gable', 'mansard', 'spire', 'cone'] }));
@@ -188,7 +206,7 @@ function library() {
     const x = r.range(1500, 2200);
     const y = r.range(60, 300);
     const a = r.range(-30, 30);
-    pages.push(`<g class="pl-flutter"><g transform="rotate(${n(a)} ${n(x)} ${n(y)})"><path d="M${n(x - 12)} ${n(y - 8)}q12 -6 24 0v16q-12 -6 -24 0z" fill="#fbf4e8"/><path d="M${n(x)} ${n(y - 11)}v16" stroke="#c9b49c" stroke-width="1"/></g></g>`);
+    pages.push(`<g class="pl-flutter" style="animation-duration:${n(12 + hash(x, y) * 7)}s;animation-delay:${n(-hash(y, x) * 16)}s"><g transform="rotate(${n(a)} ${n(x)} ${n(y)})"><path d="M${n(x - 12)} ${n(y - 8)}q12 -6 24 0v16q-12 -6 -24 0z" fill="#fbf4e8"/><path d="M${n(x)} ${n(y - 11)}v16" stroke="#c9b49c" stroke-width="1"/></g></g>`);
   }
   out.push(pages.join(''));
   out.push(ridge(r, { x0: 0, x1: W, base: 430, top: 380, rough: 12, step: 24, color: '#e3cfc0' }));
@@ -252,7 +270,7 @@ function tower(night = false) {
 
 function unwritten() {
   const r = rng(606);
-  const out = [];
+  const out = ['<style>@media (prefers-reduced-motion:no-preference){.pl-load{transform-box:view-box;transform-origin:1200px 188px;animation:plsway 5.5s ease-in-out infinite alternate}@keyframes plsway{from{transform:rotate(-2.6deg)}to{transform:rotate(2.6deg)}}}</style>'];
   const g = '#b4893f';
   out.push(ridge(r, { x0: 0, x1: W, base: 440, top: 380, rough: 14, step: 26, color: '#e6ddd0' }));
   const ghost = [];
@@ -269,25 +287,57 @@ function unwritten() {
     else d += `H${n(x + w)}`;
     d += 'V470';
     ghost.push(d);
-    if (r.chance(0.5)) for (let yy = top + 20; yy < 470; yy += 30) ghost.push(`M${n(x)} ${n(yy)}H${n(x + w)}`);
+    if (r.chance(0.6)) for (let yy = top + 20; yy < 470; yy += 30) ghost.push(`M${n(x)} ${n(yy)}H${n(x + w)}`);
     x += w + r.range(10, 50);
   }
-  out.push(`<path d="${ghost.join('')}" fill="none" stroke="${g}" stroke-width="1.6" stroke-dasharray="6 6" opacity=".6" class="pl-draw"/>`);
+  out.push(`<path d="${ghost.join('')}" fill="none" stroke="${g}" stroke-width="2.4" stroke-dasharray="7 5" opacity=".8" class="pl-draw"/>`);
+  out.push(`<defs><linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2ebe1" stop-opacity="0"/><stop offset=".6" stop-color="#f2ebe1" stop-opacity=".5"/><stop offset="1" stop-color="#f2ebe1" stop-opacity=".85"/></linearGradient><radialGradient id="sign-lamp"><stop offset="0" stop-color="#ffd78f" stop-opacity=".7"/><stop offset="1" stop-color="#ffd78f" stop-opacity="0"/></radialGradient></defs><g class="pl-fog">${rect(-100, 350, W + 200, 250, ' fill="url(#fog)"')}</g>`);
+  out.push(rect(960, 470, 520, 16, fill('#d9cbbd')));
+  out.push(rect(1080, 370, 240, 100, fill('#a8939a')));
+  out.push(rect(1156, 416, 48, 54, fill('#8d7a74')));
+  out.push(rect(1162, 422, 36, 48, fill('#2a2440')));
+  out.push(line(1162, 422, 1198, 422, ' stroke="#6d5c5c" stroke-width="2"'));
+  out.push(line(1080, 410, 1320, 410, ' stroke="#8d7a74" stroke-width="2" opacity=".55"'));
+  const win = [];
+  for (const wx of [1100, 1136, 1172, 1220, 1256, 1292]) win.push(`M${wx} 386h14v18h-14z`);
+  out.push(`<path d="${win.join('')}" fill="#6d5c5c"/>`);
+  out.push(rect(1080, 345, 58, 25, fill('#a8939a')), rect(1242, 345, 78, 25, fill('#a8939a')));
+  for (const cx of [1084, 1124, 1164, 1204, 1244, 1284]) out.push(rect(cx, 318, 9, 52, fill('#8d7a74')));
+  out.push(rect(1078, 310, 252, 10, fill('#8d7a74')));
+  out.push(line(1080, 370, 1140, 320, ' stroke="#8d7a74" stroke-width="3"'));
+  out.push(rect(1030, 446, 34, 12, fill('#8d7a74')), rect(1040, 434, 26, 12, fill('#8d7a74')));
   const scaf = [];
-  for (let sx = 1050; sx <= 1350; sx += 50) scaf.push(`M${sx} 470V170`);
-  for (let sy = 190; sy <= 470; sy += 46) scaf.push(`M1050 ${sy}H1350`);
-  for (let sy = 190; sy + 92 <= 470; sy += 92) scaf.push(`M1050 ${sy}L1350 ${sy + 92}`);
-  out.push(`<path d="${scaf.join('')}" fill="none" stroke="#8d7a74" stroke-width="3"/>`);
-  out.push(rect(1080, 330, 240, 140, fill('#a8939a')), poly([[1080, 330], [1200, 260], [1320, 330]], fill('#a8939a')));
-  out.push(`<defs><linearGradient id="fog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2ebe1" stop-opacity="0"/><stop offset=".55" stop-color="#f2ebe1" stop-opacity=".92"/><stop offset="1" stop-color="#f2ebe1"/></linearGradient></defs><g class="pl-fog">${rect(-100, 330, W + 200, 270, ' fill="url(#fog)"')}</g>`);
-  out.push(`<path d="M1160 600Q1190 520 1200 470L1206 470Q1214 520 1250 600Z" fill="#d9cbbd"/>`);
-  out.push(rect(1290, 520, 6, 60, fill('#6d5c5c')), `<path d="M1268 524h56l10 10-10 10h-56z" fill="#8a6f60"/>`);
+  for (const sx of [1040, 1080, 1120, 1160]) scaf.push(`M${sx} 470V250`);
+  for (const sy of [250, 300, 350, 400, 450, 470]) scaf.push(`M1040 ${sy}H1160`);
+  for (let sy = 250; sy + 100 <= 470; sy += 100) scaf.push(`M1040 ${sy}L1160 ${sy + 100}`);
+  out.push(`<path d="${scaf.join('')}" fill="none" stroke="#8d7a74" stroke-width="2.5"/>`);
+  out.push(rect(1474, 170, 12, 300, fill('#8d7a74')));
+  out.push(rect(1456, 456, 48, 16, fill('#8d7a74')));
+  out.push(rect(1452, 470, 56, 6, fill('#6d5c5c')));
+  for (let sy = 190; sy < 470; sy += 40) out.push(line(1474, sy + 20, 1486, sy, ' stroke="#a8939a" stroke-width="1.4" opacity=".7"'));
+  out.push(line(1160, 176, 1480, 176, ' stroke="#8d7a74" stroke-width="3"'), line(1160, 188, 1480, 188, ' stroke="#8d7a74" stroke-width="2"'));
+  for (let jx = 1180; jx < 1480; jx += 40) out.push(line(jx, 176, jx + 20, 188, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'));
+  out.push(rect(1480, 176, 78, 8, fill('#8d7a74')), rect(1536, 176, 22, 20, fill('#a8939a')));
+  out.push(poly([[1474, 170], [1480, 148], [1486, 170]], fill('#8d7a74')));
+  out.push(line(1480, 152, 1180, 176, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'), line(1480, 152, 1550, 176, ' stroke="#a8939a" stroke-width="1.2" opacity=".7"'));
+  out.push(rect(1486, 188, 22, 20, fill('#a8939a')));
+  out.push(`<g class="pl-load">${line(1200, 188, 1200, 270, ' stroke="#6d5c5c" stroke-width="1.5"')}${circle(1200, 270, 2.5, fill('#6d5c5c'))}${rect(1186, 272, 28, 20, fill('#a8939a'))}${line(1186, 272, 1214, 272, ' stroke="#8d7a74" stroke-width="2"')}</g>`);
+  out.push(`<path d="M1135 470C1120 510 1000 548 830 600L1250 600C1180 558 1218 515 1225 470Z" fill="#d9cbbd"/>`);
+  out.push(`<path d="M1135 470C1120 510 1000 548 830 600M1225 470C1218 515 1180 558 1250 600" fill="none" stroke="#8d7a74" stroke-width="3" opacity=".8"/>`);
+  out.push(`<path d="M1105 500H1216M1041 530H1209M947 563H1216M879 585H1232" fill="none" stroke="#c2ad9c" stroke-width="2.5" opacity=".7"/>`);
+  out.push(rect(1360, 470, 10, 115, fill('#6d5c5c')));
+  out.push(`<path d="M1296 486h64v26h-64l-14-13z" fill="#8a6f60"/>`);
+  out.push(`<path d="M1370 524h64l14 13-14 13h-64z" fill="#8a6f60"/>`);
+  out.push(`<circle cx="1365" cy="466" r="30" fill="url(#sign-lamp)"/>`);
+  out.push(circle(1365, 466, 6, fill('#ffd78f')));
+  out.push('<ellipse cx="1365" cy="585" rx="32" ry="6" fill="#c2ad9c" opacity=".45"/>');
   return frame('unw', [[0, '#efe8dd'], [0.6, '#ece2d6'], [1, '#f2ebe1']], out.join(''));
 }
 
 function dusk() {
   const r = rng(707);
   const L = LIGHTS.dusk;
+  const near = { ...L.layers.near, late: 0.2 };
   const out = [];
   out.push(stars(r, 70, 330, '#f1e6cf', '#e2bf7c', 220));
   out.push(`<path d="M1730 160A40 40 0 1 0 1730 236A32 32 0 1 1 1730 160Z" fill="#f4e7c8"/>`);
@@ -296,7 +346,8 @@ function dusk() {
   out.push(skyline(r, { x0: 0, x1: W, base: 540, hMin: 50, hMax: 170, wMin: 30, wMax: 70, s: L.layers.mid, sunX: 1200, detail: 3.2 }));
   const cx = 1500;
   out.push(clockTowerShape({ cx, base: 560, k: 0.66, body: L.layers.mid.body, face: '#ffd78f', gilt: '#b8935a', rim: '#7d5d73', windows: '#ffcf7e' }));
-  out.push(skyline(r, { x0: -20, x1: W + 20, base: 600, hMin: 40, hMax: 90, wMin: 50, wMax: 110, s: L.layers.near, sunX: 1200, detail: 4.5, dark: true, roofs: ['gable', 'gable', 'mansard', 'flat'] }));
+  out.push(`<defs><radialGradient id="clock-lamp"><stop offset="0" stop-color="#ffd78f" stop-opacity=".55"/><stop offset="1" stop-color="#ffd78f" stop-opacity="0"/></radialGradient></defs><circle class="pl-lamp" cx="1500" cy="287" r="76" fill="url(#clock-lamp)"/>`);
+  out.push(skyline(r, { x0: -20, x1: W + 20, base: 600, hMin: 40, hMax: 90, wMin: 50, wMax: 110, s: near, sunX: 1200, detail: 4.5, dark: true, roofs: ['gable', 'gable', 'mansard', 'flat'] }));
   out.push(rect(0, 586, W, 14, fill('#16131f')));
   return frame('dusk', [[0, '#f6efe2'], [0.08, '#f1d7b6'], [0.2, '#d99a7a'], [0.38, '#8a5e78'], [0.6, '#3d3358'], [1, '#16131f']], out.join(''));
 }
