@@ -48,8 +48,6 @@ if (preview > 0) {
   const css = readFileSync(join(root, 'portfolio.css'), 'utf8').replace(/\/\* world:still \*\/[\s\S]*?\/\* \/world:still \*\//, '');
   const rules = [...css.matchAll(/([^{}]+)\{([^{}]*url\('?\/world\/[a-z-]+\.svg'?\)[^{}]*)\}/g)]
     .map(([, selector, body]) => `${selector.trim()}{${body.replace(/\/world\/([a-z-]+)\.svg/g, '/world/$1-still.svg')}}`);
-  const cards = ['works', 'observatory', 'market', 'library', 'tower']
-    .map((name) => `.chapter-list .plate[style*="/world/${name}.svg"]{background-image:url(/world/${name}-still.svg)!important}`);
-  splice('portfolio.css', 'still', `@media(prefers-reduced-motion:reduce){\n${[...rules, ...cards].join('\n')}\n}`);
+  splice('portfolio.css', 'still', `@media(prefers-reduced-motion:reduce){\n${rules.join('\n')}\n}`);
   console.log(`${Object.keys(PLATES).length} plates written`);
 }

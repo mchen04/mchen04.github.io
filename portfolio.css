@@ -110,14 +110,6 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 @keyframes meteor{0%{opacity:0;translate:0 0}1%{opacity:1}5%{opacity:0;translate:calc(260 * var(--u)) calc(68 * var(--u))}100%{opacity:0;translate:calc(260 * var(--u)) calc(68 * var(--u))}}
 @keyframes orbit{from{offset-distance:0%}to{offset-distance:100%}}
 @keyframes sway{from{rotate:-1.6deg}to{rotate:1.6deg}}
-.spot{pointer-events:none}
-.spot-label{opacity:0;transition:opacity .3s var(--ease)}
-.spot-card{fill:#fbf6ea;stroke:#c9a161;stroke-width:1.2}
-.spot-place{font:600 23px var(--display);fill:#221c2a}
-@media (hover:hover) and (pointer:fine){
-  .spot{pointer-events:auto;cursor:pointer}
-  .spot:hover .spot-label{opacity:1}
-}
 
 .hero-copy{position:absolute;z-index:3;left:max(28px,min(calc((100% - 1120px) / 2),12vw));top:clamp(40px,13svh,140px);width:min(700px,46vw)}
 @media(min-width:701px) and (max-height:800px) and (min-aspect-ratio:1/1){.orrery{height:20cqh;width:20cqh}}
@@ -144,14 +136,11 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 .world.is-swapping{opacity:.15}
 .world.blueprint{background-color:#0f2440;background-image:linear-gradient(rgba(150,190,230,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(150,190,230,.09) 1px,transparent 1px);background-size:48px 48px}
 .world.blueprint::before{content:'';position:absolute;inset:0;background:linear-gradient(rgba(150,190,230,.16) 1px,transparent 1px) 0 0/240px 240px,linear-gradient(90deg,rgba(150,190,230,.16) 1px,transparent 1px) 0 0/240px 240px}
-.blueprint .flat :not(text):not(tspan):not(g):not(.spot-hit),.blueprint .pillar :not(text):not(g),.blueprint .orrery :not(text):not(g),.blueprint .rail :not(text):not(g),.blueprint .actor svg :not(g){fill:none!important;stroke:#9cc3ea!important;stroke-width:1px!important;vector-effect:non-scaling-stroke;stroke-dasharray:none!important}
+.blueprint .flat :not(text):not(tspan):not(g),.blueprint .pillar :not(text):not(g),.blueprint .orrery :not(text):not(g),.blueprint .rail :not(text):not(g),.blueprint .actor svg :not(g){fill:none!important;stroke:#9cc3ea!important;stroke-width:1px!important;vector-effect:non-scaling-stroke;stroke-dasharray:none!important}
 .blueprint .far,.blueprint .near{opacity:.75}
 .blueprint [fill='#ffdc92'],.blueprint [fill='#ffd283'],.blueprint [fill='#fbe2ac'],.blueprint .lamp-glow{display:none}
-.blueprint .spot:hover .spot-label{opacity:1}
 .blueprint .glow,.blueprint .rays,.blueprint .bloom,.blueprint .grain,.blueprint .glints,.blueprint .ring{display:none}
 .blueprint .code-notes,.blueprint .code-note{opacity:1}
-.blueprint .spot-card{fill:#0f2440!important;stroke:#9cc3ea!important}
-.blueprint .spot-place{fill:#e6f0fa!important}
 .is-blueprint .hero-copy::before{background:radial-gradient(closest-side,rgba(15,36,64,.85),rgba(15,36,64,.5) 55%,rgba(15,36,64,0))}
 .is-blueprint .tag{color:#9cc3ea!important}
 .is-blueprint h1,.is-blueprint .hero-role b{color:#f2f7fc!important}
@@ -177,8 +166,6 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 .night .hero .blueprint-toggle{background:#ffffff14;border-color:#b9b0d866;color:#f4eee2}
 .night .hero .social-links a{color:#d9d2e6}
 .night .hero .social-links a:hover{background:#ffffff1a;color:#fff}
-.night .world .spot-card{fill:#1b1830;stroke:#9a8fc4}
-.night .world .spot-place{fill:#f4eee2}
 .time-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;flex:none;border:1px solid var(--line);border-radius:50%;background:var(--card);color:var(--ink);order:2;margin-left:20px;transition:border-color .25s,color .25s}
 .js .time-toggle{display:inline-flex}
 #site-nav{order:1;margin-left:auto}
