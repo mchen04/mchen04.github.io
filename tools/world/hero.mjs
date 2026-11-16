@@ -226,26 +226,6 @@ function skyObservatory(r, s) {
   return out.join('');
 }
 
-function spotLabel({ section, at }) {
-  const lw = section.length * 11 + 64;
-  const [lx, ly] = at;
-  return `<g class="spot-label">${rect(lx, ly + 10, lw, 44, ' rx="3" class="spot-card"')}`
-    + `<text x="${n(lx + 18)}" y="${n(ly + 39)}" class="spot-place">${section} →</text></g>`;
-}
-
-function spotWrap(href, body) {
-  const spot = SPOTS.find((item) => item.href === href);
-  return `<a class="spot" href="${href}" tabindex="-1" aria-hidden="true"><g class="spot-body">${body}</g>${spotLabel(spot)}</a>`;
-}
-
-export const SPOTS = [
-  { href: '/work/', section: 'Work', at: [1480, 460] },
-  { href: '/ml/', section: 'ML & Research', at: [1876, 28] },
-  { href: '/projects/', section: 'Projects & Fun', at: [1100, 712] },
-  { href: '/writing/', section: 'Writing', at: [1940, 420] },
-  { href: '/about/', section: 'About', at: [1856, 300] },
-];
-
 function mid(r) {
   const s = L.layers.mid;
   const out = [];
@@ -268,12 +248,12 @@ function mid(r) {
   out.push(skyline(r, { x0: 880, x1: 1540, base: SCENE.shore, hMin: 34, hMax: 104, wMin: 26, wMax: 58, s, sunX: SUN.x, detail: 3.2, roofs: ['gable', 'gable', 'mansard', 'flat', 'cone', 'dome'] }));
   out.push(`<defs><linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${L.sky[3]}" stop-opacity="0"/><stop offset="1" stop-color="${L.sky[3]}" stop-opacity=".55"/></linearGradient></defs>`);
   out.push(rect(0, 650, 1540, 112, ' fill="url(#mist)"'));
-  out.push(spotWrap('/work/', foundry(r, s)));
+  out.push(foundry(r, s));
   out.push(causeway(s));
-  out.push(spotWrap('/about/', clockTower(s)));
-  out.push(spotWrap('/writing/', library(LANDMARK)));
+  out.push(clockTower(s));
+  out.push(library(LANDMARK));
   out.push(skyline(r, { x0: 2272, x1: 2300, base: SCENE.shore, hMin: 50, hMax: 80, wMin: 26, wMax: 30, s, sunX: SUN.x, detail: 3.2 }));
-  out.push(spotWrap('/ml/', skyObservatory(r, LANDMARK)));
+  out.push(skyObservatory(r, LANDMARK));
   out.push(skyline(r, { x0: 2640, x1: 3210, base: SCENE.shore, hMin: 50, hMax: 210, wMin: 24, wMax: 60, s, sunX: SUN.x, detail: 3.2 }));
   out.push(rect(2290, 650, 910, 112, ' fill="url(#mist)"'));
   out.push(`<g class="code-notes"><text class="code-note" x="1752" y="170" text-anchor="end">clockTower(s)</text><text class="code-note" x="1965" y="356" text-anchor="middle">skyObservatory(r, s)</text><text class="code-note" x="2170" y="462" text-anchor="middle">library(s)</text><text class="code-note" x="1532" y="694" text-anchor="end">foundry(r, s)</text><text class="code-note" x="1440" y="792" text-anchor="middle">skyline(r, { x0: 880, x1: 1540 })</text><text class="code-note" x="1930" y="616" text-anchor="start">SUN.r = 150</text><g class="code-note dim"><path d="M1866 52V742M1860 52h12M1860 742h12"/></g><text class="code-note" x="1880" y="400" text-anchor="middle" transform="rotate(-90 1880 400)">h = 690</text></g>`);
@@ -288,7 +268,6 @@ function lampPost(x, top) {
 function lanterns(r, x0, x1, y, sag, count, posts = [true, true]) {
   const out = [];
   const d = `M${x0} ${y}Q${(x0 + x1) / 2} ${y + sag * 2} ${x1} ${y}`;
-  out.push(`<path d="${d}" fill="none" stroke="transparent" stroke-width="28" pointer-events="stroke"/>`);
   if (posts[0]) out.push(lampPost(x0, y));
   if (posts[1]) out.push(lampPost(x1, y));
   out.push(`<path d="${d}" fill="none" stroke="#3b3242" stroke-width="1.4"/>`);
@@ -325,7 +304,7 @@ function near(r) {
   out.push(`<g class="bob">${boat(1720, 884, s, 0.9)}</g>`);
   out.push(`<g class="bob b2">${boat(1880, 890, s, 0.7)}</g>`);
   out.push(skyline(r, { x0: 2120, x1: 3220, base: 1000, hMin: 110, hMax: 200, wMin: 60, wMax: 120, s, sunX: SUN.x, detail: 6, dark: true, roofs: ['gable', 'gable', 'mansard', 'flat', 'gable', 'spire'], gap: [-8, 0], cap: (mx) => (mx < 2330 ? 70 : 200) }));
-  out.push(spotWrap('/projects/', lanterns(r, 1040, 1190, 836, 16, 8, [true, false]) + lanterns(r, 1190, 1380, 836, 20, 10)));
+  out.push(lanterns(r, 1040, 1190, 836, 16, 8, [true, false]) + lanterns(r, 1190, 1380, 836, 20, 10));
   out.push(lanterns(r, 2220, 2400, 840, 18, 9));
   return svg('flat near', '0 0 3200 1000', `<g class="shift">${out.join('')}</g>`);
 }
