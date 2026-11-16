@@ -1,4 +1,4 @@
-import { rng, n, hash, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, star8, gear, clockTowerShape } from './kit.mjs';
+import { rng, n, hash, poly, rect, circle, fill, line, arc, LIGHTS, building, skyline, ridge, cloud, gear, clockTowerShape } from './kit.mjs';
 import { observatory as drawObservatory } from './observatory.mjs';
 
 const W = 2400;
@@ -213,7 +213,6 @@ function tower(night = false) {
     out.push(stars(r, 140, 360, '#f1e6cf', '#e2bf7c'));
     out.push(sun('t', 1240, 330, 110, '#fbf3df', '#efe1c0', '#f4e7c8', 0.35));
   } else out.push(sun('t', 1240, 330, 130, L.sun.core, L.sun.disc, L.sun.halo, 0.9));
-  out.push(`<g fill="none" stroke="${L.gilt}" opacity=".55">${circle(1240, 330, 168, ' stroke-width="1.4"')}${circle(1240, 330, 214, ' stroke-width="1" stroke-dasharray="2 7"')}</g>`);
   out.push(`<g class="pl-drift">${cloud(r, { x: 300, y: 160, w: 480, h: 90, c: L.cloud, lx: 1 })}</g>`);
   out.push(`<g class="pl-drift">${cloud(r, { x: 1700, y: 130, w: 420, h: 80, c: L.cloud, lx: -1 })}</g>`);
   out.push(ridge(r, { x0: 0, x1: W, base: 432, top: 392, rough: 12, step: 24, color: night ? '#3d3456' : '#e8bb9a' }));

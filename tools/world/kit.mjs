@@ -233,16 +233,6 @@ export function cloud(r, { x, y, w, h, c, lx = 0 }) {
     + `<g clip-path="url(#${id})"><ellipse cx="${n(x + w * 0.5)}" cy="${n(y + h * 0.06)}" rx="${n(w * 0.56)}" ry="${n(h * 0.3)}" fill="${c.shade}" opacity=".55"/></g>`;
 }
 
-export function star8(cx, cy, r, attrs) {
-  const list = [];
-  for (let i = 0; i < 16; i += 1) {
-    const a = (i * Math.PI) / 8 - Math.PI / 2;
-    const rr = i % 2 ? r * 0.38 : i % 4 ? r * 0.7 : r;
-    list.push([cx + rr * Math.cos(a), cy + rr * Math.sin(a)]);
-  }
-  return poly(list, attrs);
-}
-
 export function gear(cx, cy, r, teeth, attrs) {
   const list = [];
   const inner = r * 0.84;
@@ -255,25 +245,6 @@ export function gear(cx, cy, r, teeth, attrs) {
     }
   }
   return poly(list, attrs);
-}
-
-export function sunGlyph(cx, cy, r, color) {
-  const rays = [];
-  for (let i = 0; i < 16; i += 1) {
-    const a = (i / 16) * Math.PI * 2;
-    const r0 = r * 0.58;
-    const r1 = i % 2 ? r * 0.8 : r;
-    rays.push(line(cx + r0 * Math.cos(a), cy + r0 * Math.sin(a), cx + r1 * Math.cos(a), cy + r1 * Math.sin(a)));
-  }
-  return `<g fill="none" stroke="${color}" stroke-width="1.6">${circle(cx, cy, r * 0.42)}${circle(cx, cy, r * 0.16, ` fill="${color}"`)}${rays.join('')}</g>`;
-}
-
-export function crescent(cx, cy, r, color) {
-  return `<path d="M${n(cx + r * 0.2)} ${n(cy - r)}A${n(r)} ${n(r)} 0 1 0 ${n(cx + r * 0.2)} ${n(cy + r)}A${n(r * 0.78)} ${n(r * 0.78)} 0 1 1 ${n(cx + r * 0.2)} ${n(cy - r)}Z" fill="${color}"/>`;
-}
-
-export function diamond(cx, cy, w, h, attrs) {
-  return poly([[cx, cy - h], [cx + w, cy], [cx, cy + h], [cx - w, cy]], attrs);
 }
 
 export function baluster(x, top, bottom, w, color) {
@@ -310,5 +281,5 @@ export function clockTowerShape({ cx, base, k = 1, body, face, gilt, rim, ink = 
     + `<circle cx="${X(0)}" cy="${Y(cy)}" r="${n(27 * k)}" fill="${face}" stroke="${gilt}" stroke-width="${n(3 * k)}"/>`
     + `<path d="M${X(0)} ${Y(cy)}V${Y(cy + 13)}M${X(0)} ${Y(cy)}L${X(14)} ${Y(cy - 6)}" stroke="${ink}" stroke-width="${n(2.4 * k)}" stroke-linecap="round"/>`
     + `<g fill="none" stroke="${rim}" stroke-width="${n(Math.max(1, 1.3 * k))}" opacity=".85"><path d="M${X(-30)} ${Y(518)}L${X(0)} ${Y(640)}L${X(30)} ${Y(518)}M${X(-42)} ${Y(52)}V${Y(200)}M${X(42)} ${Y(52)}V${Y(200)}"/></g>`
-    + `<g fill="${gilt}"><path d="M${X(0)} ${Y(704)}l${n(3 * k)} ${n(8 * k)} ${n(8 * k)} ${n(3 * k)} -${n(8 * k)} ${n(3 * k)} -${n(3 * k)} ${n(8 * k)} -${n(3 * k)} -${n(8 * k)} -${n(8 * k)} -${n(3 * k)} ${n(8 * k)} -${n(3 * k)}z"/></g>`;
+    + `<g fill="${gilt}"><circle cx="${X(0)}" cy="${Y(686)}" r="${n(4.5 * k)}"/><rect x="${X(-0.8)}" y="${Y(720)}" width="${n(1.6 * k)}" height="${n(34 * k)}"/></g>`;
 }
