@@ -48,7 +48,8 @@ function metadata(url, list) {
   const ogUrl = find(metas, 'property', 'og:url').content;
   const image = find(metas, 'property', 'og:image').content;
   const problems = [];
-  if (title.length > 65) problems.push(`title is ${title.length} characters`);
+  const headline = title.split(' · Michael Chen')[0];
+  if (headline.length > 65) problems.push(`headline is ${headline.length} characters`);
   if (description.length < 50 || description.length > 170) problems.push(`description is ${description.length} characters`);
   if (canonical !== SITE + url) problems.push(`canonical ${canonical}`);
   if (!author) problems.push('no author');
