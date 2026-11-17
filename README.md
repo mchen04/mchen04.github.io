@@ -40,7 +40,7 @@ one wind (left to right) and one light source per scene. Hero animations pause o
 
 ## Helpers
 
-- `python3 tools/site/new_case.py <spec.json>` writes short project pages from `{slug, title, description, body_html, action?}` and their share picture; add each to `projects/index.html` and `sitemap.xml`.
+- `python3 tools/site/new_case.py <spec.json>` writes short project pages from `{slug, title, description, body_html, action?}` and their share picture; add each to `projects/index.html` and `sitemap.xml` with a `lastmod`.
 - `python3 tools/site/emblems.py` adds a medallion beside each Work entry and Work detail page; give new entries an icon there.
 - `python3 tools/site/social.py` redraws every page's share picture from its banner and the current title.
 - `python3 tools/site/icons.py` redraws `favicon.ico` and `apple-touch-icon.png` from `favicon.svg`.
@@ -51,7 +51,7 @@ one wind (left to right) and one light source per scene. Hero animations pause o
 
 Serve with `python3 tools/check/serve.py 4173` (caching off), then:
 
-- `node tools/check/pages.mjs`: every page at desktop and phone width; fails on script errors, failed loads, sideways overflow, images without alt text, or a page without exactly one `h1`.
+- `node tools/check/pages.mjs`: every page at desktop and phone width; fails on script errors, failed loads, sideways overflow, images without alt text or dimensions, a page without exactly one `h1`, a title over 65 characters, a description outside 50–170 characters, a canonical or `og:url` that does not match the page, a missing share image or its dimensions and alt, unparseable JSON-LD, an article `BlogPosting` without its required fields, a broken static reference, or a sitemap that misses a page, repeats one, or lacks a `lastmod`.
 - `node tools/check/a11y.mjs`: axe-core (WCAG 2.1 AA) on the main pages, day and night, at both widths.
 - `node tools/check/frames.mjs <out-dir> [base] [--theme day|night] [--reduced] [--width 1440] [--paths /a,/b]`: screenshots of every page's top and bottom, waiting for fonts and finite animations to settle.
 - `node tools/check/motion.mjs <out-dir> [base] [--paths …] [--width 1440] [--theme day|night] [--frames 8] [--gap 400]`: numbered banner and footer frames per page.
