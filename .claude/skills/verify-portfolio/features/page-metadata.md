@@ -24,7 +24,7 @@ Preconditions:
 - **Title and description.** Open a page and read them. Run `agent-browser open http://127.0.0.1:4173/projects/hark/`, `agent-browser eval 'JSON.stringify({title:document.title,description:document.querySelector("meta[name=description]").content,canonical:document.querySelector("link[rel=canonical]").href})'`. The title ends with `· Michael Chen`, the description is non-empty, and the canonical is `https://michaelluochen.com/projects/hark/`.
 - **Share tags.** Run `agent-browser eval 'JSON.stringify({og:document.querySelector("meta[property=\"og:title\"]").content,twitter:document.querySelector("meta[name=\"twitter:card\"]").content,image:document.querySelector("meta[property=\"og:image\"]").content})'`. All three are present.
 - **One heading.** Run `agent-browser eval 'document.querySelectorAll("h1").length'`. The result is `1`.
-- **Theme color before scripts.** Block the deferred script and read the meta. Run `agent-browser network route /portfolio.js --abort`, `agent-browser open http://127.0.0.1:4173/projects/hark/`, `agent-browser eval 'document.querySelector("meta[name=theme-color]").content'`. The result is `#f6efe2`, matching the day background the page paints without scripts. Then `agent-browser network unroute /portfolio.js`.
+- **Theme color.** Open a page in day and in night and read the meta. Run `agent-browser open 'http://127.0.0.1:4173/projects/hark/?time=day'`, `agent-browser eval 'document.querySelector("meta[name=theme-color]").content'`, then the same with `?time=night`. The results are `#f6efe2` and `#16131f`, matching the painted background.
 - **Whole site.** Run `node tools/check/pages.mjs http://127.0.0.1:4173`. It reports every page at both widths with no problems.
 
 ## Gotchas
