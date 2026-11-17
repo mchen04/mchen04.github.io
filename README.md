@@ -14,7 +14,8 @@ Old anchors (`#upstream`, `#measured`, `#books`, `#friends`, `#tools`, `#moved`)
 ## Shared files
 
 - [portfolio.css](portfolio.css): all styles. Colours are tokens on `:root`; `.night` on `<html>` swaps them for the dark theme. Each page's `<main>` class (`home`, `page-work`, `page-case`, …) picks its section banner; project and article pages pick theirs from the breadcrumb.
-- [portfolio.js](portfolio.js): day and night (the header switch, remembered across pages; otherwise the device's dark mode, then the clock; `?time=day|night` forces either), the home scene's clock, parallax and Blueprint view, the writing topic filter, readable dates, essay drop caps and read-on links, and the activity chart.
+- [portfolio.js](portfolio.js): the home scene's clock, parallax and Blueprint view, the writing topic filter, readable dates, essay drop caps and read-on links, and the activity chart. It loads with `defer`.
+- Each page's `<head>` carries a small inline script that sets the `js` class, restores scroll on reload, and picks day or night (the header switch, remembered across pages; otherwise the device's dark mode, then the clock; `?time=day|night` forces either) before the first paint, so the theme and `theme-color` are right without waiting for `portfolio.js`.
 - [fonts/](fonts/): Cormorant for headings, Newsreader for reading text. [images/](images/) holds photos and app captures.
 
 ## Writing

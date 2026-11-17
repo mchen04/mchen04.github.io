@@ -34,7 +34,8 @@
 <link rel="preload" href="/fonts/cormorant.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/portfolio.css">
 
-<script src="/portfolio.js"></script>
+<script>document.documentElement.classList.add('js');(function(){var e=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];var r=!!e&&e.type==='reload';if('scrollRestoration' in history)history.scrollRestoration=r?'manual':'auto';if(!r)return;if(location.hash)history.replaceState(null,'',location.pathname+location.search);var t=function(){scrollTo(0,0)};t();addEventListener('DOMContentLoaded',t);addEventListener('load',t);})();(function(){var f=/[?&]time=(day|night)\b/.exec(location.search);var s=null;try{s=localStorage.getItem('time')}catch(e){}var h=new Date().getHours();var n=f?f[1]==='night':s?s==='night':matchMedia('(prefers-color-scheme:dark)').matches||h>=20||h<6;if(n)document.documentElement.classList.add('night');var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n?'#16131f':'#f6efe2');})();</script>
+<script src="/portfolio.js" defer></script>
 
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How much orchestration do I actually need?", "description": "I just think the useful interface and the size of the system are separate questions.", "url": "https://michaelluochen.com/writing/how-much-orchestration/", "mainEntityOfPage": "https://michaelluochen.com/writing/how-much-orchestration/", "datePublished": "2026-10-09", "author": {"@type": "Person", "@id": "https://michaelluochen.com/#person", "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}}
