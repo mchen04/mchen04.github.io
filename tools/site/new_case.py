@@ -34,6 +34,14 @@ def ensure_share(head, title, description, url):
     return head.replace(canon, canon + '\n\n' + share_tags(title, description, url), 1)
 
 
+def replace_work(head, work):
+    def rule(match):
+        if '"@type": "CreativeWork"' not in match.group(1):
+            return match.group(0)
+        return '<script type="application/ld+json">\n' + json.dumps(work, ensure_ascii=False) + '\n</script>'
+    return re.sub(r'<script type="application/ld\+json">(.*?)</script>', rule, head, flags=re.S)
+
+
 def make(slug, title, description, body_html, action=None):
     src = open(os.path.join(ROOT, TEMPLATE)).read()
     head, rest = src.split('</head>', 1)
@@ -45,6 +53,16 @@ def make(slug, title, description, body_html, action=None):
     head = head.replace('/projects/selfie-a-day/', f'/projects/{slug}/')
     head = ensure_share(head, title, description, f'https://michaelluochen.com/projects/{slug}/')
     head = re.sub(r'"name":"Selfie a Day"', json.dumps(title).join(['"name":', '']), head)
+    alt = f'An illustrated scene from Michael Chen’s portfolio, titled {title}.'
+    head = re.sub(r'(<meta (?:property|name)="(?:og:image:alt|twitter:image:alt)" content=")[^"]*', lambda m: m.group(1) + html.escape(alt), head)
+    head = re.sub(r'(<meta (?:property|name)="(?:og:image|twitter:image)" content="https://michaelluochen.com/images/social/)[^"?]*',
+                  lambda m: m.group(1) + f'{slug}.jpg', head)
+    work = {"@context": "https://schema.org", "@type": "CreativeWork",
+            "@id": f"https://michaelluochen.com/projects/{slug}/#work", "name": title,
+            "description": description, "url": f"https://michaelluochen.com/projects/{slug}/",
+            "author": {"@type": "Person", "@id": "https://michaelluochen.com/#person",
+                       "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}}
+    head = replace_work(head, work)
     cta = '' if not action else f'<p class="cta-row"><a class="cta" href="{html.escape(action["href"])}" rel="noopener">{html.escape(action["label"])}</a></p>'
     main = (f'<main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol>'
             f'<li><a href="/">Home</a></li><li><a href="/projects/">Projects &amp; Fun</a></li><li><span aria-current="page">{t}</span></li></ol></nav>'
