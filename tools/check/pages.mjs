@@ -43,6 +43,7 @@ function metadata(url, list) {
   const find = (tags, key, value) => tags.find((tag) => tag[key] === value) || {};
   const title = (html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '';
   const description = find(metas, 'name', 'description').content || '';
+  const author = find(metas, 'name', 'author').content;
   const canonical = find(links, 'rel', 'canonical').href;
   const ogUrl = find(metas, 'property', 'og:url').content;
   const image = find(metas, 'property', 'og:image').content;
@@ -50,6 +51,7 @@ function metadata(url, list) {
   if (title.length > 65) problems.push(`title is ${title.length} characters`);
   if (description.length < 50 || description.length > 170) problems.push(`description is ${description.length} characters`);
   if (canonical !== SITE + url) problems.push(`canonical ${canonical}`);
+  if (!author) problems.push('no author');
   if (ogUrl !== canonical) problems.push(`og:url ${ogUrl}`);
   if (!image) problems.push('no og:image');
   else {
