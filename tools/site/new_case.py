@@ -38,11 +38,11 @@ def replace_work(head, work):
     def rule(match):
         if '"@type": "CreativeWork"' not in match.group(1):
             return match.group(0)
-        return '<script type="application/ld+json">\n' + json.dumps(work, ensure_ascii=False) + '\n</script>'
+        return '<script type="application/ld+json">\n' + json.dumps(work, ensure_ascii=False).replace('</', '<\\/') + '\n</script>'
     return re.sub(r'<script type="application/ld\+json">(.*?)</script>', rule, head, flags=re.S)
 
 
-def make(slug, title, description, body_html, action=None):
+def build(slug, title, description, body_html, action=None):
     src = open(os.path.join(ROOT, TEMPLATE)).read()
     head, rest = src.split('</head>', 1)
     t = html.escape(title, quote=False)
@@ -72,6 +72,11 @@ def make(slug, title, description, body_html, action=None):
     out = head + '</head>' + rest
     if 'Selfie a Day' in out or 'selfie-a-day' in out:
         raise SystemExit(f'{slug}: template text leaked')
+    return out
+
+
+def make(slug, title, description, body_html, action=None):
+    out = build(slug, title, description, body_html, action)
     path = os.path.join(ROOT, 'projects', slug)
     os.makedirs(path, exist_ok=True)
     open(os.path.join(path, 'index.html'), 'w').write(out)
@@ -79,6 +84,19 @@ def make(slug, title, description, body_html, action=None):
 
 
 if __name__ == '__main__':
+    if sys.argv[1:] == ['--check']:
+        sample = 'Close </script> & "quotes" and \'apostrophes\'.'
+        out = build('check-page', 'Check Page', sample, '<p>Body</p>')
+        blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', out, re.S)
+        if not blocks:
+            raise SystemExit('new_case: no json-ld')
+        for block in blocks:
+            data = json.loads(block)
+            for node in data.get('@graph', [data]):
+                if node.get('@type') == 'CreativeWork' and node.get('description') != sample:
+                    raise SystemExit('new_case: description changed')
+        print('new_case ok')
+        sys.exit(0)
     spec = json.load(open(sys.argv[1]))
     for page in spec:
         make(**page)

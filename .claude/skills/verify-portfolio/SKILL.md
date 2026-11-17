@@ -63,6 +63,7 @@ The repository already ships the harness; use it instead of writing new drivers.
 
 - `node tools/check/pages.mjs [base]`: every page at 1440 and 390 px; fails on script errors, failed loads, sideways overflow, missing alt text or image dimensions, a page without exactly one `h1`, a headline over 65 characters, a description outside 50–170 characters, a canonical or `og:url` that does not match the page, a missing share image or its dimensions and alt, unparseable JSON-LD, an article `BlogPosting` without headline, description, datePublished, image, mainEntityOfPage or author, a broken static reference, or a sitemap that misses or repeats a page or lacks a `lastmod`.
 - `node tools/check/a11y.mjs [base] [paths…]`: axe-core WCAG 2.1 AA on the main pages, day and night, both widths.
+- `node tools/check/theme.mjs [--root <dir>]`: starts a cacheable server and Chrome for Testing, then proves `theme-color` equals the computed `--paper` in day and night, during a streamed first paint, and after Back restores a bfcache page with the saved choice.
 - `node tools/check/frames.mjs <out-dir> [base] [--theme day|night] [--width 1440] [--paths /a,/b]`: top and bottom screenshots after fonts and finite animations settle.
 - `node tools/check/motion.mjs <out-dir> [base] [--paths …] [--frames 8] [--gap 400]`: numbered banner and footer frames.
 - `node tools/check/worlddiff.mjs <baseline-rev>`: fails when a still plate changes shape.

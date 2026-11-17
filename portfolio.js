@@ -10,14 +10,18 @@ document.documentElement.classList.add('js');
   addEventListener('DOMContentLoaded',top);
   addEventListener('load',top);
 })();
-(function(){
+function selectTime(){
   var forced=/[?&]time=(day|night)\b/.exec(location.search);
   var stored=null;
   try{stored=localStorage.getItem('time');}catch(error){}
   var hour=new Date().getHours();
   var night=forced?forced[1]==='night':stored?stored==='night':matchMedia('(prefers-color-scheme:dark)').matches||hour>=20||hour<6;
-  if(night) document.documentElement.classList.add('night');
-})();
+  document.documentElement.classList.toggle('night',night);
+  var meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content',getComputedStyle(document.documentElement).getPropertyValue('--paper').trim());
+  return night;
+}
+selectTime();
 
 function ready(run){
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
@@ -36,7 +40,7 @@ ready(function(){
     var night=root.classList.contains('night');
     timeToggle.setAttribute('aria-pressed',String(night));
     timeToggle.setAttribute('aria-label',night?'Switch to day':'Switch to night');
-    if(themeColor) themeColor.setAttribute('content',night?'#16131f':'#f6efe2');
+    if(themeColor) themeColor.setAttribute('content',getComputedStyle(root).getPropertyValue('--paper').trim());
   }
   timeToggle.addEventListener('click',function(){
     var night=!root.classList.contains('night');
@@ -75,7 +79,10 @@ ready(function(){
     if(event.relatedTarget&&!header.contains(event.relatedTarget)) closeMenu(false);
   });
   mobile.addEventListener('change',function(){closeMenu(false);});
-  addEventListener('pageshow',function(){closeMenu(false);});
+  addEventListener('pageshow',function(event){
+    if(event.persisted){selectTime();syncTime();}
+    closeMenu(false);
+  });
   function measureHeader(){
     if(!header.classList.contains('nav-open')) document.documentElement.style.setProperty('--head',header.offsetHeight+'px');
   }

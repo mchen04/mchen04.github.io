@@ -115,6 +115,14 @@ for (const path of list) {
   else if (!matches[0].lastmod) failures.push(`${path}: sitemap has no lastmod`);
 }
 for (const entry of entries) if (!list.includes(entry.loc.replace(SITE, ''))) failures.push(`${entry.loc}: sitemap url without page`);
+for (const match of readFileSync(join(root, 'README.md'), 'utf8').matchAll(/`([^`\s]*tools\/[^`\s]+)`/g)) {
+  if (!existsSync(join(root, match[1]))) failures.push(`README documents missing ${match[1]}`);
+}
+try {
+  execFileSync('python3', [join(root, 'tools/site/new_case.py'), '--check'], { encoding: 'utf8' });
+} catch (error) {
+  failures.push(`new_case check failed: ${error.stderr || error.message}`);
+}
 const sizes = (process.env.WIDTHS || '1440x900,390x844').split(',').map((size) => size.split('x').map(Number));
 for (const [w, h] of sizes) {
   ab('set', 'viewport', String(w), String(h));
