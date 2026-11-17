@@ -115,8 +115,10 @@ for (const path of list) {
   else if (!matches[0].lastmod) failures.push(`${path}: sitemap has no lastmod`);
 }
 for (const entry of entries) if (!list.includes(entry.loc.replace(SITE, ''))) failures.push(`${entry.loc}: sitemap url without page`);
-for (const match of readFileSync(join(root, 'README.md'), 'utf8').matchAll(/`([^`\s]*tools\/[^`\s]+)`/g)) {
-  if (!existsSync(join(root, match[1]))) failures.push(`README documents missing ${match[1]}`);
+for (const span of readFileSync(join(root, 'README.md'), 'utf8').matchAll(/`([^`]*)`/g)) {
+  for (const match of span[1].matchAll(/(tools\/[^\s`]+)/g)) {
+    if (!existsSync(join(root, match[1]))) failures.push(`README documents missing ${match[1]}`);
+  }
 }
 try {
   execFileSync('python3', [join(root, 'tools/site/new_case.py'), '--check'], { encoding: 'utf8' });

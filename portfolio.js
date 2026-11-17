@@ -18,7 +18,8 @@ function selectTime(){
   var night=forced?forced[1]==='night':stored?stored==='night':matchMedia('(prefers-color-scheme:dark)').matches||hour>=20||hour<6;
   document.documentElement.classList.toggle('night',night);
   var meta=document.querySelector('meta[name="theme-color"]');
-  if(meta) meta.setAttribute('content',getComputedStyle(document.documentElement).getPropertyValue('--paper').trim());
+  var paper=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
+  if(meta&&paper) meta.setAttribute('content',paper);
   return night;
 }
 selectTime();
@@ -40,7 +41,8 @@ ready(function(){
     var night=root.classList.contains('night');
     timeToggle.setAttribute('aria-pressed',String(night));
     timeToggle.setAttribute('aria-label',night?'Switch to day':'Switch to night');
-    if(themeColor) themeColor.setAttribute('content',getComputedStyle(root).getPropertyValue('--paper').trim());
+    var paper=getComputedStyle(root).getPropertyValue('--paper').trim();
+    if(themeColor&&paper) themeColor.setAttribute('content',paper);
   }
   timeToggle.addEventListener('click',function(){
     var night=!root.classList.contains('night');
