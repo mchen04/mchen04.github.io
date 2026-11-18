@@ -70,12 +70,15 @@ function metadata(url, list) {
   }
   const nodes = blocks.flatMap((block) => block['@graph'] || [block]);
   const posting = nodes.find((node) => node['@type'] === 'BlogPosting');
-  if (url.startsWith('/writing/') && posting) {
-    for (const key of ['headline', 'description', 'datePublished', 'image', 'mainEntityOfPage']) {
-      if (!posting[key]) problems.push(`BlogPosting has no ${key}`);
+  if (url.startsWith('/writing/') && url !== '/writing/') {
+    if (!posting) problems.push('no BlogPosting');
+    else {
+      for (const key of ['headline', 'description', 'datePublished', 'image', 'mainEntityOfPage']) {
+        if (!posting[key]) problems.push(`BlogPosting has no ${key}`);
+      }
+      if (!(posting.author || {}).id && !(posting.author || {})['@id']) problems.push('BlogPosting has no author @id');
+      if (posting.image && !isFile(posting.image)) problems.push(`BlogPosting image missing ${posting.image}`);
     }
-    if (!(posting.author || {}).id && !(posting.author || {})['@id']) problems.push('BlogPosting has no author @id');
-    if (posting.image && !isFile(posting.image)) problems.push(`BlogPosting image missing ${posting.image}`);
   }
   for (const href of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     if (!isFile(href[1])) problems.push(`broken reference ${href[1]}`);

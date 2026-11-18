@@ -1,13 +1,27 @@
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
-import { existsSync, mkdtempSync, readFileSync, rmSync, statSync } from 'node:fs';
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs';
 import { dirname, extname, join } from 'node:path';
-import { tmpdir } from 'node:os';
+import { homedir, tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const rootIndex = process.argv.indexOf('--root');
 const root = rootIndex > 0 ? process.argv[rootIndex + 1] : join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const chrome = process.env.CHROME || '/Users/michaelchen/Library/Caches/ms-playwright/chromium-1254/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing';
+function findChrome() {
+  if (process.env.CHROME) return process.env.CHROME;
+  const relatives = ['chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing', 'chrome-mac/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing', 'chrome-linux64/chrome', 'chrome-linux/chrome'];
+  for (const base of [join(homedir(), 'Library/Caches/ms-playwright'), join(homedir(), '.cache/ms-playwright')]) {
+    if (!existsSync(base)) continue;
+    for (const version of readdirSync(base).filter((name) => name.startsWith('chromium-')).sort().reverse()) {
+      for (const relative of relatives) {
+        const candidate = join(base, version, relative);
+        if (existsSync(candidate)) return candidate;
+      }
+    }
+  }
+  return null;
+}
+const chrome = findChrome();
 const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.ico': 'image/x-icon' };
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -83,7 +97,7 @@ const profile = mkdtempSync(join(tmpdir(), 'theme-check-'));
 let browser;
 let cdp;
 try {
-  if (!existsSync(chrome)) throw new Error(`Chrome for Testing not found at ${chrome}`);
+  if (!chrome) throw new Error('Chrome for Testing not found; set CHROME');
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   const origin = `http://127.0.0.1:${server.address().port}`;
   browser = spawn(chrome, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check', '--disable-background-networking', 'about:blank'], { stdio: 'ignore' });
@@ -105,7 +119,7 @@ try {
   await cdp.send('Page.enable');
   await cdp.send('Runtime.enable');
   await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
-    source: "Date.prototype.getHours=function(){return 12};addEventListener('pageshow',function(e){window.__persisted=e.persisted});",
+    source: "Date.prototype.getHours=function(){var m=/[?&]hour=(\\d+)/.exec(location.search);return m?Number(m[1]):12};addEventListener('pageshow',function(e){window.__persisted=e.persisted});",
   });
 
   const evaluate = async (expression) => {
@@ -165,6 +179,29 @@ try {
       check(`loaded-meta-equals-paper-${query}-${width}`, loaded.night === night && loaded.meta === loaded.paper, loaded);
     }
 
+    await evaluate('localStorage.clear()');
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] });
+    await navigate(`${origin}/`);
+    const osDark = await facts();
+    check(`os-dark-empty-${width}`, osDark.night && !osDark.stored && osDark.meta === osDark.paper, osDark);
+
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
+    await navigate(`${origin}/?hour=21`);
+    const clockNight = await facts();
+    check(`clock-night-${width}`, clockNight.night && clockNight.meta === clockNight.paper, clockNight);
+    await navigate(`${origin}/?hour=12`);
+    const clockDay = await facts();
+    check(`clock-day-${width}`, !clockDay.night && clockDay.meta === clockDay.paper, clockDay);
+
+    await evaluate('localStorage.clear()');
+    await navigate(`${origin}/?hour=12`);
+    const beforeChange = await facts();
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] });
+    const wentDark = await waitFor("document.documentElement.classList.contains('night') && document.querySelector('meta[name=theme-color]').content === getComputedStyle(document.documentElement).getPropertyValue('--paper').trim()", 4000);
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
+    const wentLight = await waitFor("!document.documentElement.classList.contains('night') && document.querySelector('meta[name=theme-color]').content === getComputedStyle(document.documentElement).getPropertyValue('--paper').trim()", 4000);
+    check(`live-os-change-${width}`, !beforeChange.night && wentDark && wentLight, { beforeChange, wentDark, wentLight });
+
     await navigate(`${origin}/`);
     await evaluate('localStorage.clear()');
     await navigate(`${origin}/`);
@@ -194,6 +231,11 @@ try {
     await sleep(200);
     const back = { ...(await facts()), bfcache: restored };
     check(`bfcache-back-follows-saved-${width}`, saved.stored === 'night' && back.bfcache && back.night && back.meta === back.paper && back.pressed === 'true', { saved, back });
+    const reloadLoaded = cdp.once('Page.loadEventFired', 15000).catch(() => {});
+    await cdp.send('Page.reload');
+    await reloadLoaded;
+    const reloaded = await facts();
+    check(`reload-persist-${width}`, reloaded.night && reloaded.stored === 'night' && reloaded.pressed === 'true' && reloaded.meta === reloaded.paper, reloaded);
     await evaluate('localStorage.clear()');
   }
 } finally {
