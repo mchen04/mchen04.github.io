@@ -1,3 +1,4 @@
+import glob
 import re
 import subprocess
 import sys
@@ -6,8 +7,9 @@ CSS = 'portfolio.css'
 css = open(CSS).read()
 html = ' '.join(open(f).read() for f in subprocess.check_output(['git', 'ls-files', '*.html']).decode().split())
 code = open('portfolio.js').read() + ''.join(open(f'tools/world/{f}').read() for f in ('hero.mjs', 'kit.mjs', 'plates.mjs', 'night.mjs'))
+helpers = ''.join(open(f).read() for f in glob.glob('tools/site/*.py'))
 known = set()
-for attr in re.findall(r'class=\\?"([^"\\]*)', html + code):
+for attr in re.findall(r'class=\\?"([^"\\]*)', html + code + helpers):
     known.update(re.findall(r'[A-Za-z][\w-]*', re.sub(r'\$\{[^}]*\}', '', attr)))
 for literal in re.findall(r"'([^'\n]*)'|`([^`]*)`", code):
     known.update(re.findall(r'[A-Za-z][\w-]*', ''.join(literal)))
@@ -33,6 +35,12 @@ def prune(block):
 
 
 out = prune(css)
+animations = set()
+for decl in re.findall(r'animation(?:-name)?\s*:\s*([^;}]*)', out):
+    animations.update(re.findall(r'[A-Za-z][\w-]*', decl))
+for name in re.findall(r'@keyframes\s+([\w-]+)', out):
+    if name not in animations and not re.search(r'\b' + re.escape(name) + r'\b', html + code + helpers):
+        out = re.sub(r'@keyframes\s+' + re.escape(name) + r'\s*\{(?:[^{}]|\{[^{}]*\})*\}', '', out)
 removed = len(css) - len(out)
 if '--check' in sys.argv:
     print('unused CSS bytes:', removed)

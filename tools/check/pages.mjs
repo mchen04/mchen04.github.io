@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { readdirSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const base = process.argv[2] || 'http://127.0.0.1:4173';
@@ -24,6 +24,74 @@ function pages(dir) {
   });
 }
 
+const SITE = 'https://michaelluochen.com';
+const attrs = (tag) => Object.fromEntries([...tag.matchAll(/([a-zA-Z:-]+)="([^"]*)"/g)].map((m) => [m[1], m[2]]));
+const local = (url) => {
+  const path = url.split('?')[0].split('#')[0].replace(SITE, '');
+  return path.startsWith('/') ? join(root, path.endsWith('/') ? path + 'index.html' : path) : null;
+};
+const isFile = (url) => {
+  const path = local(url);
+  return !!path && existsSync(path) && statSync(path).isFile();
+};
+
+function metadata(url) {
+  const file = join(root, url === '/' ? 'index.html' : url.slice(1) + 'index.html');
+  const html = readFileSync(file, 'utf8');
+  const metas = [...html.matchAll(/<meta\b[^>]*>/g)].map((m) => attrs(m[0]));
+  const links = [...html.matchAll(/<link\b[^>]*>/g)].map((m) => attrs(m[0]));
+  const find = (tags, key, value) => tags.find((tag) => tag[key] === value) || {};
+  const title = (html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '';
+  const description = find(metas, 'name', 'description').content || '';
+  const author = find(metas, 'name', 'author').content;
+  const canonical = find(links, 'rel', 'canonical').href;
+  const ogUrl = find(metas, 'property', 'og:url').content;
+  const image = find(metas, 'property', 'og:image').content;
+  const problems = [];
+  const headline = title.split(' · Michael Chen')[0];
+  if (headline.length > 65) problems.push(`headline is ${headline.length} characters`);
+  if (description.length < 50 || description.length > 170) problems.push(`description is ${description.length} characters`);
+  if (canonical !== SITE + url) problems.push(`canonical ${canonical}`);
+  if (!author) problems.push('no author');
+  if (ogUrl !== canonical) problems.push(`og:url ${ogUrl}`);
+  if (!image) problems.push('no og:image');
+  else {
+    if (!isFile(image)) problems.push(`og:image missing ${image}`);
+    for (const key of ['og:image:width', 'og:image:height', 'og:image:alt']) {
+      if (!find(metas, 'property', key).content) problems.push(`no ${key}`);
+    }
+  }
+  let blocks;
+  try {
+    blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+  } catch (error) {
+    problems.push(`bad json-ld ${error.message}`);
+    blocks = [];
+  }
+  const nodes = blocks.flatMap((block) => block['@graph'] || [block]);
+  const posting = nodes.find((node) => node['@type'] === 'BlogPosting');
+  if (url.startsWith('/writing/') && url !== '/writing/') {
+    if (!posting) problems.push('no BlogPosting');
+    else {
+      for (const key of ['headline', 'description', 'datePublished', 'image', 'mainEntityOfPage']) {
+        if (!posting[key]) problems.push(`BlogPosting has no ${key}`);
+      }
+      const postingAuthor = posting.author || {};
+      if (!postingAuthor['@id']) problems.push('BlogPosting has no author @id');
+      if (posting.image && !isFile(posting.image)) problems.push(`BlogPosting image missing ${posting.image}`);
+    }
+  }
+  for (const href of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
+    if (!isFile(href[1])) problems.push(`broken reference ${href[1]}`);
+  }
+  for (const tag of html.matchAll(/<img\b[^>]*>/g)) {
+    const img = attrs(tag[0]);
+    if (img.alt === undefined) problems.push('image without alt');
+    if (!img.width || !img.height) problems.push(`image without dimensions ${tag[0].slice(0, 60)}`);
+  }
+  problems.forEach((problem) => failures.push(`${url}: ${problem}`));
+}
+
 const probe = `JSON.stringify({
   bad: performance.getEntriesByType('resource').filter((e) => e.responseStatus >= 400).map((e) => e.name),
   overflow: Math.max(
@@ -38,6 +106,29 @@ const probe = `JSON.stringify({
 
 const failures = [];
 const list = pages(root).sort();
+const checked = list.filter((path) => path !== '/404.html');
+for (const path of checked) metadata(path);
+const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+const entries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((entry) => ({
+  loc: (entry[1].match(/<loc>([^<]+)<\/loc>/) || [])[1],
+  lastmod: (entry[1].match(/<lastmod>([^<]+)<\/lastmod>/) || [])[1],
+}));
+for (const path of checked) {
+  const matches = entries.filter((entry) => entry.loc === SITE + path);
+  if (matches.length !== 1) failures.push(`${path}: sitemap entries ${matches.length}`);
+  else if (!matches[0].lastmod) failures.push(`${path}: sitemap has no lastmod`);
+}
+for (const entry of entries) if (!list.includes(entry.loc.replace(SITE, ''))) failures.push(`${entry.loc}: sitemap url without page`);
+for (const span of readFileSync(join(root, 'README.md'), 'utf8').matchAll(/`([^`]*)`/g)) {
+  for (const match of span[1].matchAll(/(tools\/[^\s`]+)/g)) {
+    if (!existsSync(join(root, match[1]))) failures.push(`README documents missing ${match[1]}`);
+  }
+}
+try {
+  execFileSync('python3', [join(root, 'tools/site/new_case.py'), '--check'], { encoding: 'utf8' });
+} catch (error) {
+  failures.push(`new_case check failed: ${error.stderr || error.message}`);
+}
 const sizes = (process.env.WIDTHS || '1440x900,390x844').split(',').map((size) => size.split('x').map(Number));
 for (const [w, h] of sizes) {
   ab('set', 'viewport', String(w), String(h));

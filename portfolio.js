@@ -10,14 +10,21 @@ document.documentElement.classList.add('js');
   addEventListener('DOMContentLoaded',top);
   addEventListener('load',top);
 })();
-(function(){
+function paintChrome(){
+  var meta=document.querySelector('meta[name="theme-color"]');
+  var paper=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
+  if(meta&&paper) meta.setAttribute('content',paper);
+}
+function selectTime(){
   var forced=/[?&]time=(day|night)\b/.exec(location.search);
   var stored=null;
   try{stored=localStorage.getItem('time');}catch(error){}
   var hour=new Date().getHours();
   var night=forced?forced[1]==='night':stored?stored==='night':matchMedia('(prefers-color-scheme:dark)').matches||hour>=20||hour<6;
-  if(night) document.documentElement.classList.add('night');
-})();
+  document.documentElement.classList.toggle('night',night);
+  paintChrome();
+}
+selectTime();
 
 function ready(run){
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
@@ -27,7 +34,6 @@ function ready(run){
 ready(function(){
   var header=document.querySelector('.masthead');
   var root=document.documentElement;
-  var themeColor=document.querySelector('meta[name="theme-color"]');
   var timeToggle=document.createElement('button');
   timeToggle.type='button';
   timeToggle.className='time-toggle';
@@ -36,8 +42,16 @@ ready(function(){
     var night=root.classList.contains('night');
     timeToggle.setAttribute('aria-pressed',String(night));
     timeToggle.setAttribute('aria-label',night?'Switch to day':'Switch to night');
-    if(themeColor) themeColor.setAttribute('content',night?'#16131f':'#f6efe2');
+    paintChrome();
   }
+  function refreshTime(){
+    selectTime();
+    syncTime();
+  }
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change',refreshTime);
+  addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible') refreshTime();
+  });
   timeToggle.addEventListener('click',function(){
     var night=!root.classList.contains('night');
     root.classList.toggle('night',night);
@@ -75,7 +89,10 @@ ready(function(){
     if(event.relatedTarget&&!header.contains(event.relatedTarget)) closeMenu(false);
   });
   mobile.addEventListener('change',function(){closeMenu(false);});
-  addEventListener('pageshow',function(){closeMenu(false);});
+  addEventListener('pageshow',function(event){
+    if(event.persisted) refreshTime();
+    closeMenu(false);
+  });
   function measureHeader(){
     if(!header.classList.contains('nav-open')) document.documentElement.style.setProperty('--head',header.offsetHeight+'px');
   }
