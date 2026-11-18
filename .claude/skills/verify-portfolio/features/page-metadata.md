@@ -38,4 +38,4 @@ Preconditions:
 - `tools/site/social.py` rewrites share images from each page's banner; do not hand-edit generated share pictures.
 - The canonical URL is absolute and must keep the trailing slash.
 - `pages.mjs` also fails on sideways overflow and missing alt text, so a metadata-only change can surface unrelated failures.
-- A new sitemap entry needs a `lastmod`; `tools/site/new_case.py` writes only the page, so add the sitemap entry and its `lastmod` yourself.
+- The writing publisher appends sitemap entries without a `lastmod`, and `tools/site/new_case.py` writes only the page, so add the sitemap entry and its `lastmod` yourself.
