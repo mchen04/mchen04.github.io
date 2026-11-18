@@ -44,6 +44,14 @@ ready(function(){
     var paper=getComputedStyle(root).getPropertyValue('--paper').trim();
     if(themeColor&&paper) themeColor.setAttribute('content',paper);
   }
+  function refreshTime(){
+    selectTime();
+    syncTime();
+  }
+  matchMedia('(prefers-color-scheme:dark)').addEventListener('change',refreshTime);
+  addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible') refreshTime();
+  });
   timeToggle.addEventListener('click',function(){
     var night=!root.classList.contains('night');
     root.classList.toggle('night',night);
@@ -82,7 +90,7 @@ ready(function(){
   });
   mobile.addEventListener('change',function(){closeMenu(false);});
   addEventListener('pageshow',function(event){
-    if(event.persisted){selectTime();syncTime();}
+    if(event.persisted) refreshTime();
     closeMenu(false);
   });
   function measureHeader(){
