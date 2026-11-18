@@ -217,7 +217,7 @@ try {
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
     let saved;
     let back;
-    let reasons = [];
+    let reasons;
     const attemptLog = [];
     for (let round = 0; round < 4; round += 1) {
       const attempt = round + 1;

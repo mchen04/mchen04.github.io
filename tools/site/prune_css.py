@@ -1,7 +1,7 @@
+import glob
 import re
 import subprocess
 import sys
-import glob
 
 CSS = 'portfolio.css'
 css = open(CSS).read()

@@ -93,14 +93,18 @@ if __name__ == '__main__':
             blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', out, re.S)
             if not blocks:
                 raise SystemExit('new_case: no json-ld')
+            found = False
             for block in blocks:
                 data = json.loads(block)
                 for node in data.get('@graph', [data]):
                     if node.get('@type') == 'CreativeWork':
+                        found = True
                         if node.get('description') != sample:
                             raise SystemExit('new_case: description changed')
                         if role not in node or ('contributor' if role == 'author' else 'author') in node:
                             raise SystemExit(f'new_case: wrong {role} shape')
+            if not found:
+                raise SystemExit('new_case: no CreativeWork')
         print('new_case ok')
         sys.exit(0)
     spec = json.load(open(sys.argv[1]))

@@ -35,7 +35,7 @@ const isFile = (url) => {
   return !!path && existsSync(path) && statSync(path).isFile();
 };
 
-function metadata(url, list) {
+function metadata(url) {
   const file = join(root, url === '/' ? 'index.html' : url.slice(1) + 'index.html');
   const html = readFileSync(file, 'utf8');
   const metas = [...html.matchAll(/<meta\b[^>]*>/g)].map((m) => attrs(m[0]));
@@ -86,10 +86,10 @@ function metadata(url, list) {
   }
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) {
     const image = attrs(tag[0]);
-    if (!image.alt && image.alt !== '') problems.push('image without alt');
+    if (image.alt === undefined) problems.push('image without alt');
     if (!image.width || !image.height) problems.push(`image without dimensions ${tag[0].slice(0, 60)}`);
   }
-  if (list) problems.forEach((problem) => list.push(`${url}: ${problem}`));
+  problems.forEach((problem) => failures.push(`${url}: ${problem}`));
 }
 
 const probe = `JSON.stringify({
@@ -106,14 +106,14 @@ const probe = `JSON.stringify({
 
 const failures = [];
 const list = pages(root).sort();
-for (const path of list) if (path !== '/404.html') metadata(path, failures);
+const checked = list.filter((path) => path !== '/404.html');
+for (const path of checked) metadata(path);
 const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
 const entries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((entry) => ({
   loc: (entry[1].match(/<loc>([^<]+)<\/loc>/) || [])[1],
   lastmod: (entry[1].match(/<lastmod>([^<]+)<\/lastmod>/) || [])[1],
 }));
-for (const path of list) {
-  if (path === '/404.html') continue;
+for (const path of checked) {
   const matches = entries.filter((entry) => entry.loc === SITE + path);
   if (matches.length !== 1) failures.push(`${path}: sitemap entries ${matches.length}`);
   else if (!matches[0].lastmod) failures.push(`${path}: sitemap has no lastmod`);
