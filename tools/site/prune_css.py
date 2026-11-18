@@ -35,6 +35,12 @@ def prune(block):
 
 
 out = prune(css)
+animations = set()
+for decl in re.findall(r'animation(?:-name)?\s*:\s*([^;}]*)', out):
+    animations.update(re.findall(r'[A-Za-z][\w-]*', decl))
+for name in re.findall(r'@keyframes\s+([\w-]+)', out):
+    if name not in animations and not re.search(r'\b' + re.escape(name) + r'\b', html + code + helpers):
+        out = re.sub(r'@keyframes\s+' + re.escape(name) + r'\s*\{(?:[^{}]|\{[^{}]*\})*\}', '', out)
 removed = len(css) - len(out)
 if '--check' in sys.argv:
     print('unused CSS bytes:', removed)
