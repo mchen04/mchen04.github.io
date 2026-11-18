@@ -20,6 +20,7 @@ Every page has a header with the site name, the section links, and a menu button
 Preconditions:
 
 - The server is healthy at `http://127.0.0.1:4173`.
+- The run exported `AGENT_BROWSER_SESSION=portfolio-verify` before any command.
 - The viewport is `390 844` for the menu checks and `1440 900` for the link checks.
 
 - **Links.** Open the home page and count the header links. Run `agent-browser open http://127.0.0.1:4173/`, `agent-browser eval 'document.querySelectorAll("#site-nav a").length'`. The result is `7`.

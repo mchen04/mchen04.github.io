@@ -6,6 +6,7 @@ This directory is the maintained source for verifying the user-facing behavior o
 
 - Serve the checkout with `python3 tools/check/serve.py 4173` from the repository root.
 - Run the doctor checks in `../SKILL.md`; the port must belong to this run.
+- Export `AGENT_BROWSER_SESSION=portfolio-verify` before the first browser command so this run has its own session; the check scripts inherit it.
 - Start from a clean browser state: open a page, run `agent-browser storage local clear`, then `agent-browser reload`.
 - Use agent-browser's own profile. Never attach to the user's browser.
 - Never drive an instance this run did not start.

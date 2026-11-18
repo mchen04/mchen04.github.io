@@ -25,6 +25,7 @@ The site paints a warm day palette or a dark night palette. The choice is forced
 Preconditions:
 
 - The server is healthy at `http://127.0.0.1:4173`.
+- The run exported `AGENT_BROWSER_SESSION=portfolio-verify` before any command.
 - A page is open, `agent-browser storage local clear` has run, and the page has reloaded.
 
 - **OS dark.** Emulate dark and open the home page. Run `agent-browser set media dark`, `agent-browser open http://127.0.0.1:4173/`, `agent-browser eval 'document.documentElement.classList.contains("night")'`. The result is `true` and the screenshot is dark.

@@ -29,9 +29,10 @@ The port must be owned by the server this run started, `/portfolio.js` must retu
 
 ## Drive
 
-All commands are literal. Use the default agent-browser session for this run and close it at the end.
+All commands are literal. Before the first command, export `AGENT_BROWSER_SESSION=portfolio-verify` so this run uses its own named session; every command below and every `tools/check` helper inherits it. Pass `--session portfolio-verify` instead if you cannot export. Other projects share this machine, so never use the default session.
 
 ```bash
+export AGENT_BROWSER_SESSION=portfolio-verify
 agent-browser set viewport 390 844
 agent-browser set media dark
 agent-browser open http://127.0.0.1:4173/
@@ -55,7 +56,7 @@ Write proof under an evidence directory outside the repository (for example a si
 
 ## Cleanup
 
-`agent-browser close` closes the automation browser. Stop the server PID this run started. Remove scratch files inside the repository; never remove the evidence directory.
+`agent-browser close` closes only the named session. Never run `agent-browser close --all`, which would close another project's session. Stop the server PID this run started. Remove scratch files inside the repository; never remove the evidence directory.
 
 ## Helpers
 

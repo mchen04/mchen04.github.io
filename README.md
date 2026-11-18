@@ -48,7 +48,7 @@ one wind (left to right) and one light source per scene. Hero animations pause o
 
 ## Checks
 
-Serve with `python3 tools/check/serve.py 4173` (caching off), then:
+Serve with `python3 tools/check/serve.py 4173` (caching off). Export `AGENT_BROWSER_SESSION=portfolio-verify` before the first check so this run has its own browser session; the scripts inherit it. Close only that session with `agent-browser close`, never `agent-browser close --all`. Then:
 
 - `node tools/check/pages.mjs`: every page at desktop and phone width; fails on script errors, failed loads, sideways overflow, images without alt text or dimensions, a page without exactly one `h1`, a headline over 65 characters, a description outside 50–170 characters, a canonical or `og:url` that does not match the page, a missing share image or its dimensions and alt, unparseable JSON-LD, an article `BlogPosting` without its required fields, a broken static reference, or a sitemap that misses a page, repeats one, or lacks a `lastmod`.
 - `node tools/check/a11y.mjs`: axe-core (WCAG 2.1 AA) on the main pages, day and night, at both widths.

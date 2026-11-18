@@ -23,6 +23,7 @@ Every page carries a unique title, a description, a canonical URL, share tags, a
 Preconditions:
 
 - The server is healthy at `http://127.0.0.1:4173`.
+- The run exported `AGENT_BROWSER_SESSION=portfolio-verify` before any command.
 
 - **Title and description.** Open a page and read them. Run `agent-browser open http://127.0.0.1:4173/projects/hark/`, `agent-browser eval 'JSON.stringify({title:document.title,description:document.querySelector("meta[name=description]").content,canonical:document.querySelector("link[rel=canonical]").href})'`. The title ends with `· Michael Chen`, the description is non-empty, and the canonical is `https://michaelluochen.com/projects/hark/`.
 - **Share tags.** Run `agent-browser eval 'JSON.stringify({og:document.querySelector("meta[property=\"og:title\"]").content,twitter:document.querySelector("meta[name=\"twitter:card\"]").content,image:document.querySelector("meta[property=\"og:image\"]").content})'`. All three are present.
