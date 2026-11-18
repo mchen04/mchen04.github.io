@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://michaelluochen.com/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/work/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/ml/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/kestrel-tts/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/philip/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/audiobook-stack/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/writing/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/about/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://michaelluochen.com/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/work/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/ml/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/kestrel-tts/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/philip/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/audiobook-stack/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/writing/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/about/</loc><lastmod>2026-11-16</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/light-novels-audiobook-stack/</loc><lastmod>2026-10-02</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/nfl-draft-2026-ppr/</loc><lastmod>2026-10-05</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/nfl-weeks-1-4-2026/</loc><lastmod>2026-10-05</lastmod></url>
@@ -16,44 +16,44 @@
   <url><loc>https://michaelluochen.com/writing/local-speech-model-delegation/</loc><lastmod>2026-10-05</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/how-much-orchestration/</loc><lastmod>2026-10-09</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/nfl-week-5-2026/</loc><lastmod>2026-10-15</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/lfm25-delegate/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/mlx-audio/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/vireo-tts/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/ornith-reap/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/decision-heads/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/epub-listener/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/hark/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/felt/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/codenames/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/loldle/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/better-82-0/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/splitwisest/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/first-or-eighth/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/neon-royale/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/selfie-a-day/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/build-a-bucket/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/poker-banker/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/coverage-map/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/nba-draft-room/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/tcd/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/claude-switch/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/espn-lineup-bot/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/house-by-30/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/creator-harness/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/valence/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/pancake/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/michael-router/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/ding/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/projects/25-words-or-less/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://michaelluochen.com/resume/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/zerg-ztc/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/zergchat/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/zergstack/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/simulations/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/zergboard/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/forward-deployed-engineering/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/mobivolt/</loc><lastmod>2026-11-17</lastmod></url>
-<url><loc>https://michaelluochen.com/projects/ai-at-ucr/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/lfm25-delegate/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/mlx-audio/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/vireo-tts/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/ornith-reap/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/decision-heads/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/epub-listener/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/hark/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/felt/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/codenames/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/loldle/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/better-82-0/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/splitwisest/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/first-or-eighth/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/neon-royale/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/selfie-a-day/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/build-a-bucket/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/poker-banker/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/coverage-map/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/nba-draft-room/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/tcd/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/claude-switch/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/espn-lineup-bot/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/house-by-30/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/creator-harness/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/valence/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/pancake/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/michael-router/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/ding/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/projects/25-words-or-less/</loc><lastmod>2026-11-16</lastmod></url>
+  <url><loc>https://michaelluochen.com/resume/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/zerg-ztc/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/zergchat/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/zergstack/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/simulations/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/zergboard/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/forward-deployed-engineering/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/mobivolt/</loc><lastmod>2026-11-16</lastmod></url>
+<url><loc>https://michaelluochen.com/projects/ai-at-ucr/</loc><lastmod>2026-11-16</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/nfl-week-6-2026/</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/sleeper-nba-draft-2026/</loc><lastmod>2026-10-20</lastmod></url>
   <url><loc>https://michaelluochen.com/writing/three-types-agent-work/</loc><lastmod>2026-10-20</lastmod></url>
