@@ -101,7 +101,6 @@ ul[role=list],ol[role=list]{list-style:none;margin:0;padding:0}
 @keyframes rock{from{transform:rotate(-1.4deg) translateY(0)}to{transform:rotate(1.4deg) translateY(1.5px)}}
 @keyframes flick{0%{opacity:1}46%{opacity:.08}71%{opacity:1}}
 
-
 @keyframes orbit{from{offset-distance:0%}to{offset-distance:100%}}
 @keyframes sway{from{rotate:-1.6deg}to{rotate:1.6deg}}
 

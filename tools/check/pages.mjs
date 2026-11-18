@@ -76,7 +76,8 @@ function metadata(url, list) {
       for (const key of ['headline', 'description', 'datePublished', 'image', 'mainEntityOfPage']) {
         if (!posting[key]) problems.push(`BlogPosting has no ${key}`);
       }
-      if (!(posting.author || {}).id && !(posting.author || {})['@id']) problems.push('BlogPosting has no author @id');
+      const postingAuthor = posting.author || {};
+      if (!postingAuthor.id && !postingAuthor['@id']) problems.push('BlogPosting has no author @id');
       if (posting.image && !isFile(posting.image)) problems.push(`BlogPosting image missing ${posting.image}`);
     }
   }

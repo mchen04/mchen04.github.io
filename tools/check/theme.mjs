@@ -217,14 +217,13 @@ try {
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
     let saved;
     let back;
-    let attempts = 0;
     let reasons = [];
     const attemptLog = [];
     for (let round = 0; round < 4; round += 1) {
-      attempts = round + 1;
-      await navigate(`${origin}/?hour=12&attempt=${attempts}`);
+      const attempt = round + 1;
+      await navigate(`${origin}/?hour=12&attempt=${attempt}`);
       await evaluate('localStorage.clear()');
-      await navigate(`${origin}/?hour=12&attempt=${attempts}`);
+      await navigate(`${origin}/?hour=12&attempt=${attempt}`);
       await evaluate('document.fonts.ready');
       if (width < 860) await click('#menu-toggle');
       const writingLoaded = cdp.once('Page.loadEventFired', 15000).catch(() => {});
@@ -258,11 +257,11 @@ try {
       await sleep(200);
       off();
       back = { ...(await facts()), bfcache: restored };
-      attemptLog.push({ attempt: attempts, restored, reasons });
+      attemptLog.push({ attempt, restored, reasons });
       if (restored) break;
       if (reasons.some((reason) => reason.type !== 'Circumstantial')) break;
     }
-    check(`bfcache-back-follows-saved-${width}`, saved.stored === 'night' && back.bfcache && back.night && back.meta === back.paper && back.pressed === 'true', { saved, back, attempts, reasons, attemptLog });
+    check(`bfcache-back-follows-saved-${width}`, saved.stored === 'night' && back.bfcache && back.night && back.meta === back.paper && back.pressed === 'true', { saved, back, attempts: attemptLog.length, reasons, attemptLog });
     const reloadLoaded = cdp.once('Page.loadEventFired', 15000).catch(() => {});
     await cdp.send('Page.reload');
     await reloadLoaded;

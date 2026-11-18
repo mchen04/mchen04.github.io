@@ -20,7 +20,6 @@ function selectTime(){
   var meta=document.querySelector('meta[name="theme-color"]');
   var paper=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
   if(meta&&paper) meta.setAttribute('content',paper);
-  return night;
 }
 selectTime();
 
