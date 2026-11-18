@@ -10,6 +10,11 @@ document.documentElement.classList.add('js');
   addEventListener('DOMContentLoaded',top);
   addEventListener('load',top);
 })();
+function paintChrome(){
+  var meta=document.querySelector('meta[name="theme-color"]');
+  var paper=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
+  if(meta&&paper) meta.setAttribute('content',paper);
+}
 function selectTime(){
   var forced=/[?&]time=(day|night)\b/.exec(location.search);
   var stored=null;
@@ -17,9 +22,7 @@ function selectTime(){
   var hour=new Date().getHours();
   var night=forced?forced[1]==='night':stored?stored==='night':matchMedia('(prefers-color-scheme:dark)').matches||hour>=20||hour<6;
   document.documentElement.classList.toggle('night',night);
-  var meta=document.querySelector('meta[name="theme-color"]');
-  var paper=getComputedStyle(document.documentElement).getPropertyValue('--paper').trim();
-  if(meta&&paper) meta.setAttribute('content',paper);
+  paintChrome();
 }
 selectTime();
 
@@ -31,7 +34,6 @@ function ready(run){
 ready(function(){
   var header=document.querySelector('.masthead');
   var root=document.documentElement;
-  var themeColor=document.querySelector('meta[name="theme-color"]');
   var timeToggle=document.createElement('button');
   timeToggle.type='button';
   timeToggle.className='time-toggle';
@@ -40,8 +42,7 @@ ready(function(){
     var night=root.classList.contains('night');
     timeToggle.setAttribute('aria-pressed',String(night));
     timeToggle.setAttribute('aria-label',night?'Switch to day':'Switch to night');
-    var paper=getComputedStyle(root).getPropertyValue('--paper').trim();
-    if(themeColor&&paper) themeColor.setAttribute('content',paper);
+    paintChrome();
   }
   function refreshTime(){
     selectTime();

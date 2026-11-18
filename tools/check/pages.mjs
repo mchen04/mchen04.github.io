@@ -77,7 +77,7 @@ function metadata(url) {
         if (!posting[key]) problems.push(`BlogPosting has no ${key}`);
       }
       const postingAuthor = posting.author || {};
-      if (!postingAuthor.id && !postingAuthor['@id']) problems.push('BlogPosting has no author @id');
+      if (!postingAuthor['@id']) problems.push('BlogPosting has no author @id');
       if (posting.image && !isFile(posting.image)) problems.push(`BlogPosting image missing ${posting.image}`);
     }
   }
@@ -85,9 +85,9 @@ function metadata(url) {
     if (!isFile(href[1])) problems.push(`broken reference ${href[1]}`);
   }
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) {
-    const image = attrs(tag[0]);
-    if (image.alt === undefined) problems.push('image without alt');
-    if (!image.width || !image.height) problems.push(`image without dimensions ${tag[0].slice(0, 60)}`);
+    const img = attrs(tag[0]);
+    if (img.alt === undefined) problems.push('image without alt');
+    if (!img.width || !img.height) problems.push(`image without dimensions ${tag[0].slice(0, 60)}`);
   }
   problems.forEach((problem) => failures.push(`${url}: ${problem}`));
 }
