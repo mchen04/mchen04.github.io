@@ -42,7 +42,9 @@ def replace_work(head, work):
     return re.sub(r'<script type="application/ld\+json">(.*?)</script>', rule, head, flags=re.S)
 
 
-def build(slug, title, description, body_html, action=None):
+def build(slug, title, description, body_html, action=None, role='author'):
+    if role not in ('author', 'contributor'):
+        raise SystemExit(f'{slug}: role must be author or contributor')
     src = open(os.path.join(ROOT, TEMPLATE)).read()
     head, rest = src.split('</head>', 1)
     t = html.escape(title, quote=False)
@@ -59,9 +61,9 @@ def build(slug, title, description, body_html, action=None):
                   lambda m: m.group(1) + f'{slug}.jpg', head)
     work = {"@context": "https://schema.org", "@type": "CreativeWork",
             "@id": f"https://michaelluochen.com/projects/{slug}/#work", "name": title,
-            "description": description, "url": f"https://michaelluochen.com/projects/{slug}/",
-            "author": {"@type": "Person", "@id": "https://michaelluochen.com/#person",
-                       "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}}
+            "description": description, "url": f"https://michaelluochen.com/projects/{slug}/"}
+    work[role] = {"@type": "Person", "@id": "https://michaelluochen.com/#person",
+                  "name": "Michael Chen", "url": "https://michaelluochen.com/about/"}
     head = replace_work(head, work)
     cta = '' if not action else f'<p class="cta-row"><a class="cta" href="{html.escape(action["href"])}" rel="noopener">{html.escape(action["label"])}</a></p>'
     main = (f'<main id="top" tabindex="-1" class="page-case"><div class="page-head"><div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol>'
@@ -75,8 +77,8 @@ def build(slug, title, description, body_html, action=None):
     return out
 
 
-def make(slug, title, description, body_html, action=None):
-    out = build(slug, title, description, body_html, action)
+def make(slug, title, description, body_html, action=None, role='author'):
+    out = build(slug, title, description, body_html, action, role)
     path = os.path.join(ROOT, 'projects', slug)
     os.makedirs(path, exist_ok=True)
     open(os.path.join(path, 'index.html'), 'w').write(out)
@@ -86,15 +88,19 @@ def make(slug, title, description, body_html, action=None):
 if __name__ == '__main__':
     if sys.argv[1:] == ['--check']:
         sample = 'Close </script> & "quotes" and \'apostrophes\'.'
-        out = build('check-page', 'Check Page', sample, '<p>Body</p>')
-        blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', out, re.S)
-        if not blocks:
-            raise SystemExit('new_case: no json-ld')
-        for block in blocks:
-            data = json.loads(block)
-            for node in data.get('@graph', [data]):
-                if node.get('@type') == 'CreativeWork' and node.get('description') != sample:
-                    raise SystemExit('new_case: description changed')
+        for role in ('author', 'contributor'):
+            out = build('check-page', 'Check Page', sample, '<p>Body</p>', role=role)
+            blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', out, re.S)
+            if not blocks:
+                raise SystemExit('new_case: no json-ld')
+            for block in blocks:
+                data = json.loads(block)
+                for node in data.get('@graph', [data]):
+                    if node.get('@type') == 'CreativeWork':
+                        if node.get('description') != sample:
+                            raise SystemExit('new_case: description changed')
+                        if role not in node or ('contributor' if role == 'author' else 'author') in node:
+                            raise SystemExit(f'new_case: wrong {role} shape')
         print('new_case ok')
         sys.exit(0)
     spec = json.load(open(sys.argv[1]))
