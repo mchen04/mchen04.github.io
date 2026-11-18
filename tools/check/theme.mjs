@@ -51,6 +51,7 @@ class CDP {
     this.id = 0;
     this.pending = new Map();
     this.waiters = new Map();
+    this.handlers = new Map();
     socket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.id) {
@@ -59,10 +60,15 @@ class CDP {
         this.pending.delete(message.id);
         if (message.error) pending.reject(new Error(message.error.message));
         else pending.resolve(message.result);
-      } else if (this.waiters.has(message.method)) {
-        const waiter = this.waiters.get(message.method);
-        this.waiters.delete(message.method);
-        waiter(message.params);
+      } else {
+        if (this.handlers.has(message.method)) {
+          for (const handler of this.handlers.get(message.method)) handler(message.params);
+        }
+        if (this.waiters.has(message.method)) {
+          const waiter = this.waiters.get(message.method);
+          this.waiters.delete(message.method);
+          waiter(message.params);
+        }
       }
     };
   }
@@ -84,6 +90,11 @@ class CDP {
         resolve(params);
       });
     });
+  }
+  on(method, handler) {
+    if (!this.handlers.has(method)) this.handlers.set(method, new Set());
+    this.handlers.get(method).add(handler);
+    return () => this.handlers.get(method).delete(handler);
   }
 }
 
@@ -128,6 +139,7 @@ try {
     return result.result.value;
   };
   const facts = () => evaluate(`({
+    url: location.pathname + location.search,
     state: document.readyState,
     night: document.documentElement.classList.contains('night'),
     meta: document.querySelector('meta[name="theme-color"]')?.content,
@@ -202,35 +214,55 @@ try {
     const wentLight = await waitFor("!document.documentElement.classList.contains('night') && document.querySelector('meta[name=theme-color]').content === getComputedStyle(document.documentElement).getPropertyValue('--paper').trim()", 4000);
     check(`live-os-change-${width}`, !beforeChange.night && wentDark && wentLight, { beforeChange, wentDark, wentLight });
 
-    await navigate(`${origin}/`);
-    await evaluate('localStorage.clear()');
-    await navigate(`${origin}/`);
-    await evaluate('document.fonts.ready');
-    if (width < 860) await click('#menu-toggle');
-    const writingLoaded = cdp.once('Page.loadEventFired', 15000).catch(() => {});
-    await click('#site-nav a[href="/writing/"]');
-    await writingLoaded;
-    await evaluate('document.fonts.ready');
-    const hitTest = `(() => {
-      const toggle = document.querySelector('.time-toggle');
-      if (!toggle) return false;
-      const rect = toggle.getBoundingClientRect();
-      return toggle.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
-    })()`;
+    await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'light' }] });
     let saved;
-    for (let attempt = 0; attempt < 4; attempt += 1) {
-      if (!(await waitFor(hitTest, 15000))) throw new Error(`switch not hit-testable at ${width}`);
-      await sleep(400);
-      await click('.time-toggle');
-      await sleep(150);
-      saved = await facts();
-      if (saved.stored === 'night') break;
+    let back;
+    let attempts = 0;
+    let reasons = [];
+    const attemptLog = [];
+    for (let round = 0; round < 4; round += 1) {
+      attempts = round + 1;
+      await navigate(`${origin}/?hour=12&attempt=${attempts}`);
+      await evaluate('localStorage.clear()');
+      await navigate(`${origin}/?hour=12&attempt=${attempts}`);
+      await evaluate('document.fonts.ready');
+      if (width < 860) await click('#menu-toggle');
+      const writingLoaded = cdp.once('Page.loadEventFired', 15000).catch(() => {});
+      await click('#site-nav a[href="/writing/"]');
+      await writingLoaded;
+      await evaluate('document.fonts.ready');
+      const hitTest = `(() => {
+        const toggle = document.querySelector('.time-toggle');
+        if (!toggle) return false;
+        const rect = toggle.getBoundingClientRect();
+        return toggle.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + rect.height / 2));
+      })()`;
+      for (let press = 0; press < 4; press += 1) {
+        if (!(await waitFor(hitTest, 15000))) throw new Error(`switch not hit-testable at ${width}`);
+        await sleep(400);
+        await click('.time-toggle');
+        await sleep(150);
+        saved = await facts();
+        if (saved.stored === 'night') break;
+      }
+      if (!saved || saved.stored !== 'night') throw new Error(`switch did not save at ${width}`);
+      reasons = [];
+      const off = cdp.on('Page.backForwardCacheNotUsed', (params) => {
+        for (const reason of params.notRestoredExplanations || []) reasons.push(reason);
+      });
+      const beforeUrl = await evaluate('location.href');
+      await evaluate('history.back()');
+      const navigated = await waitFor(`location.href !== ${JSON.stringify(beforeUrl)}`, 5000);
+      const restored = navigated && await waitFor('window.__persisted === true', 3000);
+      if (!restored) await waitFor("document.readyState === 'complete'", 5000);
+      await sleep(200);
+      off();
+      back = { ...(await facts()), bfcache: restored };
+      attemptLog.push({ attempt: attempts, restored, reasons });
+      if (restored) break;
+      if (reasons.some((reason) => reason.type !== 'Circumstantial')) break;
     }
-    await evaluate('history.back()');
-    const restored = await waitFor('window.__persisted === true', 10000);
-    await sleep(200);
-    const back = { ...(await facts()), bfcache: restored };
-    check(`bfcache-back-follows-saved-${width}`, saved.stored === 'night' && back.bfcache && back.night && back.meta === back.paper && back.pressed === 'true', { saved, back });
+    check(`bfcache-back-follows-saved-${width}`, saved.stored === 'night' && back.bfcache && back.night && back.meta === back.paper && back.pressed === 'true', { saved, back, attempts, reasons, attemptLog });
     const reloadLoaded = cdp.once('Page.loadEventFired', 15000).catch(() => {});
     await cdp.send('Page.reload');
     await reloadLoaded;

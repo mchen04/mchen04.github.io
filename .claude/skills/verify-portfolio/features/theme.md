@@ -46,3 +46,4 @@ Preconditions:
 - A stored `time` value outranks the OS setting, so clear storage before testing OS dark.
 - The night paper is `#17141f`, not the old hardcoded `#16131f`.
 - `python3 tools/check/serve.py` sends `no-store`, which disables bfcache; `theme.mjs` serves `max-age=600` for that case.
+- Chrome can evict a bfcache entry under memory pressure; `theme.mjs` retries only when every not-restored reason is Circumstantial and fails immediately on a page-caused reason.
